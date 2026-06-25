@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PORTAL CDI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style/style.css">
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="sidebar-top">
+
+        <div class="logo" onclick="mostrarInicio()">
+            <img src="CDI.png">
+        </div>
+
+        <div class="avatar">
+            K
+        </div>
+
+    </div>
+
+    <div class="menu">
+
+        <div class="menu-item active" id="inicioBtn" onclick="mostrarInicio()">
+            <div class="menu-icon">🏠</div>
+            <div>Área Inicial</div>
+        </div>
+
+        <div class="menu-item" id="relatoriosBtn" onclick="mostrarRelatorios()">
+            <div class="menu-icon">📄</div>
+            <div>Relatórios</div>
+        </div>
+
+        <div class="menu-item" id="programacaoBtn" onclick="mostrarProgramacao()">
+            <div class="menu-icon">🚛</div>
+            <div>Programação</div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+
+    <div class="content">
+
+        <!-- HOME -->
+
+        <div class="box home-screen" id="inicio">
+
+            <div class="watermark">
+                <img src="LOGO.png">
+            </div>
+
+            <h1>PORTAL TRANSPORTE</h1>
+
+            <p>
+                Salamaleikon TESTE V0.4   
+            </p>
+
+        </div>
+
+        <!-- RELATORIOS -->
+
+        <div class="box" id="relatorios">
+
+            <h2>RELATÓRIOS</h2>
+
+            <div class="cards">
+
+                <div class="card" onclick="abrirRelatorio('DEVS')">
+                    <h3>Revisão Devoluções</h3>
+                    <p>Busca IMPO por período</p>
+                </div>
+
+                <div class="card" onclick="abrirRelatorio('PENDENCIAS')">
+                    <h3>Pendências</h3>
+                    <p>Exibe pendências da coluna W</p>
+                </div>
+
+                <div class="card" onclick="abrirRelatorio('DEADLINE')">
+                    <h3>Deadlines</h3>
+                    <p>Exibe deadlines próximos da coluna S</p>
+                </div>
+
+            </div>
+
+            <!-- FILTRO RELATÓRIOS -->
+
+            <div class="filters" id="filtrosRelatorio">
+
+                <input type="date" id="inicioData">
+                <input type="date" id="fimData">
+
+                <button onclick="buscarRelatorio()">
+                    Buscar
+                </button>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr id="thead"></tr>
+                    </thead>
+
+                    <tbody id="tbody">
+
+                        <tr>
+                            <td class="loading">
+                                Carregando planilha...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- PROGRAMAÇÃO -->
+
+        <div class="box" id="programacao">
+
+            <h2>PROGRAMAÇÃO</h2>
+
+            <div class="filters active">
+
+        <select id="tipoProgramacao">
+     <option value="AZ">AZ</option>
+     <option value="RX">RX</option>
+     <option value="ESTUFAGEM">ESTUFAGEM</option>
+        </select>
+
+                <input type="date" id="progInicio">
+                <input type="date" id="progFim">
+
+                <button onclick="buscarProgramacao()">
+                    Buscar
+                </button>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr id="theadProg"></tr>
+                    </thead>
+
+                    <tbody id="tbodyProg"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+ <script src="/javascript/index.js"></script>
+
+</body>
+</html>
