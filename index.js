@@ -387,21 +387,20 @@ function buscarProgramacao(){
 
         /* AZ E RX */
 
-        return (
+        const passou =
+    A === tipo &&
+    K >= dataInicio &&
+    K <= dataFim;
 
-            A === tipo
-
-            &&
-
-            K >= dataInicio
-
-            &&
-
-            K <= dataFim
-
-        );
-
-    });
+console.log({
+    container: linha[9],
+    tipo: A,
+    dataTexto: linha[10],
+    dataConvertida: K,
+    inicio: dataInicio,
+    fim: dataFim,
+    passou
+});
 
     const colunas = [
 
