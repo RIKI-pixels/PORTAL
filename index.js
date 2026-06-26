@@ -387,10 +387,12 @@ function buscarProgramacao(){
 
         /* AZ E RX */
 
-        const passou =
-    A === tipo &&
-    K >= dataInicio &&
-    K <= dataFim;
+        const (passou =
+         A === tipo 
+            &&
+         K >= dataInicio 
+            &&
+         K <= dataFim;)
 
 console.log({
     container: linha[9],
