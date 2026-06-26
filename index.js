@@ -317,93 +317,164 @@ PROGRAMAÇÃO
 
 function buscarProgramacao(){
 
-    const tipo =
-        document.getElementById("tipoProgramacao").value;
+    const tipo = document.getElementById("tipoProgramacao").value;
 
-    const inicio =
-        document.getElementById("progInicio").value;
+    const inicio = document.getElementById("progInicio").value;
 
-    const fim =
-        document.getElementById("progFim").value;
+    const fim = document.getElementById("progFim").value;
 
-    const tbody =
-        document.getElementById("tbodyProg");
+    if(!inicio || !fim){
+        alert("Selecione o período.");
+        return;
+    }
 
-    const thead =
-        document.getElementById("theadProg");
+    const dataInicio = new Date(inicio + "T00:00:00");
+    const dataFim = new Date(fim + "T23:59:59");
+
+    const tbody = document.getElementById("tbodyProg");
+    const thead = document.getElementById("theadProg");
 
     tbody.innerHTML = "";
     thead.innerHTML = "";
+
+    console.clear();
+
+    console.log("Filtro");
+    console.log({
+        tipo,
+        inicio,
+        fim,
+        dataInicio,
+        dataFim
+    });
 
     const lista = dados.filter((linha,index)=>{
 
         if(index === 0) return false;
 
-        const A =
-            (linha[0] || "")
-            .trim()
-            .toUpperCase();
+        const status = (linha[0] || "").trim().toUpperCase();
 
-        const cliente =
-            (linha[12] || "")
-            .trim()
-            .toUpperCase();
+        const cliente = (linha[12] || "").trim().toUpperCase();
 
-        const K =
-            parseDataBR(linha[10]);
+        const dataTexto = (linha[10] || "").trim();
 
-        if(!K) return false;
+        const dataLinha = parseDataBR(dataTexto);
 
-        const dataInicio =
-            new Date(inicio);
+        if(!dataLinha){
 
-        const dataFim =
-            new Date(fim);
+            console.warn("Data inválida:", dataTexto, linha);
 
-        dataInicio.setHours(0,0,0,0);
-        dataFim.setHours(23,59,59,999);
-
-        /* ESTUFAGEM */
-
-        if(tipo === "ESTUFAGEM"){
-
-            return (
-
-                clientesEstufagem
-                .map(c => c.toUpperCase())
-                .includes(cliente)
-
-                &&
-
-                K >= dataInicio
-
-                &&
-
-                K <= dataFim
-
-            );
+            return false;
 
         }
 
+        dataLinha.setHours(0,0,0,0);
+
+        let aprovado = false;
+
+        if(tipo === "ESTUFAGEM"){
+
+            aprovado =
+                clientesEstufagem
+                    .map(c => c.toUpperCase())
+                    .includes(cliente)
+
+                &&
+
+                dataLinha >= dataInicio
+
+                &&
+
+                dataLinha <= dataFim;
+
+        }else{
+
+            aprovado =
+                status === tipo
+
+                &&
+
+                dataLinha >= dataInicio
+
+                &&
+
+                dataLinha <= dataFim;
+
+        }
+
+        console.log({
+            container: linha[9],
+            status,
+            cliente,
+            dataTexto,
+            dataLinha,
+            aprovado
+        });
+
+        return aprovado;
+
+    });
+
+    console.log("Total encontrados:", lista.length);
+
+    const colunas = [
+
+        { nome:"TIPO", coluna:0 },
+        { nome:"CLIENTE", coluna:12 },
+        { nome:"CONTAINER", coluna:9 },
+        { nome:"DATA AG.", coluna:10 },
+        { nome:"JANELA", coluna:11 },
+        { nome:"BOOKING", coluna:13 },
+        { nome:"DDL", coluna:18 }
+
+    ];
+
+    colunas.forEach(c=>{
+
+        thead.innerHTML += `<th>${c.nome}</th>`;
+
+    });
+
+    if(lista.length === 0){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="${colunas.length}">
+                    Nenhum resultado encontrado
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+    lista.forEach(item=>{
+
+        let linha = "<tr>";
+
+        colunas.forEach(c=>{
+
+            linha += `<td>${item[c.coluna] || ""}</td>`;
+
+        });
+
+        linha += "</tr>";
+
+        tbody.innerHTML += linha;
+
+    });
+
+}
         /* AZ E RX */
 
-        const (passou =
-         A === tipo 
-            &&
-         K >= dataInicio 
-            &&
-         K <= dataFim;)
-
-console.log({
-    container: linha[9],
-    tipo: A,
-    dataTexto: linha[10],
-    dataConvertida: K,
-    inicio: dataInicio,
-    fim: dataFim,
-    passou
-});
-
+      return (
+    A === tipo 
+          &&
+    K >= dataInicio 
+          &&
+    K <= dataFim
+);
     const colunas = [
 
         { nome:"TIPO", coluna:0 },
