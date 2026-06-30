@@ -11,7 +11,7 @@
 const CONFIG = {
 
     URL_PLANILHA:
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=1756837760&single=true&output=tsv",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=921961552&single=true&output=tsv",
 
     DEBUG: false,
 
