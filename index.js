@@ -1,590 +1,170 @@
-/* ==========================================================
-   PORTAL OPERACIONAL CDI
-   Versão 2.0
-========================================================== */
+/* =========================
+LINK PLANILHA
+========================= */
 
+const url =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=921961552&single=true&output=tsv";
 
-/* ==========================================================
-   CONFIGURAÇÕES
-========================================================== */
+/* =========================
+DADOS
+========================= */
 
-const CONFIG = {
+let dados = [];
+let relatorioAtual = "";
 
-    URL_PLANILHA:
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=921961552&single=true&output=tsv",
+/* =========================
+CLIENTES ESTUFAGEM
+========================= */
 
-    DEBUG: false,
-
-    VERSAO: "2.0.0"
-
-};
-
-
-/* ==========================================================
-   ESTADO DA APLICAÇÃO
-========================================================== */
-
-const APP = {
-
-    dados: [],
-
-    relatorioAtual: "",
-
-    carregado: false,
-
-    ultimaAtualizacao: null
-
-};
-
-
-/* ==========================================================
-   CLIENTES ESTUFAGEM
-========================================================== */
-
-const CLIENTES_ESTUFAGEM = [
+const clientesEstufagem = [
 
     "MARINI",
-
     "RANDA",
-
     "METISA",
-
     "COMPENSADOS NM",
-
     "EURO",
+    "EAGLE"
 
-    "EAGLE",
-
-    "THOMASI",
-
-    "AFFONSO DITZEL",
-
-    "MULTIPINE"
 
 ];
+/* =========================
+CARREGA PLANILHA
+========================= */
 
+Papa.parse(url,{
 
-/* ==========================================================
-   COLUNAS DA PLANILHA
-========================================================== */
+    download:true,
+    delimiter:"\t",
+    skipEmptyLines:true,
 
-const COL = {
+    complete:function(resultado){
 
-    TIPO:0,
+        dados = resultado.data;
 
-    STATUS:1,
+        document.getElementById("tbody").innerHTML = `
+            <tr>
+                <td class="loading">
+                    Planilha carregada com sucesso.
+                </td>
+            </tr>
+        `;
 
-    MODAL:4,
-
-    DU_DI:6,
-
-    ISO:8,
-
-    CONTAINER:9,
-
-    DATA_AG:10,
-
-    JANELA:11,
-
-    CLIENTE:12,
-
-    BOOKING:13,
-
-    ARMADOR:14,
-
-    DEADLINE:18,
-
-    PENDENCIA:22
-
-};
-
-
-/* ==========================================================
-   ELEMENTOS HTML
-========================================================== */
-
-const DOM = {
-
-    tbody: document.getElementById("tbody"),
-
-    thead: document.getElementById("thead"),
-
-    tbodyProg: document.getElementById("tbodyProg"),
-
-    theadProg: document.getElementById("theadProg")
-
-};
-
-
-/* ==========================================================
-   DEBUG
-========================================================== */
-
-function debug(...mensagem){
-
-    if(CONFIG.DEBUG){
-
-        console.log(...mensagem);
+        console.log(dados);
 
     }
 
-}
-
-
-/* ==========================================================
-   UTILITÁRIOS
-========================================================== */
-
-function texto(valor){
-
-    if(valor === undefined) return "";
-
-    if(valor === null) return "";
-
-    return String(valor).trim();
-
-}
-
-
-function textoMaiusculo(valor){
-
-    return texto(valor).toUpperCase();
-
-}
-
-
-function valor(linha,coluna){
-
-    return texto(linha[coluna]);
-
-}
-
-
-function limparTabela(){
-
-    DOM.thead.innerHTML = "";
-
-    DOM.tbody.innerHTML = "";
-
-}
-
-
-function limparTabelaProgramacao(){
-
-    DOM.theadProg.innerHTML = "";
-
-    DOM.tbodyProg.innerHTML = "";
-
-}
-
-
-/* ==========================================================
-   MANIPULAÇÃO DE DATAS
-========================================================== */
-
-function parseDataBR(dataStr){
-
-    if(!dataStr){
-
-        return null;
-
-    }
-
-    dataStr = texto(dataStr);
-
-    if(dataStr === ""){
-
-        return null;
-
-    }
-
-    const somenteData = dataStr.split(" ")[0];
-
-    const partes = somenteData.split("/");
-
-    if(partes.length !== 3){
-
-        return null;
-
-    }
-
-    let dia = parseInt(partes[0]);
-
-    let mes = parseInt(partes[1]);
-
-    let ano = parseInt(partes[2]);
-
-    if(isNaN(dia)) return null;
-
-    if(isNaN(mes)) return null;
-
-    if(isNaN(ano)) return null;
-
-    if(ano < 100){
-
-        ano += 2000;
-
-    }
-
-    const data = new Date(
-
-        ano,
-
-        mes - 1,
-
-        dia,
-
-        12,
-
-        0,
-
-        0
-
-    );
-
-    if(
-
-        data.getDate() !== dia ||
-
-        data.getMonth() !== (mes - 1) ||
-
-        data.getFullYear() !== ano
-
-    ){
-
-        return null;
-
-    }
-
-    return data;
-
-}
-
-
-function parseInputData(valor,fim=false){
-
-    if(!valor){
-
-        return null;
-
-    }
-
-    const data = new Date(valor);
-
-    if(fim){
-
-        data.setHours(
-
-            23,
-
-            59,
-
-            59,
-
-            999
-
-        );
-
-    }else{
-
-        data.setHours(
-
-            0,
-
-            0,
-
-            0,
-
-            0
-
-        );
-
-    }
-
-    return data;
-
-}
-
-
-function dataEntre(data,inicio,fim){
-
-    if(!data){
-
-        return false;
-
-    }
-
-    return (
-
-        data >= inicio &&
-
-        data <= fim
-
-    );
-
-}
-
-/* ==========================================================
-   CONVERSÃO DE LINHA PARA REGISTRO
-========================================================== */
-
-function criarRegistro(linha){
-
-    return{
-
-        tipo: valor(linha,COL.TIPO),
-
-        status: textoMaiusculo(valor(linha,COL.STATUS)),
-
-        modal: textoMaiusculo(valor(linha,COL.MODAL)),
-
-        duDi: valor(linha,COL.DU_DI),
-
-        iso: valor(linha,COL.ISO),
-
-        container: valor(linha,COL.CONTAINER),
-
-        dataTexto: valor(linha,COL.DATA_AG),
-
-        dataAg: parseDataBR(valor(linha,COL.DATA_AG)),
-
-        janela: valor(linha,COL.JANELA),
-
-        cliente: textoMaiusculo(valor(linha,COL.CLIENTE)),
-
-        booking: valor(linha,COL.BOOKING),
-
-        armador: valor(linha,COL.ARMADOR),
-
-        ddlTexto: valor(linha,COL.DEADLINE),
-
-        ddl: parseDataBR(valor(linha,COL.DEADLINE)),
-
-        pendencia: textoMaiusculo(valor(linha,COL.PENDENCIA))
-
-    };
-
-}
-
-
-/* ==========================================================
-   CARREGAMENTO DA PLANILHA
-========================================================== */
-
-function carregarPlanilha(){
-
-    DOM.tbody.innerHTML = `
-
-        <tr>
-
-            <td class="loading">
-
-                Carregando planilha...
-
-            </td>
-
-        </tr>
-
-    `;
-
-    Papa.parse(
-
-        CONFIG.URL_PLANILHA,
-
-        {
-
-            download:true,
-
-            delimiter:"\t",
-
-            skipEmptyLines:true,
-
-            complete(resultado){
-
-                APP.dados = resultado.data
-                    .slice(1)
-                    .map(criarRegistro);
-
-                APP.carregado = true;
-
-                APP.ultimaAtualizacao = new Date();
-
-                debug(
-
-                    "Planilha carregada.",
-
-                    APP.dados.length,
-
-                    "registros."
-
-                );
-
-                DOM.tbody.innerHTML = `
-
-                    <tr>
-
-                        <td class="loading">
-
-                            Planilha carregada com sucesso.
-
-                            <br><br>
-
-                            ${APP.dados.length} registros encontrados.
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            },
-
-            error(erro){
-
-                console.error(erro);
-
-                DOM.tbody.innerHTML = `
-
-                    <tr>
-
-                        <td class="loading">
-
-                            Erro ao carregar a planilha.
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-
-        }
-
-    );
-
-}
-
-
-/* ==========================================================
-   VALIDAÇÃO
-========================================================== */
-
-function verificarCarregamento(){
-
-    if(APP.carregado){
-
-        return true;
-
-    }
-
-    alert(
-
-        "A planilha ainda está sendo carregada."
-
-    );
-
-    return false;
-
-}
-
-
-/* ==========================================================
-   CONTROLE DAS TELAS
-========================================================== */
+});
+
+/* =========================
+TELAS
+========================= */
 
 function limparMenu(){
 
-    document
-
-        .querySelectorAll(".menu-item")
-
-        .forEach(item=>{
-
-            item.classList.remove("active");
-
-        });
+    document.querySelectorAll(".menu-item")
+    .forEach(item=>item.classList.remove("active"));
 
 }
-
 
 function mostrarInicio(){
 
     limparMenu();
 
-    document
-        .getElementById("inicioBtn")
-        .classList.add("active");
+    document.getElementById("inicioBtn")
+    .classList.add("active");
 
-    document
-        .getElementById("inicio")
-        .style.display = "flex";
+    document.getElementById("inicio")
+    .style.display = "flex";
 
-    document
-        .getElementById("relatorios")
-        .style.display = "none";
+    document.getElementById("relatorios")
+    .style.display = "none";
 
-    document
-        .getElementById("programacao")
-        .style.display = "none";
+    document.getElementById("programacao")
+    .style.display = "none";
 
 }
-
 
 function mostrarRelatorios(){
 
     limparMenu();
 
-    document
-        .getElementById("relatoriosBtn")
-        .classList.add("active");
+    document.getElementById("relatoriosBtn")
+    .classList.add("active");
 
-    document
-        .getElementById("inicio")
-        .style.display = "none";
+    document.getElementById("inicio")
+    .style.display = "none";
 
-    document
-        .getElementById("relatorios")
-        .style.display = "block";
+    document.getElementById("relatorios")
+    .style.display = "block";
 
-    document
-        .getElementById("programacao")
-        .style.display = "none";
+    document.getElementById("programacao")
+    .style.display = "none";
 
 }
-
 
 function mostrarProgramacao(){
 
     limparMenu();
 
-    document
-        .getElementById("programacaoBtn")
-        .classList.add("active");
+    document.getElementById("programacaoBtn")
+    .classList.add("active");
 
-    document
-        .getElementById("inicio")
-        .style.display = "none";
+    document.getElementById("inicio")
+    .style.display = "none";
 
-    document
-        .getElementById("relatorios")
-        .style.display = "none";
+    document.getElementById("relatorios")
+    .style.display = "none";
 
-    document
-        .getElementById("programacao")
-        .style.display = "block";
+    document.getElementById("programacao")
+    .style.display = "block";
 
 }
 
-/* ==========================================================
-   ABRIR RELATÓRIO
-========================================================== */
+/* =========================
+DATA BR
+========================= */
+
+function parseDataBR(dataStr){
+
+    if(!dataStr) return null;
+
+    dataStr = dataStr.toString().trim();
+
+    const partes = dataStr.split(" ");
+    const dataParte = partes[0];
+
+    const d = dataParte.split("/");
+
+    if(d.length !== 3) return null;
+
+    let dia = parseInt(d[0],10);
+    let mes = parseInt(d[1],10)-1;
+    let ano = parseInt(d[2],10);
+
+    if(ano < 100){
+        ano += 2000;
+    }
+
+    const data = new Date(ano,mes,dia);
+
+    if(isNaN(data.getTime())){
+        return null;
+    }
+
+    return data;
+
+}
+
+/* =========================
+ABRIR RELATÓRIO
+========================= */
 
 function abrirRelatorio(tipo){
 
-    APP.relatorioAtual = tipo;
+    relatorioAtual = tipo;
 
-    const filtros = document.getElementById("filtrosRelatorio");
+    const filtros =
+        document.getElementById("filtrosRelatorio");
 
     if(tipo === "DEVS"){
 
@@ -600,854 +180,382 @@ function abrirRelatorio(tipo){
 
 }
 
+/* =========================
+VALIDAR PERÍODO
+========================= */
 
-/* ==========================================================
-   VALIDAÇÃO DE PERÍODO
-========================================================== */
+function validarPeriodo(dataLinha){
 
-function validarPeriodo(data){
+    const inicio =
+        document.getElementById("inicioData").value;
 
-    const inicio = document.getElementById("inicioData").value;
+    const fim =
+        document.getElementById("fimData").value;
 
-    const fim = document.getElementById("fimData").value;
+    if(!inicio || !fim) return false;
 
-    if(!inicio || !fim){
+    const dataInicio = new Date(inicio);
+    const dataFim = new Date(fim);
 
-        return false;
+    dataInicio.setHours(0,0,0,0);
+    dataFim.setHours(23,59,59,999);
 
-    }
-
-    const dataInicio = parseInputData(inicio);
-
-    const dataFim = parseInputData(fim,true);
-
-    return dataEntre(
-
-        data,
-
-        dataInicio,
-
-        dataFim
-
+    return (
+        dataLinha >= dataInicio &&
+        dataLinha <= dataFim
     );
 
 }
 
-
-/* ==========================================================
-   RELATÓRIOS
-========================================================== */
+/* =========================
+RELATÓRIOS
+========================= */
 
 function buscarRelatorio(){
 
-    if(!verificarCarregamento()){
+    let filtrado = [];
 
-        return;
+    filtrado = dados.filter((linha,index)=>{
 
-    }
+ 
+        if(index === 0) return false;
 
-    let lista = [];
+        const B = (linha[1] || "").trim();
+        const E = (linha[4] || "").trim();
+        const K = (linha[10] || "").trim();
+        const S = (linha[18] || "").trim();
+        const W = (linha[22] || "").trim();
+        const L = (linha[11] || "").trim();
+        const O = (linha[14] || "").trim();
 
-    switch(APP.relatorioAtual){
+        //const B = (linha[1] || "").trim();
+        //const G = (linha[6] || "").trim();
+        //const H = (linha[7] || "").trim();
+        //const L = (linha[11] || "").trim();
+        //const M = (linha[12] || "").trim();
+        //const N = (linha[13] || "").trim();
 
-        /* ==========================
-           DEVOLUÇÕES
-        ========================== */
 
-        case "DEVS":
 
-            lista = APP.dados.filter(registro=>{
 
-                if(!registro.dataAg){
+        /* =========================
+        DEVOLUÇÕES
+        COLUNA E = IMPO
+        ========================= */
 
-                    return false;
+        if(relatorioAtual === "DEVS"){
 
-                }
+            const dataK = parseDataBR(K);
 
-                return(
+            if(!dataK) return false;
 
-                    registro.modal === "IMPO"
+            return (
+                E.toUpperCase() === "IMPO" &&
+                validarPeriodo(dataK)
+            );
 
-                    &&
+        }
 
-                    validarPeriodo(registro.dataAg)
+        /* =========================
+        PENDÊNCIAS
+        COLUNA W
+        ========================= */
 
-                );
+        if(relatorioAtual === "PENDENCIAS"){
 
-            });
+            return (
+                W.toUpperCase() === "PENDÊNCIAS"
+            );
 
-        break;
+        }
 
+        /* =========================
+        DEADLINE
+        COLUNA S
+        ========================= */
 
+        if(relatorioAtual === "DEADLINE"){
 
-        /* ==========================
-           PENDÊNCIAS
-        ========================== */
+            if(B.toUpperCase() !== "AGENDAR"){
+                return false;
+            }
 
-        case "PENDENCIAS":
+            const dataDeadline =
+                parseDataBR(S);
 
-            lista = APP.dados.filter(registro=>{
+            if(!dataDeadline){
+                return false;
+            }
 
-                return(
+            const hoje = new Date();
 
-                    registro.pendencia === "PENDÊNCIAS"
+            hoje.setHours(0,0,0,0);
+            dataDeadline.setHours(0,0,0,0);
 
-                );
+            const diff =
+                (dataDeadline - hoje) /
+                (1000 * 60 * 60 * 24);
 
-            });
+            return diff >= 0 && diff <= 2;
 
-        break;
+        }
 
+    });
 
-
-        /* ==========================
-           DEADLINE
-        ========================== */
-
-        case "DEADLINE":
-
-            lista = APP.dados.filter(registro=>{
-
-                if(
-
-                    registro.status !== "AGENDAR"
-
-                ){
-
-                    return false;
-
-                }
-
-                if(!registro.ddl){
-
-                    return false;
-
-                }
-
-                const hoje = new Date();
-
-                hoje.setHours(
-
-                    0,
-
-                    0,
-
-                    0,
-
-                    0
-
-                );
-
-                registro.ddl.setHours(
-
-                    0,
-
-                    0,
-
-                    0,
-
-                    0
-
-                );
-
-                const dias =
-
-                    (registro.ddl - hoje)
-
-                    /
-
-                    86400000;
-
-                return(
-
-                    dias >= 0
-
-                    &&
-
-                    dias <= 2
-
-                );
-
-            });
-
-        break;
-
-    }
-
-    renderTabelaRelatorio(lista);
+    renderTabela(filtrado,relatorioAtual);
 
 }
 
-
-
-/* ==========================================================
-   COLUNAS DOS RELATÓRIOS
-========================================================== */
-
-function obterColunasRelatorio(){
-
-    switch(APP.relatorioAtual){
-
-        case "DEVS":
-
-            return [
-
-                {
-
-                    nome:"DU-E / DI",
-
-                    campo:"duDi"
-
-                },
-
-                {
-
-                    nome:"ISO",
-
-                    campo:"iso"
-
-                },
-
-                {
-
-                    nome:"CONTAINER",
-
-                    campo:"container"
-
-                },
-
-                {
-
-                    nome:"DATA AG.",
-
-                    campo:"dataTexto"
-
-                },
-
-                {
-
-                    nome:"JANELA",
-
-                    campo:"janela"
-
-                },
-
-                {
-
-                    nome:"CLIENTE",
-
-                    campo:"cliente"
-
-                }
-
-            ];
-
-
-
-        case "PENDENCIAS":
-
-            return [
-
-                {
-
-                    nome:"STATUS",
-
-                    campo:"status"
-
-                },
-
-                {
-
-                    nome:"CONTAINER",
-
-                    campo:"container"
-
-                },
-
-                {
-
-                    nome:"CLIENTE",
-
-                    campo:"cliente"
-
-                },
-
-                {
-
-                    nome:"DATA",
-
-                    campo:"dataTexto"
-
-                },
-
-                {
-
-                    nome:"PENDÊNCIA",
-
-                    campo:"pendencia"
-
-                }
-
-            ];
-
-
-
-        case "DEADLINE":
-
-            return [
-
-                {
-
-                    nome:"STATUS",
-
-                    campo:"status"
-
-                },
-
-                {
-
-                    nome:"CONTAINER",
-
-                    campo:"container"
-
-                },
-
-                {
-
-                    nome:"CLIENTE",
-
-                    campo:"cliente"
-
-                },
-
-                {
-
-                    nome:"DATA",
-
-                    campo:"dataTexto"
-
-                },
-
-                {
-
-                    nome:"DDL",
-
-                    campo:"ddlTexto"
-
-                }
-
-            ];
-
-    }
-
-    return [];
-
-}
-
-/* ==========================================================
-   PROGRAMAÇÃO
-========================================================== */
+/* =========================
+PROGRAMAÇÃO
+========================= */
 
 function buscarProgramacao(){
 
-    if(!verificarCarregamento()){
+    const tipo =
+        document.getElementById("tipoProgramacao").value;
 
-        return;
+    const inicio =
+        document.getElementById("progInicio").value;
 
-    }
+    const fim =
+        document.getElementById("progFim").value;
 
-    const tipo = document.getElementById("tipoProgramacao").value;
+    const tbody =
+        document.getElementById("tbodyProg");
 
-    const inicio = document.getElementById("progInicio").value;
+    const thead =
+        document.getElementById("theadProg");
 
-    const fim = document.getElementById("progFim").value;
+    tbody.innerHTML = "";
+    thead.innerHTML = "";
 
-    if(!inicio || !fim){
+    const lista = dados.filter((linha,index)=>{
 
-        alert("Selecione o período.");
+        if(index === 0) return false;
 
-        return;
+        const A =
+            (linha[0] || "")
+            .trim()
+            .toUpperCase();
 
-    }
+        const cliente =
+            (linha[12] || "")
+            .trim()
+            .toUpperCase();
 
-    const dataInicio = parseInputData(inicio);
+        const K =
+            parseDataBR(linha[10]);
 
-    const dataFim = parseInputData(fim,true);
+        if(!K) return false;
 
-    let lista = APP.dados.filter(registro=>{
+        const dataInicio =
+            new Date(inicio);
 
-        if(!registro.dataAg){
+        const dataFim =
+            new Date(fim);
 
-            return false;
+        dataInicio.setHours(0,0,0,0);
+        dataFim.setHours(23,59,59,999);
 
-        }
-
-        if(!dataEntre(
-
-            registro.dataAg,
-
-            dataInicio,
-
-            dataFim
-
-        )){
-
-            return false;
-
-        }
+        /* ESTUFAGEM */
 
         if(tipo === "ESTUFAGEM"){
 
-            return CLIENTES_ESTUFAGEM.includes(
+            return (
 
-                registro.cliente
+                clientesEstufagem
+                .map(c => c.toUpperCase())
+                .includes(cliente)
+
+                &&
+
+                K >= dataInicio
+
+                &&
+
+                K <= dataFim
 
             );
 
         }
 
-        return registro.tipo === tipo;
+        /* AZ E RX */
+
+        return (
+
+            A === tipo
+
+            &&
+
+            K >= dataInicio
+
+            &&
+
+            K <= dataFim
+
+        );
 
     });
 
-    lista.sort((a,b)=>{
+    const colunas = [
 
-        return a.dataAg - b.dataAg;
-
-    });
-
-    renderTabelaProgramacao(lista);
-
-}
-
-
-
-/* ==========================================================
-   COLUNAS DA PROGRAMAÇÃO
-========================================================== */
-
-function obterColunasProgramacao(){
-
-    return[
-
-        {
-
-            nome:"TIPO",
-
-            campo:"tipo"
-
-        },
-
-        {
-
-            nome:"CLIENTE",
-
-            campo:"cliente"
-
-        },
-
-        {
-
-            nome:"CONTAINER",
-
-            campo:"container"
-
-        },
-
-        {
-
-            nome:"DATA AG.",
-
-            campo:"dataTexto"
-
-        },
-
-        {
-
-            nome:"JANELA",
-
-            campo:"janela"
-
-        },
-
-        {
-
-            nome:"BOOKING",
-
-            campo:"booking"
-
-        },
-
-        {
-
-            nome:"DDL",
-
-            campo:"ddlTexto"
-
-        }
+        { nome:"TIPO", coluna:0 },
+        { nome:"CLIENTE", coluna:12 },
+        { nome:"CONTAINER", coluna:9 },
+        { nome:"DATA AG.", coluna:10 },
+        { nome:"JANELA", coluna:11 },
+        { nome:"BOOKING", coluna:13 },
+        { nome:"DDL", coluna:18 }
 
     ];
 
+    colunas.forEach(c=>{
+
+        thead.innerHTML += `
+            <th>${c.nome}</th>
+        `;
+
+    });
+
+    lista.forEach(item=>{
+
+        let linha = "<tr>";
+
+        colunas.forEach(c=>{
+
+            linha += `
+                <td>${item[c.coluna] || ""}</td>
+            `;
+
+        });
+
+        linha += "</tr>";
+
+        tbody.innerHTML += linha;
+
+    });
+
 }
+/* =========================
+TABELA
+========================= */
 
+function renderTabela(lista,tipo){
 
+    const tbody =
+        document.getElementById("tbody");
 
-/* ==========================================================
-   RENDER UNIVERSAL
-========================================================== */
-
-function renderTabela(
-
-    thead,
-
-    tbody,
-
-    colunas,
-
-    lista
-
-){
-
-    thead.innerHTML = "";
+    const thead =
+        document.getElementById("thead");
 
     tbody.innerHTML = "";
+    thead.innerHTML = "";
 
     if(lista.length === 0){
 
-        tbody.innerHTML =
-
-        `
-
-        <tr>
-
-            <td colspan="${colunas.length}">
-
-                Nenhum resultado encontrado.
-
-            </td>
-
-        </tr>
-
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="30">
+                    Nenhum dado encontrado
+                </td>
+            </tr>
         `;
 
         return;
 
     }
 
-    let htmlHead = "";
+    let colunas = [];
 
-    let htmlBody = "";
+    /* =========================
+    DEVOLUÇÕES
+    ========================= */
 
-    colunas.forEach(coluna=>{
+    if(tipo === "DEVS"){
 
-        htmlHead += `
+        colunas = [
 
-            <th>
+            { nome:"DU-E / DI", coluna:6 },
+            { nome:"ISO", coluna:8 },
+            { nome:"CONTAINER", coluna:9 },
+            { nome:"DATA AG.", coluna:10 },
+            { nome:"JANELA", coluna:11 },
+            { nome:"CLIENTE", coluna:12 },
 
-                ${coluna.nome}
+            //{ nome:"BOOKING", coluna:13 },
+            //{ nome:"ARMADOR", coluna:14 },
+            //{ nome:"DDL", coluna:18 }
+        ];
 
-            </th>
+    }
 
+    /* =========================
+    PENDÊNCIAS
+    ========================= */
+
+    if(tipo === "PENDENCIAS"){
+
+        colunas = [
+
+            { nome:"STATUS", coluna:1 },
+            { nome:"CONTAINER", coluna:9 },
+            { nome:"CLIENTE", coluna:12 },
+            { nome:"DATA", coluna:10 },
+            { nome:"PENDÊNCIA", coluna:22 }
+
+        ];
+
+    }
+
+    /* =========================
+    DEADLINE
+    ========================= */
+
+    if(tipo === "DEADLINE"){
+
+        colunas = [
+
+            { nome:"STATUS", coluna:1 },
+            { nome:"CONTAINER", coluna:9 },
+            { nome:"CLIENTE", coluna:12 },
+            { nome:"DATA", coluna:10 },
+            { nome:"DDL", coluna:18 }
+
+        ];
+
+    }
+
+    colunas.forEach(campo=>{
+
+        thead.innerHTML += `
+            <th>${campo.nome}</th>
         `;
 
     });
 
-    lista.forEach(registro=>{
+    lista.forEach(item=>{
 
-        htmlBody += "<tr>";
+        let linha = "<tr>";
 
-        colunas.forEach(coluna=>{
+        colunas.forEach(campo=>{
 
-            htmlBody += `
-
-                <td>
-
-                    ${registro[coluna.campo] ?? ""}
-
-                </td>
-
+            linha += `
+                <td>${item[campo.coluna] || ""}</td>
             `;
 
         });
 
-        htmlBody += "</tr>";
+        linha += "</tr>";
+
+        tbody.innerHTML += linha;
 
     });
 
-    thead.innerHTML = htmlHead;
-
-    tbody.innerHTML = htmlBody;
-
 }
 
-
-
-/* ==========================================================
-   RENDER RELATÓRIOS
-========================================================== */
-
-function renderTabelaRelatorio(lista){
-
-    renderTabela(
-
-        DOM.thead,
-
-        DOM.tbody,
-
-        obterColunasRelatorio(),
-
-        lista
-
-    );
-
-}
-
-
-
-/* ==========================================================
-   RENDER PROGRAMAÇÃO
-========================================================== */
-
-function renderTabelaProgramacao(lista){
-
-    renderTabela(
-
-        DOM.theadProg,
-
-        DOM.tbodyProg,
-
-        obterColunasProgramacao(),
-
-        lista
-
-    );
-
-}
-
-/* ==========================================================
-   INICIALIZAÇÃO
-========================================================== */
-
-function iniciarPortal(){
-
-    debug(
-
-        "================================"
-
-    );
-
-    debug(
-
-        "Portal Operacional CDI"
-
-    );
-
-    debug(
-
-        "Versão:",
-
-        CONFIG.VERSAO
-
-    );
-
-    debug(
-
-        "================================"
-
-    );
-
-    carregarPlanilha();
-
-    mostrarInicio();
-
-}
-
-
-
-/* ==========================================================
-   EVENTOS
-========================================================== */
-
-document.addEventListener(
-
-    "DOMContentLoaded",
-
-    ()=>{
-
-        iniciarPortal();
-
-    }
-
-);
-
-
-
-/* ==========================================================
-   ATALHOS
-========================================================== */
-
-function atualizarPlanilha(){
-
-    APP.carregado = false;
-
-    APP.dados = [];
-
-    carregarPlanilha();
-
-}
-
-
-
-function totalRegistros(){
-
-    return APP.dados.length;
-
-}
-
-
-
-function obterRegistro(indice){
-
-    return APP.dados[indice];
-
-}
-
-
-
-/* ==========================================================
-   PESQUISA FUTURA
-========================================================== */
-
-function pesquisarContainer(numero){
-
-    numero = textoMaiusculo(numero);
-
-    return APP.dados.filter(registro=>{
-
-        return registro.container
-
-            .includes(numero);
-
-    });
-
-}
-
-
-
-function pesquisarCliente(cliente){
-
-    cliente = textoMaiusculo(cliente);
-
-    return APP.dados.filter(registro=>{
-
-        return registro.cliente
-
-            .includes(cliente);
-
-    });
-
-}
-
-
-
-/* ==========================================================
-   ORDENAÇÃO
-========================================================== */
-
-function ordenarPorData(lista){
-
-    return [...lista].sort(
-
-        (a,b)=>{
-
-            if(
-
-                !a.dataAg ||
-
-                !b.dataAg
-
-            ){
-
-                return 0;
-
-            }
-
-            return a.dataAg - b.dataAg;
-
-        }
-
-    );
-
-}
-
-
-
-/* ==========================================================
-   ESTATÍSTICAS
-========================================================== */
-
-function estatisticas(){
-
-    return{
-
-        registros:
-
-            APP.dados.length,
-
-        carregado:
-
-            APP.carregado,
-
-        ultimaAtualizacao:
-
-            APP.ultimaAtualizacao,
-
-        relatorioAtual:
-
-            APP.relatorioAtual
-
-    };
-
-}
-
-
-
-/* ==========================================================
-   DEBUG
-========================================================== */
-
-if(CONFIG.DEBUG){
-
-    window.APP = APP;
-
-    window.CONFIG = CONFIG;
-
-    window.DOM = DOM;
-
-}
-
-
-
-/* ==========================================================
-   EXPORTAÇÕES FUTURAS
-========================================================== */
-
-window.mostrarInicio = mostrarInicio;
-
-window.mostrarRelatorios = mostrarRelatorios;
-
-window.mostrarProgramacao = mostrarProgramacao;
-
-window.buscarProgramacao = buscarProgramacao;
-
-window.buscarRelatorio = buscarRelatorio;
-
-window.abrirRelatorio = abrirRelatorio;
-
-window.atualizarPlanilha = atualizarPlanilha;
-
-
-
-/* ==========================================================
-   FIM DO ARQUIVO
-========================================================== */
+/* =========================
+ABRE HOME AO INICIAR
+========================= */
+
+mostrarInicio();
