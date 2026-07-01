@@ -387,6 +387,14 @@ function carregarPlanilha(){
 
     `;
 
+   console.log("URL utilizada:", CONFIG.URL_PLANILHA);
+
+Papa.parse(CONFIG.URL_PLANILHA, {
+    download: true,
+    delimiter: "\t",
+    ...
+});
+
     Papa.parse(
 
         CONFIG.URL_PLANILHA,
