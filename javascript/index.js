@@ -182,81 +182,29 @@ function limparTabelaProgramacao(){
    MANIPULAÇÃO DE DATAS
 ========================================================== */
 
+/* =========================
+DATA BR
+========================= */
+
 function parseDataBR(dataStr){
 
-    if(!dataStr){
+    if(!dataStr) return null;
 
-        return null;
+    dataStr = dataStr.toString().trim();
 
-    }
+    const partes = dataStr.split(" ")[0].split("/");
 
-    dataStr = texto(dataStr);
+    if(partes.length !== 3) return null;
 
-    if(dataStr === ""){
-
-        return null;
-
-    }
-
-    const somenteData = dataStr.split(" ")[0];
-
-    const partes = somenteData.split("/");
-
-    if(partes.length !== 3){
-
-        return null;
-
-    }
-
-    let dia = parseInt(partes[0]);
-
-    let mes = parseInt(partes[1]);
-
-    let ano = parseInt(partes[2]);
-
-    if(isNaN(dia)) return null;
-
-    if(isNaN(mes)) return null;
-
-    if(isNaN(ano)) return null;
+    let dia = Number(partes[0]);
+    let mes = Number(partes[1]) - 1;
+    let ano = Number(partes[2]);
 
     if(ano < 100){
-
         ano += 2000;
-
     }
 
-    const data = new Date(
-
-        ano,
-
-        mes - 1,
-
-        dia,
-
-        12,
-
-        0,
-
-        0
-
-    );
-
-    if(
-
-        data.getDate() !== dia ||
-
-        data.getMonth() !== (mes - 1) ||
-
-        data.getFullYear() !== ano
-
-    ){
-
-        return null;
-
-    }
-
-    return data;
+    return new Date(ano, mes, dia);
 
 }
 
@@ -305,6 +253,21 @@ function parseInputData(valor,fim=false){
 
 }
 
+/* =========================
+CONVERTE DATA PARA NÚMERO
+========================= */
+
+function dataNumero(data){
+
+    if(!data) return 0;
+
+    return (
+        data.getFullYear() * 10000 +
+        (data.getMonth() + 1) * 100 +
+        data.getDate()
+    );
+
+}
 
 function dataEntre(data,inicio,fim){
 
@@ -603,38 +566,36 @@ function abrirRelatorio(tipo){
 }
 
 
-/* ==========================================================
-   VALIDAÇÃO DE PERÍODO
-========================================================== */
+/* =========================
+VALIDAR PERÍODO
+========================= */
 
-function validarPeriodo(data){
+function validarPeriodo(dataLinha){
 
-    const inicio = document.getElementById("inicioData").value;
+    const inicio =
+        document.getElementById("inicioData").value;
 
-    const fim = document.getElementById("fimData").value;
+    const fim =
+        document.getElementById("fimData").value;
 
-    if(!inicio || !fim){
-
+    if(!inicio || !fim || !dataLinha){
         return false;
-
     }
 
-    const dataInicio = parseInputData(inicio);
+    const dataInicio = new Date(inicio);
+    const dataFim = new Date(fim);
 
-    const dataFim = parseInputData(fim,true);
+    return (
 
-    return dataEntre(
+        dataNumero(dataLinha) >= dataNumero(dataInicio)
 
-        data,
+        &&
 
-        dataInicio,
-
-        dataFim
+        dataNumero(dataLinha) <= dataNumero(dataFim)
 
     );
 
 }
-
 
 /* ==========================================================
    RELATÓRIOS
@@ -972,9 +933,8 @@ function buscarProgramacao(){
 
     }
 
-    const dataInicio = parseInputData(inicio);
-
-    const dataFim = parseInputData(fim,true);
+        const dataInicio = new Date(inicio);
+        const dataFim = new Date(fim);
 
     let lista = APP.dados.filter(registro=>{
 
