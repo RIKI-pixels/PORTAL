@@ -204,7 +204,11 @@ function parseDataBR(dataStr){
         ano += 2000;
     }
 
-    return new Date(ano, mes, dia);
+    const data = new Date(ano, mes, dia);
+
+     data.setHours(12,0,0,0);
+
+     return data;
 
 }
 
@@ -217,7 +221,33 @@ function parseInputData(valor,fim=false){
 
     }
 
-    const data = new Date(valor);
+/* ==========================================================
+   CONVERTE INPUT DATE
+========================================================== */
+
+function parseInputDate(valor){
+
+    if(!valor){
+
+        return null;
+
+    }
+
+    const [ano, mes, dia] = valor
+        .split("-")
+        .map(Number);
+
+    return new Date(
+
+        ano,
+
+        mes - 1,
+
+        dia
+
+    );
+
+}    const data = new Date(valor);
 
     if(fim){
 
@@ -269,19 +299,27 @@ function dataNumero(data){
 
 }
 
+/* ==========================================================
+   VALIDAÇÃO DE PERÍODO
+========================================================== */
+
 function dataEntre(data,inicio,fim){
 
-    if(!data){
+    if(!data || !inicio || !fim){
 
         return false;
 
     }
 
+    const numeroData = dataNumero(data);
+    const numeroInicio = dataNumero(inicio);
+    const numeroFim = dataNumero(fim);
+
     return (
 
-        data >= inicio &&
+        numeroData >= numeroInicio &&
 
-        data <= fim
+        numeroData <= numeroFim
 
     );
 
