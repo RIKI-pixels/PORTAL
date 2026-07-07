@@ -39,11 +39,6 @@
             <div>Área Inicial</div>
         </div>
 
-        <div class="menu-item" id="relatoriosBtn" onclick="mostrarRelatorios()">
-            <div class="menu-icon">📄</div>
-            <div>Relatórios</div>
-        </div>
-
         <div class="menu-item" id="programacaoBtn" onclick="mostrarProgramacao()">
             <div class="menu-icon">🚛</div>
             <div>Programação</div>
@@ -73,68 +68,6 @@
             <p>
                 Salamaleikon TESTE V0.4   
             </p>
-
-        </div>
-
-        <!-- RELATORIOS -->
-
-        <div class="box" id="relatorios">
-
-            <h2>RELATÓRIOS</h2>
-
-            <div class="cards">
-
-                <div class="card" onclick="abrirRelatorio('DEVS')">
-                    <h3>Revisão Devoluções</h3>
-                    <p>Busca IMPO por período</p>
-                </div>
-
-                <div class="card" onclick="abrirRelatorio('PENDENCIAS')">
-                    <h3>Pendências</h3>
-                    <p>Exibe pendências da coluna W</p>
-                </div>
-
-                <div class="card" onclick="abrirRelatorio('DEADLINE')">
-                    <h3>Deadlines</h3>
-                    <p>Exibe deadlines próximos da coluna S</p>
-                </div>
-
-            </div>
-
-            <!-- FILTRO RELATÓRIOS -->
-
-            <div class="filters" id="filtrosRelatorio">
-
-                <input type="date" id="inicioData">
-                <input type="date" id="fimData">
-
-                <button onclick="buscarRelatorio()">
-                    Buscar
-                </button>
-
-            </div>
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-                        <tr id="thead"></tr>
-                    </thead>
-
-                    <tbody id="tbody">
-
-                        <tr>
-                            <td class="loading">
-                                Carregando planilha...
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
 
         </div>
 
