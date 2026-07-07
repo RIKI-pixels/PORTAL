@@ -210,15 +210,6 @@ function parseDataBR(dataStr){
 
 }
 
-
-function parseInputData(valor,fim=false){
-
-    if(!valor){
-
-        return null;
-
-    }
-
 /* ==========================================================
    CONVERTE INPUT DATE
 ========================================================== */
@@ -243,7 +234,6 @@ function parseInputDate(valor){
 
     return data;
 
-}
 }
 
 /* =========================
@@ -337,7 +327,7 @@ function criarRegistro(linha){
 
 function carregarPlanilha(){
 
-    DOM.tbody.innerHTML= `
+    DOM.tbody.innerHTML = `
 
         <tr>
 
