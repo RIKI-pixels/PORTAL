@@ -28,8 +28,6 @@ const APP = {
 
     dados: [],
 
-    relatorioAtual: "",
-
     carregado: false,
 
     ultimaAtualizacao: null
@@ -228,59 +226,24 @@ function parseInputData(valor,fim=false){
 function parseInputDate(valor){
 
     if(!valor){
-
         return null;
-
     }
 
     const [ano, mes, dia] = valor
         .split("-")
         .map(Number);
 
-    return new Date(
-
+    const data = new Date(
         ano,
-
         mes - 1,
-
         dia
-
     );
 
-}    const data = new Date(valor);
-
-    if(fim){
-
-        data.setHours(
-
-            23,
-
-            59,
-
-            59,
-
-            999
-
-        );
-
-    }else{
-
-        data.setHours(
-
-            0,
-
-            0,
-
-            0,
-
-            0
-
-        );
-
-    }
+    data.setHours(12,0,0,0);
 
     return data;
 
+}
 }
 
 /* =========================
@@ -524,33 +487,6 @@ function mostrarInicio(){
         .style.display = "flex";
 
     document
-        .getElementById("relatorios")
-        .style.display = "none";
-
-    document
-        .getElementById("programacao")
-        .style.display = "none";
-
-}
-
-
-function mostrarRelatorios(){
-
-    limparMenu();
-
-    document
-        .getElementById("relatoriosBtn")
-        .classList.add("active");
-
-    document
-        .getElementById("inicio")
-        .style.display = "none";
-
-    document
-        .getElementById("relatorios")
-        .style.display = "block";
-
-    document
         .getElementById("programacao")
         .style.display = "none";
 
@@ -570,378 +506,8 @@ function mostrarProgramacao(){
         .style.display = "none";
 
     document
-        .getElementById("relatorios")
-        .style.display = "none";
-
-    document
         .getElementById("programacao")
         .style.display = "block";
-
-}
-
-/* ==========================================================
-   ABRIR RELATÓRIO
-========================================================== */
-
-function abrirRelatorio(tipo){
-
-    APP.relatorioAtual = tipo;
-
-    const filtros = document.getElementById("filtrosRelatorio");
-
-    if(tipo === "DEVS"){
-
-        filtros.classList.add("active");
-
-    }else{
-
-        filtros.classList.remove("active");
-
-        buscarRelatorio();
-
-    }
-
-}
-
-
-/* =========================
-VALIDAR PERÍODO
-========================= */
-
-function validarPeriodo(dataLinha){
-
-    const inicio =
-        document.getElementById("inicioData").value;
-
-    const fim =
-        document.getElementById("fimData").value;
-
-    if(!inicio || !fim || !dataLinha){
-        return false;
-    }
-
-    const dataInicio = new Date(inicio);
-    const dataFim = new Date(fim);
-
-    return (
-
-        dataNumero(dataLinha) >= dataNumero(dataInicio)
-
-        &&
-
-        dataNumero(dataLinha) <= dataNumero(dataFim)
-
-    );
-
-}
-
-/* ==========================================================
-   RELATÓRIOS
-========================================================== */
-
-function buscarRelatorio(){
-
-    if(!verificarCarregamento()){
-
-        return;
-
-    }
-
-    let lista = [];
-
-    switch(APP.relatorioAtual){
-
-        /* ==========================
-           DEVOLUÇÕES
-        ========================== */
-
-        case "DEVS":
-
-            lista = APP.dados.filter(registro=>{
-
-                if(!registro.dataAg){
-
-                    return false;
-
-                }
-
-                return(
-
-                    registro.modal === "IMPO"
-
-                    &&
-
-                    validarPeriodo(registro.dataAg)
-
-                );
-
-            });
-
-        break;
-
-
-
-        /* ==========================
-           PENDÊNCIAS
-        ========================== */
-
-        case "PENDENCIAS":
-
-            lista = APP.dados.filter(registro=>{
-
-                return(
-
-                    registro.pendencia === "PENDÊNCIAS"
-
-                );
-
-            });
-
-        break;
-
-
-
-        /* ==========================
-           DEADLINE
-        ========================== */
-
-        case "DEADLINE":
-
-            lista = APP.dados.filter(registro=>{
-
-                if(
-
-                    registro.status !== "AGENDAR"
-
-                ){
-
-                    return false;
-
-                }
-
-                if(!registro.ddl){
-
-                    return false;
-
-                }
-
-                const hoje = new Date();
-
-                hoje.setHours(
-
-                    0,
-
-                    0,
-
-                    0,
-
-                    0
-
-                );
-
-                registro.ddl.setHours(
-
-                    0,
-
-                    0,
-
-                    0,
-
-                    0
-
-                );
-
-                const dias =
-
-                    (registro.ddl - hoje)
-
-                    /
-
-                    86400000;
-
-                return(
-
-                    dias >= 0
-
-                    &&
-
-                    dias <= 2
-
-                );
-
-            });
-
-        break;
-
-    }
-
-    renderTabelaRelatorio(lista);
-
-}
-
-
-
-/* ==========================================================
-   COLUNAS DOS RELATÓRIOS
-========================================================== */
-
-function obterColunasRelatorio(){
-
-    switch(APP.relatorioAtual){
-
-        case "DEVS":
-
-            return [
-
-                {
-
-                    nome:"DU-E / DI",
-
-                    campo:"duDi"
-
-                },
-
-                {
-
-                    nome:"ISO",
-
-                    campo:"iso"
-
-                },
-
-                {
-
-                    nome:"CONTAINER",
-
-                    campo:"container"
-
-                },
-
-                {
-
-                    nome:"DATA AG.",
-
-                    campo:"dataTexto"
-
-                },
-
-                {
-
-                    nome:"JANELA",
-
-                    campo:"janela"
-
-                },
-
-                {
-
-                    nome:"CLIENTE",
-
-                    campo:"cliente"
-
-                }
-
-            ];
-
-
-
-        case "PENDENCIAS":
-
-            return [
-
-                {
-
-                    nome:"STATUS",
-
-                    campo:"status"
-
-                },
-
-                {
-
-                    nome:"CONTAINER",
-
-                    campo:"container"
-
-                },
-
-                {
-
-                    nome:"CLIENTE",
-
-                    campo:"cliente"
-
-                },
-
-                {
-
-                    nome:"DATA",
-
-                    campo:"dataTexto"
-
-                },
-
-                {
-
-                    nome:"PENDÊNCIA",
-
-                    campo:"pendencia"
-
-                }
-
-            ];
-
-
-
-        case "DEADLINE":
-
-            return [
-
-                {
-
-                    nome:"STATUS",
-
-                    campo:"status"
-
-                },
-
-                {
-
-                    nome:"CONTAINER",
-
-                    campo:"container"
-
-                },
-
-                {
-
-                    nome:"CLIENTE",
-
-                    campo:"cliente"
-
-                },
-
-                {
-
-                    nome:"DATA",
-
-                    campo:"dataTexto"
-
-                },
-
-                {
-
-                    nome:"DDL",
-
-                    campo:"ddlTexto"
-
-                }
-
-            ];
-
-    }
-
-    return [];
 
 }
 
@@ -1181,29 +747,6 @@ function renderTabela(
 }
 
 
-
-/* ==========================================================
-   RENDER RELATÓRIOS
-========================================================== */
-
-function renderTabelaRelatorio(lista){
-
-    renderTabela(
-
-        DOM.thead,
-
-        DOM.tbody,
-
-        obterColunasRelatorio(),
-
-        lista
-
-    );
-
-}
-
-
-
 /* ==========================================================
    RENDER PROGRAMAÇÃO
 ========================================================== */
@@ -1402,9 +945,6 @@ function estatisticas(){
 
             APP.ultimaAtualizacao,
 
-        relatorioAtual:
-
-            APP.relatorioAtual
 
     };
 
@@ -1434,19 +974,11 @@ if(CONFIG.DEBUG){
 
 window.mostrarInicio = mostrarInicio;
 
-window.mostrarRelatorios = mostrarRelatorios;
-
 window.mostrarProgramacao = mostrarProgramacao;
 
 window.buscarProgramacao = buscarProgramacao;
 
-window.buscarRelatorio = buscarRelatorio;
-
-window.abrirRelatorio = abrirRelatorio;
-
 window.atualizarPlanilha = atualizarPlanilha;
-
-
 
 /* ==========================================================
    FIM DO ARQUIVO
