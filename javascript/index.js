@@ -337,7 +337,7 @@ function criarRegistro(linha){
 
 function carregarPlanilha(){
 
-    DOM.tbody.innerHTML = `
+    DOM.tbody.innerHTML= `
 
         <tr>
 
