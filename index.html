@@ -71,41 +71,54 @@
 
         </div>
 
-        <!-- PROGRAMAÇÃO -->
+<!-- HOME -->
 
-        <div class="box" id="programacao">
+<div class="box home-screen" id="inicio">
 
-            <h2>PROGRAMAÇÃO</h2>
+    <h1>PORTAL CDI</h1>
 
-            <div class="filters active">
+    <p class="versao">
+        Versão 1.0 BETA TEST
+    </p>
 
-        <select id="tipoProgramacao">
-     <option value="AZ">AZ</option>
-     <option value="RX">RX</option>
-     <option value="ESTUFAGEM">ESTUFAGEM</option>
-        </select>
+    <div class="dashboard">
 
-                <input type="date" id="progInicio">
-                <input type="date" id="progFim">
+        <div class="status-card">
 
-                <button onclick="buscarProgramacao()">
-                    Buscar
-                </button>
+            <h3>🚛 TSV TRANSPORTE</h3>
 
+            <div class="status-item">
+                <span>Última atualização</span>
+                <strong id="dataTransporte">
+                    00/00/0000 00:00
+                </strong>
             </div>
 
-            <div class="table-container">
+            <div class="status-item">
+                <span>Registros carregados</span>
+                <strong id="linhasTransporte">
+                    0000
+                </strong>
+            </div>
 
-                <table>
+        </div>
 
-                    <thead>
-                        <tr id="theadProg"></tr>
-                    </thead>
+        <div class="status-card">
 
-                    <tbody id="tbodyProg"></tbody>
+            <h3>📦 TSV ESTOQUE</h3>
 
-                </table>
+            <div class="status-item">
+                <span>Última atualização</span>
+                <strong id="dataEstoque">
+                    00/00/0000 00:00
+                </strong>
+            </div>
 
+            <div class="status-item">
+                <span>Registros carregados</span>
+                <strong id="linhasEstoque">
+                    0000
+                </strong>
             </div>
 
         </div>
@@ -113,7 +126,6 @@
     </div>
 
 </div>
-
  <script src="/PORTAL/javascript/index.js"></script>
 
 </body>
