@@ -325,99 +325,51 @@ function criarRegistro(linha){
    CARREGAMENTO DA PLANILHA
 ========================================================== */
 
-function carregarPlanilha(){
+function carregarPlanilha() {
 
-    DOM.tbody.innerHTML = `
+    console.log("URL utilizada:", CONFIG.URL_PLANILHA);
 
-        <tr>
+    Papa.parse(CONFIG.URL_PLANILHA, {
 
-            <td class="loading">
+        download: true,
+        delimiter: "\t",
+        skipEmptyLines: true,
 
-                Carregando planilha...
+        complete(resultado) {
 
-            </td>
+            APP.dados = resultado.data
+                .slice(1)
+                .map(criarRegistro);
 
-        </tr>
+            APP.carregado = true;
+            APP.ultimaAtualizacao = new Date();
 
-    `;
+            debug(
+                "Planilha carregada.",
+                APP.dados.length,
+                "registros."
+            );
 
-   console.log("URL utilizada:", CONFIG.URL_PLANILHA);
+            document.getElementById("linhasTransporte").textContent =
+                APP.dados.length.toLocaleString("pt-BR");
 
-    Papa.parse(
+            document.getElementById("dataTransporte").textContent =
+                APP.ultimaAtualizacao.toLocaleString("pt-BR");
 
-        CONFIG.URL_PLANILHA,
+        },
 
-        {
+        error(erro) {
 
-            download:true,
+            console.error(erro);
 
-            delimiter:"\t",
+            document.getElementById("linhasTransporte").textContent = "--";
 
-            skipEmptyLines:true,
-
-            complete(resultado){
-
-                APP.dados = resultado.data
-                    .slice(1)
-                    .map(criarRegistro);
-
-                APP.carregado = true;
-
-                APP.ultimaAtualizacao = new Date();
-
-                debug(
-
-                    "Planilha carregada.",
-
-                    APP.dados.length,
-
-                    "registros."
-
-                );
-
-                DOM.tbody.innerHTML = `
-
-                    <tr>
-
-                        <td class="loading">
-
-                            Planilha carregada com sucesso.
-
-                            <br><br>
-
-                            ${APP.dados.length} registros encontrados.
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            },
-
-            error(erro){
-
-                console.error(erro);
-
-                DOM.tbody.innerHTML = `
-
-                    <tr>
-
-                        <td class="loading">
-
-                            Erro ao carregar a planilha.
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
+            document.getElementById("dataTransporte").textContent =
+                "Erro ao carregar";
 
         }
 
-    );
+    });
 
 }
 
