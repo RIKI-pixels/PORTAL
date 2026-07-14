@@ -10,8 +10,14 @@
 
 const CONFIG = {
 
+     URL_ESTOQUE:
+     "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwLw-C7k481tht-EBvb726lS51kJw2Uf6DtbXHXjqX8iVR-ergQXu2WRWU0Zi45A/pub?gid=1093636519&single=true&output=tsv",
+
+     DEBUG:false,
+     VERSAO:"2.0.0"
+
     URL_PLANILHA:
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=1612124623&single=true&output=tsv",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=484487288&single=true&output=tsv",
 
     DEBUG: false,
 
@@ -24,13 +30,16 @@ const CONFIG = {
    ESTADO DA APLICAÇÃO
 ========================================================== */
 
-const APP = {
+const APP={
 
-    dados: [],
+    dados:[],
+    dadosEstoque:[],
 
-    carregado: false,
+    carregado:false,
+    carregadoEstoque:false,
 
-    ultimaAtualizacao: null
+    ultimaAtualizacao:null,
+    ultimaAtualizacaoEstoque:null
 
 };
 
@@ -326,6 +335,20 @@ function criarRegistro(linha){
 
 }
 
+function criarRegistroEstoque(linha){
+
+    return{
+
+        container: textoMaiusculo(linha[0]),
+        iso: textoMaiusculo(linha[1]),
+        estado: textoMaiusculo(linha[2]),
+        cliente: textoMaiusculo(linha[3]),
+        booking: textoMaiusculo(linha[4])
+
+    };
+
+}
+
 
 /* ==========================================================
    CARREGAMENTO DA PLANILHA
@@ -376,6 +399,50 @@ function carregarPlanilha() {
         }
 
     });
+
+}
+
+function carregarEstoque(){
+
+    Papa.parse(
+
+        CONFIG.URL_ESTOQUE,
+
+        {
+
+            download:true,
+            delimiter:"\t",
+            skipEmptyLines:true,
+
+            complete(resultado){
+
+                APP.dadosEstoque = resultado.data
+                    .slice(1)
+                    .map(criarRegistroEstoque);
+
+                APP.carregadoEstoque = true;
+
+                APP.ultimaAtualizacaoEstoque = new Date();
+
+                document.getElementById("linhasEstoque").textContent =
+                    APP.dadosEstoque.length.toLocaleString("pt-BR");
+
+                document.getElementById("dataEstoque").textContent =
+                    APP.ultimaAtualizacaoEstoque.toLocaleString("pt-BR");
+
+            },
+
+            error(){
+
+                document.getElementById("linhasEstoque").textContent="--";
+
+                document.getElementById("dataEstoque").textContent="Erro";
+
+            }
+
+        }
+
+    );
 
 }
 
@@ -465,7 +532,52 @@ function mostrarEstoque(){
 
 function buscarEstoque(){
 
-    console.log("Busca de estoque em desenvolvimento.");
+    if(!APP.carregadoEstoque){
+
+        alert("O estoque ainda está carregando.");
+
+        return;
+
+    }
+
+    const tipo =
+        document.getElementById("tipoBuscaEstoque").value;
+
+    const pesquisa =
+        textoMaiusculo(
+            document.getElementById("valorBuscaEstoque").value
+        );
+
+    let lista = APP.dadosEstoque;
+
+    if(pesquisa){
+
+        lista = lista.filter(registro=>{
+
+            switch(tipo){
+
+                case "ISO":
+                    return registro.iso.includes(pesquisa);
+
+                case "CONTAINER":
+                    return registro.container.includes(pesquisa);
+
+                case "CLIENTE":
+                    return registro.cliente.includes(pesquisa);
+
+                case "BOOKING":
+                    return registro.booking.includes(pesquisa);
+
+                default:
+                    return true;
+
+            }
+
+        });
+
+    }
+
+    renderTabelaEstoque(lista);
 
 }
 
@@ -614,6 +726,23 @@ function obterColunasProgramacao(){
 
 }
 
+function obterColunasEstoque(){
+
+    return[
+
+        {nome:"CONTAINER",campo:"container"},
+       
+        {nome:"ISO",campo:"iso"},
+       
+        {nome:"ESTADO",campo:"estado"},
+       
+        {nome:"CLIENTE",campo:"cliente"},
+       
+        {nome:"BOOKING",campo:"booking"}
+
+    ];
+
+}
 
 
 /* ==========================================================
@@ -726,6 +855,23 @@ function renderTabelaProgramacao(lista){
 }
 
 /* ==========================================================
+   RENDER ESTOQUE
+========================================================== */
+
+function renderTabelaEstoque(lista){
+
+    renderTabela(
+
+        DOM.theadEstoque,
+        DOM.tbodyEstoque,
+        obterColunasEstoque(),
+        lista
+
+    );
+
+}
+
+/* ==========================================================
    INICIALIZAÇÃO
 ========================================================== */
 
@@ -757,9 +903,11 @@ function iniciarPortal(){
 
     );
 
-    carregarPlanilha();
-
-    mostrarInicio();
+   carregarPlanilha();
+   
+    carregarEstoque();
+   
+     mostrarInicio();
 
 }
 
