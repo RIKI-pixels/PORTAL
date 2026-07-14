@@ -31,7 +31,7 @@
             </div>
 
         </div>
-
+        
         <div class="menu">
 
             <div class="menu-item active" id="inicioBtn" onclick="mostrarInicio()">
@@ -160,6 +160,72 @@
         </div>
 
     </div>
+
+    <!-- ESTOQUE -->
+
+<div class="box" id="estoque">
+
+    <h2>ESTOQUE</h2>
+
+    <div class="filters active">
+
+        <select id="tipoBuscaEstoque">
+
+            <option value="ISO">ISO</option>
+            <option value="CONTAINER">CONTAINER</option>
+            <option value="CLIENTE">CLIENTE</option>
+            <option value="BOOKING">BOOKING</option>
+
+        </select>
+
+        <input
+            type="text"
+            id="valorBuscaEstoque"
+            placeholder="Digite sua busca">
+
+        <button onclick="buscarEstoque()">
+            Buscar
+        </button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr id="theadEstoque">
+
+                    <th>CONTAINER</th>
+                    <th>ISO</th>
+                    <th>ESTADO</th>
+                    <th>CLIENTE</th>
+                    <th>BOOKING</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tbodyEstoque">
+
+                <tr>
+
+                    <td colspan="5" class="loading">
+
+                        Nenhuma consulta realizada.
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 
     <script src="javascript/index.js"></script>
 
