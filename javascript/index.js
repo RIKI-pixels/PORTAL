@@ -10,14 +10,11 @@
 
 const CONFIG = {
 
-     URL_ESTOQUE:
-     "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwLw-C7k481tht-EBvb726lS51kJw2Uf6DtbXHXjqX8iVR-ergQXu2WRWU0Zi45A/pub?gid=1093636519&single=true&output=tsv",
-
-     DEBUG:false,
-     VERSAO:"2.0.0"
-
     URL_PLANILHA:
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=484487288&single=true&output=tsv",
+
+    URL_ESTOQUE:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwLw-C7k481tht-EBvb726lS51kJw2Uf6DtbXHXjqX8iVR-ergQXu2WRWU0Zi45A/pub?gid=1093636519&single=true&output=tsv",
 
     DEBUG: false,
 
