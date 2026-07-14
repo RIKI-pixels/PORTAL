@@ -103,13 +103,19 @@ const COL = {
 
 const DOM = {
 
-    tbody: document.getElementById("tbody"),
+    inicio: document.getElementById("inicio"),
+    programacao: document.getElementById("programacao"),
+    estoque: document.getElementById("estoque"),
 
-    thead: document.getElementById("thead"),
+    inicioBtn: document.getElementById("inicioBtn"),
+    programacaoBtn: document.getElementById("programacaoBtn"),
+    estoqueBtn: document.getElementById("estoqueBtn"),
 
+    theadProg: document.getElementById("theadProg"),
     tbodyProg: document.getElementById("tbodyProg"),
 
-    theadProg: document.getElementById("theadProg")
+    theadEstoque: document.getElementById("theadEstoque"),
+    tbodyEstoque: document.getElementById("tbodyEstoque")
 
 };
 
@@ -418,38 +424,48 @@ function limparMenu(){
 
 function mostrarInicio(){
 
-    limparMenu();
+    DOM.inicio.style.display = "flex";
+    DOM.programacao.style.display = "none";
+    DOM.estoque.style.display = "none";
 
-    document
-        .getElementById("inicioBtn")
-        .classList.add("active");
-
-    document
-        .getElementById("inicio")
-        .style.display = "flex";
-
-    document
-        .getElementById("programacao")
-        .style.display = "none";
+    DOM.inicioBtn.classList.add("active");
+    DOM.programacaoBtn.classList.remove("active");
+    DOM.estoqueBtn.classList.remove("active");
 
 }
 
 
 function mostrarProgramacao(){
 
-    limparMenu();
+    DOM.inicio.style.display = "none";
+    DOM.programacao.style.display = "block";
+    DOM.estoque.style.display = "none";
 
-    document
-        .getElementById("programacaoBtn")
-        .classList.add("active");
+    DOM.inicioBtn.classList.remove("active");
+    DOM.programacaoBtn.classList.add("active");
+    DOM.estoqueBtn.classList.remove("active");
 
-    document
-        .getElementById("inicio")
-        .style.display = "none";
+}
 
-    document
-        .getElementById("programacao")
-        .style.display = "block";
+function mostrarEstoque(){
+
+    DOM.inicio.style.display = "none";
+    DOM.programacao.style.display = "none";
+    DOM.estoque.style.display = "block";
+
+    DOM.inicioBtn.classList.remove("active");
+    DOM.programacaoBtn.classList.remove("active");
+    DOM.estoqueBtn.classList.add("active");
+
+}
+
+/* ==========================================================
+   ESTOQUE
+========================================================== */
+
+function buscarEstoque(){
+
+    console.log("Busca de estoque em desenvolvimento.");
 
 }
 
@@ -921,6 +937,10 @@ window.mostrarProgramacao = mostrarProgramacao;
 window.buscarProgramacao = buscarProgramacao;
 
 window.atualizarPlanilha = atualizarPlanilha;
+
+window.mostrarEstoque = mostrarEstoque;
+
+window.buscarEstoque = buscarEstoque;
 
 /* ==========================================================
    FIM DO ARQUIVO
