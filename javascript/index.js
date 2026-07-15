@@ -41,6 +41,9 @@ const APP = {
     dados: [],
     dadosEstoque: [],
 
+    listaEstoqueAtual: [],
+    listaProgramacaoAtual: [],
+
     carregado: false,
     carregadoEstoque: false,
 
@@ -48,7 +51,10 @@ const APP = {
     ultimaAtualizacaoEstoque: null,
 
     paginaEstoque: 1,
-    limiteEstoque: 25
+    limiteEstoque: 25,
+
+    paginaProgramacao: 1,
+    limiteProgramacao: 25
 
 };
 
@@ -635,11 +641,14 @@ function buscarProgramacao(){
 
     }
 
-    const tipo = document.getElementById("tipoProgramacao").value;
+    const tipo =
+        document.getElementById("tipoProgramacao").value;
 
-    const inicio = document.getElementById("progInicio").value;
+    const inicio =
+        document.getElementById("progInicio").value;
 
-    const fim = document.getElementById("progFim").value;
+    const fim =
+        document.getElementById("progFim").value;
 
     if(!inicio || !fim){
 
@@ -649,8 +658,8 @@ function buscarProgramacao(){
 
     }
 
-        const dataInicio = new Date(inicio);
-        const dataFim = new Date(fim);
+    const dataInicio = new Date(inicio);
+    const dataFim = new Date(fim);
 
     let lista = APP.dados.filter(registro=>{
 
@@ -661,13 +670,9 @@ function buscarProgramacao(){
         }
 
         if(!dataEntre(
-
             registro.dataAg,
-
             dataInicio,
-
             dataFim
-
         )){
 
             return false;
@@ -677,9 +682,7 @@ function buscarProgramacao(){
         if(tipo === "ESTUFAGEM"){
 
             return CLIENTES_ESTUFAGEM.includes(
-
                 registro.cliente
-
             );
 
         }
@@ -693,6 +696,10 @@ function buscarProgramacao(){
         return a.dataAg - b.dataAg;
 
     });
+
+    APP.listaProgramacaoAtual = lista;
+
+    APP.paginaProgramacao = 1;
 
     renderTabelaProgramacao(lista);
 
@@ -920,15 +927,24 @@ function renderTabela(
 
 function renderTabelaProgramacao(lista){
 
+    document.getElementById("totalProgramacao").textContent =
+        lista.length;
+
+    const inicio =
+        (APP.paginaProgramacao - 1) * APP.limiteProgramacao;
+
+    const fim =
+        inicio + APP.limiteProgramacao;
+
+    const pagina =
+        lista.slice(inicio, fim);
+
     renderTabela(
 
         DOM.theadProg,
-
         DOM.tbodyProg,
-
         obterColunasProgramacao(),
-
-        lista
+        pagina
 
     );
 
