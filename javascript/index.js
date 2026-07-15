@@ -8,13 +8,23 @@
    CONFIGURAÇÕES
 ========================================================== */
 
+const URLS_PADRAO = {
+
+    transporte:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=484487288&single=true&output=tsv",
+
+    estoque:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwLw-C7k481tht-EBvb726lS51kJw2Uf6DtbXHXjqX8iVR-ergQXu2WRWU0Zi45A/pub?gid=1093636519&single=true&output=tsv"
+
+};
+
 const CONFIG = {
 
     URL_PLANILHA:
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTo2yDYJIk7j-FOFM_02DgQyXXrH6TXbjlR5T_RvqyoeEpKjaIOc4xJRekjmD24MA/pub?gid=484487288&single=true&output=tsv",
+        localStorage.getItem("tsvTransporte") || URLS_PADRAO.transporte,
 
     URL_ESTOQUE:
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwLw-C7k481tht-EBvb726lS51kJw2Uf6DtbXHXjqX8iVR-ergQXu2WRWU0Zi45A/pub?gid=1093636519&single=true&output=tsv",
+        localStorage.getItem("tsvEstoque") || URLS_PADRAO.estoque,
 
     DEBUG: false,
 
@@ -653,6 +663,46 @@ function buscarProgramacao(){
 }
 
 
+/* ==========================================================
+   ADM
+========================================================== */
+
+function abrirDEV(){
+
+    mostrarTela("dev");
+
+    document.getElementById("urlTransporte").value =
+        CONFIG.URL_PLANILHA;
+
+    document.getElementById("urlEstoque").value =
+        CONFIG.URL_ESTOQUE;
+
+}
+
+function salvarTSV(){
+
+    localStorage.setItem(
+        "tsvTransporte",
+        document.getElementById("urlTransporte").value
+    );
+
+    localStorage.setItem(
+        "tsvEstoque",
+        document.getElementById("urlEstoque").value
+    );
+
+    location.reload();
+
+}
+
+function restaurarTSV(){
+
+    localStorage.removeItem("tsvTransporte");
+    localStorage.removeItem("tsvEstoque");
+
+    location.reload();
+
+}
 
 /* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
