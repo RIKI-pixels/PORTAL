@@ -206,8 +206,9 @@ HOME
 TELAS
 ========================= */
 
-#relatorios,
-#programacao{
+#programacao,
+#estoque,
+#dev{
     display:none;
 }
 
@@ -217,6 +218,12 @@ h2{
     margin-bottom:25px;
 }
 
+#dev label{
+    display:block;
+    font-weight:600;
+    color:#0B4EA2;
+    margin:15px 0 8px;
+}
 /* =========================
 CARDS
 ========================= */
