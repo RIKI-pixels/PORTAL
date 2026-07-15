@@ -532,6 +532,22 @@ function mostrarEstoque(){
 
 }
 
+function abrirDEV(){
+
+    DOM.inicio.style.display = "none";
+    DOM.programacao.style.display = "none";
+    DOM.estoque.style.display = "none";
+    DOM.dev.style.display = "block";
+
+    DOM.inicioBtn.classList.remove("active");
+    DOM.programacaoBtn.classList.remove("active");
+    DOM.estoqueBtn.classList.remove("active");
+
+    DOM.urlTransporte.value = CONFIG.URL_PLANILHA;
+    DOM.urlEstoque.value = CONFIG.URL_ESTOQUE;
+
+}
+
 /* ==========================================================
    ESTOQUE
 ========================================================== */
@@ -666,18 +682,6 @@ function buscarProgramacao(){
 /* ==========================================================
    ADM
 ========================================================== */
-
-function abrirDEV(){
-
-    mostrarTela("dev");
-
-    document.getElementById("urlTransporte").value =
-        CONFIG.URL_PLANILHA;
-
-    document.getElementById("urlEstoque").value =
-        CONFIG.URL_ESTOQUE;
-
-}
 
 function salvarTSV(){
 
