@@ -54,28 +54,36 @@ const APP={
    CLIENTES ESTUFAGEM
 ========================================================== */
 
-const CLIENTES_ESTUFAGEM = [
+const CLIENTES_PADRAO = [
 
     "MARINI",
-
     "RANDA",
-
     "METISA",
-
     "COMPENSADOS NM",
-
     "EURO",
-
     "EAGLE",
-
     "THOMASI",
-
     "AFFONSO DITZEL",
-
-    "MULTIPINE"
+    "MULTIPINE",
+    "COPERAGUAS"
 
 ];
 
+const CLIENTES_ESTUFAGEM =
+
+    localStorage.getItem("clientesEstufagem")
+
+    ?
+
+    localStorage
+        .getItem("clientesEstufagem")
+        .split("\n")
+        .map(c=>c.trim().toUpperCase())
+        .filter(c=>c)
+
+    :
+
+    CLIENTES_PADRAO;
 
 /* ==========================================================
    COLUNAS DA PLANILHA
@@ -552,7 +560,9 @@ function abrirDEV(){
 
     document.getElementById("urlEstoque").value =
         CONFIG.URL_ESTOQUE;
-
+   
+    document.getElementById("clientesEstufagem").value =
+     CLIENTES_ESTUFAGEM.join("\n");
 }
 
 /* ==========================================================
@@ -702,6 +712,16 @@ function salvarTSV(){
         document.getElementById("urlEstoque").value
     );
 
+   localStorage.setItem(
+
+    "clientesEstufagem",
+
+    document
+        .getElementById("clientesEstufagem")
+        .value
+
+    );
+
     location.reload();
 
 }
@@ -710,7 +730,7 @@ function restaurarTSV(){
 
     localStorage.removeItem("tsvTransporte");
     localStorage.removeItem("tsvEstoque");
-
+    localStorage.removeItem("clientesEstufagem");
     location.reload();
 
 }
