@@ -121,11 +121,12 @@ const DOM = {
     inicio: document.getElementById("inicio"),
     programacao: document.getElementById("programacao"),
     estoque: document.getElementById("estoque"),
+    dev: document.getElementById("dev"),
 
     inicioBtn: document.getElementById("inicioBtn"),
     programacaoBtn: document.getElementById("programacaoBtn"),
     estoqueBtn: document.getElementById("estoqueBtn"),
-
+   
     theadProg: document.getElementById("theadProg"),
     tbodyProg: document.getElementById("tbodyProg"),
 
@@ -500,6 +501,7 @@ function mostrarInicio(){
     DOM.inicio.style.display = "flex";
     DOM.programacao.style.display = "none";
     DOM.estoque.style.display = "none";
+    DOM.dev.style.display = "none";
 
     DOM.inicioBtn.classList.add("active");
     DOM.programacaoBtn.classList.remove("active");
@@ -509,7 +511,8 @@ function mostrarInicio(){
 
 
 function mostrarProgramacao(){
-
+   
+    DOM.dev.style.display = "none";
     DOM.inicio.style.display = "none";
     DOM.programacao.style.display = "block";
     DOM.estoque.style.display = "none";
@@ -521,7 +524,8 @@ function mostrarProgramacao(){
 }
 
 function mostrarEstoque(){
-
+   
+    DOM.dev.style.display = "none";
     DOM.inicio.style.display = "none";
     DOM.programacao.style.display = "none";
     DOM.estoque.style.display = "block";
@@ -543,8 +547,11 @@ function abrirDEV(){
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.remove("active");
 
-    DOM.urlTransporte.value = CONFIG.URL_PLANILHA;
-    DOM.urlEstoque.value = CONFIG.URL_ESTOQUE;
+    document.getElementById("urlTransporte").value =
+        CONFIG.URL_PLANILHA;
+
+    document.getElementById("urlEstoque").value =
+        CONFIG.URL_ESTOQUE;
 
 }
 
@@ -1129,16 +1136,17 @@ if(CONFIG.DEBUG){
 ========================================================== */
 
 window.mostrarInicio = mostrarInicio;
-
 window.mostrarProgramacao = mostrarProgramacao;
-
 window.buscarProgramacao = buscarProgramacao;
 
-window.atualizarPlanilha = atualizarPlanilha;
-
 window.mostrarEstoque = mostrarEstoque;
-
 window.buscarEstoque = buscarEstoque;
+
+window.abrirDEV = abrirDEV;
+window.salvarTSV = salvarTSV;
+window.restaurarTSV = restaurarTSV;
+
+window.atualizarPlanilha = atualizarPlanilha;
 
 /* ==========================================================
    FIM DO ARQUIVO
