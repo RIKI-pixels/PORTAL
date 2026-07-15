@@ -248,6 +248,23 @@ HOME / DASHBOARD
 
     font-size:18px;
 }
+
+#dev textarea{
+
+    width:100%;
+    min-height:220px;
+
+    padding:15px;
+
+    border:1px solid #dbe2ea;
+    border-radius:14px;
+
+    resize:vertical;
+
+    font-family:inherit;
+    font-size:14px;
+
+}
 /* =========================
 TELAS
 ========================= */
