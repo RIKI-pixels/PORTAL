@@ -930,14 +930,32 @@ function renderTabelaProgramacao(lista){
     document.getElementById("totalProgramacao").textContent =
         lista.length;
 
-    const inicio =
-        (APP.paginaProgramacao - 1) * APP.limiteProgramacao;
+    const totalPaginas = Math.max(
+        1,
+        Math.ceil(
+            lista.length /
+            APP.limiteProgramacao
+        )
+    );
 
-    const fim =
-        inicio + APP.limiteProgramacao;
+    if(APP.paginaProgramacao > totalPaginas){
+
+        APP.paginaProgramacao = totalPaginas;
+
+    }
+
+    document.getElementById("paginaProgramacao").textContent =
+        APP.paginaProgramacao;
+
+    const inicio =
+        (APP.paginaProgramacao - 1) *
+        APP.limiteProgramacao;
 
     const pagina =
-        lista.slice(inicio, fim);
+        lista.slice(
+            inicio,
+            inicio + APP.limiteProgramacao
+        );
 
     renderTabela(
 
@@ -946,6 +964,60 @@ function renderTabelaProgramacao(lista){
         obterColunasProgramacao(),
         pagina
 
+    );
+
+}
+
+function programacaoAnterior(){
+
+    if(APP.paginaProgramacao > 1){
+
+        APP.paginaProgramacao--;
+
+        renderTabelaProgramacao(
+            APP.listaProgramacaoAtual
+        );
+
+    }
+
+}
+
+function programacaoProximo(){
+
+    const totalPaginas = Math.ceil(
+
+        APP.listaProgramacaoAtual.length /
+
+        APP.limiteProgramacao
+
+    );
+
+    if(APP.paginaProgramacao < totalPaginas){
+
+        APP.paginaProgramacao++;
+
+        renderTabelaProgramacao(
+            APP.listaProgramacaoAtual
+        );
+
+    }
+
+}
+
+function alterarLimiteProgramacao(){
+
+    APP.limiteProgramacao = Number(
+
+        document.getElementById(
+            "limiteProgramacao"
+        ).value
+
+    );
+
+    APP.paginaProgramacao = 1;
+
+    renderTabelaProgramacao(
+        APP.listaProgramacaoAtual
     );
 
 }
