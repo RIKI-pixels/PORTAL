@@ -146,86 +146,169 @@
 
                 </div>
 
-                <div class="table-container">
+               <div class="grid-panel">
 
-                    <table>
+                 <div class="grid-table">
 
-                        <thead>
-                            <tr id="theadProg"></tr>
-                        </thead>
+                   <table>
 
-                        <tbody id="tbodyProg"></tbody>
+                     <thead>
+                      <tr id="theadProg"></tr>
+                     </thead>
 
-                    </table>
+                     <tbody id="tbodyProg"></tbody>
 
-                </div>
+                   </table>
 
-            </div>
+                 </div>
 
-            <!-- ESTOQUE -->
+                 <div class="grid-footer">
 
-            <div class="box" id="estoque">
+                   <div class="grid-total">
 
-                <h2>ESTOQUE</h2>
+                    Total:
+                    <strong id="totalProgramacao">0</strong>
+                    registros
 
-                <div class="filters active">
+                 </div>
 
-                    <select id="tipoBuscaEstoque">
+                 <div class="grid-pagination">
 
-                        <option value="ISO">ISO</option>
-                        <option value="CONTAINER">CONTAINER</option>
-                        <option value="CLIENTE">CLIENTE</option>
-                        <option value="BOOKING">BOOKING</option>
+                    <button>◄</button>
+
+                 <span class="page-active">1</span>
+
+                    <button>►</button>
+
+                 </div>
+
+                 <div class="grid-limit">
+
+                    <select>
+
+                     <option>10</option>
+                     <option selected>25</option>
+                     <option>50</option>
+                     <option>100</option>
 
                     </select>
 
-                    <input
-                        type="text"
-                        id="valorBuscaEstoque"
-                        placeholder="Digite sua busca">
+                 </div>
 
-                    <button onclick="buscarEstoque()">
-                        Buscar
-                    </button>
+              </div>
 
-                </div>
+           </div>
 
-                <div class="table-container">
+            <!-- ESTOQUE -->
 
-                    <table>
+<div class="box" id="estoque">
 
-                        <thead>
+    <h2>ESTOQUE</h2>
 
-                            <tr id="theadEstoque">
+    <div class="filters active">
 
-                                <th>CONTAINER</th>
-                                <th>ISO</th>
-                                <th>ESTADO</th>
-                                <th>CLIENTE</th>
-                                <th>BOOKING</th>
+        <select id="tipoBuscaEstoque">
 
-                            </tr>
+            <option value="ISO">ISO</option>
+            <option value="CONTAINER">CONTAINER</option>
+            <option value="CLIENTE">CLIENTE</option>
+            <option value="BOOKING">BOOKING</option>
 
-                        </thead>
+        </select>
 
-                        <tbody id="tbodyEstoque">
+        <input
+            type="text"
+            id="valorBuscaEstoque"
+            placeholder="Digite sua busca">
 
-                            <tr>
+        <button onclick="buscarEstoque()">
+            Buscar
+        </button>
 
-                                <td colspan="5" class="loading">
-                                    Nenhuma consulta realizada.
-                                </td>
+    </div>
 
-                            </tr>
+    <div class="grid-panel">
 
-                        </tbody>
+        <div class="grid-table">
 
-                    </table>
+            <table>
 
-                </div>
+                <thead>
+
+                    <tr id="theadEstoque">
+
+                        <th>CONTAINER</th>
+                        <th>ISO</th>
+                        <th>ESTADO</th>
+                        <th>CLIENTE</th>
+                        <th>BOOKING</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tbodyEstoque">
+
+                    <tr>
+
+                        <td colspan="5" class="loading">
+
+                            Nenhuma consulta realizada.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="grid-footer">
+
+            <div class="grid-total">
+
+                Total:
+                <strong id="totalEstoque">0</strong>
+                registros
 
             </div>
 
+            <div class="grid-pagination">
+
+                <button id="estoqueAnterior">
+                    ◄
+                </button>
+
+                <span class="page-active">
+                    1
+                </span>
+
+                <button id="estoqueProximo">
+                    ►
+                </button>
+
+            </div>
+
+            <div class="grid-limit">
+
+                <select id="limiteEstoque">
+
+                    <option>10</option>
+                    <option selected>25</option>
+                    <option>50</option>
+                    <option>100</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
             <!-- DEV -->
 
             <div class="box" id="dev">
