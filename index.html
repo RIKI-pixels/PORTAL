@@ -27,10 +27,9 @@
                 <img src="CDI.png" alt="CDI">
             </div>
 
-            <div class="avatar">
-                K
+            <div class="avatar" ondblclick="abrirDEV()">
+               K
             </div>
-
         </div>
 
         <div class="menu">
@@ -226,6 +225,38 @@
                 </div>
 
             </div>
+
+            <!-- DEV -->
+
+            <div class="box" id="dev">
+
+               <h2>CONFIGURAÇÕES DEV</h2>
+ 
+               <div class="filters active">
+ 
+              <label>TSV TRANSPORTE</label>
+
+                  <input
+                   type="text"
+                   id="urlTransporte">
+
+               <label>TSV ESTOQUE</label>
+
+                   <input
+                     type="text"
+                     id="urlEstoque">
+ 
+                 <button onclick="salvarTSV()">
+                   Salvar TSV
+                 </button>
+
+                 <button onclick="restaurarTSV()">
+                     Restaurar TSV
+                 </button>
+ 
+               </div>
+
+           </div>
 
         </div>
 
