@@ -36,16 +36,19 @@ const CONFIG = {
    ESTADO DA APLICAÇÃO
 ========================================================== */
 
-const APP={
+const APP = {
 
-    dados:[],
-    dadosEstoque:[],
+    dados: [],
+    dadosEstoque: [],
 
-    carregado:false,
-    carregadoEstoque:false,
+    carregado: false,
+    carregadoEstoque: false,
 
-    ultimaAtualizacao:null,
-    ultimaAtualizacaoEstoque:null
+    ultimaAtualizacao: null,
+    ultimaAtualizacaoEstoque: null,
+
+    paginaEstoque: 1,
+    limiteEstoque: 25
 
 };
 
@@ -937,14 +940,70 @@ function renderTabelaProgramacao(lista){
 
 function renderTabelaEstoque(lista){
 
+    const inicio = (APP.paginaEstoque - 1) * APP.limiteEstoque;
+    const fim = inicio + APP.limiteEstoque;
+
+    const pagina = lista.slice(inicio, fim);
+
     renderTabela(
 
         DOM.theadEstoque,
         DOM.tbodyEstoque,
         obterColunasEstoque(),
-        lista
+        pagina
 
     );
+
+    document.getElementById("totalEstoque").textContent =
+        lista.length;
+
+    document.querySelector(".page-active").textContent =
+        APP.paginaEstoque;
+
+}
+
+function estoqueAnterior(){
+
+    if(APP.paginaEstoque > 1){
+
+        APP.paginaEstoque--;
+
+        buscarEstoque();
+
+    }
+
+}
+
+function estoqueProximo(){
+
+    const totalPaginas = Math.ceil(
+
+        APP.dadosEstoque.length /
+        APP.limiteEstoque
+
+    );
+
+    if(APP.paginaEstoque < totalPaginas){
+
+        APP.paginaEstoque++;
+
+        buscarEstoque();
+
+    }
+
+}
+
+function alterarLimiteEstoque(){
+
+    APP.limiteEstoque = Number(
+
+        document.getElementById("limiteEstoque").value
+
+    );
+
+    APP.paginaEstoque = 1;
+
+    buscarEstoque();
 
 }
 
@@ -1002,6 +1061,17 @@ document.addEventListener(
 
         iniciarPortal();
 
+       document
+    .getElementById("estoqueAnterior")
+    .addEventListener("click", estoqueAnterior);
+
+       document
+    .getElementById("estoqueProximo")
+    .addEventListener("click", estoqueProximo);
+
+       document
+    .getElementById("limiteEstoque")
+    .addEventListener("change", alterarLimiteEstoque);
     }
 
 );
