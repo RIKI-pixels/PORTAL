@@ -146,67 +146,51 @@
                     </button>
 
                 </div>
+                
+                <div class="grid-footer">
+                 <div class="grid-total">
+       
+                     Total:
+                     <strong id="totalProgramacao">0</strong>
+                     registros
 
-                <div class="grid-panel">
+    
+                 </div>
 
-                    <div class="grid-table">
-
-                        <table>
-
-                            <thead>
-                                <tr id="theadProg"></tr>
-                            </thead>
-
-                            <tbody id="tbodyProg"></tbody>
-
-                        </table>
-
+    
+                    <div class="grid-pagination">
+                        <button onclick="programacaoAnterior()">
+                            ◄
+                        </button>
+                        
+                        <span
+                            class="page-active"
+                            id="paginaProgramacao">
+                            1
+                        </span>
+                        
+                        <button onclick="programacaoProximo()">
+                            ►
+                        </button>
+                        
                     </div>
-
-                    <div class="grid-footer">
-
-                        <div class="grid-total">
-
-                            Total:
-                            <strong id="totalProgramacao">0</strong>
-                            registros
-
-                        </div>
-
-                        <div class="grid-pagination">
-
-                            <button id="programacaoAnterior">
-                                ◄
-                            </button>
-
-                            <span class="page-active" id="paginaProgramacao">
-                                1
-                            </span>
-
-                            <button id="programacaoProximo">
-                                ►
-                            </button>
-
-                        </div>
-
-                        <div class="grid-limit">
-
-                            <select id="limiteProgramacao">
-
-                                <option>10</option>
-                                <option selected>25</option>
-                                <option>50</option>
-                                <option>100</option>
-
-                            </select>
-
-                        </div>
+                    <div class="grid-limit">
+                        
+                        <select
+                            id="limiteProgramacao"
+                            onchange="alterarLimiteProgramacao()">
+                            
+                            <option>10</option>
+                            <option selected>25</option>
+                            <option>50</option>
+                            <option>100</option>
+        
+                        </select>
+                    </div>
 
                     </div>
 
                 </div>
-
-            </div>
 
             <!-- ESTOQUE -->
 
