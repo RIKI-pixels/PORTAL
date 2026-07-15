@@ -28,8 +28,9 @@
             </div>
 
             <div class="avatar" ondblclick="abrirDEV()">
-               K
+                K
             </div>
+
         </div>
 
         <div class="menu">
@@ -146,210 +147,217 @@
 
                 </div>
 
-               <div class="grid-panel">
+                <div class="grid-panel">
 
-                 <div class="grid-table">
+                    <div class="grid-table">
 
-                   <table>
+                        <table>
 
-                     <thead>
-                      <tr id="theadProg"></tr>
-                     </thead>
+                            <thead>
+                                <tr id="theadProg"></tr>
+                            </thead>
 
-                     <tbody id="tbodyProg"></tbody>
+                            <tbody id="tbodyProg"></tbody>
 
-                   </table>
+                        </table>
 
-                 </div>
+                    </div>
 
-                 <div class="grid-footer">
+                    <div class="grid-footer">
 
-                   <div class="grid-total">
+                        <div class="grid-total">
 
-                    Total:
-                    <strong id="totalProgramacao">0</strong>
-                    registros
+                            Total:
+                            <strong id="totalProgramacao">0</strong>
+                            registros
 
-                 </div>
+                        </div>
 
-                 <div class="grid-pagination">
+                        <div class="grid-pagination">
 
-                    <button>◄</button>
+                            <button id="programacaoAnterior">
+                                ◄
+                            </button>
 
-                 <span class="page-active">1</span>
+                            <span class="page-active" id="paginaProgramacao">
+                                1
+                            </span>
 
-                    <button>►</button>
+                            <button id="programacaoProximo">
+                                ►
+                            </button>
 
-                 </div>
+                        </div>
 
-                 <div class="grid-limit">
+                        <div class="grid-limit">
 
-                    <select>
+                            <select id="limiteProgramacao">
 
-                     <option>10</option>
-                     <option selected>25</option>
-                     <option>50</option>
-                     <option>100</option>
+                                <option>10</option>
+                                <option selected>25</option>
+                                <option>50</option>
+                                <option>100</option>
 
-                    </select>
+                            </select>
 
-                 </div>
+                        </div>
 
-              </div>
+                    </div>
 
-           </div>
+                </div>
+
+            </div>
 
             <!-- ESTOQUE -->
 
-<div class="box" id="estoque">
+            <div class="box" id="estoque">
 
-    <h2>ESTOQUE</h2>
+                <h2>ESTOQUE</h2>
 
-    <div class="filters active">
+                <div class="filters active">
 
-        <select id="tipoBuscaEstoque">
+                    <select id="tipoBuscaEstoque">
 
-            <option value="ISO">ISO</option>
-            <option value="CONTAINER">CONTAINER</option>
-            <option value="CLIENTE">CLIENTE</option>
-            <option value="BOOKING">BOOKING</option>
+                        <option value="ISO">ISO</option>
+                        <option value="CONTAINER">CONTAINER</option>
+                        <option value="CLIENTE">CLIENTE</option>
+                        <option value="BOOKING">BOOKING</option>
 
-        </select>
+                    </select>
 
-        <input
-            type="text"
-            id="valorBuscaEstoque"
-            placeholder="Digite sua busca">
+                    <input
+                        type="text"
+                        id="valorBuscaEstoque"
+                        placeholder="Digite sua busca">
 
-        <button onclick="buscarEstoque()">
-            Buscar
-        </button>
+                    <button onclick="buscarEstoque()">
+                        Buscar
+                    </button>
 
-    </div>
+                </div>
 
-    <div class="grid-panel">
+                <div class="grid-panel">
 
-        <div class="grid-table">
+                    <div class="grid-table">
 
-            <table>
+                        <table>
 
-                <thead>
+                            <thead>
 
-                    <tr id="theadEstoque">
+                                <tr id="theadEstoque">
 
-                        <th>CONTAINER</th>
-                        <th>ISO</th>
-                        <th>ESTADO</th>
-                        <th>CLIENTE</th>
-                        <th>BOOKING</th>
+                                    <th>CONTAINER</th>
+                                    <th>ISO</th>
+                                    <th>ESTADO</th>
+                                    <th>CLIENTE</th>
+                                    <th>BOOKING</th>
 
-                    </tr>
+                                </tr>
 
-                </thead>
+                            </thead>
 
-                <tbody id="tbodyEstoque">
+                            <tbody id="tbodyEstoque">
 
-                    <tr>
+                                <tr>
 
-                        <td colspan="5" class="loading">
+                                    <td colspan="5" class="loading">
+                                        Nenhuma consulta realizada.
+                                    </td>
 
-                            Nenhuma consulta realizada.
+                                </tr>
 
-                        </td>
+                            </tbody>
 
-                    </tr>
+                        </table>
 
-                </tbody>
+                    </div>
 
-            </table>
+                    <div class="grid-footer">
 
-        </div>
+                        <div class="grid-total">
 
-        <div class="grid-footer">
+                            Total:
+                            <strong id="totalEstoque">0</strong>
+                            registros
 
-            <div class="grid-total">
+                        </div>
 
-                Total:
-                <strong id="totalEstoque">0</strong>
-                registros
+                        <div class="grid-pagination">
+
+                            <button id="estoqueAnterior">
+                                ◄
+                            </button>
+
+                            <span class="page-active" id="paginaEstoque">
+                                1
+                            </span>
+
+                            <button id="estoqueProximo">
+                                ►
+                            </button>
+
+                        </div>
+
+                        <div class="grid-limit">
+
+                            <select id="limiteEstoque">
+
+                                <option>10</option>
+                                <option selected>25</option>
+                                <option>50</option>
+                                <option>100</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="grid-pagination">
-
-                <button id="estoqueAnterior">
-                    ◄
-                </button>
-
-                <span class="page-active">
-                    1
-                </span>
-
-                <button id="estoqueProximo">
-                    ►
-                </button>
-
-            </div>
-
-            <div class="grid-limit">
-
-                <select id="limiteEstoque">
-
-                    <option>10</option>
-                    <option selected>25</option>
-                    <option>50</option>
-                    <option>100</option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
             <!-- DEV -->
 
             <div class="box" id="dev">
 
-               <h2>CONFIGURAÇÕES DEV</h2>
- 
-               <div class="filters active">
- 
-              <label>TSV TRANSPORTE</label>
+                <h2>CONFIGURAÇÕES DEV</h2>
 
-                  <input
-                   type="text"
-                   id="urlTransporte">
+                <div class="filters active">
 
-               <label>TSV ESTOQUE</label>
+                    <label>TSV TRANSPORTE</label>
 
-                   <input
-                     type="text"
-                     id="urlEstoque">
+                    <input
+                        type="text"
+                        id="urlTransporte">
 
-                   <hr>
+                    <label>TSV ESTOQUE</label>
 
-            <label>CLIENTES DE ESTUFAGEM</label>
+                    <input
+                        type="text"
+                        id="urlEstoque">
 
-            <textarea
-              id="clientesEstufagem"
-              rows="10"
-              placeholder="Um cliente por linha">
-            </textarea>
- 
-                 <button onclick="salvarTSV()">
-                   Salvar TSV
-                 </button>
+                    <hr>
 
-                 <button onclick="restaurarTSV()">
-                     Restaurar TSV
-                 </button>
- 
-               </div>
+                    <label>CLIENTES DE ESTUFAGEM</label>
 
-           </div>
+                    <textarea
+                        id="clientesEstufagem"
+                        rows="10"
+                        placeholder="Um cliente por linha">
+                    </textarea>
+
+                    <button onclick="salvarTSV()">
+                        Salvar TSV
+                    </button>
+
+                    <button onclick="restaurarTSV()">
+                        Restaurar TSV
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
 
