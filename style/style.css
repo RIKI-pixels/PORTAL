@@ -707,3 +707,147 @@ RESPONSIVO
      width:100%;
     }
 }
+
+/* ==========================================================
+GRID PROFISSIONAL
+========================================================== */
+
+.grid-panel{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    border:1px solid #dbe2ea;
+
+}
+
+.grid-table{
+
+    max-height:600px;
+
+    overflow:auto;
+
+}
+
+.grid-table table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:1200px;
+
+}
+
+.grid-table thead{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:10;
+
+    background:#0B4EA2;
+
+}
+
+.grid-table th{
+
+    padding:16px;
+
+    color:#fff;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+.grid-table td{
+
+    padding:15px 16px;
+
+    border-bottom:1px solid #eef2f7;
+
+    font-size:14px;
+
+    white-space:nowrap;
+
+}
+
+.grid-table tbody tr:hover{
+
+    background:#f6f9ff;
+
+}
+
+.grid-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 20px;
+
+    border-top:1px solid #e6ebf2;
+
+    background:#fafbfd;
+
+}
+
+.grid-pagination{
+
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+
+}
+
+.grid-pagination button{
+
+    width:34px;
+
+    height:34px;
+
+    padding:0;
+
+}
+
+.page-active{
+
+    background:#0B4EA2;
+
+    color:#fff;
+
+    width:34px;
+
+    height:34px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:8px;
+
+    font-weight:600;
+
+}
+
+.grid-limit select{
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+}
