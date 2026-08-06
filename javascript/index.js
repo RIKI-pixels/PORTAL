@@ -625,7 +625,7 @@ function buscarEstoque(){
 
     }
     APP.listaEstoqueAtual = lista;
-    APP.paginaEstoque = 1;
+   
     renderTabelaEstoque(lista);
 
 }
@@ -1057,7 +1057,7 @@ function estoqueAnterior(){
 
         APP.paginaEstoque--;
 
-        buscarEstoque();
+        renderTabelaEstoque(APP.listaEstoqueAtual);
 
     }
 
@@ -1067,7 +1067,7 @@ function estoqueProximo(){
 
     const totalPaginas = Math.ceil(
 
-       APP.listaEstoqueAtual.length /
+        APP.listaEstoqueAtual.length /
         APP.limiteEstoque
 
     );
@@ -1076,7 +1076,7 @@ function estoqueProximo(){
 
         APP.paginaEstoque++;
 
-        buscarEstoque();
+        renderTabelaEstoque(APP.listaEstoqueAtual);
 
     }
 
@@ -1092,7 +1092,7 @@ function alterarLimiteEstoque(){
 
     APP.paginaEstoque = 1;
 
-    buscarEstoque();
+    renderTabelaEstoque(APP.listaEstoqueAtual);
 
 }
 
