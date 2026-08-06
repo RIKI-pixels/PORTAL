@@ -659,39 +659,25 @@ function buscarProgramacao(){
 
     }
 
-   const dataInicio = parseInputDate(inicio);
-   const dataFim = parseInputDate(fim);
+   const dataInicio = Number(inicio.replaceAll("-", ""));
+const dataFim = Number(fim.replaceAll("-", ""));
 
+let lista = APP.dados.filter(registro => {
+    if (!registro.dataAg) return false;
 
-    let lista = APP.dados.filter(registro=>{
+    const dataRegistro = dataNumero(registro.dataAg);
 
-        if(!registro.dataAg){
+    if (dataRegistro < dataInicio || dataRegistro > dataFim) {
+        return false;
+    }
 
-            return false;
+    if (tipo === "ESTUFAGEM") {
+        return CLIENTES_ESTUFAGEM.includes(registro.cliente);
+    }
 
-        }
+    return registro.tipo === tipo;
+});
 
-        if(!dataEntre(
-            registro.dataAg,
-            dataInicio,
-            dataFim
-        )){
-
-            return false;
-
-        }
-
-        if(tipo === "ESTUFAGEM"){
-
-            return CLIENTES_ESTUFAGEM.includes(
-                registro.cliente
-            );
-
-        }
-
-        return registro.tipo === tipo;
-
-    });
 
     lista.sort((a,b)=>{
 
