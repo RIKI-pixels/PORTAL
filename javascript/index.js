@@ -624,7 +624,8 @@ function buscarEstoque(){
         });
 
     }
-
+    APP.listaEstoqueAtual = lista;
+    APP.paginaEstoque = 1;
     renderTabelaEstoque(lista);
 
 }
@@ -1045,8 +1046,8 @@ function renderTabelaEstoque(lista){
     document.getElementById("totalEstoque").textContent =
         lista.length;
 
-    document.querySelector(".page-active").textContent =
-        APP.paginaEstoque;
+    document.getElementById("paginaEstoque").textContent =
+    APP.paginaEstoque;
 
 }
 
@@ -1066,7 +1067,7 @@ function estoqueProximo(){
 
     const totalPaginas = Math.ceil(
 
-        APP.dadosEstoque.length /
+       APP.listaEstoqueAtual.length /
         APP.limiteEstoque
 
     );
