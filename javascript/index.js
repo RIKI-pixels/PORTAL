@@ -1047,7 +1047,7 @@ function renderTabelaEstoque(lista){
         lista.length;
 
     document.getElementById("paginaEstoque").textContent =
-    APP.paginaEstoque;
+        APP.paginaEstoque;
 
 }
 
