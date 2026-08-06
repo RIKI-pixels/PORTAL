@@ -71,12 +71,10 @@
                 <h1>PORTAL CDI</h1>
 
                 <p class="versao">
-                    Versão 1.0 • BETA TEST
+                    Versão 1.1 • BETA TEST
                 </p>
 
                 <div class="dashboard">
-
-                    <!-- TRANSPORTE -->
 
                     <div class="status-card">
 
@@ -84,21 +82,15 @@
 
                         <div class="status-item">
                             <span>Última atualização</span>
-                            <strong id="dataTransporte">
-                                00/00/0000 00:00
-                            </strong>
+                            <strong id="dataTransporte">00/00/0000 00:00</strong>
                         </div>
 
                         <div class="status-item">
                             <span>Registros carregados</span>
-                            <strong id="linhasTransporte">
-                                0000
-                            </strong>
+                            <strong id="linhasTransporte">0000</strong>
                         </div>
 
                     </div>
-
-                    <!-- ESTOQUE -->
 
                     <div class="status-card">
 
@@ -106,16 +98,12 @@
 
                         <div class="status-item">
                             <span>Última atualização</span>
-                            <strong id="dataEstoque">
-                                00/00/0000 00:00
-                            </strong>
+                            <strong id="dataEstoque">00/00/0000 00:00</strong>
                         </div>
 
                         <div class="status-item">
                             <span>Registros carregados</span>
-                            <strong id="linhasEstoque">
-                                0000
-                            </strong>
+                            <strong id="linhasEstoque">0000</strong>
                         </div>
 
                     </div>
@@ -146,53 +134,71 @@
                     </button>
 
                 </div>
-                
-                <div class="grid-footer">
-                 <div class="grid-total">
-       
-                     Total:
-                     <strong id="totalProgramacao">0</strong>
-                     registros
 
-    
-                 </div>
+                <div class="grid-panel">
 
-    
-                    <div class="grid-pagination">
-                        <button onclick="programacaoAnterior()">
-                            ◄
-                        </button>
-                        
-                        <span
-                            class="page-active"
-                            id="paginaProgramacao">
-                            1
-                        </span>
-                        
-                        <button onclick="programacaoProximo()">
-                            ►
-                        </button>
-                        
+                    <div class="grid-table">
+
+                        <table>
+
+                            <thead>
+                                <tr id="theadProg"></tr>
+                            </thead>
+
+                            <tbody id="tbodyProg">
+
+                                <tr>
+                                    <td colspan="7" class="loading">
+                                        Nenhuma consulta realizada.
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
                     </div>
-                    <div class="grid-limit">
-                        
-                        <select
-                            id="limiteProgramacao"
-                            onchange="alterarLimiteProgramacao()">
-                            
-                            <option>10</option>
-                            <option selected>25</option>
-                            <option>50</option>
-                            <option>100</option>
-        
-                        </select>
-                    </div>
+
+                    <div class="grid-footer">
+
+                        <div class="grid-total">
+
+                            Total:
+                            <strong id="totalProgramacao">0</strong>
+                            registros
+
+                        </div>
+
+                        <div class="grid-pagination">
+
+                            <button onclick="programacaoAnterior()">◄</button>
+
+                            <span class="page-active" id="paginaProgramacao">
+                                1
+                            </span>
+
+                            <button onclick="programacaoProximo()">►</button>
+
+                        </div>
+
+                        <div class="grid-limit">
+
+                            <select id="limiteProgramacao" onchange="alterarLimiteProgramacao()">
+
+                                <option>10</option>
+                                <option selected>25</option>
+                                <option>50</option>
+                                <option>100</option>
+
+                            </select>
+
+                        </div>
 
                     </div>
 
                 </div>
-            
-        </div>
+
+            </div>
 
             <!-- ESTOQUE -->
 
@@ -270,17 +276,13 @@
 
                         <div class="grid-pagination">
 
-                            <button id="estoqueAnterior">
-                                ◄
-                            </button>
+                            <button id="estoqueAnterior">◄</button>
 
                             <span class="page-active" id="paginaEstoque">
                                 1
                             </span>
 
-                            <button id="estoqueProximo">
-                                ►
-                            </button>
+                            <button id="estoqueProximo">►</button>
 
                         </div>
 
@@ -313,15 +315,11 @@
 
                     <label>TSV TRANSPORTE</label>
 
-                    <input
-                        type="text"
-                        id="urlTransporte">
+                    <input type="text" id="urlTransporte">
 
                     <label>TSV ESTOQUE</label>
 
-                    <input
-                        type="text"
-                        id="urlEstoque">
+                    <input type="text" id="urlEstoque">
 
                     <hr>
 
@@ -330,8 +328,7 @@
                     <textarea
                         id="clientesEstufagem"
                         rows="10"
-                        placeholder="Um cliente por linha">
-                    </textarea>
+                        placeholder="Um cliente por linha"></textarea>
 
                     <button onclick="salvarTSV()">
                         Salvar TSV
