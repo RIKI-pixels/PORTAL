@@ -54,7 +54,13 @@ const APP = {
     limiteEstoque: 25,
 
     paginaProgramacao: 1,
-    limiteProgramacao: 25
+    limiteProgramacao: 25,
+
+    pracaSelecionada: null,
+    linhaSelecionada: null,
+    pilhaSelecionada: null,
+    nivelSelecionado: null,
+    destinoSelecionado: null
 
 };
 
@@ -907,21 +913,20 @@ function resetarLocalizacoes(){
 
 }
 
-   function abrirPraca(nomePraca){
+function abrirPraca(nomePraca){
 
     const quantidadeLinhas =
         PRACAS_PATIO[nomePraca];
 
     if(!quantidadeLinhas){
-
         return;
-
     }
 
+    APP.pracaSelecionada = nomePraca;
+    APP.linhaSelecionada = null;
+
     DOM.mapaGeral.style.display = "none";
-
     DOM.mapaPraca.style.display = "block";
-
     DOM.mapaLinha.style.display = "none";
 
     DOM.voltarMapaGeral.style.display = "block";
@@ -989,18 +994,310 @@ function resetarLocalizacoes(){
 
 }
 
-   function abrirLinha(nomeLinha){
+function abrirLinha(nomeLinha){
+
+    APP.linhaSelecionada = nomeLinha;
 
     DOM.mapaGeral.style.display = "none";
-
     DOM.mapaPraca.style.display = "none";
-
     DOM.mapaLinha.style.display = "block";
 
     DOM.voltarMapaGeral.style.display = "block";
 
     DOM.nomeLinhaSelecionada.textContent =
         nomeLinha;
+
+    atualizarVisualLinha();
+
+}
+
+function obterLocalizacoes(){
+
+    return JSON.parse(
+        localStorage.getItem("localizacoesContainers") || "{}"
+    );
+
+}
+
+
+function salvarLocalizacoes(localizacoes){
+
+    localStorage.setItem(
+        "localizacoesContainers",
+        JSON.stringify(localizacoes)
+    );
+
+}
+
+function obterContainerNaPosicao(posicao){
+
+    const localizacoes =
+        obterLocalizacoes();
+
+    for(const container in localizacoes){
+
+        if(localizacoes[container] === posicao){
+
+            return container;
+
+        }
+
+    }
+
+    return null;
+
+}
+
+function atualizarVisualLinha(){
+
+    if(!APP.linhaSelecionada){
+        return;
+    }
+
+    document
+        .querySelectorAll("#mapaLinha .nivel")
+        .forEach(botao=>{
+
+            const pilha =
+                botao.closest(".pilha").dataset.pilha;
+
+            const nivel =
+                botao.dataset.nivel;
+
+            const posicao =
+                `${APP.linhaSelecionada}-${pilha}-${nivel}`;
+
+            const container =
+                obterContainerNaPosicao(posicao);
+
+            botao.dataset.posicao =
+                posicao;
+
+            if(container){
+
+                botao.classList.add("ocupado");
+
+                botao.innerHTML = `
+                    <strong>${container}</strong>
+                    <span>${posicao}</span>
+                `;
+
+            }else{
+
+                botao.classList.remove("ocupado");
+
+                botao.innerHTML = `
+                    <strong>VAZIO</strong>
+                    <span>${posicao}</span>
+                `;
+
+            }
+
+        });
+
+}
+
+function abrirMovimentacao(botao){
+
+    const pilha =
+        Number(
+            botao.closest(".pilha").dataset.pilha
+        );
+
+    const nivel =
+        Number(botao.dataset.nivel);
+
+    const destino =
+        `${APP.linhaSelecionada}-${pilha}-${nivel}`;
+
+    APP.pilhaSelecionada = pilha;
+    APP.nivelSelecionado = nivel;
+    APP.destinoSelecionado = destino;
+
+
+    const containerOcupando =
+        obterContainerNaPosicao(destino);
+
+
+    if(containerOcupando){
+
+        alert(
+            `Posição ocupada por ${containerOcupando}.`
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "destinoMovimentacao"
+    ).textContent =
+        `Destino: ${destino}`;
+
+
+    const input =
+        document.getElementById(
+            "containerMovimentacao"
+        );
+
+    input.value = "";
+
+
+    document.getElementById(
+        "modalMovimentacao"
+    ).style.display = "flex";
+
+
+    input.focus();
+
+}
+
+function normalizarContainer(numero){
+
+    return textoMaiusculo(numero)
+        .replace(/\s/g,"");
+
+}
+
+function validarFormatoContainer(numero){
+
+    numero =
+        normalizarContainer(numero);
+
+    return /^[A-Z]{4}[0-9]{6}-[0-9]$/.test(
+        numero
+    );
+
+}
+
+function buscarContainerNoEstoque(numero){
+
+    numero =
+        normalizarContainer(numero);
+
+    return APP.dadosEstoque.find(registro=>{
+
+        return normalizarContainer(
+            registro.container
+        ) === numero;
+
+    });
+
+}
+
+function validarEmpilhamento(){
+
+    const nivel =
+        APP.nivelSelecionado;
+
+    if(nivel === 1){
+        return true;
+    }
+
+    for(
+        let nivelInferior = 1;
+        nivelInferior < nivel;
+        nivelInferior++
+    ){
+
+        const posicaoInferior =
+            `${APP.linhaSelecionada}-${APP.pilhaSelecionada}-${nivelInferior}`;
+
+        if(
+            !obterContainerNaPosicao(
+                posicaoInferior
+            )
+        ){
+
+            return false;
+
+        }
+
+    }
+
+    return true;
+
+}
+
+function confirmarMovimentacao(){
+
+    const input =
+        document.getElementById(
+            "containerMovimentacao"
+        );
+
+    const container =
+        normalizarContainer(
+            input.value
+        );
+
+
+    if(!validarFormatoContainer(container)){
+
+        alert(
+            "Formato inválido.\nUse: AAAA 000000-0"
+        );
+
+        return;
+
+    }
+
+
+    const registro =
+        buscarContainerNoEstoque(container);
+
+
+    if(!registro){
+
+        alert(
+            "Container não localizado no estoque."
+        );
+
+        return;
+
+    }
+
+
+    if(!validarEmpilhamento()){
+
+        alert(
+            "Não é possível utilizar este nível porque existem níveis vazios abaixo."
+        );
+
+        return;
+
+    }
+
+
+    const localizacoes =
+        obterLocalizacoes();
+
+
+    localizacoes[container] =
+        APP.destinoSelecionado;
+
+
+    salvarLocalizacoes(
+        localizacoes
+    );
+
+
+    fecharMovimentacao();
+
+    atualizarVisualLinha();
+
+}
+
+function fecharMovimentacao(){
+
+    document.getElementById(
+        "modalMovimentacao"
+    ).style.display = "none";
+
+    APP.destinoSelecionado = null;
+    APP.pilhaSelecionada = null;
+    APP.nivelSelecionado = null;
 
 }
    
@@ -1575,6 +1872,32 @@ document.addEventListener(
     }
 
 );
+
+document
+    .querySelectorAll("#mapaLinha .nivel")
+    .forEach(botao=>{
+
+        botao.addEventListener(
+            "click",
+            ()=>abrirMovimentacao(botao)
+        );
+
+    });
+
+document
+    .getElementById("confirmarMovimentacao")
+    .addEventListener(
+        "click",
+        confirmarMovimentacao
+    );
+
+
+document
+    .getElementById("cancelarMovimentacao")
+    .addEventListener(
+        "click",
+        fecharMovimentacao
+    );
 
 /* ==========================================================
    ATALHOS
