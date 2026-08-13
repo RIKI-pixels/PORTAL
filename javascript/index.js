@@ -1420,9 +1420,18 @@ window.mostrarInicio = mostrarInicio;
 window.mostrarProgramacao = mostrarProgramacao;
 window.buscarProgramacao = buscarProgramacao;
 
+window.programacaoAnterior = programacaoAnterior;
+window.programacaoProximo = programacaoProximo;
+window.alterarLimiteProgramacao = alterarLimiteProgramacao;
+
 window.mostrarEstoque = mostrarEstoque;
-window.editarLocalizacao = editarLocalizacao;
 window.buscarEstoque = buscarEstoque;
+
+window.estoqueAnterior = estoqueAnterior;
+window.estoqueProximo = estoqueProximo;
+window.alterarLimiteEstoque = alterarLimiteEstoque;
+
+window.editarLocalizacao = editarLocalizacao;
 
 window.abrirDEV = abrirDEV;
 window.salvarTSV = salvarTSV;
