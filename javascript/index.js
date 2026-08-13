@@ -1,6 +1,6 @@
 /* ==========================================================
    PORTAL OPERACIONAL CDI
-   Versão 1.4.6 MAPA
+   Versão 1.4.8 MAPA
 ========================================================== */
 
 
@@ -761,23 +761,24 @@ function renderTabelaEstoque(lista){
                     <td>${registro.cliente}</td>
                     <td>${registro.booking}</td>
 
-                    <td>
+               <td>
 
-                        ${localizacao
-                            ? localizacao
-                            : `
+                   <div class="localizacao-estoque">
 
-                                <button
-                                    onclick="editarLocalizacao('${registro.container}')">
+                       <span>
+                        ${localizacao || "SEM LOCALIZAÇÃO"}
+                       </span>
 
-                                    Editar
+                          <button
+                              onclick="movimentarContainer('${registro.container}')">
 
-                                </button>
+                              Movimentar
 
-                            `
-                        }
+                          </button>
 
-                    </td>
+                      </div>
+
+                </td>
 
                 </tr>
 
