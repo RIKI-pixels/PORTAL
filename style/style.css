@@ -1307,3 +1307,21 @@ RESPONSIVO MAPA
     }
 
 }
+
+.nivel.ocupado{
+    background:#e7f0ff;
+    color:#0B4EA2;
+}
+
+.nivel.ocupado strong{
+    display:block;
+    font-size:13px;
+}
+
+.nivel.ocupado span,
+.nivel:not(.ocupado) span{
+    display:block;
+    font-size:10px;
+    margin-top:4px;
+    opacity:.7;
+}
