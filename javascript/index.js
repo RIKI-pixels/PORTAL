@@ -725,6 +725,50 @@ function renderTabelaEstoque(lista){
 
 }
 
+function estoqueAnterior(){
+
+    if(APP.paginaEstoque > 1){
+
+        APP.paginaEstoque--;
+
+        renderTabelaEstoque(APP.listaEstoqueAtual);
+
+    }
+
+}
+
+function estoqueProximo(){
+
+    const totalPaginas = Math.ceil(
+
+        APP.listaEstoqueAtual.length /
+        APP.limiteEstoque
+
+    );
+
+    if(APP.paginaEstoque < totalPaginas){
+
+        APP.paginaEstoque++;
+
+        renderTabelaEstoque(APP.listaEstoqueAtual);
+
+    }
+
+}
+
+function alterarLimiteEstoque(){
+
+    APP.limiteEstoque = Number(
+
+        document.getElementById("limiteEstoque").value
+
+    );
+
+    APP.paginaEstoque = 1;
+
+    renderTabelaEstoque(APP.listaEstoqueAtual);
+
+}
 
 /* ==========================================================
    ADM
@@ -1058,6 +1102,74 @@ function alterarLimiteProgramacao(){
     renderTabelaProgramacao(
         APP.listaProgramacaoAtual
     );
+
+}
+
+function buscarProgramacao(){
+
+    if(!verificarCarregamento()){
+
+        return;
+
+    }
+
+    const tipo =
+        document.getElementById("tipoProgramacao").value;
+
+    const inicio =
+        document.getElementById("progInicio").value;
+
+    const fim =
+        document.getElementById("progFim").value;
+
+    if(!inicio || !fim){
+
+        alert("Selecione o período.");
+
+        return;
+
+    }
+
+    const dataInicio = new Date(inicio);
+    const dataFim = new Date(fim);
+
+    let lista = APP.dados.filter(registro=>{
+
+        if(!registro.dataAg){
+
+            return false;
+
+        }
+
+        if(!dataEntre(
+            registro.dataAg,
+            dataInicio,
+            dataFim
+        )){
+
+            return false;
+
+        }
+
+        if(tipo === "ESTUFAGEM"){
+
+            return CLIENTES_ESTUFAGEM.includes(
+                registro.cliente
+            );
+
+        }
+
+        return registro.tipo === tipo;
+
+    });
+
+    lista.sort((a,b)=>a.dataAg - b.dataAg);
+
+    APP.listaProgramacaoAtual = lista;
+
+    APP.paginaProgramacao = 1;
+
+    renderTabelaProgramacao(lista);
 
 }
 
