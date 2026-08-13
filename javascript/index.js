@@ -1,7 +1,6 @@
 /* ==========================================================
    PORTAL OPERACIONAL CDI
-   Versão 1.4.5 ADD SÓ DOR DE CABEÇA AAAAAAAAA
-
+   Versão 1.4.5 MTO TRAMPO SLK
 ========================================================== */
 
 
@@ -1003,30 +1002,6 @@ function resetarLocalizacoes(){
         nomeLinha;
 
 }
-
-   document
-    .querySelectorAll(".praca")
-    .forEach(praca=>{
-
-        praca.addEventListener(
-            "click",
-            ()=>{
-
-                abrirPraca(
-                    praca.dataset.local
-                );
-
-            }
-        );
-
-    });
-
-   DOM.voltarMapaGeral
-    .addEventListener(
-        "click",
-        mostrarMapaGeral
-    );
-
    
 /* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
@@ -1561,22 +1536,44 @@ document.addEventListener(
 
         iniciarPortal();
 
-       document
-    .getElementById("estoqueAnterior")
-    .addEventListener("click", estoqueAnterior);
+        document
+            .getElementById("estoqueAnterior")
+            .addEventListener("click", estoqueAnterior);
 
-       document
-    .getElementById("estoqueProximo")
-    .addEventListener("click", estoqueProximo);
+        document
+            .getElementById("estoqueProximo")
+            .addEventListener("click", estoqueProximo);
 
-       document
-    .getElementById("limiteEstoque")
-    .addEventListener("change", alterarLimiteEstoque);
+        document
+            .getElementById("limiteEstoque")
+            .addEventListener("change", alterarLimiteEstoque);
+
+        document
+            .querySelectorAll(".praca")
+            .forEach(praca=>{
+
+                praca.addEventListener(
+                    "click",
+                    ()=>{
+
+                        abrirPraca(
+                            praca.dataset.local
+                        );
+
+                    }
+                );
+
+            });
+
+        DOM.voltarMapaGeral
+            .addEventListener(
+                "click",
+                mostrarMapaGeral
+            );
+
     }
 
 );
-
-
 
 /* ==========================================================
    ATALHOS
