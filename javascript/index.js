@@ -1011,24 +1011,134 @@ function alterarLimiteProgramacao(){
 }
 
 /* ==========================================================
+   LOCALIZAÇÃO
+========================================================== */
+
+function obterLocalizacao(container){
+
+    const mapa = JSON.parse(
+        localStorage.getItem("localizacoesContainers") || "{}"
+    );
+
+    return mapa[container] || "";
+
+}
+
+function editarLocalizacao(container){
+
+    const atual = obterLocalizacao(container);
+
+    const nova = prompt(
+        "Informe a localização do container:",
+        atual
+    );
+
+    if(nova === null){
+
+        return;
+
+    }
+
+    const mapa = JSON.parse(
+        localStorage.getItem("localizacoesContainers") || "{}"
+    );
+
+    mapa[container] = nova.trim();
+
+    localStorage.setItem(
+        "localizacoesContainers",
+        JSON.stringify(mapa)
+    );
+
+    buscarEstoque();
+
+}
+
+
+/* ==========================================================
    RENDER ESTOQUE
 ========================================================== */
 
 function renderTabelaEstoque(lista){
 
-    const inicio = (APP.paginaEstoque - 1) * APP.limiteEstoque;
-    const fim = inicio + APP.limiteEstoque;
+    const inicio =
+        (APP.paginaEstoque - 1) * APP.limiteEstoque;
 
-    const pagina = lista.slice(inicio, fim);
+    const fim =
+        inicio + APP.limiteEstoque;
 
-    renderTabela(
+    const pagina =
+        lista.slice(inicio, fim);
 
-        DOM.theadEstoque,
-        DOM.tbodyEstoque,
-        obterColunasEstoque(),
-        pagina
+    DOM.theadEstoque.innerHTML = `
 
-    );
+        <th>CONTAINER</th>
+        <th>ISO</th>
+        <th>ESTADO</th>
+        <th>CLIENTE</th>
+        <th>BOOKING</th>
+        <th>LOCALIZAÇÃO</th>
+
+    `;
+
+    DOM.tbodyEstoque.innerHTML = "";
+
+    if(pagina.length === 0){
+
+        DOM.tbodyEstoque.innerHTML = `
+
+            <tr>
+
+                <td colspan="6" class="loading">
+                    Nenhum resultado encontrado.
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    pagina.forEach(registro=>{
+
+        const localizacao =
+            obterLocalizacao(registro.container);
+
+        DOM.tbodyEstoque.innerHTML += `
+
+            <tr>
+
+                <td>${registro.container}</td>
+                <td>${registro.iso}</td>
+                <td>${registro.estado}</td>
+                <td>${registro.cliente}</td>
+                <td>${registro.booking}</td>
+
+                <td>
+
+                    ${localizacao
+                        ? localizacao
+                        : `
+
+                            <button
+                                onclick="editarLocalizacao('${registro.container}')">
+
+                                Editar
+
+                            </button>
+
+                        `
+                    }
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
 
     document.getElementById("totalEstoque").textContent =
         lista.length;
@@ -1037,52 +1147,6 @@ function renderTabelaEstoque(lista){
         APP.paginaEstoque;
 
 }
-
-function estoqueAnterior(){
-
-    if(APP.paginaEstoque > 1){
-
-        APP.paginaEstoque--;
-
-        renderTabelaEstoque(APP.listaEstoqueAtual);
-
-    }
-
-}
-
-function estoqueProximo(){
-
-    const totalPaginas = Math.ceil(
-
-        APP.listaEstoqueAtual.length /
-        APP.limiteEstoque
-
-    );
-
-    if(APP.paginaEstoque < totalPaginas){
-
-        APP.paginaEstoque++;
-
-        renderTabelaEstoque(APP.listaEstoqueAtual);
-
-    }
-
-}
-
-function alterarLimiteEstoque(){
-
-    APP.limiteEstoque = Number(
-
-        document.getElementById("limiteEstoque").value
-
-    );
-
-    APP.paginaEstoque = 1;
-
-    renderTabelaEstoque(APP.listaEstoqueAtual);
-
-}
-
 /* ==========================================================
    INICIALIZAÇÃO
 ========================================================== */
@@ -1306,6 +1370,7 @@ window.mostrarProgramacao = mostrarProgramacao;
 window.buscarProgramacao = buscarProgramacao;
 
 window.mostrarEstoque = mostrarEstoque;
+window.editarLocalizacao = editarLocalizacao;
 window.buscarEstoque = buscarEstoque;
 
 window.abrirDEV = abrirDEV;
