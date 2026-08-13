@@ -57,10 +57,12 @@ const APP = {
     limiteProgramacao: 25,
 
     pracaSelecionada: null,
-    linhaSelecionada: null,
-    pilhaSelecionada: null,
-    nivelSelecionado: null,
-    destinoSelecionado: null
+   linhaSelecionada: null,
+   pilhaSelecionada: null,
+   nivelSelecionado: null,
+   destinoSelecionado: null,
+
+   containerSelecionado: null
 
 };
 
@@ -641,6 +643,8 @@ function mostrarMapa(){
 
     mostrarMapaGeral();
 
+   atualizarContainerSelecionadoMapa();
+
 }
 
 /* ==========================================================
@@ -1141,7 +1145,16 @@ function abrirMovimentacao(botao){
             "containerMovimentacao"
         );
 
+    if(APP.containerSelecionado){
+
+    input.value =
+        APP.containerSelecionado;
+
+}else{
+
     input.value = "";
+
+}
 
 
     document.getElementById(
@@ -1280,6 +1293,8 @@ function confirmarMovimentacao(){
         localizacoes
     );
 
+   APP.containerSelecionado = null;
+
 
     fecharMovimentacao();
 
@@ -1296,6 +1311,40 @@ function fecharMovimentacao(){
     APP.destinoSelecionado = null;
     APP.pilhaSelecionada = null;
     APP.nivelSelecionado = null;
+
+}
+
+function atualizarContainerSelecionadoMapa(){
+
+    const painel =
+        document.getElementById(
+            "containerSelecionadoMapa"
+        );
+
+    if(!APP.containerSelecionado){
+
+        painel.style.display = "none";
+
+        return;
+
+    }
+
+    painel.style.display = "flex";
+
+    document.getElementById(
+        "numeroContainerSelecionado"
+    ).textContent =
+        APP.containerSelecionado;
+
+    const localAtual =
+        obterLocalizacao(
+            APP.containerSelecionado
+        );
+
+    document.getElementById(
+        "localAtualContainerSelecionado"
+    ).textContent =
+        `Local atual: ${localAtual || "SEM LOCALIZAÇÃO"}`;
 
 }
    
@@ -1685,6 +1734,28 @@ function editarLocalizacao(container){
 
 }
 
+function movimentarContainer(container){
+
+    const registro =
+        buscarContainerNoEstoque(container);
+
+    if(!registro){
+
+        alert(
+            "Container não localizado no estoque."
+        );
+
+        return;
+
+    }
+
+    APP.containerSelecionado =
+        normalizarContainer(container);
+
+    mostrarMapa();
+
+}
+
 
 /* ==========================================================
    RENDER ESTOQUE
@@ -2067,6 +2138,7 @@ window.restaurarTSV = restaurarTSV;
 window.resetarLocalizacoes = resetarLocalizacoes;
 
 window.mostrarMapa = mostrarMapa;
+window.movimentarContainer = movimentarContainer;
 
 window.atualizarPlanilha = atualizarPlanilha;
 
