@@ -152,41 +152,37 @@ const DOM = {
     programacao: document.getElementById("programacao"),
     estoque: document.getElementById("estoque"),
     dev: document.getElementById("dev"),
+    mapa: document.getElementById("mapa"),
 
     inicioBtn: document.getElementById("inicioBtn"),
     programacaoBtn: document.getElementById("programacaoBtn"),
     estoqueBtn: document.getElementById("estoqueBtn"),
-   
+    mapaBtn: document.getElementById("mapaBtn"),
+
     theadProg: document.getElementById("theadProg"),
     tbodyProg: document.getElementById("tbodyProg"),
 
     theadEstoque: document.getElementById("theadEstoque"),
-    tbodyEstoque: document.getElementById("tbodyEstoque")
+    tbodyEstoque: document.getElementById("tbodyEstoque"),
 
-   mapa: document.getElementById("mapa"),
+    mapaGeral: document.getElementById("mapaGeral"),
+    mapaPraca: document.getElementById("mapaPraca"),
+    mapaLinha: document.getElementById("mapaLinha"),
 
-mapaBtn: document.getElementById("mapaBtn"),
+    nomePracaSelecionada:
+        document.getElementById("nomePracaSelecionada"),
 
-mapaGeral: document.getElementById("mapaGeral"),
+    quantidadeLinhasPraca:
+        document.getElementById("quantidadeLinhasPraca"),
 
-mapaPraca: document.getElementById("mapaPraca"),
+    linhasPraca:
+        document.getElementById("linhasPraca"),
 
-mapaLinha: document.getElementById("mapaLinha"),
+    nomeLinhaSelecionada:
+        document.getElementById("nomeLinhaSelecionada"),
 
-nomePracaSelecionada:
-    document.getElementById("nomePracaSelecionada"),
-
-quantidadeLinhasPraca:
-    document.getElementById("quantidadeLinhasPraca"),
-
-linhasPraca:
-    document.getElementById("linhasPraca"),
-
-nomeLinhaSelecionada:
-    document.getElementById("nomeLinhaSelecionada"),
-
-voltarMapaGeral:
-    document.getElementById("voltarMapaGeral")
+    voltarMapaGeral:
+        document.getElementById("voltarMapaGeral")
 
 };
 
