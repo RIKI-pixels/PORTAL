@@ -361,13 +361,16 @@ function criarRegistro(linha){
 
 function criarRegistroEstoque(linha){
 
+    const container = textoMaiusculo(linha[0]);
+
     return{
 
-        container: textoMaiusculo(linha[0]),
+        container: container,
         iso: textoMaiusculo(linha[1]),
         estado: textoMaiusculo(linha[2]),
         cliente: textoMaiusculo(linha[3]),
-        booking: textoMaiusculo(linha[4])
+        booking: textoMaiusculo(linha[4]),
+        localizacao: obterLocalizacao(container)
 
     };
 
@@ -634,62 +637,91 @@ function buscarEstoque(){
    PROGRAMAÇÃO
 ========================================================== */
 
-function buscarProgramacao(){
-
-    if(!verificarCarregamento()){
-
-        return;
-
-    }
-
-    const tipo =
-        document.getElementById("tipoProgramacao").value;
+function renderTabelaEstoque(lista){
 
     const inicio =
-        document.getElementById("progInicio").value;
+        (APP.paginaEstoque - 1) * APP.limiteEstoque;
 
     const fim =
-        document.getElementById("progFim").value;
+        inicio + APP.limiteEstoque;
 
-    if(!inicio || !fim){
+    const pagina =
+        lista.slice(inicio, fim);
 
-        alert("Selecione o período.");
+    DOM.theadEstoque.innerHTML = "";
+    DOM.tbodyEstoque.innerHTML = "";
 
-        return;
+    DOM.theadEstoque.innerHTML = `
+
+        <th>CONTAINER</th>
+        <th>ISO</th>
+        <th>ESTADO</th>
+        <th>CLIENTE</th>
+        <th>BOOKING</th>
+        <th>LOCALIZAÇÃO</th>
+
+    `;
+
+    if(pagina.length === 0){
+
+        DOM.tbodyEstoque.innerHTML = `
+
+            <tr>
+                <td colspan="6" class="loading">
+                    Nenhum resultado encontrado.
+                </td>
+            </tr>
+
+        `;
+
+    }else{
+
+        pagina.forEach(registro=>{
+
+            const localizacao =
+                obterLocalizacao(registro.container);
+
+            DOM.tbodyEstoque.innerHTML += `
+
+                <tr>
+
+                    <td>${registro.container}</td>
+                    <td>${registro.iso}</td>
+                    <td>${registro.estado}</td>
+                    <td>${registro.cliente}</td>
+                    <td>${registro.booking}</td>
+
+                    <td>
+
+                        ${localizacao
+                            ? localizacao
+                            : `
+
+                                <button
+                                    onclick="editarLocalizacao('${registro.container}')">
+
+                                    Editar
+
+                                </button>
+
+                            `
+                        }
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
 
     }
 
-   const dataInicio = Number(inicio.replaceAll("-", ""));
-const dataFim = Number(fim.replaceAll("-", ""));
+    document.getElementById("totalEstoque").textContent =
+        lista.length;
 
-let lista = APP.dados.filter(registro => {
-    if (!registro.dataAg) return false;
-
-    const dataRegistro = dataNumero(registro.dataAg);
-
-    if (dataRegistro < dataInicio || dataRegistro > dataFim) {
-        return false;
-    }
-
-    if (tipo === "ESTUFAGEM") {
-        return CLIENTES_ESTUFAGEM.includes(registro.cliente);
-    }
-
-    return registro.tipo === tipo;
-});
-
-
-    lista.sort((a,b)=>{
-
-        return a.dataAg - b.dataAg;
-
-    });
-
-    APP.listaProgramacaoAtual = lista;
-
-    APP.paginaProgramacao = 1;
-
-    renderTabelaProgramacao(lista);
+    document.getElementById("paginaEstoque").textContent =
+        APP.paginaEstoque;
 
 }
 
@@ -806,14 +838,11 @@ function obterColunasEstoque(){
     return[
 
         {nome:"CONTAINER",campo:"container"},
-       
         {nome:"ISO",campo:"iso"},
-       
         {nome:"ESTADO",campo:"estado"},
-       
         {nome:"CLIENTE",campo:"cliente"},
-       
-        {nome:"BOOKING",campo:"booking"}
+        {nome:"BOOKING",campo:"booking"},
+        {nome:"LOCALIZAÇÃO",campo:"localizacao"}
 
     ];
 
