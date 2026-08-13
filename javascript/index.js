@@ -1427,6 +1427,7 @@ window.buscarEstoque = buscarEstoque;
 window.abrirDEV = abrirDEV;
 window.salvarTSV = salvarTSV;
 window.restaurarTSV = restaurarTSV;
+window.resetarLocalizacoes = resetarLocalizacoes;
 
 window.atualizarPlanilha = atualizarPlanilha;
 
