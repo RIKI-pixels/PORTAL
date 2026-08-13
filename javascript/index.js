@@ -1156,18 +1156,16 @@ function abrirMovimentacao(botao){
 function normalizarContainer(numero){
 
     return textoMaiusculo(numero)
-        .replace(/\s/g,"");
+        .replace(/\s/g, "")
+        .replace(/-/g, "");
 
 }
 
 function validarFormatoContainer(numero){
 
-    numero =
-        normalizarContainer(numero);
+    numero = normalizarContainer(numero);
 
-    return /^[A-Z]{4}[0-9]{6}-[0-9]$/.test(
-        numero
-    );
+    return /^[A-Z]{4}[0-9]{7}$/.test(numero);
 
 }
 
