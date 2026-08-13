@@ -593,6 +593,7 @@ function mostrarEstoque(){
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.add("active");
     DOM.mapaBtn.classList.remove("active");
+}
 
 function abrirDEV(){
 
