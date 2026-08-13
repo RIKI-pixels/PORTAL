@@ -50,6 +50,11 @@
                 <div>Estoque</div>
             </div>
 
+            <div class="menu-item" id="mapaBtn" onclick="mostrarMapa()">
+                <div class="menu-icon">🗺️</div>
+                <div>Mapa</div>
+            </div>
+
         </div>
 
     </div>
@@ -304,6 +309,468 @@
                 </div>
 
             </div>
+
+<!-- MAPA DO PÁTIO -->
+
+<div class="box" id="mapa">
+
+    <div class="mapa-header">
+
+        <div>
+            <h2>MAPA DO PÁTIO</h2>
+
+            <p>
+                Selecione uma praça ou área para visualizar as posições.
+            </p>
+        </div>
+
+        <button
+            id="voltarMapaGeral"
+            class="mapa-voltar"
+            style="display:none;">
+            ← Voltar ao mapa
+        </button>
+
+    </div>
+
+
+    <!-- ==========================================
+         VISÃO GERAL
+    =========================================== -->
+
+    <div id="mapaGeral" class="mapa-geral">
+
+        <div class="patio-layout">
+
+
+            <!-- PRAÇA A -->
+
+            <button
+                class="area-patio praca praca-a"
+                data-local="A">
+
+                <strong>A</strong>
+
+                <span>
+                    10 linhas
+                </span>
+
+            </button>
+
+
+            <!-- PRAÇA B -->
+
+            <button
+                class="area-patio praca praca-b"
+                data-local="B">
+
+                <strong>B</strong>
+
+                <span>
+                    30 linhas
+                </span>
+
+            </button>
+
+
+            <!-- PRAÇA C -->
+
+            <button
+                class="area-patio praca praca-c"
+                data-local="C">
+
+                <strong>C</strong>
+
+                <span>
+                    30 linhas
+                </span>
+
+            </button>
+
+
+            <!-- PRAÇA D -->
+
+            <button
+                class="area-patio praca praca-d"
+                data-local="D">
+
+                <strong>D</strong>
+
+                <span>
+                    30 linhas
+                </span>
+
+            </button>
+
+
+            <!-- FUMIGAÇÃO -->
+
+            <button
+                class="area-patio area-especial fumigacao"
+                data-local="FUMIGACAO">
+
+                <strong>FUMIGAÇÃO</strong>
+
+            </button>
+
+
+            <!-- MAPA -->
+
+            <button
+                class="area-patio area-especial area-mapa"
+                data-local="MAPA">
+
+                <strong>MAPA</strong>
+
+            </button>
+
+
+            <!-- AZ 1 -->
+
+            <button
+                class="area-patio area-especial az1"
+                data-local="AZ1">
+
+                <strong>AZ 1</strong>
+
+            </button>
+
+
+            <!-- AZ 2 -->
+
+            <button
+                class="area-patio area-especial az2"
+                data-local="AZ2">
+
+                <strong>AZ 2</strong>
+
+            </button>
+
+
+            <!-- AZ 3 -->
+
+            <button
+                class="area-patio area-especial az3"
+                data-local="AZ3">
+
+                <strong>AZ 3</strong>
+
+            </button>
+
+
+            <!-- ESTUFAGEM AZ 1 -->
+
+            <button
+                class="area-patio area-especial estufagem-az1"
+                data-local="ESTUFAGEM AZ1">
+
+                <strong>ESTUFAGEM AZ 1</strong>
+
+            </button>
+
+
+            <!-- ESTUFAGEM AZ 2 -->
+
+            <button
+                class="area-patio area-especial estufagem-az2"
+                data-local="ESTUFAGEM AZ2">
+
+                <strong>ESTUFAGEM AZ 2</strong>
+
+            </button>
+
+
+            <!-- ESTUFAGEM AZ 3 -->
+
+            <button
+                class="area-patio area-especial estufagem-az3"
+                data-local="ESTUFAGEM AZ3">
+
+                <strong>ESTUFAGEM AZ 3</strong>
+
+            </button>
+
+
+            <!-- ESTUFAGEM CORREDOR -->
+
+            <button
+                class="area-patio area-especial estufagem-corredor"
+                data-local="ESTUFAGEM CORREDOR">
+
+                <strong>ESTUFAGEM CORREDOR</strong>
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         VISÃO DA PRAÇA
+    =========================================== -->
+
+    <div
+        id="mapaPraca"
+        class="mapa-praca"
+        style="display:none;">
+
+        <div class="praca-header">
+
+            <div>
+
+                <span>
+                    PRAÇA
+                </span>
+
+                <h3 id="nomePracaSelecionada">
+                    A
+                </h3>
+
+            </div>
+
+            <div class="praca-info">
+
+                <span>
+                    Linhas
+                </span>
+
+                <strong id="quantidadeLinhasPraca">
+                    10
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- As linhas serão criadas pelo JavaScript -->
+
+        <div
+            id="linhasPraca"
+            class="linhas-praca">
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         VISÃO DA LINHA
+    =========================================== -->
+
+    <div
+        id="mapaLinha"
+        class="mapa-linha"
+        style="display:none;">
+
+        <div class="linha-header">
+
+            <div>
+
+                <span>
+                    LINHA SELECIONADA
+                </span>
+
+                <h3 id="nomeLinhaSelecionada">
+                    A-01
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="estrutura-linha">
+
+            <!-- PILHA 1 -->
+
+            <div class="pilha-container">
+
+                <h4>PILHA 1</h4>
+
+                <div
+                    class="pilha"
+                    data-pilha="1">
+
+                    <button class="nivel" data-nivel="4">
+                        N4
+                    </button>
+
+                    <button class="nivel" data-nivel="3">
+                        N3
+                    </button>
+
+                    <button class="nivel" data-nivel="2">
+                        N2
+                    </button>
+
+                    <button class="nivel" data-nivel="1">
+                        N1
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PILHA 2 -->
+
+            <div class="pilha-container">
+
+                <h4>PILHA 2</h4>
+
+                <div
+                    class="pilha"
+                    data-pilha="2">
+
+                    <button class="nivel" data-nivel="4">
+                        N4
+                    </button>
+
+                    <button class="nivel" data-nivel="3">
+                        N3
+                    </button>
+
+                    <button class="nivel" data-nivel="2">
+                        N2
+                    </button>
+
+                    <button class="nivel" data-nivel="1">
+                        N1
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PILHA 3 -->
+
+            <div class="pilha-container">
+
+                <h4>PILHA 3</h4>
+
+                <div
+                    class="pilha"
+                    data-pilha="3">
+
+                    <button class="nivel" data-nivel="4">
+                        N4
+                    </button>
+
+                    <button class="nivel" data-nivel="3">
+                        N3
+                    </button>
+
+                    <button class="nivel" data-nivel="2">
+                        N2
+                    </button>
+
+                    <button class="nivel" data-nivel="1">
+                        N1
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PILHA 4 -->
+
+            <div class="pilha-container">
+
+                <h4>PILHA 4</h4>
+
+                <div
+                    class="pilha"
+                    data-pilha="4">
+
+                    <button class="nivel" data-nivel="4">
+                        N4
+                    </button>
+
+                    <button class="nivel" data-nivel="3">
+                        N3
+                    </button>
+
+                    <button class="nivel" data-nivel="2">
+                        N2
+                    </button>
+
+                    <button class="nivel" data-nivel="1">
+                        N1
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         MOVIMENTAÇÃO
+    =========================================== -->
+
+    <div
+        id="modalMovimentacao"
+        class="modal-movimentacao"
+        style="display:none;">
+
+        <div class="modal-movimentacao-conteudo">
+
+            <h3>
+                MOVIMENTAR CONTAINER
+            </h3>
+
+            <p id="destinoMovimentacao">
+                Destino: A-01-1-1
+            </p>
+
+
+            <label>
+                CONTAINER
+            </label>
+
+            <input
+                type="text"
+                id="containerMovimentacao"
+                maxlength="12"
+                placeholder="AAAA 000000-0">
+
+
+            <div class="modal-acoes">
+
+                <button
+                    type="button"
+                    id="cancelarMovimentacao">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    type="button"
+                    id="confirmarMovimentacao">
+
+                    Movimentar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+            
 
             <!-- DEV -->
 
