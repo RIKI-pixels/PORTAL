@@ -594,8 +594,6 @@ function mostrarEstoque(){
     DOM.estoqueBtn.classList.add("active");
     DOM.mapaBtn.classList.remove("active");
 
-}
-
 function abrirDEV(){
 
     DOM.inicio.style.display = "none";
@@ -614,11 +612,14 @@ function abrirDEV(){
 
     document.getElementById("urlEstoque").value =
         CONFIG.URL_ESTOQUE;
-   
-    document.getElementById("clientesEstufagem").value =
-     CLIENTES_ESTUFAGEM.join("\n");
 
-   function mostrarMapa(){
+    document.getElementById("clientesEstufagem").value =
+        CLIENTES_ESTUFAGEM.join("\n");
+
+}
+
+
+function mostrarMapa(){
 
     DOM.inicio.style.display = "none";
     DOM.programacao.style.display = "none";
@@ -632,6 +633,7 @@ function abrirDEV(){
     DOM.mapaBtn.classList.add("active");
 
     mostrarMapaGeral();
+
 }
 
 /* ==========================================================
