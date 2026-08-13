@@ -95,6 +95,19 @@ const CLIENTES_ESTUFAGEM =
     CLIENTES_PADRAO;
 
 /* ==========================================================
+   PRÇAS
+========================================================== */
+
+const PRACAS_PATIO = {
+
+    A: 10,
+    B: 30,
+    C: 30,
+    D: 30
+
+};
+
+/* ==========================================================
    COLUNAS DA PLANILHA
 ========================================================== */
 
@@ -149,6 +162,31 @@ const DOM = {
 
     theadEstoque: document.getElementById("theadEstoque"),
     tbodyEstoque: document.getElementById("tbodyEstoque")
+
+   mapa: document.getElementById("mapa"),
+
+mapaBtn: document.getElementById("mapaBtn"),
+
+mapaGeral: document.getElementById("mapaGeral"),
+
+mapaPraca: document.getElementById("mapaPraca"),
+
+mapaLinha: document.getElementById("mapaLinha"),
+
+nomePracaSelecionada:
+    document.getElementById("nomePracaSelecionada"),
+
+quantidadeLinhasPraca:
+    document.getElementById("quantidadeLinhasPraca"),
+
+linhasPraca:
+    document.getElementById("linhasPraca"),
+
+nomeLinhaSelecionada:
+    document.getElementById("nomeLinhaSelecionada"),
+
+voltarMapaGeral:
+    document.getElementById("voltarMapaGeral")
 
 };
 
@@ -522,10 +560,12 @@ function mostrarInicio(){
     DOM.programacao.style.display = "none";
     DOM.estoque.style.display = "none";
     DOM.dev.style.display = "none";
-
+    DOM.mapa.style.display = "none";
+   
     DOM.inicioBtn.classList.add("active");
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.remove("active");
+    DOM.mapaBtn.classList.remove("active");
 
 }
 
@@ -536,10 +576,12 @@ function mostrarProgramacao(){
     DOM.inicio.style.display = "none";
     DOM.programacao.style.display = "block";
     DOM.estoque.style.display = "none";
+    DOM.mapa.style.display = "none";
 
     DOM.inicioBtn.classList.remove("active");
     DOM.programacaoBtn.classList.add("active");
     DOM.estoqueBtn.classList.remove("active");
+    DOM.mapaBtn.classList.remove("active");
 
 }
 
@@ -549,10 +591,12 @@ function mostrarEstoque(){
     DOM.inicio.style.display = "none";
     DOM.programacao.style.display = "none";
     DOM.estoque.style.display = "block";
+    DOM.mapa.style.display = "none";
 
     DOM.inicioBtn.classList.remove("active");
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.add("active");
+    DOM.mapaBtn.classList.remove("active");
 
 }
 
@@ -562,10 +606,12 @@ function abrirDEV(){
     DOM.programacao.style.display = "none";
     DOM.estoque.style.display = "none";
     DOM.dev.style.display = "block";
+    DOM.mapa.style.display = "none";
 
     DOM.inicioBtn.classList.remove("active");
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.remove("active");
+    DOM.mapaBtn.classList.remove("active");
 
     document.getElementById("urlTransporte").value =
         CONFIG.URL_PLANILHA;
@@ -575,6 +621,21 @@ function abrirDEV(){
    
     document.getElementById("clientesEstufagem").value =
      CLIENTES_ESTUFAGEM.join("\n");
+
+   function mostrarMapa(){
+
+    DOM.inicio.style.display = "none";
+    DOM.programacao.style.display = "none";
+    DOM.estoque.style.display = "none";
+    DOM.dev.style.display = "none";
+    DOM.mapa.style.display = "block";
+
+    DOM.inicioBtn.classList.remove("active");
+    DOM.programacaoBtn.classList.remove("active");
+    DOM.estoqueBtn.classList.remove("active");
+    DOM.mapaBtn.classList.add("active");
+
+    mostrarMapaGeral();
 }
 
 /* ==========================================================
@@ -831,6 +892,143 @@ function resetarLocalizacoes(){
 
 }
 
+/* ==========================================================
+   MAPA
+========================================================== */
+
+   function mostrarMapaGeral(){
+
+    DOM.mapaGeral.style.display = "block";
+
+    DOM.mapaPraca.style.display = "none";
+
+    DOM.mapaLinha.style.display = "none";
+
+    DOM.voltarMapaGeral.style.display = "none";
+
+}
+
+   function abrirPraca(nomePraca){
+
+    const quantidadeLinhas =
+        PRACAS_PATIO[nomePraca];
+
+    if(!quantidadeLinhas){
+
+        return;
+
+    }
+
+    DOM.mapaGeral.style.display = "none";
+
+    DOM.mapaPraca.style.display = "block";
+
+    DOM.mapaLinha.style.display = "none";
+
+    DOM.voltarMapaGeral.style.display = "block";
+
+    DOM.nomePracaSelecionada.textContent =
+        nomePraca;
+
+    DOM.quantidadeLinhasPraca.textContent =
+        quantidadeLinhas;
+
+    gerarLinhasPraca(
+        nomePraca,
+        quantidadeLinhas
+    );
+
+}
+
+   function gerarLinhasPraca(
+    nomePraca,
+    quantidade
+){
+
+    DOM.linhasPraca.innerHTML = "";
+
+    for(
+        let numero = 1;
+        numero <= quantidade;
+        numero++
+    ){
+
+        const numeroFormatado =
+            String(numero).padStart(2,"0");
+
+        const nomeLinha =
+            `${nomePraca}-${numeroFormatado}`;
+
+        const botao =
+            document.createElement("button");
+
+        botao.className =
+            "linha-patio";
+
+        botao.innerHTML = `
+
+            <strong>
+                ${nomeLinha}
+            </strong>
+
+            <span>
+                4 pilhas
+            </span>
+
+        `;
+
+        botao.addEventListener(
+            "click",
+            ()=>abrirLinha(nomeLinha)
+        );
+
+        DOM.linhasPraca.appendChild(
+            botao
+        );
+
+    }
+
+}
+
+   function abrirLinha(nomeLinha){
+
+    DOM.mapaGeral.style.display = "none";
+
+    DOM.mapaPraca.style.display = "none";
+
+    DOM.mapaLinha.style.display = "block";
+
+    DOM.voltarMapaGeral.style.display = "block";
+
+    DOM.nomeLinhaSelecionada.textContent =
+        nomeLinha;
+
+}
+
+   document
+    .querySelectorAll(".praca")
+    .forEach(praca=>{
+
+        praca.addEventListener(
+            "click",
+            ()=>{
+
+                abrirPraca(
+                    praca.dataset.local
+                );
+
+            }
+        );
+
+    });
+
+   DOM.voltarMapaGeral
+    .addEventListener(
+        "click",
+        mostrarMapaGeral
+    );
+
+   
 /* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
 ========================================================== */
@@ -1172,7 +1370,7 @@ function buscarProgramacao(){
     renderTabelaProgramacao(lista);
 
 }
-
+   
 /* ==========================================================
    LOCALIZAÇÃO
 ========================================================== */
@@ -1549,6 +1747,8 @@ window.abrirDEV = abrirDEV;
 window.salvarTSV = salvarTSV;
 window.restaurarTSV = restaurarTSV;
 window.resetarLocalizacoes = resetarLocalizacoes;
+
+window.mostrarMapa = mostrarMapa;
 
 window.atualizarPlanilha = atualizarPlanilha;
 
