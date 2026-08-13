@@ -1,6 +1,6 @@
 /* ==========================================================
    PORTAL OPERACIONAL CDI
-   Versão 1.4.3 beta test
+   Versão 1.4.4 beta test
 ========================================================== */
 
 
@@ -762,6 +762,28 @@ function restaurarTSV(){
     localStorage.removeItem("tsvEstoque");
     localStorage.removeItem("clientesEstufagem");
     location.reload();
+
+}
+
+function resetarLocalizacoes(){
+
+    const confirmar = confirm(
+
+        "Deseja realmente apagar todas as localizações salvas?"
+
+    );
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+    localStorage.removeItem("localizacoesContainers");
+
+    alert("Todas as localizações foram removidas.");
+
+    buscarEstoque();
 
 }
 
