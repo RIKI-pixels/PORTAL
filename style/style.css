@@ -272,6 +272,7 @@ TELAS
 #programacao,
 #estoque,
 #mapa,
+#solicitacoes,
 #dev{
     display:none;
 }
@@ -1378,4 +1379,112 @@ RESPONSIVO MAPA
 
     color:#666;
 
+}
+
+/* ==========================================================
+SOLICITAÇÕES
+========================================================== */
+
+.solicitacoes-dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.solicitacao-card{
+    background:#f7faff;
+    border:2px solid #dbe8ff;
+    border-radius:20px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.solicitacao-card h3{
+    color:#0B4EA2;
+    font-size:18px;
+}
+
+.solicitacao-card strong{
+    color:#0B4EA2;
+    font-size:34px;
+}
+
+.solicitacao-card span{
+    color:#777;
+    font-size:13px;
+}
+
+.solicitacoes-acoes{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.solicitacao-form{
+    margin-bottom:30px;
+    padding:25px;
+    border:1px solid #dbe2ea;
+    border-radius:20px;
+    background:#fafbfd;
+}
+
+.solicitacao-form h3{
+    color:#0B4EA2;
+    margin-bottom:15px;
+}
+
+.solicitacao-form label{
+    display:block;
+    margin:20px 0 8px;
+    color:#0B4EA2;
+    font-weight:600;
+}
+
+.solicitacao-form textarea{
+    width:100%;
+    min-height:180px;
+    padding:14px;
+    border:1px solid #dbe2ea;
+    border-radius:14px;
+    resize:vertical;
+    font-family:inherit;
+    margin-bottom:15px;
+}
+
+.locais-solicitacao{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin:20px 0;
+}
+
+.local-solicitacao{
+    min-height:90px;
+    background:white;
+    color:#0B4EA2;
+    border:2px solid #dbe8ff;
+}
+
+.local-solicitacao:hover{
+    border-color:#0B4EA2;
+    background:#edf5ff;
+}
+
+.local-solicitacao.selecionado{
+    background:#0B4EA2;
+    color:white;
+    border-color:#0B4EA2;
+}
+
+.solicitacoes-pendentes{
+    margin-top:30px;
+}
+
+.solicitacoes-pendentes h3{
+    color:#0B4EA2;
+    margin-bottom:15px;
 }
