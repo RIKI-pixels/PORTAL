@@ -1488,3 +1488,9 @@ SOLICITAÇÕES
     color:#0B4EA2;
     margin-bottom:15px;
 }
+
+.area-patio.solicitacao-pendente{
+    background:#ffb347;
+    border-color:#e58a00;
+    color:#663c00;
+}
