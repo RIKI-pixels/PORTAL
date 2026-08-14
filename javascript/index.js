@@ -2510,15 +2510,6 @@ function alterarLimiteProgramacao(){
 
 }
 
-lista.forEach(registro=>{
-
-    registro.localizacao =
-        obterLocalizacao(
-            registro.container
-        ) || "AGUARDANDO MAPEAMENTO";
-
-});
-
 function buscarProgramacao(){
 
     if(!verificarCarregamento()){
@@ -2544,8 +2535,8 @@ function buscarProgramacao(){
 
     }
 
-const dataInicio = parseInputDate(inicio);
-const dataFim = parseInputDate(fim);
+    const dataInicio = parseInputDate(inicio);
+    const dataFim = parseInputDate(fim);
 
     let lista = APP.dados.filter(registro=>{
 
@@ -2577,9 +2568,28 @@ const dataFim = parseInputDate(fim);
 
     });
 
-    lista.sort((a,b)=>a.dataAg - b.dataAg);
 
-    APP.listaProgramacaoAtual = lista;
+    /* =========================
+       LOCALIZAÇÃO ATUAL
+    ========================= */
+
+    lista.forEach(registro=>{
+
+        registro.localizacao =
+            obterLocalizacao(
+                registro.container
+            ) || "AGUARDANDO MAPEAMENTO";
+
+    });
+
+
+    lista.sort((a,b)=>
+        a.dataAg - b.dataAg
+    );
+
+
+    APP.listaProgramacaoAtual =
+        lista;
 
     APP.paginaProgramacao = 1;
 
