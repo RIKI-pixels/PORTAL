@@ -1,6 +1,6 @@
 /* ==========================================================
    PORTAL OPERACIONAL CDI
-   Versão 1.4.9 SOLICITAÇÕES 0.1
+   Versão 1.4.9 SOLICITAÇÕES 0.2
 ========================================================== */
 
 
@@ -2139,6 +2139,26 @@ function concluirSolicitacoesArea(destino){
 
 }
 
+function obterContainersDaArea(local){
+
+    const localizacoes =
+        obterLocalizacoes();
+
+    const localNormalizado =
+        textoMaiusculo(local);
+
+    return Object.keys(localizacoes)
+        .filter(container=>{
+
+            return textoMaiusculo(
+                localizacoes[container]
+            ) === localNormalizado;
+
+        })
+        .sort();
+
+}
+
 /* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
 ========================================================== */
@@ -2793,15 +2813,213 @@ document
             "click",
             ()=>{
 
-                abrirSolicitacoesArea(
-                    area.dataset.local
-                );
+function abrirSolicitacoesArea(destino){
 
-            }
+    const pendentes =
+        obterSolicitacoes().filter(item=>{
+
+            return (
+                item.status === "PENDENTE" &&
+                textoMaiusculo(item.destino) ===
+                textoMaiusculo(destino)
+            );
+
+        });
+
+
+    const posicionados =
+        obterContainersDaArea(destino);
+
+
+    /*
+       Se não existe absolutamente nada
+       na área, não abre o modal.
+    */
+
+    if(
+        pendentes.length === 0 &&
+        posicionados.length === 0
+    ){
+
+        return;
+
+    }
+
+
+    let modal =
+        document.getElementById(
+            "modalSolicitacoesArea"
         );
 
-    });
 
+    if(!modal){
+
+        modal =
+            document.createElement("div");
+
+        modal.id =
+            "modalSolicitacoesArea";
+
+        modal.className =
+            "modal-movimentacao";
+
+        document.body.appendChild(modal);
+
+    }
+
+
+    /* =========================================
+       CONTAINERS JÁ POSICIONADOS
+    ========================================= */
+
+    let posicionadosHTML = "";
+
+
+    if(posicionados.length > 0){
+
+        posicionadosHTML = `
+
+            <div class="area-containers-posicionados">
+
+                <h4>
+                    POSICIONADOS
+                </h4>
+
+                <div class="lista-containers-area">
+
+                    ${posicionados.map(container=>`
+
+                        <div class="container-area-posicionado">
+
+                            <strong>
+                                ${container}
+                            </strong>
+
+                            <span>
+                                ${destino}
+                            </span>
+
+                        </div>
+
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =========================================
+       SOLICITAÇÕES PENDENTES
+    ========================================= */
+
+    let pendentesHTML = "";
+
+
+    if(pendentes.length > 0){
+
+        pendentesHTML = `
+
+            <div class="area-containers-pendentes">
+
+                <h4>
+                    AGUARDANDO POSICIONAMENTO
+                </h4>
+
+                <div class="lista-check-solicitacoes">
+
+                    ${pendentes.map(item=>`
+
+                        <label class="solicitacao-checkbox">
+
+                            <input
+                                type="checkbox"
+                                value="${item.container}">
+
+                            <span>
+                                ${item.container}
+                            </span>
+
+                        </label>
+
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =========================================
+       BOTÃO CONFIRMAR
+    ========================================= */
+
+    let botaoConfirmar = "";
+
+
+    if(pendentes.length > 0){
+
+        botaoConfirmar = `
+
+            <button
+                onclick="concluirSolicitacoesArea('${destino}')">
+
+                Confirmar movimentação
+
+            </button>
+
+        `;
+
+    }
+
+
+    /* =========================================
+       MODAL
+    ========================================= */
+
+    modal.innerHTML = `
+
+        <div class="modal-movimentacao-conteudo">
+
+            <h3>
+                ${destino}
+            </h3>
+
+            <p>
+                Containers da área
+            </p>
+
+            ${posicionadosHTML}
+
+            ${pendentesHTML}
+
+            <div class="modal-acoes">
+
+                <button
+                    onclick="fecharSolicitacoesArea()">
+
+                    Fechar
+
+                </button>
+
+                ${botaoConfirmar}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    modal.style.display = "flex";
+
+}
 /* ==========================================================
    ATALHOS
 ========================================================== */
