@@ -390,11 +390,15 @@ function criarRegistro(linha){
 
         dataTexto: valor(linha,COL.DATA_AG),
 
-        dataAg: parseDataBR(valor(linha,COL.DATA_AG)),
+        dataAg: parseDataBR(
+            valor(linha,COL.DATA_AG)
+        ),
 
         janela: valor(linha,COL.JANELA),
 
-        cliente: textoMaiusculo(valor(linha,COL.CLIENTE)),
+        cliente: textoMaiusculo(
+            valor(linha,COL.CLIENTE)
+        ),
 
         booking: valor(linha,COL.BOOKING),
 
@@ -402,14 +406,22 @@ function criarRegistro(linha){
 
         ddlTexto: valor(linha,COL.DEADLINE),
 
-        ddl: parseDataBR(valor(linha,COL.DEADLINE)),
+        ddl: parseDataBR(
+            valor(linha,COL.DEADLINE)
+        ),
 
-        pendencia: textoMaiusculo(valor(linha,COL.PENDENCIA))
+        pendencia: textoMaiusculo(
+            valor(linha,COL.PENDENCIA)
+        ),
+
+        localizacao:
+            obterLocalizacao(
+                valor(linha,COL.CONTAINER)
+            ) || "AGUARDANDO MAPEAMENTO"
 
     };
 
 }
-
 function criarRegistroEstoque(linha){
 
     const container = textoMaiusculo(linha[0]);
@@ -2254,59 +2266,38 @@ function obterColunasProgramacao(){
     return[
 
         {
-
             nome:"TIPO",
-
             campo:"tipo"
-
         },
 
         {
-
             nome:"CLIENTE",
-
             campo:"cliente"
-
         },
 
         {
-
             nome:"CONTAINER",
-
             campo:"container"
-
         },
 
         {
-
             nome:"DATA AG.",
-
             campo:"dataTexto"
-
         },
 
         {
-
             nome:"JANELA",
-
             campo:"janela"
-
         },
 
         {
-
             nome:"BOOKING",
-
             campo:"booking"
-
         },
 
         {
-
-            nome:"DDL",
-
-            campo:"ddlTexto"
-
+            nome:"LOCALIZAÇÃO",
+            campo:"localizacao"
         }
 
     ];
@@ -2518,6 +2509,15 @@ function alterarLimiteProgramacao(){
     );
 
 }
+
+lista.forEach(registro=>{
+
+    registro.localizacao =
+        obterLocalizacao(
+            registro.container
+        ) || "AGUARDANDO MAPEAMENTO";
+
+});
 
 function buscarProgramacao(){
 
