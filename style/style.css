@@ -1494,3 +1494,81 @@ SOLICITAÇÕES
     border-color:#e58a00;
     color:#663c00;
 }
+
+/* ==========================================================
+   CONTAINERS POSICIONADOS NAS ÁREAS
+========================================================== */
+
+.area-containers-posicionados,
+.area-containers-pendentes{
+
+    margin-top:20px;
+
+}
+
+.area-containers-posicionados h4,
+.area-containers-pendentes h4{
+
+    margin-bottom:10px;
+
+    font-size:12px;
+    font-weight:700;
+
+    color:#0B4EA2;
+
+}
+
+
+.lista-containers-area{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(180px,1fr));
+
+    gap:10px;
+
+}
+
+
+.container-area-posicionado{
+
+    min-height:65px;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:10px;
+
+    background:#e7f0ff;
+
+    border:1px solid #0B4EA2;
+
+    text-align:center;
+
+}
+
+
+.container-area-posicionado strong{
+
+    color:#0B4EA2;
+
+    font-size:13px;
+
+}
+
+
+.container-area-posicionado span{
+
+    margin-top:4px;
+
+    color:#0B4EA2;
+
+    font-size:9px;
+
+    opacity:.75;
+
+}
