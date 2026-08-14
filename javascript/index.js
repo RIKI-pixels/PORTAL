@@ -1,6 +1,6 @@
 /* ==========================================================
    PORTAL OPERACIONAL CDI
-   Versão 1.4.8 MAPA
+   Versão 1.4.9 SOLICITAÇÕES 0.1
 ========================================================== */
 
 
@@ -62,7 +62,9 @@ const APP = {
    nivelSelecionado: null,
    destinoSelecionado: null,
 
-   containerSelecionado: null
+   containerSelecionado: null,
+   
+   destinoEstufagemSelecionado: null
 
 };
 
@@ -190,7 +192,14 @@ const DOM = {
         document.getElementById("nomeLinhaSelecionada"),
 
     voltarMapaGeral:
-        document.getElementById("voltarMapaGeral")
+        document.getElementById("voltarMapaGeral"),
+
+    solicitacoes:
+         document.getElementById("solicitacoes"),
+            
+   solicitacoesBtn:
+
+         document.getElementById("solicitacoesBtn")
 
 };
 
@@ -565,11 +574,13 @@ function mostrarInicio(){
     DOM.estoque.style.display = "none";
     DOM.dev.style.display = "none";
     DOM.mapa.style.display = "none";
+    DOM.solicitacoes.style.display = "none";
    
     DOM.inicioBtn.classList.add("active");
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.remove("active");
     DOM.mapaBtn.classList.remove("active");
+    DOM.solicitacoesBtn.classList.remove("active");
 
 }
 
@@ -581,11 +592,13 @@ function mostrarProgramacao(){
     DOM.programacao.style.display = "block";
     DOM.estoque.style.display = "none";
     DOM.mapa.style.display = "none";
+    DOM.solicitacoes.style.display = "none";
 
     DOM.inicioBtn.classList.remove("active");
     DOM.programacaoBtn.classList.add("active");
     DOM.estoqueBtn.classList.remove("active");
     DOM.mapaBtn.classList.remove("active");
+    DOM.solicitacoesBtn.classList.remove("active");
 
 }
 
@@ -596,11 +609,13 @@ function mostrarEstoque(){
     DOM.programacao.style.display = "none";
     DOM.estoque.style.display = "block";
     DOM.mapa.style.display = "none";
+    DOM.solicitacoes.style.display = "none";
 
     DOM.inicioBtn.classList.remove("active");
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.add("active");
     DOM.mapaBtn.classList.remove("active");
+    DOM.solicitacoesBtn.classList.remove("active");
 }
 
 function abrirDEV(){
@@ -610,11 +625,13 @@ function abrirDEV(){
     DOM.estoque.style.display = "none";
     DOM.dev.style.display = "block";
     DOM.mapa.style.display = "none";
+    DOM.solicitacoes.style.display = "none";
 
     DOM.inicioBtn.classList.remove("active");
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.remove("active");
     DOM.mapaBtn.classList.remove("active");
+    DOM.solicitacoesBtn.classList.remove("active");
 
     document.getElementById("urlTransporte").value =
         CONFIG.URL_PLANILHA;
@@ -635,15 +652,41 @@ function mostrarMapa(){
     DOM.estoque.style.display = "none";
     DOM.dev.style.display = "none";
     DOM.mapa.style.display = "block";
+    DOM.solicitacoes.style.display = "none";
 
     DOM.inicioBtn.classList.remove("active");
     DOM.programacaoBtn.classList.remove("active");
     DOM.estoqueBtn.classList.remove("active");
     DOM.mapaBtn.classList.add("active");
+    DOM.solicitacoesBtn.classList.remove("active");
 
     mostrarMapaGeral();
 
+   atualizarAreasSolicitadasMapa();
+
    atualizarContainerSelecionadoMapa();
+
+   
+
+}
+
+function mostrarSolicitacoes(){
+
+    DOM.inicio.style.display = "none";
+    DOM.programacao.style.display = "none";
+    DOM.estoque.style.display = "none";
+    DOM.mapa.style.display = "none";
+    DOM.dev.style.display = "none";
+    DOM.solicitacoes.style.display = "block";
+
+    DOM.inicioBtn.classList.remove("active");
+    DOM.programacaoBtn.classList.remove("active");
+    DOM.estoqueBtn.classList.remove("active");
+    DOM.mapaBtn.classList.remove("active");
+    DOM.solicitacoesBtn.classList.add("active");
+
+    atualizarDashboardSolicitacoes();
+    renderSolicitacoesPendentes();
 
 }
 
@@ -1348,7 +1391,754 @@ function atualizarContainerSelecionadoMapa(){
         `Local atual: ${localAtual || "SEM LOCALIZAÇÃO"}`;
 
 }
-   
+
+
+/* ==========================================================
+   SOLICITAÇÕES
+========================================================== */
+
+function obterSolicitacoes(){
+
+    return JSON.parse(
+        localStorage.getItem("solicitacoesPosicionamento") || "[]"
+    );
+
+}
+
+
+function salvarSolicitacoes(lista){
+
+    localStorage.setItem(
+        "solicitacoesPosicionamento",
+        JSON.stringify(lista)
+    );
+
+}
+
+function atualizarDashboardSolicitacoes(){
+
+    const vazios = APP.dadosEstoque.filter(registro=>{
+
+        return textoMaiusculo(registro.estado) === "V";
+
+    }).length;
+
+
+    const pendentes = obterSolicitacoes().filter(item=>{
+
+        return item.status === "PENDENTE";
+
+    }).length;
+
+
+    document.getElementById(
+        "totalContainersVazios"
+    ).textContent = vazios;
+
+
+    document.getElementById(
+        "totalSolicitacoesPendentes"
+    ).textContent = pendentes;
+
+}
+
+function fecharFormulariosSolicitacao(){
+
+    document.getElementById(
+        "solicitacaoEstufagem"
+    ).style.display = "none";
+
+    document.getElementById(
+        "solicitacaoMapa"
+    ).style.display = "none";
+
+    document.getElementById(
+        "solicitacaoFumigacao"
+    ).style.display = "none";
+
+}
+
+
+function abrirSolicitacaoEstufagem(){
+
+    fecharFormulariosSolicitacao();
+
+    document.getElementById(
+        "solicitacaoEstufagem"
+    ).style.display = "block";
+
+}
+
+
+function abrirSolicitacaoMapa(){
+
+    fecharFormulariosSolicitacao();
+
+    document.getElementById(
+        "solicitacaoMapa"
+    ).style.display = "block";
+
+}
+
+
+function abrirSolicitacaoFumigacao(){
+
+    fecharFormulariosSolicitacao();
+
+    document.getElementById(
+        "solicitacaoFumigacao"
+    ).style.display = "block";
+
+}
+
+function lerListaContainers(idTextarea){
+
+    const textoLista =
+        document.getElementById(idTextarea).value;
+
+    return textoLista
+        .split("\n")
+        .map(numero=>normalizarContainer(numero))
+        .filter(numero=>numero);
+
+}
+
+function containerJaSolicitado(container){
+
+    return obterSolicitacoes().some(item=>{
+
+        return (
+            item.container === container &&
+            item.status === "PENDENTE"
+        );
+
+    });
+
+}
+
+function criarSolicitacoes(
+    containers,
+    destino,
+    tipo
+){
+
+    const solicitacoes =
+        obterSolicitacoes();
+
+    const erros = [];
+
+    let adicionados = 0;
+
+
+    containers.forEach(container=>{
+
+        const registro =
+            buscarContainerNoEstoque(container);
+
+
+        // CONTAINER NÃO EXISTE
+
+        if(!registro){
+
+            erros.push(
+                `${container}: não localizado no estoque`
+            );
+
+            return;
+
+        }
+
+
+        // SEM LOCALIZAÇÃO
+
+        const localAtual =
+            obterLocalizacao(container);
+
+        if(!localAtual){
+
+            erros.push(
+                `${container}: container sem localização`
+            );
+
+            return;
+
+        }
+
+
+        const estado =
+            textoMaiusculo(registro.estado);
+
+
+        // ESTUFAGEM = SOMENTE VAZIO
+
+        if(
+            tipo === "ESTUFAGEM" &&
+            estado !== "V"
+        ){
+
+            erros.push(
+                `${container}: somente containers V podem ser solicitados para estufagem`
+            );
+
+            return;
+
+        }
+
+
+        // MAPA/FUMIGAÇÃO NÃO ACEITAM VAZIO
+
+        if(
+            (tipo === "MAPA" ||
+             tipo === "FUMIGACAO") &&
+            estado === "V"
+        ){
+
+            erros.push(
+                `${container}: container V não pode ser solicitado para ${destino}`
+            );
+
+            return;
+
+        }
+
+
+        // JÁ SOLICITADO
+
+        if(containerJaSolicitado(container)){
+
+            erros.push(
+                `${container}: já possui solicitação pendente`
+            );
+
+            return;
+
+        }
+
+
+        solicitacoes.push({
+
+            container: container,
+
+            origem: localAtual,
+
+            destino: destino,
+
+            tipo: tipo,
+
+            status: "PENDENTE",
+
+            data: new Date()
+                .toLocaleString("pt-BR")
+
+        });
+
+
+        adicionados++;
+
+    });
+
+
+    salvarSolicitacoes(
+        solicitacoes
+    );
+
+
+    atualizarDashboardSolicitacoes();
+
+    renderSolicitacoesPendentes();
+
+    atualizarAreasSolicitadasMapa();
+
+
+    if(adicionados > 0){
+
+        alert(
+            `${adicionados} solicitação(ões) criada(s) com sucesso.`
+        );
+
+    }
+
+
+    if(erros.length > 0){
+
+        alert(
+
+            "Alguns containers não foram solicitados:\n\n" +
+
+            erros.join("\n")
+
+        );
+
+    }
+
+}
+
+function confirmarSolicitacaoEstufagem(){
+
+    const destino =
+        APP.destinoEstufagemSelecionado;
+
+
+    if(!destino){
+
+        alert(
+            "Selecione uma área de estufagem."
+        );
+
+        return;
+
+    }
+
+
+    const containers =
+        lerListaContainers(
+            "containersEstufagem"
+        );
+
+
+    if(containers.length === 0){
+
+        alert(
+            "Informe pelo menos um container."
+        );
+
+        return;
+
+    }
+
+
+    criarSolicitacoes(
+        containers,
+        destino,
+        "ESTUFAGEM"
+    );
+
+
+    document.getElementById(
+        "containersEstufagem"
+    ).value = "";
+
+}
+
+function confirmarSolicitacaoMapa(){
+
+    const containers =
+        lerListaContainers(
+            "containersMapa"
+        );
+
+
+    if(containers.length === 0){
+
+        alert(
+            "Informe pelo menos um container."
+        );
+
+        return;
+
+    }
+
+
+    criarSolicitacoes(
+        containers,
+        "MAPA",
+        "MAPA"
+    );
+
+
+    document.getElementById(
+        "containersMapa"
+    ).value = "";
+
+}
+
+function confirmarSolicitacaoFumigacao(){
+
+    const containers =
+        lerListaContainers(
+            "containersFumigacao"
+        );
+
+
+    if(containers.length === 0){
+
+        alert(
+            "Informe pelo menos um container."
+        );
+
+        return;
+
+    }
+
+
+    criarSolicitacoes(
+        containers,
+        "FUMIGAÇÃO",
+        "FUMIGACAO"
+    );
+
+
+    document.getElementById(
+        "containersFumigacao"
+    ).value = "";
+
+}
+
+function renderSolicitacoesPendentes(){
+
+    const tbody =
+        document.getElementById(
+            "tbodySolicitacoes"
+        );
+
+
+    const pendentes =
+        obterSolicitacoes().filter(item=>{
+
+            return item.status === "PENDENTE";
+
+        });
+
+
+    tbody.innerHTML = "";
+
+
+    if(pendentes.length === 0){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="loading">
+
+                    Nenhuma solicitação pendente.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    pendentes.forEach(item=>{
+
+        tbody.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${item.container}
+                </td>
+
+                <td>
+                    ${item.origem}
+                </td>
+
+                <td>
+                    ${item.destino}
+                </td>
+
+                <td>
+                    ${item.status}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+function atualizarAreasSolicitadasMapa(){
+
+    const pendentes =
+        obterSolicitacoes().filter(item=>{
+
+            return item.status === "PENDENTE";
+
+        });
+
+
+    document
+        .querySelectorAll(".area-especial")
+        .forEach(area=>{
+
+            area.classList.remove(
+                "solicitacao-pendente"
+            );
+
+        });
+
+
+    pendentes.forEach(item=>{
+
+        document
+            .querySelectorAll(".area-especial")
+            .forEach(area=>{
+
+                const localArea =
+                    textoMaiusculo(
+                        area.dataset.local
+                    );
+
+                const destino =
+                    textoMaiusculo(
+                        item.destino
+                    );
+
+                if(localArea === destino){
+
+                    area.classList.add(
+                        "solicitacao-pendente"
+                    );
+
+                }
+
+            });
+
+    });
+
+}
+
+function abrirSolicitacoesArea(destino){
+
+    const pendentes =
+        obterSolicitacoes().filter(item=>{
+
+            return (
+                item.status === "PENDENTE" &&
+                textoMaiusculo(item.destino) ===
+                textoMaiusculo(destino)
+            );
+
+        });
+
+
+    if(pendentes.length === 0){
+
+        return;
+
+    }
+
+
+    let modal =
+        document.getElementById(
+            "modalSolicitacoesArea"
+        );
+
+
+    if(!modal){
+
+        modal =
+            document.createElement("div");
+
+        modal.id =
+            "modalSolicitacoesArea";
+
+        modal.className =
+            "modal-movimentacao";
+
+        document.body.appendChild(modal);
+
+    }
+
+
+    let listaHTML = "";
+
+
+    pendentes.forEach(item=>{
+
+        listaHTML += `
+
+            <label class="solicitacao-checkbox">
+
+                <input
+                    type="checkbox"
+                    value="${item.container}">
+
+                <span>
+                    ${item.container}
+                </span>
+
+            </label>
+
+        `;
+
+    });
+
+
+    modal.innerHTML = `
+
+        <div class="modal-movimentacao-conteudo">
+
+            <h3>
+                ${destino}
+            </h3>
+
+            <p>
+                Containers aguardando posicionamento
+            </p>
+
+            <div class="lista-check-solicitacoes">
+
+                ${listaHTML}
+
+            </div>
+
+            <div class="modal-acoes">
+
+                <button
+                    onclick="fecharSolicitacoesArea()">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    onclick="concluirSolicitacoesArea('${destino}')">
+
+                    Confirmar movimentação
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    modal.style.display = "flex";
+
+}
+
+function fecharSolicitacoesArea(){
+
+    const modal =
+        document.getElementById(
+            "modalSolicitacoesArea"
+        );
+
+    if(modal){
+
+        modal.style.display = "none";
+
+    }
+
+}
+
+function concluirSolicitacoesArea(destino){
+
+    const modal =
+        document.getElementById(
+            "modalSolicitacoesArea"
+        );
+
+
+    const selecionados =
+        [...modal.querySelectorAll(
+            'input[type="checkbox"]:checked'
+        )]
+        .map(input=>input.value);
+
+
+    if(selecionados.length === 0){
+
+        alert(
+            "Selecione pelo menos um container."
+        );
+
+        return;
+
+    }
+
+
+    const solicitacoes =
+        obterSolicitacoes();
+
+
+    const localizacoes =
+        obterLocalizacoes();
+
+
+    selecionados.forEach(container=>{
+
+        localizacoes[container] =
+            destino;
+
+
+        const solicitacao =
+            solicitacoes.find(item=>{
+
+                return (
+                    item.container === container &&
+                    item.status === "PENDENTE" &&
+                    textoMaiusculo(item.destino) ===
+                    textoMaiusculo(destino)
+                );
+
+            });
+
+
+        if(solicitacao){
+
+            solicitacao.status =
+                "CONCLUÍDO";
+
+            solicitacao.concluidoEm =
+                new Date()
+                    .toLocaleString("pt-BR");
+
+        }
+
+    });
+
+
+    salvarLocalizacoes(
+        localizacoes
+    );
+
+    salvarSolicitacoes(
+        solicitacoes
+    );
+
+
+    fecharSolicitacoesArea();
+
+    atualizarAreasSolicitadasMapa();
+
+    atualizarDashboardSolicitacoes();
+
+    renderSolicitacoesPendentes();
+
+
+    if(APP.carregadoEstoque){
+
+        APP.dadosEstoque.forEach(registro=>{
+
+            registro.localizacao =
+                obterLocalizacao(
+                    registro.container
+                );
+
+        });
+
+    }
+
+
+    alert(
+        `${selecionados.length} container(s) movimentado(s) para ${destino}.`
+    );
+
+}
+
 /* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
 ========================================================== */
@@ -1969,6 +2759,49 @@ document
         fecharMovimentacao
     );
 
+document
+    .querySelectorAll(".local-solicitacao")
+    .forEach(botao=>{
+
+        botao.addEventListener(
+            "click",
+            ()=>{
+
+                document
+                    .querySelectorAll(".local-solicitacao")
+                    .forEach(item=>{
+
+                        item.classList.remove("selecionado");
+
+                    });
+
+                botao.classList.add("selecionado");
+
+                APP.destinoEstufagemSelecionado =
+                    botao.dataset.local;
+
+            }
+        );
+
+    });
+
+document
+    .querySelectorAll(".area-especial")
+    .forEach(area=>{
+
+        area.addEventListener(
+            "click",
+            ()=>{
+
+                abrirSolicitacoesArea(
+                    area.dataset.local
+                );
+
+            }
+        );
+
+    });
+
 /* ==========================================================
    ATALHOS
 ========================================================== */
@@ -2142,6 +2975,24 @@ window.mostrarMapa = mostrarMapa;
 window.movimentarContainer = movimentarContainer;
 
 window.atualizarPlanilha = atualizarPlanilha;
+
+window.mostrarSolicitacoes = mostrarSolicitacoes;
+
+window.abrirSolicitacaoEstufagem = abrirSolicitacaoEstufagem;
+
+window.abrirSolicitacaoMapa = abrirSolicitacaoMapa;
+
+window.abrirSolicitacaoFumigacao = abrirSolicitacaoFumigacao;
+
+window.confirmarSolicitacaoEstufagem = confirmarSolicitacaoEstufagem;
+
+window.confirmarSolicitacaoMapa = confirmarSolicitacaoMapa;
+
+window.confirmarSolicitacaoFumigacao = confirmarSolicitacaoFumigacao;
+
+window.fecharSolicitacoesArea = fecharSolicitacoesArea;
+
+window.concluirSolicitacoesArea = concluirSolicitacoesArea;
 
 /* ==========================================================
    FIM DO ARQUIVO
