@@ -1648,8 +1648,8 @@ function buscarProgramacao(){
 
     }
 
-    const dataInicio = new Date(inicio);
-    const dataFim = new Date(fim);
+const dataInicio = parseInputDate(inicio);
+const dataFim = parseInputDate(fim);
 
     let lista = APP.dados.filter(registro=>{
 
