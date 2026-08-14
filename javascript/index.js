@@ -111,9 +111,9 @@ const CLIENTES_ESTUFAGEM =
 const PRACAS_PATIO = {
 
     A: 10,
-    B: 30,
-    C: 30,
-    D: 30
+    B: 37,
+    C: 37,
+    D: 37
 
 };
 
