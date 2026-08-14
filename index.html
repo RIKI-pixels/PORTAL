@@ -54,6 +54,11 @@
                 <div class="menu-icon">🗺️</div>
                 <div>Mapa</div>
             </div>
+            
+            <div class="menu-item" id="solicitacoesBtn" onclick="mostrarSolicitacoes()">
+                <div class="menu-icon">📋</div>
+                <div>Solicitações</div>
+            </div>
 
         </div>
 
@@ -769,7 +774,236 @@
 </div>
 
 
+<!-- SOLICITAÇÕES -->
 
+<div class="box" id="solicitacoes">
+
+    <h2>SOLICITAÇÕES</h2>
+
+    <div class="solicitacoes-dashboard">
+
+        <div class="solicitacao-card">
+
+            <h3>Containers Vazios</h3>
+
+            <strong id="totalContainersVazios">
+                0
+            </strong>
+
+            <span>
+                containers disponíveis
+            </span>
+
+        </div>
+
+        <div class="solicitacao-card">
+
+            <h3>Solicitações Pendentes</h3>
+
+            <strong id="totalSolicitacoesPendentes">
+                0
+            </strong>
+
+            <span>
+                aguardando posicionamento
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="solicitacoes-acoes">
+
+        <button onclick="abrirSolicitacaoEstufagem()">
+            Solicitar para Estufagem
+        </button>
+
+        <button onclick="abrirSolicitacaoMapa()">
+            Solicitar MAPA
+        </button>
+
+        <button onclick="abrirSolicitacaoFumigacao()">
+            Solicitar Fumigação
+        </button>
+
+    </div>
+
+
+    <!-- ESTUFAGEM -->
+
+    <div
+        id="solicitacaoEstufagem"
+        class="solicitacao-form"
+        style="display:none;">
+
+        <h3>
+            SOLICITAR PARA ESTUFAGEM
+        </h3>
+
+        <p>
+            Selecione o local de estufagem:
+        </p>
+
+        <div class="locais-solicitacao">
+
+            <button
+                class="local-solicitacao"
+                data-local="ESTUFAGEM AZ 1">
+
+                ESTUFAGEM AZ 1
+
+            </button>
+
+            <button
+                class="local-solicitacao"
+                data-local="ESTUFAGEM AZ 2">
+
+                ESTUFAGEM AZ 2
+
+            </button>
+
+            <button
+                class="local-solicitacao"
+                data-local="ESTUFAGEM CORREDOR">
+
+                ESTUFAGEM CORREDOR
+
+            </button>
+
+            <button
+                class="local-solicitacao"
+                data-local="ESTUFAGEM AZ 3">
+
+                ESTUFAGEM AZ 3
+
+            </button>
+
+        </div>
+
+        <label>
+            Containers
+        </label>
+
+        <textarea
+            id="containersEstufagem"
+            rows="10"
+            placeholder="Digite um container por linha">
+        </textarea>
+
+        <button onclick="confirmarSolicitacaoEstufagem()">
+            Solicitar
+        </button>
+
+    </div>
+
+
+    <!-- MAPA -->
+
+    <div
+        id="solicitacaoMapa"
+        class="solicitacao-form"
+        style="display:none;">
+
+        <h3>
+            SOLICITAR MAPA
+        </h3>
+
+        <label>
+            Containers
+        </label>
+
+        <textarea
+            id="containersMapa"
+            rows="10"
+            placeholder="Digite um container por linha">
+        </textarea>
+
+        <button onclick="confirmarSolicitacaoMapa()">
+            Solicitar
+        </button>
+
+    </div>
+
+
+    <!-- FUMIGAÇÃO -->
+
+    <div
+        id="solicitacaoFumigacao"
+        class="solicitacao-form"
+        style="display:none;">
+
+        <h3>
+            SOLICITAR FUMIGAÇÃO
+        </h3>
+
+        <label>
+            Containers
+        </label>
+
+        <textarea
+            id="containersFumigacao"
+            rows="10"
+            placeholder="Digite um container por linha">
+        </textarea>
+
+        <button onclick="confirmarSolicitacaoFumigacao()">
+            Solicitar
+        </button>
+
+    </div>
+
+
+    <!-- SOLICITAÇÕES PENDENTES -->
+
+    <div class="solicitacoes-pendentes">
+
+        <h3>
+            SOLICITAÇÕES PENDENTES
+        </h3>
+
+        <div class="grid-panel">
+
+            <div class="grid-table">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>CONTAINER</th>
+                            <th>LOCAL ATUAL</th>
+                            <th>DESTINO</th>
+                            <th>STATUS</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tbodySolicitacoes">
+
+                        <tr>
+
+                            <td colspan="4" class="loading">
+
+                                Nenhuma solicitação pendente.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
             
 
             <!-- DEV -->
