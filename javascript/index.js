@@ -1879,22 +1879,49 @@ function atualizarAreasSolicitadasMapa(){
 
     pendentes.forEach(item=>{
 
-document
-    .querySelectorAll(".area-especial")
-    .forEach(area=>{
+        document
+            .querySelectorAll(".area-especial")
+            .forEach(area=>{
 
-        area.addEventListener(
-            "click",
-            ()=>{
+                if(
+                    textoMaiusculo(area.dataset.local) ===
+                    textoMaiusculo(item.destino)
+                ){
 
-                abrirSolicitacoesArea(
-                    area.dataset.local
-                );
+                    area.classList.add(
+                        "solicitacao-pendente"
+                    );
 
-            }
-        );
+                }
+
+            });
 
     });
+
+}
+
+
+function obterContainersDaArea(local){
+
+    const localizacoes =
+        obterLocalizacoes();
+
+    const localNormalizado =
+        textoMaiusculo(local);
+
+    return Object.keys(localizacoes)
+
+        .filter(container=>{
+
+            return textoMaiusculo(
+                localizacoes[container]
+            ) === localNormalizado;
+
+        })
+
+        .sort();
+
+}
 
 
 function abrirSolicitacoesArea(destino){
@@ -1910,13 +1937,15 @@ function abrirSolicitacoesArea(destino){
 
         });
 
-}
-            );
 
-        });
+    const posicionados =
+        obterContainersDaArea(destino);
 
 
-    if(pendentes.length === 0){
+    if(
+        pendentes.length === 0 &&
+        posicionados.length === 0
+    ){
 
         return;
 
@@ -1945,28 +1974,115 @@ function abrirSolicitacoesArea(destino){
     }
 
 
-    let listaHTML = "";
+    /* =========================================
+       CONTAINERS JÁ POSICIONADOS
+    ========================================= */
+
+    let posicionadosHTML = "";
 
 
-    pendentes.forEach(item=>{
+    if(posicionados.length > 0){
 
-        listaHTML += `
+        posicionadosHTML = `
 
-            <label class="solicitacao-checkbox">
+            <div class="area-containers-posicionados">
 
-                <input
-                    type="checkbox"
-                    value="${item.container}">
+                <h4>
+                    POSICIONADOS
+                </h4>
 
-                <span>
-                    ${item.container}
-                </span>
+                <div class="lista-containers-area">
 
-            </label>
+                    ${posicionados.map(container=>`
+
+                        <div class="container-area-posicionado">
+
+                            <strong>
+                                ${container}
+                            </strong>
+
+                            <span>
+                                ${destino}
+                            </span>
+
+                        </div>
+
+                    `).join("")}
+
+                </div>
+
+            </div>
 
         `;
 
-    });
+    }
+
+
+    /* =========================================
+       SOLICITAÇÕES PENDENTES
+    ========================================= */
+
+    let pendentesHTML = "";
+
+
+    if(pendentes.length > 0){
+
+        pendentesHTML = `
+
+            <div class="area-containers-pendentes">
+
+                <h4>
+                    AGUARDANDO POSICIONAMENTO
+                </h4>
+
+                <div class="lista-check-solicitacoes">
+
+                    ${pendentes.map(item=>`
+
+                        <label class="solicitacao-checkbox">
+
+                            <input
+                                type="checkbox"
+                                value="${item.container}">
+
+                            <span>
+                                ${item.container}
+                            </span>
+
+                        </label>
+
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =========================================
+       BOTÃO CONFIRMAR
+    ========================================= */
+
+    let botaoConfirmar = "";
+
+
+    if(pendentes.length > 0){
+
+        botaoConfirmar = `
+
+            <button
+                onclick="concluirSolicitacoesArea('${destino}')">
+
+                Confirmar movimentação
+
+            </button>
+
+        `;
+
+    }
 
 
     modal.innerHTML = `
@@ -1978,30 +2094,23 @@ function abrirSolicitacoesArea(destino){
             </h3>
 
             <p>
-                Containers aguardando posicionamento
+                Containers da área
             </p>
 
-            <div class="lista-check-solicitacoes">
+            ${posicionadosHTML}
 
-                ${listaHTML}
-
-            </div>
+            ${pendentesHTML}
 
             <div class="modal-acoes">
 
                 <button
                     onclick="fecharSolicitacoesArea()">
 
-                    Cancelar
+                    Fechar
 
                 </button>
 
-                <button
-                    onclick="concluirSolicitacoesArea('${destino}')">
-
-                    Confirmar movimentação
-
-                </button>
+                ${botaoConfirmar}
 
             </div>
 
@@ -2013,6 +2122,7 @@ function abrirSolicitacoesArea(destino){
     modal.style.display = "flex";
 
 }
+
 
 function fecharSolicitacoesArea(){
 
@@ -2028,6 +2138,7 @@ function fecharSolicitacoesArea(){
     }
 
 }
+
 
 function concluirSolicitacoesArea(destino){
 
@@ -2131,26 +2242,6 @@ function concluirSolicitacoesArea(destino){
     alert(
         `${selecionados.length} container(s) movimentado(s) para ${destino}.`
     );
-
-}
-
-function obterContainersDaArea(local){
-
-    const localizacoes =
-        obterLocalizacoes();
-
-    const localNormalizado =
-        textoMaiusculo(local);
-
-    return Object.keys(localizacoes)
-        .filter(container=>{
-
-            return textoMaiusculo(
-                localizacoes[container]
-            ) === localNormalizado;
-
-        })
-        .sort();
 
 }
 
@@ -2808,213 +2899,15 @@ document
             "click",
             ()=>{
 
-function abrirSolicitacoesArea(destino){
+                abrirSolicitacoesArea(
+                    area.dataset.local
+                );
 
-    const pendentes =
-        obterSolicitacoes().filter(item=>{
-
-            return (
-                item.status === "PENDENTE" &&
-                textoMaiusculo(item.destino) ===
-                textoMaiusculo(destino)
-            );
-
-        });
-
-
-    const posicionados =
-        obterContainersDaArea(destino);
-
-
-    /*
-       Se não existe absolutamente nada
-       na área, não abre o modal.
-    */
-
-    if(
-        pendentes.length === 0 &&
-        posicionados.length === 0
-    ){
-
-        return;
-
-    }
-
-
-    let modal =
-        document.getElementById(
-            "modalSolicitacoesArea"
+            }
         );
 
+    });
 
-    if(!modal){
-
-        modal =
-            document.createElement("div");
-
-        modal.id =
-            "modalSolicitacoesArea";
-
-        modal.className =
-            "modal-movimentacao";
-
-        document.body.appendChild(modal);
-
-    }
-
-
-    /* =========================================
-       CONTAINERS JÁ POSICIONADOS
-    ========================================= */
-
-    let posicionadosHTML = "";
-
-
-    if(posicionados.length > 0){
-
-        posicionadosHTML = `
-
-            <div class="area-containers-posicionados">
-
-                <h4>
-                    POSICIONADOS
-                </h4>
-
-                <div class="lista-containers-area">
-
-                    ${posicionados.map(container=>`
-
-                        <div class="container-area-posicionado">
-
-                            <strong>
-                                ${container}
-                            </strong>
-
-                            <span>
-                                ${destino}
-                            </span>
-
-                        </div>
-
-                    `).join("")}
-
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
-
-    /* =========================================
-       SOLICITAÇÕES PENDENTES
-    ========================================= */
-
-    let pendentesHTML = "";
-
-
-    if(pendentes.length > 0){
-
-        pendentesHTML = `
-
-            <div class="area-containers-pendentes">
-
-                <h4>
-                    AGUARDANDO POSICIONAMENTO
-                </h4>
-
-                <div class="lista-check-solicitacoes">
-
-                    ${pendentes.map(item=>`
-
-                        <label class="solicitacao-checkbox">
-
-                            <input
-                                type="checkbox"
-                                value="${item.container}">
-
-                            <span>
-                                ${item.container}
-                            </span>
-
-                        </label>
-
-                    `).join("")}
-
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
-
-    /* =========================================
-       BOTÃO CONFIRMAR
-    ========================================= */
-
-    let botaoConfirmar = "";
-
-
-    if(pendentes.length > 0){
-
-        botaoConfirmar = `
-
-            <button
-                onclick="concluirSolicitacoesArea('${destino}')">
-
-                Confirmar movimentação
-
-            </button>
-
-        `;
-
-    }
-
-
-    /* =========================================
-       MODAL
-    ========================================= */
-
-    modal.innerHTML = `
-
-        <div class="modal-movimentacao-conteudo">
-
-            <h3>
-                ${destino}
-            </h3>
-
-            <p>
-                Containers da área
-            </p>
-
-            ${posicionadosHTML}
-
-            ${pendentesHTML}
-
-            <div class="modal-acoes">
-
-                <button
-                    onclick="fecharSolicitacoesArea()">
-
-                    Fechar
-
-                </button>
-
-                ${botaoConfirmar}
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    modal.style.display = "flex";
-
-}
 /* ==========================================================
    ATALHOS
 ========================================================== */
