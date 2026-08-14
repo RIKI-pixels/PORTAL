@@ -1879,33 +1879,23 @@ function atualizarAreasSolicitadasMapa(){
 
     pendentes.forEach(item=>{
 
-        document
-            .querySelectorAll(".area-especial")
-            .forEach(area=>{
+document
+    .querySelectorAll(".area-especial")
+    .forEach(area=>{
 
-                const localArea =
-                    textoMaiusculo(
-                        area.dataset.local
-                    );
+        area.addEventListener(
+            "click",
+            ()=>{
 
-                const destino =
-                    textoMaiusculo(
-                        item.destino
-                    );
+                abrirSolicitacoesArea(
+                    area.dataset.local
+                );
 
-                if(localArea === destino){
-
-                    area.classList.add(
-                        "solicitacao-pendente"
-                    );
-
-                }
-
-            });
+            }
+        );
 
     });
 
-}
 
 function abrirSolicitacoesArea(destino){
 
@@ -1916,6 +1906,11 @@ function abrirSolicitacoesArea(destino){
                 item.status === "PENDENTE" &&
                 textoMaiusculo(item.destino) ===
                 textoMaiusculo(destino)
+            );
+
+        });
+
+}
             );
 
         });
