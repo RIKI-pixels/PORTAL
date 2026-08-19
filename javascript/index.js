@@ -699,6 +699,7 @@ function mostrarSolicitacoes(){
 
     atualizarDashboardSolicitacoes();
     renderSolicitacoesPendentes();
+    renderSolicitacoesEmAndamento();
 
 }
 
@@ -1803,7 +1804,6 @@ function renderSolicitacoesPendentes(){
             "tbodySolicitacoes"
         );
 
-
     const pendentes =
         obterSolicitacoes().filter(item=>{
 
@@ -1811,9 +1811,7 @@ function renderSolicitacoesPendentes(){
 
         });
 
-
     tbody.innerHTML = "";
-
 
     if(pendentes.length === 0){
 
@@ -1836,7 +1834,6 @@ function renderSolicitacoesPendentes(){
         return;
 
     }
-
 
     pendentes.forEach(item=>{
 
@@ -1868,6 +1865,160 @@ function renderSolicitacoesPendentes(){
 
 }
 
+
+/* ==========================================================
+   SOLICITAÇÕES EM ANDAMENTO
+========================================================== */
+
+function obterSolicitacoesEmAndamento(){
+
+    return obterSolicitacoes().filter(item=>{
+
+        return item.status === "EM ANDAMENTO";
+
+    });
+
+}
+
+
+function renderSolicitacoesEmAndamento(){
+
+    const tbody =
+        document.getElementById(
+            "tbodySolicitacoesAndamento"
+        );
+
+    if(!tbody){
+
+        return;
+
+    }
+
+    const andamento =
+        obterSolicitacoesEmAndamento();
+
+    tbody.innerHTML = "";
+
+    if(andamento.length === 0){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="loading">
+
+                    Nenhuma solicitação em andamento.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    andamento.forEach(item=>{
+
+        tbody.innerHTML += `
+
+            <tr>
+
+                <td>
+
+                    <input
+                        type="checkbox"
+                        class="check-solicitacao-andamento"
+                        value="${item.container}">
+
+                </td>
+
+                <td>
+                    ${item.container}
+                </td>
+
+                <td>
+                    ${item.destino}
+                </td>
+
+                <td>
+                    ${item.posicionadoEm || ""}
+                </td>
+
+                <td>
+                    ${item.status}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+function concluirSolicitacoesSelecionadas(){
+
+    const selecionados = [
+
+        ...document.querySelectorAll(
+            ".check-solicitacao-andamento:checked"
+        )
+
+    ].map(input=>input.value);
+
+    if(selecionados.length === 0){
+
+        alert(
+            "Selecione pelo menos uma solicitação."
+        );
+
+        return;
+
+    }
+
+    const solicitacoes =
+        obterSolicitacoes();
+
+    solicitacoes.forEach(item=>{
+
+        if(
+            selecionados.includes(item.container) &&
+            item.status === "EM ANDAMENTO"
+        ){
+
+            item.status =
+                "CONCLUÍDO";
+
+            item.concluidoEm =
+                new Date()
+                    .toLocaleString("pt-BR");
+
+        }
+
+    });
+
+    salvarSolicitacoes(
+        solicitacoes
+    );
+
+    renderSolicitacoesPendentes();
+
+    renderSolicitacoesEmAndamento();
+
+    atualizarDashboardSolicitacoes();
+
+    atualizarAreasSolicitadasMapa();
+
+    alert(
+        `${selecionados.length} solicitação(ões) concluída(s).`
+    );
+
+}
 function atualizarAreasSolicitadasMapa(){
 
     const pendentes =
@@ -2222,17 +2373,16 @@ function concluirSolicitacoesArea(destino){
             });
 
 
-        if(solicitacao){
+         if(solicitacao){
 
-            solicitacao.status =
-                "CONCLUÍDO";
+             solicitacao.status =
+              "EM ANDAMENTO";
 
-            solicitacao.concluidoEm =
-                new Date()
-                    .toLocaleString("pt-BR");
+             solicitacao.posicionadoEm =
+                 new Date()
+                  .toLocaleString("pt-BR");
 
-        }
-
+         }
     });
 
 
@@ -2252,6 +2402,8 @@ function concluirSolicitacoesArea(destino){
     atualizarDashboardSolicitacoes();
 
     renderSolicitacoesPendentes();
+
+    renderSolicitacoesEmAndamento();
 
 
     if(APP.carregadoEstoque){
@@ -3126,6 +3278,8 @@ window.confirmarSolicitacaoFumigacao = confirmarSolicitacaoFumigacao;
 window.fecharSolicitacoesArea = fecharSolicitacoesArea;
 
 window.concluirSolicitacoesArea = concluirSolicitacoesArea;
+
+window.concluirSolicitacoesSelecionadas =concluirSolicitacoesSelecionadas;
 
 /* ==========================================================
    FIM DO ARQUIVO
