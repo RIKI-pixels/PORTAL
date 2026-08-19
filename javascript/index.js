@@ -2049,52 +2049,38 @@ function abrirSolicitacoesArea(destino){
 
                 <div class="lista-check-solicitacoes">
 
-                    ${pendentes.map(item=>`
+${pendentes.map(item=>{
 
-                        <label class="solicitacao-checkbox">
+    const localAtual =
+        obterLocalizacao(item.container) ||
+        item.origem ||
+        "SEM LOCALIZAÇÃO";
 
-                            <input
-                                type="checkbox"
-                                value="${item.container}">
+    return `
 
-                            <span>
-                                ${item.container}
-                            </span>
+        <label class="solicitacao-checkbox">
 
-                        </label>
+            <input
+                type="checkbox"
+                value="${item.container}">
 
-                    `).join("")}
+            <div class="solicitacao-info">
 
-                </div>
+                <strong>
+                    ${item.container}
+                </strong>
+
+                <span>
+                    Local atual: ${localAtual}
+                </span>
 
             </div>
 
-        `;
+        </label>
 
-    }
+    `;
 
-
-    /* =========================================
-       BOTÃO CONFIRMAR
-    ========================================= */
-
-    let botaoConfirmar = "";
-
-
-    if(pendentes.length > 0){
-
-        botaoConfirmar = `
-
-            <button
-                onclick="concluirSolicitacoesArea('${destino}')">
-
-                Confirmar movimentação
-
-            </button>
-
-        `;
-
-    }
+}).join("")}
 
 
     modal.innerHTML = `
