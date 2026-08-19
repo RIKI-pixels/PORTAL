@@ -2034,54 +2034,86 @@ function abrirSolicitacoesArea(destino){
        SOLICITAÇÕES PENDENTES
     ========================================= */
 
-    let pendentesHTML = "";
+let pendentesHTML = "";
 
+if(pendentes.length > 0){
 
-    if(pendentes.length > 0){
+    pendentesHTML = `
 
-        pendentesHTML = `
+        <div class="area-containers-pendentes">
 
-            <div class="area-containers-pendentes">
+            <h4>
+                AGUARDANDO POSICIONAMENTO
+            </h4>
 
-                <h4>
-                    AGUARDANDO POSICIONAMENTO
-                </h4>
+            <div class="lista-check-solicitacoes">
 
-                <div class="lista-check-solicitacoes">
+                ${pendentes.map(item=>{
 
-${pendentes.map(item=>{
+                    const localAtual =
+                        obterLocalizacao(item.container) ||
+                        item.origem ||
+                        "SEM LOCALIZAÇÃO";
 
-    const localAtual =
-        obterLocalizacao(item.container) ||
-        item.origem ||
-        "SEM LOCALIZAÇÃO";
+                    return `
 
-    return `
+                        <label class="solicitacao-checkbox">
 
-        <label class="solicitacao-checkbox">
+                            <input
+                                type="checkbox"
+                                value="${item.container}">
 
-            <input
-                type="checkbox"
-                value="${item.container}">
+                            <div class="solicitacao-info">
 
-            <div class="solicitacao-info">
+                                <strong>
+                                    ${item.container}
+                                </strong>
 
-                <strong>
-                    ${item.container}
-                </strong>
+                                <span>
+                                    Local atual: ${localAtual}
+                                </span>
 
-                <span>
-                    Local atual: ${localAtual}
-                </span>
+                            </div>
+
+                        </label>
+
+                    `;
+
+                }).join("")}
 
             </div>
 
-        </label>
+        </div>
 
     `;
 
-}).join("")}
+}
 
+    /* =========================================
+       BOTÃO CONFIRMAR
+    ========================================= */
+
+    let botaoConfirmar = "";
+
+    if(pendentes.length > 0){
+
+        botaoConfirmar = `
+
+            <button
+                onclick="concluirSolicitacoesArea('${destino}')">
+
+                Confirmar movimentação
+
+            </button>
+
+        `;
+
+    }
+
+
+    /* =========================================
+       MODAL
+    ========================================= */
 
     modal.innerHTML = `
 
@@ -2166,7 +2198,6 @@ function concluirSolicitacoesArea(destino){
 
     const solicitacoes =
         obterSolicitacoes();
-
 
     const localizacoes =
         obterLocalizacoes();
