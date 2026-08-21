@@ -698,8 +698,12 @@ function mostrarSolicitacoes(){
     DOM.solicitacoesBtn.classList.add("active");
 
     atualizarDashboardSolicitacoes();
+
     renderSolicitacoesPendentes();
-    );
+
+    renderSolicitacoesEmAndamento();
+
+    renderSolicitacoesConcluidas();
 
 }
 
