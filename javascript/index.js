@@ -2226,10 +2226,6 @@ function atualizarAreasSolicitadasMapa(){
 
             });
 
-    });
-
-}
-
 
 function obterContainersDaArea(local){
 
