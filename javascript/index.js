@@ -2207,26 +2207,6 @@ function atualizarAreasSolicitadasMapa(){
 
 }
 
-    pendentes.forEach(item=>{
-
-        document
-            .querySelectorAll(".area-especial")
-            .forEach(area=>{
-
-                if(
-                    textoMaiusculo(area.dataset.local) ===
-                    textoMaiusculo(item.destino)
-                ){
-
-                    area.classList.add(
-                        "solicitacao-pendente"
-                    );
-
-                }
-
-            });
-
-
 function obterContainersDaArea(local){
 
     const localizacoes =
