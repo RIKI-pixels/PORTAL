@@ -1633,3 +1633,35 @@ SOLICITAÇÕES
     font-weight:400;
     color:#777;
 }
+
+/* ==========================================================
+   SOLICITAÇÕES EM ANDAMENTO
+========================================================== */
+
+.solicitacoes-andamento{
+    margin-top:30px;
+}
+
+.solicitacoes-titulo-linha{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.solicitacoes-titulo-linha h3{
+    margin:0;
+    color:#0B4EA2;
+}
+
+.solicitacoes-titulo-linha button{
+    padding:9px 14px;
+    font-size:12px;
+}
+
+#tbodySolicitacoesAndamento input[type="checkbox"]{
+    width:16px;
+    height:16px;
+    cursor:pointer;
+}
