@@ -1665,3 +1665,15 @@ SOLICITAÇÕES
     height:16px;
     cursor:pointer;
 }
+
+/* ==========================================================
+   SOLICITAÇÕES CONCLUÍDAS
+========================================================== */
+
+.solicitacoes-concluidas{
+    margin-top:30px;
+}
+
+.solicitacoes-concluidas h3{
+    color:#0B4EA2;
+}
