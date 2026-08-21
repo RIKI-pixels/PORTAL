@@ -699,7 +699,7 @@ function mostrarSolicitacoes(){
 
     atualizarDashboardSolicitacoes();
     renderSolicitacoesPendentes();
-    renderSolicitacoesEmAndamento();
+    );
 
 }
 
@@ -1656,11 +1656,15 @@ function criarSolicitacoes(
     );
 
 
-    atualizarDashboardSolicitacoes();
+renderSolicitacoesPendentes();
 
-    renderSolicitacoesPendentes();
+renderSolicitacoesEmAndamento();
 
-    atualizarAreasSolicitadasMapa();
+renderSolicitacoesConcluidas();
+
+atualizarDashboardSolicitacoes();
+
+atualizarAreasSolicitadasMapa();
 
 
     if(adicionados > 0){
@@ -1960,6 +1964,98 @@ function renderSolicitacoesEmAndamento(){
 
 }
 
+function obterSolicitacoesConcluidas(){
+
+    return obterSolicitacoes().filter(item=>{
+
+        return item.status === "CONCLUÍDO";
+
+    });
+
+}
+
+
+function renderSolicitacoesConcluidas(){
+
+    const tbody =
+        document.getElementById(
+            "tbodySolicitacoesConcluidas"
+        );
+
+
+    if(!tbody){
+
+        return;
+
+    }
+
+
+    const concluidas =
+        obterSolicitacoesConcluidas();
+
+
+    tbody.innerHTML = "";
+
+
+    if(concluidas.length === 0){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="loading">
+
+                    Nenhuma solicitação concluída.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    concluidas
+        .slice()
+        .reverse()
+        .forEach(item=>{
+
+            tbody.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${item.container}
+                    </td>
+
+                    <td>
+                        ${item.origem || ""}
+                    </td>
+
+                    <td>
+                        ${item.destino}
+                    </td>
+
+                    <td>
+                        ${item.posicionadoEm || ""}
+                    </td>
+
+                    <td>
+                        ${item.concluidoEm || ""}
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+}
 
 function concluirSolicitacoesSelecionadas(){
 
