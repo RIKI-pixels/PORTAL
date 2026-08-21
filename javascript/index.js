@@ -704,6 +704,8 @@ function mostrarSolicitacoes(){
     renderSolicitacoesEmAndamento();
 
     renderSolicitacoesConcluidas();
+   
+   atualizarNotificacaoSolicitacoes();
 
 }
 
@@ -2116,6 +2118,8 @@ atualizarDashboardSolicitacoes();
 
 atualizarAreasSolicitadasMapa();
 
+atualizarNotificacaoSolicitacoes();
+
     alert(
         `${selecionados.length} solicitação(ões) concluída(s).`
     );
@@ -2123,12 +2127,8 @@ atualizarAreasSolicitadasMapa();
 }
 function atualizarAreasSolicitadasMapa(){
 
-    const pendentes =
-        obterSolicitacoes().filter(item=>{
-
-            return item.status === "PENDENTE";
-
-        });
+    const solicitacoes =
+        obterSolicitacoes();
 
 
     document
@@ -2136,11 +2136,76 @@ function atualizarAreasSolicitadasMapa(){
         .forEach(area=>{
 
             area.classList.remove(
-                "solicitacao-pendente"
+                "solicitacao-pendente",
+                "solicitacao-concluida",
+                "solicitacao-mista"
             );
+
+
+            const local =
+                textoMaiusculo(
+                    area.dataset.local
+                );
+
+
+            const pendentes =
+                solicitacoes.filter(item=>{
+
+                    return (
+                        item.status === "PENDENTE" &&
+                        textoMaiusculo(item.destino) === local
+                    );
+
+                }).length;
+
+
+            const concluidas =
+                solicitacoes.filter(item=>{
+
+                    return (
+                        item.status === "CONCLUÍDO" &&
+                        textoMaiusculo(item.destino) === local
+                    );
+
+                }).length;
+
+
+            if(
+                pendentes > 0 &&
+                concluidas > 0
+            ){
+
+                area.classList.add(
+                    "solicitacao-mista"
+                );
+
+                return;
+
+            }
+
+
+            if(pendentes > 0){
+
+                area.classList.add(
+                    "solicitacao-pendente"
+                );
+
+                return;
+
+            }
+
+
+            if(concluidas > 0){
+
+                area.classList.add(
+                    "solicitacao-concluida"
+                );
+
+            }
 
         });
 
+}0
 
     pendentes.forEach(item=>{
 
@@ -2342,6 +2407,44 @@ if(pendentes.length > 0){
 
 }
 
+   function atualizarNotificacaoSolicitacoes(){
+
+    const andamento =
+        obterSolicitacoes().filter(item=>{
+
+            return item.status === "EM ANDAMENTO";
+
+        }).length;
+
+
+    const notificacao =
+        document.getElementById(
+            "notificacaoSolicitacoes"
+        );
+
+
+    if(!notificacao){
+        return;
+    }
+
+
+    if(andamento > 0){
+
+        notificacao.textContent =
+            andamento;
+
+        notificacao.style.display =
+            "flex";
+
+    }else{
+
+        notificacao.style.display =
+            "none";
+
+    }
+
+}
+
     /* =========================================
        BOTÃO CONFIRMAR
     ========================================= */
@@ -2506,6 +2609,8 @@ function concluirSolicitacoesArea(destino){
     renderSolicitacoesPendentes();
 
     renderSolicitacoesEmAndamento();
+   
+   atualizarNotificacaoSolicitacoes();
 
 
     if(APP.carregadoEstoque){
@@ -3064,6 +3169,8 @@ function iniciarPortal(){
     carregarEstoque();
    
      mostrarInicio();
+
+     atualizarNotificacaoSolicitacoes();
 
 }
 
