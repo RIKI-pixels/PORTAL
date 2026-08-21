@@ -1677,3 +1677,33 @@ SOLICITAÇÕES
 .solicitacoes-concluidas h3{
     color:#0B4EA2;
 }
+
+.container-selecionado-mapa{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+
+    margin-bottom:20px;
+    padding:15px 20px;
+
+    background:#f7faff;
+
+    border:1px solid #dbe8ff;
+    border-radius:14px;
+}
+
+.container-selecionado-mapa span{
+    font-size:11px;
+    font-weight:600;
+    color:#777;
+}
+
+.container-selecionado-mapa strong{
+    font-size:18px;
+    color:#0B4EA2;
+}
+
+.container-selecionado-mapa small{
+    font-size:11px;
+    color:#666;
+}
