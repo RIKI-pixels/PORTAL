@@ -674,7 +674,7 @@ function mostrarMapa(){
 
     mostrarMapaGeral();
 
-   atualizarAreasSolicitadasMapa();
+   
 
    atualizarContainerSelecionadoMapa();
 
@@ -2106,13 +2106,15 @@ function concluirSolicitacoesSelecionadas(){
         solicitacoes
     );
 
-    renderSolicitacoesPendentes();
+renderSolicitacoesPendentes();
 
-    renderSolicitacoesEmAndamento();
+renderSolicitacoesEmAndamento();
 
-    atualizarDashboardSolicitacoes();
+renderSolicitacoesConcluidas();
 
-    atualizarAreasSolicitadasMapa();
+atualizarDashboardSolicitacoes();
+
+atualizarAreasSolicitadasMapa();
 
     alert(
         `${selecionados.length} solicitação(ões) concluída(s).`
