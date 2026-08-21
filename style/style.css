@@ -1489,10 +1489,29 @@ SOLICITAÇÕES
     margin-bottom:15px;
 }
 
-.area-patio.solicitacao-pendente{
+.area-especial.solicitacao-pendente{
     background:#ffb347;
     border-color:#e58a00;
     color:#663c00;
+}
+.area-especial.solicitacao-concluida{
+    background:#b9e8c5;
+    border-color:#39a857;
+    color:#176b2e;
+}
+
+.area-especial.solicitacao-mista{
+    background:
+        linear-gradient(
+            90deg,
+            #ffb347 0%,
+            #ffb347 50%,
+            #b9e8c5 50%,
+            #b9e8c5 100%
+        );
+
+    border-color:#999;
+    color:#333;
 }
 
 /* ==========================================================
