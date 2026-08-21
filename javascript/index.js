@@ -2205,7 +2205,7 @@ function atualizarAreasSolicitadasMapa(){
 
         });
 
-}0
+}
 
     pendentes.forEach(item=>{
 
