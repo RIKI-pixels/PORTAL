@@ -247,16 +247,6 @@ function valor(linha,coluna){
 
 }
 
-
-function limparTabela(){
-
-    DOM.thead.innerHTML = "";
-
-    DOM.tbody.innerHTML = "";
-
-}
-
-
 function limparTabelaProgramacao(){
 
     DOM.theadProg.innerHTML = "";
@@ -674,7 +664,7 @@ function mostrarMapa(){
 
     mostrarMapaGeral();
 
-   
+   atualizarAreasSolicitadasMapa();
 
    atualizarContainerSelecionadoMapa();
 
@@ -945,22 +935,77 @@ function restaurarTSV(){
 function resetarLocalizacoes(){
 
     const confirmar = confirm(
-
-        "Deseja realmente apagar todas as localizações salvas?"
-
+        "Deseja realmente apagar todas as localizações salvas?\n\nSolicitações pendentes e em andamento também serão removidas."
     );
 
     if(!confirmar){
-
         return;
+    }
+
+
+    // REMOVE TODAS AS LOCALIZAÇÕES
+
+    localStorage.removeItem(
+        "localizacoesContainers"
+    );
+
+
+    // MANTÉM SOMENTE O HISTÓRICO CONCLUÍDO
+
+    const solicitacoes =
+        obterSolicitacoes();
+
+    const historico =
+        solicitacoes.filter(item=>{
+
+            return item.status === "CONCLUÍDO";
+
+        });
+
+    salvarSolicitacoes(
+        historico
+    );
+
+
+    // ATUALIZA O ESTADO EM MEMÓRIA DO ESTOQUE
+
+    if(APP.carregadoEstoque){
+
+        APP.dadosEstoque.forEach(registro=>{
+
+            registro.localizacao = "";
+
+        });
 
     }
 
-    localStorage.removeItem("localizacoesContainers");
 
-    alert("Todas as localizações foram removidas.");
+    APP.containerSelecionado = null;
 
-    buscarEstoque();
+
+    atualizarDashboardSolicitacoes();
+
+    renderSolicitacoesPendentes();
+
+    renderSolicitacoesEmAndamento();
+
+    renderSolicitacoesConcluidas();
+
+    atualizarAreasSolicitadasMapa();
+
+    atualizarNotificacaoSolicitacoes();
+
+
+    alert(
+        "Localizações resetadas.\nSolicitações pendentes e em andamento foram removidas."
+    );
+
+
+    if(APP.carregadoEstoque){
+
+        buscarEstoque();
+
+    }
 
 }
 
@@ -1294,6 +1339,79 @@ function validarEmpilhamento(){
 
 }
 
+function validarRetiradaContainer(container){
+
+    const localAtual =
+        obterLocalizacao(container);
+
+    if(!localAtual){
+        return true;
+    }
+
+
+    const partes =
+        localAtual.split("-");
+
+
+    if(partes.length < 4){
+
+        // Está em área especial, como MAPA/FUMIGAÇÃO/ESTUFAGEM
+        return true;
+
+    }
+
+
+    const nivelAtual =
+        Number(
+            partes[partes.length - 1]
+        );
+
+
+    if(!nivelAtual){
+        return true;
+    }
+
+
+    const basePosicao =
+        partes.slice(
+            0,
+            partes.length - 1
+        ).join("-");
+
+
+    for(
+        let nivelSuperior = nivelAtual + 1;
+        nivelSuperior <= 4;
+        nivelSuperior++
+    ){
+
+        const posicaoSuperior =
+            `${basePosicao}-${nivelSuperior}`;
+
+        const containerSuperior =
+            obterContainerNaPosicao(
+                posicaoSuperior
+            );
+
+
+        if(containerSuperior){
+
+            alert(
+                `Não é possível movimentar ${container}.\n\n` +
+                `Existe o container ${containerSuperior} acima dele na posição ${posicaoSuperior}.`
+            );
+
+            return false;
+
+        }
+
+    }
+
+
+    return true;
+
+}
+
 function confirmarMovimentacao(){
 
     const input =
@@ -1384,6 +1502,11 @@ function atualizarContainerSelecionadoMapa(){
             "containerSelecionadoMapa"
         );
 
+    if(!painel){
+        return;
+    }
+
+
     if(!APP.containerSelecionado){
 
         painel.style.display = "none";
@@ -1392,22 +1515,40 @@ function atualizarContainerSelecionadoMapa(){
 
     }
 
+
     painel.style.display = "flex";
 
-    document.getElementById(
-        "numeroContainerSelecionado"
-    ).textContent =
-        APP.containerSelecionado;
+
+    const numeroContainer =
+        document.getElementById(
+            "numeroContainerSelecionado"
+        );
+
+    if(numeroContainer){
+
+        numeroContainer.textContent =
+            APP.containerSelecionado;
+
+    }
+
 
     const localAtual =
         obterLocalizacao(
             APP.containerSelecionado
         );
 
-    document.getElementById(
-        "localAtualContainerSelecionado"
-    ).textContent =
-        `Local atual: ${localAtual || "SEM LOCALIZAÇÃO"}`;
+
+    const localAtualElemento =
+        document.getElementById(
+            "localAtualContainerSelecionado"
+        );
+
+    if(localAtualElemento){
+
+        localAtualElemento.textContent =
+            `Local atual: ${localAtual || "SEM LOCALIZAÇÃO"}`;
+
+    }
 
 }
 
@@ -1528,7 +1669,10 @@ function containerJaSolicitado(container){
 
         return (
             item.container === container &&
-            item.status === "PENDENTE"
+            (
+                item.status === "PENDENTE" ||
+                item.status === "EM ANDAMENTO"
+            )
         );
 
     });
@@ -1880,6 +2024,46 @@ function renderSolicitacoesPendentes(){
    SOLICITAÇÕES EM ANDAMENTO
 ========================================================== */
 
+function atualizarNotificacaoSolicitacoes(){
+
+    const notificacao =
+        document.getElementById(
+            "notificacaoSolicitacoes"
+        );
+
+    if(!notificacao){
+        return;
+    }
+
+    const quantidade =
+        obterSolicitacoes().filter(item=>{
+
+            return (
+                item.status === "EM ANDAMENTO"
+            );
+
+        }).length;
+
+    if(quantidade > 0){
+
+        notificacao.textContent =
+            quantidade;
+
+        notificacao.style.display =
+            "flex";
+
+    }else{
+
+        notificacao.textContent =
+            "";
+
+        notificacao.style.display =
+            "none";
+
+    }
+
+}
+
 function obterSolicitacoesEmAndamento(){
 
     return obterSolicitacoes().filter(item=>{
@@ -2125,11 +2309,11 @@ atualizarNotificacaoSolicitacoes();
     );
 
 }
+
 function atualizarAreasSolicitadasMapa(){
 
     const solicitacoes =
         obterSolicitacoes();
-
 
     document
         .querySelectorAll(".area-especial")
@@ -2140,7 +2324,6 @@ function atualizarAreasSolicitadasMapa(){
                 "solicitacao-concluida",
                 "solicitacao-mista"
             );
-
 
             const local =
                 textoMaiusculo(
@@ -2159,12 +2342,25 @@ function atualizarAreasSolicitadasMapa(){
                 }).length;
 
 
-            const concluidas =
+            const concluidasAtuais =
                 solicitacoes.filter(item=>{
 
+                    if(
+                        item.status !== "CONCLUÍDO" ||
+                        textoMaiusculo(item.destino) !== local
+                    ){
+
+                        return false;
+
+                    }
+
+                    const localAtual =
+                        obterLocalizacao(
+                            item.container
+                        );
+
                     return (
-                        item.status === "CONCLUÍDO" &&
-                        textoMaiusculo(item.destino) === local
+                        textoMaiusculo(localAtual) === local
                     );
 
                 }).length;
@@ -2172,7 +2368,7 @@ function atualizarAreasSolicitadasMapa(){
 
             if(
                 pendentes > 0 &&
-                concluidas > 0
+                concluidasAtuais > 0
             ){
 
                 area.classList.add(
@@ -2195,7 +2391,7 @@ function atualizarAreasSolicitadasMapa(){
             }
 
 
-            if(concluidas > 0){
+            if(concluidasAtuais > 0){
 
                 area.classList.add(
                     "solicitacao-concluida"
@@ -2953,46 +3149,6 @@ function buscarProgramacao(){
    LOCALIZAÇÃO
 ========================================================== */
 
-function obterLocalizacao(container){
-
-    const mapa = JSON.parse(
-        localStorage.getItem("localizacoesContainers") || "{}"
-    );
-
-    return mapa[container] || "";
-
-}
-
-function editarLocalizacao(container){
-
-    const atual = obterLocalizacao(container);
-
-    const nova = prompt(
-        "Informe a localização do container:",
-        atual
-    );
-
-    if(nova === null){
-
-        return;
-
-    }
-
-    const mapa = JSON.parse(
-        localStorage.getItem("localizacoesContainers") || "{}"
-    );
-
-    mapa[container] = nova.trim();
-
-    localStorage.setItem(
-        "localizacoesContainers",
-        JSON.stringify(mapa)
-    );
-
-    buscarEstoque();
-
-}
-
 function movimentarContainer(container){
 
     const registro =
@@ -3008,6 +3164,12 @@ function movimentarContainer(container){
 
     }
 
+   if(!validarRetiradaContainer(container)){
+
+    return;
+
+}
+
     APP.containerSelecionado =
         normalizarContainer(container);
 
@@ -3019,48 +3181,6 @@ function movimentarContainer(container){
 /* ==========================================================
    RENDER ESTOQUE
 ========================================================== */
-
-function renderTabelaEstoque(lista){
-
-    const inicio =
-        (APP.paginaEstoque - 1) * APP.limiteEstoque;
-
-    const fim =
-        inicio + APP.limiteEstoque;
-
-    const pagina =
-        lista.slice(inicio, fim);
-
-    DOM.theadEstoque.innerHTML = `
-
-        <th>CONTAINER</th>
-        <th>ISO</th>
-        <th>ESTADO</th>
-        <th>CLIENTE</th>
-        <th>BOOKING</th>
-        <th>LOCALIZAÇÃO</th>
-
-    `;
-
-    DOM.tbodyEstoque.innerHTML = "";
-
-    if(pagina.length === 0){
-
-        DOM.tbodyEstoque.innerHTML = `
-
-            <tr>
-
-                <td colspan="6" class="loading">
-                    Nenhum resultado encontrado.
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
-
-    }
 
     pagina.forEach(registro=>{
 
@@ -3433,8 +3553,6 @@ window.buscarEstoque = buscarEstoque;
 window.estoqueAnterior = estoqueAnterior;
 window.estoqueProximo = estoqueProximo;
 window.alterarLimiteEstoque = alterarLimiteEstoque;
-
-window.editarLocalizacao = editarLocalizacao;
 
 window.abrirDEV = abrirDEV;
 window.salvarTSV = salvarTSV;
