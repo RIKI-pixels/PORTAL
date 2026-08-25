@@ -3182,52 +3182,32 @@ function movimentarContainer(container){
    RENDER ESTOQUE
 ========================================================== */
 
-    pagina.forEach(registro=>{
+function movimentarContainer(container){
 
-        const localizacao =
-            obterLocalizacao(registro.container);
+    const registro =
+        buscarContainerNoEstoque(container);
 
-        DOM.tbodyEstoque.innerHTML += `
+    if(!registro){
 
-            <tr>
+        alert(
+            "Container não localizado no estoque."
+        );
 
-                <td>${registro.container}</td>
-                <td>${registro.iso}</td>
-                <td>${registro.estado}</td>
-                <td>${registro.cliente}</td>
-                <td>${registro.booking}</td>
+        return;
 
-                <td>
+    }
 
-                    ${localizacao
-                        ? localizacao
-                        : `
+    if(!validarRetiradaContainer(container)){
+        return;
+    }
 
-                            <button
-                                onclick="editarLocalizacao('${registro.container}')">
+    APP.containerSelecionado =
+        normalizarContainer(container);
 
-                                Editar
-
-                            </button>
-
-                        `
-                    }
-
-                </td>
-
-            </tr>
-
-        `;
-
-    });
-
-    document.getElementById("totalEstoque").textContent =
-        lista.length;
-
-    document.getElementById("paginaEstoque").textContent =
-        APP.paginaEstoque;
+    mostrarMapa();
 
 }
+
 /* ==========================================================
    INICIALIZAÇÃO
 ========================================================== */
