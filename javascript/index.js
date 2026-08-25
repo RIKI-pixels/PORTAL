@@ -3149,6 +3149,19 @@ function buscarProgramacao(){
    LOCALIZAÇÃO
 ========================================================== */
 
+function obterLocalizacao(container){
+
+    const mapa = JSON.parse(
+        localStorage.getItem("localizacoesContainers") || "{}"
+    );
+
+    const numero =
+        normalizarContainer(container);
+
+    return mapa[numero] || "";
+
+}
+
 function movimentarContainer(container){
 
     const registro =
