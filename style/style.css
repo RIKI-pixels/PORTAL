@@ -1747,3 +1747,592 @@ SOLICITAÇÕES
     font-size:11px;
     font-weight:700;
 }
+
+/* ==========================================================
+   NOVO MAPA DO PÁTIO - PLANTA OPERACIONAL
+========================================================== */
+
+.patio-planta{
+    position:relative;
+
+    width:100%;
+    max-width:1400px;
+    min-width:980px;
+
+    margin:0 auto;
+
+    aspect-ratio: 16 / 9;
+
+    background:#d9dde3;
+
+    border:2px solid #7f8a99;
+    border-radius:10px;
+
+    overflow:hidden;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.5),
+        0 4px 18px rgba(0,0,0,.08);
+}
+
+
+/* ==========================================================
+   PRÉDIOS
+========================================================== */
+
+.predio-patio{
+    position:absolute;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#d6e6f2;
+
+    border:1px solid #8aa8be;
+
+    color:#36566f;
+
+    font-size:12px;
+    font-weight:700;
+
+    text-align:center;
+}
+
+
+.predio-apoio{
+    left:2%;
+    top:2%;
+
+    width:29%;
+    height:17%;
+}
+
+
+.armazem-1{
+    left:46%;
+    top:2%;
+
+    width:51%;
+    height:17%;
+}
+
+
+.armazem-2{
+    right:2%;
+    top:28%;
+
+    width:13%;
+    height:20%;
+}
+
+
+.armazem-3{
+    right:2%;
+    bottom:15%;
+
+    width:13%;
+    height:20%;
+}
+
+
+/* ==========================================================
+   ÁREAS OPERACIONAIS
+========================================================== */
+
+.area-patio{
+    position:absolute;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:3px;
+
+    padding:6px;
+
+    border-radius:4px;
+
+    border:2px solid #587da0;
+
+    font-size:11px;
+    font-weight:700;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+}
+
+
+.area-patio:hover{
+    transform:scale(1.015);
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.15);
+
+    z-index:20;
+}
+
+
+.area-patio span{
+    font-size:9px;
+    font-weight:500;
+
+    opacity:.8;
+}
+
+
+/* ==========================================================
+   FUMIGAÇÃO
+========================================================== */
+
+.area-fumigacao{
+    left:32%;
+    top:2%;
+
+    width:13%;
+    height:17%;
+
+    background:#f0dfb3;
+
+    border-color:#b99b49;
+
+    color:#705a1d;
+}
+
+
+/* ==========================================================
+   MAPA / VISTORIA
+========================================================== */
+
+.area-mapa{
+    right:2%;
+    top:50%;
+
+    width:13%;
+    height:13%;
+
+    background:#cfe5d5;
+
+    border-color:#78a689;
+
+    color:#3d6a4a;
+}
+
+
+/* ==========================================================
+   ESTUFAGENS
+========================================================== */
+
+.estufagem-az3{
+    left:15%;
+    bottom:3%;
+
+    width:17%;
+    height:9%;
+
+    background:#d8e5f3;
+
+    color:#355b7c;
+}
+
+
+.estufagem-corredor{
+    left:33%;
+    bottom:3%;
+
+    width:22%;
+    height:9%;
+
+    background:#d8e5f3;
+
+    color:#355b7c;
+}
+
+
+.estufagem-az2{
+    left:56%;
+    bottom:3%;
+
+    width:15%;
+    height:9%;
+
+    background:#d8e5f3;
+
+    color:#355b7c;
+}
+
+
+.estufagem-az1{
+    left:72%;
+    bottom:3%;
+
+    width:11%;
+    height:9%;
+
+    background:#d8e5f3;
+
+    color:#355b7c;
+}
+
+
+/* ==========================================================
+   GATE
+========================================================== */
+
+.gate-patio{
+    position:absolute;
+
+    left:2%;
+    bottom:3%;
+
+    width:11%;
+    height:9%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#e8ebef;
+
+    border:1px solid #9da7b1;
+
+    color:#59636d;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+
+/* ==========================================================
+   VIAS
+========================================================== */
+
+.via-patio{
+    position:absolute;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-around;
+
+    color:#8d959e;
+
+    font-size:20px;
+    font-weight:600;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.20),
+            rgba(255,255,255,.05)
+        );
+
+    border-top:1px solid rgba(255,255,255,.65);
+    border-bottom:1px solid rgba(255,255,255,.65);
+}
+
+
+.via-patio span{
+    opacity:.65;
+}
+
+
+.via-superior{
+    left:2%;
+    top:21%;
+
+    width:81%;
+    height:5%;
+}
+
+
+.via-ab{
+    left:2%;
+    top:37%;
+
+    width:81%;
+    height:5%;
+}
+
+
+.via-bc{
+    left:2%;
+    top:53%;
+
+    width:81%;
+    height:5%;
+}
+
+
+.via-cd{
+    left:2%;
+    top:69%;
+
+    width:81%;
+    height:5%;
+}
+
+
+.via-inferior{
+    left:2%;
+    bottom:13%;
+
+    width:81%;
+    height:5%;
+}
+
+
+/* ==========================================================
+   PRAÇAS
+========================================================== */
+
+.praca-mapa{
+    position:absolute;
+
+    padding:0;
+
+    border-radius:3px;
+
+    border:1px solid #7192aa;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    background:#bdd8e8;
+
+    color:#31546e;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        filter .15s ease;
+}
+
+
+.praca-mapa:hover{
+    transform:scale(1.008);
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.13);
+
+    filter:brightness(1.03);
+
+    z-index:15;
+}
+
+
+.praca-a{
+    left:2%;
+    top:27%;
+
+    width:81%;
+    height:9%;
+}
+
+
+.praca-b{
+    left:2%;
+    top:43%;
+
+    width:81%;
+    height:9%;
+}
+
+
+.praca-c{
+    left:2%;
+    top:59%;
+
+    width:81%;
+    height:9%;
+}
+
+
+.praca-d{
+    left:2%;
+    top:75%;
+
+    width:81%;
+    height:9%;
+}
+
+
+/* ==========================================================
+   TÍTULO DAS PRAÇAS
+========================================================== */
+
+.praca-titulo{
+    position:absolute;
+
+    left:8px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    z-index:5;
+
+    padding:4px 7px;
+
+    background:rgba(255,255,255,.72);
+
+    border-radius:3px;
+
+    font-size:10px;
+    font-weight:700;
+
+    color:#31546e;
+
+    pointer-events:none;
+}
+
+
+/* ==========================================================
+   VISUAL DAS LINHAS DE CONTAINERS
+========================================================== */
+
+.praca-faixas{
+    position:absolute;
+
+    inset:4px 6px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(12,1fr);
+
+    gap:2px;
+}
+
+
+.praca-faixas span{
+    display:block;
+
+    min-width:0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #afd0e3 0,
+            #afd0e3 7px,
+            #91b7cf 8px,
+            #91b7cf 9px
+        );
+
+    border:1px solid rgba(84,123,150,.45);
+
+    border-radius:1px;
+}
+
+
+/* ==========================================================
+   STATUS DAS SOLICITAÇÕES
+========================================================== */
+
+.area-especial.solicitacao-pendente{
+    background:#efb366;
+
+    border-color:#c27e27;
+
+    color:#6b4208;
+}
+
+
+.area-especial.solicitacao-concluida{
+    background:#acd8b8;
+
+    border-color:#4e9b64;
+
+    color:#2a643b;
+}
+
+
+.area-especial.solicitacao-mista{
+    background:
+        linear-gradient(
+            90deg,
+            #efb366 0%,
+            #efb366 50%,
+            #acd8b8 50%,
+            #acd8b8 100%
+        );
+
+    border-color:#7b8791;
+
+    color:#37414a;
+}
+
+
+/* ==========================================================
+   DETALHES VISUAIS DAS VIAS
+========================================================== */
+
+.patio-planta::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+
+    pointer-events:none;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 46px,
+            rgba(255,255,255,.10) 47px,
+            transparent 48px
+        );
+
+    opacity:.35;
+}
+
+
+/* ==========================================================
+   RESPONSIVIDADE DO MAPA
+========================================================== */
+
+.mapa-geral{
+    width:100%;
+    overflow:auto;
+}
+
+
+@media(max-width:1200px){
+
+    .patio-planta{
+        min-width:1000px;
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .patio-planta{
+        min-width:900px;
+    }
+
+    .area-patio{
+        font-size:10px;
+    }
+
+    .praca-titulo{
+        font-size:9px;
+    }
+
+}
