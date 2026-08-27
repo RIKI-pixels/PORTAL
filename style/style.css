@@ -2336,3 +2336,129 @@ SOLICITAÇÕES
     }
 
 }
+
+/* ==========================================================
+   MAPA DO PÁTIO - POSICIONAMENTO FINAL
+========================================================== */
+
+/* TOPO */
+
+.predio-apoio{
+    left:2%;
+    top:2%;
+    width:27%;
+    height:17%;
+}
+
+.area-fumigacao{
+    left:30%;
+    top:2%;
+    width:13%;
+    height:17%;
+}
+
+.armazem-1{
+    left:44%;
+    top:2%;
+    width:53%;
+    height:17%;
+}
+
+
+/* MAPA + ESTUFAGEM AZ 1 */
+
+.area-mapa{
+    left:44%;
+    top:21%;
+    width:14%;
+    height:8%;
+}
+
+.estufagem-az1{
+    right:2%;
+    top:21%;
+    width:12%;
+    height:8%;
+}
+
+
+/* PRAÇAS - ORDEM CORRETA */
+
+.praca-d{
+    left:3%;
+    top:31%;
+    width:76%;
+    height:9%;
+}
+
+.praca-c{
+    left:3%;
+    top:43%;
+    width:76%;
+    height:9%;
+}
+
+.praca-b{
+    left:3%;
+    top:55%;
+    width:76%;
+    height:9%;
+}
+
+.praca-a{
+    left:3%;
+    top:67%;
+    width:76%;
+    height:9%;
+}
+
+
+/* ESTUFAGEM AZ 2 + ARMAZÉM 2 */
+
+.estufagem-az2{
+    right:14%;
+    top:43%;
+    width:10%;
+    height:8%;
+}
+
+.armazem-2{
+    right:2%;
+    top:41%;
+    width:11%;
+    height:19%;
+}
+
+
+/* CORREDOR */
+
+.estufagem-corredor{
+    right:2%;
+    top:62%;
+    width:22%;
+    height:8%;
+}
+
+
+/* PARTE INFERIOR */
+
+.gate-patio{
+    left:2%;
+    bottom:3%;
+    width:12%;
+    height:9%;
+}
+
+.estufagem-az3{
+    right:15%;
+    bottom:3%;
+    width:12%;
+    height:9%;
+}
+
+.armazem-3{
+    right:2%;
+    bottom:3%;
+    width:12%;
+    height:17%;
+}
