@@ -2338,127 +2338,207 @@ SOLICITAÇÕES
 }
 
 /* ==========================================================
-   MAPA DO PÁTIO - POSICIONAMENTO FINAL
+   MAPA DO PÁTIO
+   POSICIONAMENTO CONFORME BASE REAL
+   Mantém cores, ruas e estilos existentes
 ========================================================== */
 
-/* TOPO */
 
+/* =========================
+   TOPO
+========================= */
+
+/* Bloco que hoje aparece como APOIO:
+   escondemos porque ele não existe na base enviada */
 .predio-apoio{
-    left:2%;
-    top:2%;
-    width:27%;
-    height:17%;
+    display:none;
 }
 
+
+/* FUMIGAÇÃO */
 .area-fumigacao{
-    left:30%;
-    top:2%;
-    width:13%;
-    height:17%;
-}
+    left:37.7%;
+    top:1%;
 
-.armazem-1{
-    left:44%;
-    top:2%;
-    width:53%;
-    height:17%;
-}
-
-
-/* MAPA + ESTUFAGEM AZ 1 */
-
-.area-mapa{
-    left:44%;
-    top:21%;
     width:14%;
-    height:8%;
+    height:18%;
 }
 
-.estufagem-az1{
-    right:2%;
+
+/* ARMAZÉM / AZ 01 */
+.armazem-1{
+    left:53.2%;
+    top:1%;
+
+    width:43%;
+    height:18%;
+}
+
+
+/* =========================
+   MAPA + ESTUFAGEM AZ 01
+========================= */
+
+/* MAPA fica imediatamente abaixo do AZ 01 */
+.area-mapa{
+    left:54.6%;
     top:21%;
-    width:12%;
-    height:8%;
+
+    width:23.7%;
+    height:7%;
 }
 
 
-/* PRAÇAS - ORDEM CORRETA */
+/* ESTUFAGEM AZ 01 */
+.estufagem-az1{
+    left:79.2%;
+    right:auto;
+    top:21%;
+
+    width:9.3%;
+    height:7%;
+}
+
+
+/* =========================
+   PRAÇA D
+========================= */
 
 .praca-d{
-    left:3%;
-    top:31%;
-    width:76%;
-    height:9%;
+    left:13.7%;
+    top:29%;
+
+    width:68%;
+    height:12%;
 }
+
+
+/* =========================
+   PRAÇA C
+========================= */
 
 .praca-c{
-    left:3%;
-    top:43%;
-    width:76%;
-    height:9%;
+    left:13.3%;
+    top:44%;
+
+    width:68.4%;
+    height:12%;
 }
+
+
+/* =========================
+   PRAÇA B
+========================= */
 
 .praca-b{
-    left:3%;
-    top:55%;
-    width:76%;
-    height:9%;
+    left:13.3%;
+    top:59%;
+
+    width:68.4%;
+    height:12%;
 }
 
+
+/* =========================
+   PRAÇA A
+========================= */
+
+/*
+   A praça A é menor e fica mais abaixo,
+   começando mais para a direita,
+   como na base enviada.
+*/
 .praca-a{
-    left:3%;
-    top:67%;
-    width:76%;
+    left:33.8%;
+    top:83%;
+
+    width:48%;
     height:9%;
 }
 
 
-/* ESTUFAGEM AZ 2 + ARMAZÉM 2 */
+/* =========================
+   LATERAL DIREITA
+========================= */
 
-.estufagem-az2{
-    right:14%;
-    top:43%;
-    width:10%;
-    height:8%;
-}
-
+/* ARMAZÉM / AZ 02 */
 .armazem-2{
-    right:2%;
-    top:41%;
-    width:11%;
-    height:19%;
+    left:89.5%;
+    right:auto;
+    top:25%;
+
+    width:7%;
+    height:31%;
 }
 
 
-/* CORREDOR */
+/*
+   ESTUFAGEM AZ 02
+   Bloco estreito ao lado esquerdo do AZ 02
+*/
+.estufagem-az2{
+    left:86.2%;
+    right:auto;
+    top:34%;
 
+    width:2.8%;
+    height:21%;
+}
+
+
+/*
+   ESTUFAGEM CORREDOR
+   Quadrado pequeno entre AZ 02 e AZ 03
+*/
 .estufagem-corredor{
-    right:2%;
-    top:62%;
-    width:22%;
-    height:8%;
+    left:85.5%;
+    right:auto;
+    top:59%;
+
+    width:3.6%;
+    height:11%;
 }
 
 
-/* PARTE INFERIOR */
+/* ARMAZÉM / AZ 03 */
+.armazem-3{
+    left:89.5%;
+    right:auto;
+    top:66%;
+
+    bottom:auto;
+
+    width:7%;
+    height:31%;
+}
+
+
+/*
+   ESTUFAGEM AZ 03
+   Bloco estreito ao lado esquerdo do AZ 03
+*/
+.estufagem-az3{
+    left:86.3%;
+    right:auto;
+    top:74%;
+
+    bottom:auto;
+
+    width:2.8%;
+    height:22%;
+}
+
+
+/* =========================
+   GATE
+========================= */
 
 .gate-patio{
-    left:2%;
-    bottom:3%;
-    width:12%;
-    height:9%;
-}
+    left:1.5%;
+    top:75%;
 
-.estufagem-az3{
-    right:15%;
-    bottom:3%;
-    width:12%;
-    height:9%;
-}
+    bottom:auto;
 
-.armazem-3{
-    right:2%;
-    bottom:3%;
-    width:12%;
-    height:17%;
+    width:14%;
+    height:20%;
 }
