@@ -2633,3 +2633,11 @@ SOLICITAÇÕES
 .gate-patio{
     z-index:6;
 }
+/* ÁREAS ESPECIAIS SEM SOLICITAÇÃO */
+
+.area-fumigacao,
+.area-mapa{
+    background:#d8e5f3;
+    border-color:#587da0;
+    color:#355b7c;
+}
