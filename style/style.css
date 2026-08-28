@@ -2542,3 +2542,94 @@ SOLICITAÇÕES
     width:14%;
     height:20%;
 }
+
+/* ==========================================================
+   MAPA - CORREÇÃO DAS RUAS
+   Ajustado para a nova posição das praças
+========================================================== */
+
+.via-patio{
+    z-index:1;
+
+    left:2%;
+
+    width:82%;
+
+    height:5%;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.04)
+        );
+
+    border-top:1px solid rgba(255,255,255,.75);
+    border-bottom:1px solid rgba(255,255,255,.75);
+}
+
+
+/* Rua abaixo dos prédios / antes da Praça D */
+.via-superior{
+    left:2%;
+    top:21%;
+
+    width:82%;
+    height:6%;
+}
+
+
+/* Rua entre Praça D e Praça C */
+.via-ab{
+    left:2%;
+    top:41.5%;
+
+    width:82%;
+    height:2.5%;
+}
+
+
+/* Rua entre Praça C e Praça B */
+.via-bc{
+    left:2%;
+    top:56.5%;
+
+    width:82%;
+    height:2.5%;
+}
+
+
+/* Rua entre Praça B e Praça A */
+.via-cd{
+    left:2%;
+    top:72%;
+
+    width:82%;
+    height:7%;
+}
+
+
+/* Rua inferior / acesso ao Gate e Praça A */
+.via-inferior{
+    left:2%;
+
+    top:79%;
+    bottom:auto;
+
+    width:82%;
+    height:4%;
+}
+
+
+/* Praças ficam acima das ruas */
+.praca-mapa{
+    z-index:5;
+}
+
+
+/* Áreas operacionais acima das ruas */
+.area-patio,
+.predio-patio,
+.gate-patio{
+    z-index:6;
+}
