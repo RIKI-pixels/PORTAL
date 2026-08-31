@@ -43,6 +43,7 @@ const APP = {
 
     listaEstoqueAtual: [],
     listaProgramacaoAtual: [],
+    listaProgramacaoBase: [],
 
     carregado: false,
     carregadoEstoque: false,
@@ -2806,6 +2807,129 @@ function concluirSolicitacoesArea(destino){
 }
 
 /* ==========================================================
+   CONTROLE OPERACIONAL DA PROGRAMAÇÃO
+========================================================== */
+
+function obterControleProgramacao(){
+
+    return JSON.parse(
+        localStorage.getItem("controleProgramacao") || "{}"
+    );
+
+}
+
+
+function salvarControleProgramacao(controle){
+
+    localStorage.setItem(
+        "controleProgramacao",
+        JSON.stringify(controle)
+    );
+
+}
+
+
+function chaveRegistroProgramacao(registro){
+
+    return [
+        normalizarContainer(registro.container),
+        registro.dataTexto,
+        registro.janela
+    ].join("|");
+
+}
+
+
+function obterEstadoProgramacao(registro){
+
+    const controle =
+        obterControleProgramacao();
+
+    const chave =
+        chaveRegistroProgramacao(registro);
+
+    return controle[chave] || {
+        concluido:false,
+        observacao:""
+    };
+
+}
+
+
+function alterarConcluidoProgramacao(
+    container,
+    data,
+    janela,
+    marcado
+){
+
+    const controle =
+        obterControleProgramacao();
+
+    const chave = [
+        normalizarContainer(container),
+        data,
+        janela
+    ].join("|");
+
+    if(!controle[chave]){
+
+        controle[chave] = {
+            concluido:false,
+            observacao:""
+        };
+
+    }
+
+    controle[chave].concluido =
+        marcado;
+
+    salvarControleProgramacao(
+        controle
+    );
+
+    renderTabelaProgramacao(
+        APP.listaProgramacaoAtual
+    );
+
+}
+
+
+function alterarObservacaoProgramacao(
+    container,
+    data,
+    janela,
+    observacao
+){
+
+    const controle =
+        obterControleProgramacao();
+
+    const chave = [
+        normalizarContainer(container),
+        data,
+        janela
+    ].join("|");
+
+    if(!controle[chave]){
+
+        controle[chave] = {
+            concluido:false,
+            observacao:""
+        };
+
+    }
+
+    controle[chave].observacao =
+        observacao;
+
+    salvarControleProgramacao(
+        controle
+    );
+
+}
+
+/* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
 ========================================================== */
 
@@ -2963,8 +3087,10 @@ function renderTabela(
 
 function renderTabelaProgramacao(lista){
 
-    document.getElementById("totalProgramacao").textContent =
-        lista.length;
+    document.getElementById(
+        "totalProgramacao"
+    ).textContent = lista.length;
+
 
     const totalPaginas = Math.max(
         1,
@@ -2974,18 +3100,28 @@ function renderTabelaProgramacao(lista){
         )
     );
 
-    if(APP.paginaProgramacao > totalPaginas){
 
-        APP.paginaProgramacao = totalPaginas;
+    if(
+        APP.paginaProgramacao >
+        totalPaginas
+    ){
+
+        APP.paginaProgramacao =
+            totalPaginas;
 
     }
 
-    document.getElementById("paginaProgramacao").textContent =
+
+    document.getElementById(
+        "paginaProgramacao"
+    ).textContent =
         APP.paginaProgramacao;
+
 
     const inicio =
         (APP.paginaProgramacao - 1) *
         APP.limiteProgramacao;
+
 
     const pagina =
         lista.slice(
@@ -2993,14 +3129,156 @@ function renderTabelaProgramacao(lista){
             inicio + APP.limiteProgramacao
         );
 
-    renderTabela(
 
-        DOM.theadProg,
-        DOM.tbodyProg,
-        obterColunasProgramacao(),
-        pagina
+    DOM.theadProg.innerHTML = `
 
-    );
+        <th>CONCLUÍDO</th>
+        <th>TIPO</th>
+        <th>CLIENTE</th>
+        <th>CONTAINER</th>
+        <th>DATA AG.</th>
+        <th>JANELA</th>
+        <th>BOOKING</th>
+        <th>LOCALIZAÇÃO</th>
+        <th>OBSERVAÇÕES</th>
+
+    `;
+
+
+    DOM.tbodyProg.innerHTML = "";
+
+
+    if(pagina.length === 0){
+
+        DOM.tbodyProg.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="9"
+                    class="loading">
+
+                    Nenhum resultado encontrado.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    pagina.forEach(registro=>{
+
+        const estado =
+            obterEstadoProgramacao(
+                registro
+            );
+
+
+        const classeLinha =
+            estado.concluido
+                ? "programacao-concluida"
+                : "";
+
+
+        DOM.tbodyProg.innerHTML += `
+
+            <tr class="${classeLinha}">
+
+                <td class="coluna-concluido">
+
+                    <input
+                        type="checkbox"
+                        class="check-programacao"
+                        ${estado.concluido ? "checked" : ""}
+
+                        onchange="
+                            alterarConcluidoProgramacao(
+                                '${registro.container}',
+                                '${registro.dataTexto}',
+                                '${registro.janela}',
+                                this.checked
+                            )
+                        "
+                    >
+
+                </td>
+
+
+                <td>
+                    ${registro.tipo}
+                </td>
+
+
+                <td>
+                    ${registro.cliente}
+                </td>
+
+
+                <td>
+                    ${registro.container}
+                </td>
+
+
+                <td>
+                    ${registro.dataTexto}
+                </td>
+
+
+                <td>
+                    ${registro.janela}
+                </td>
+
+
+                <td>
+                    ${registro.booking}
+                </td>
+
+
+                <td>
+                    ${
+                        obterLocalizacao(
+                            registro.container
+                        ) ||
+                        "AGUARDANDO MAPEAMENTO"
+                    }
+                </td>
+
+
+                <td>
+
+                    <input
+                        type="text"
+                        class="observacao-programacao"
+
+                        value="${
+                            estado.observacao
+                                .replace(/"/g, "&quot;")
+                        }"
+
+                        placeholder="Adicionar observação..."
+
+                        onchange="
+                            alterarObservacaoProgramacao(
+                                '${registro.container}',
+                                '${registro.dataTexto}',
+                                '${registro.janela}',
+                                this.value
+                            )
+                        "
+                    >
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
 
 }
 
@@ -3116,6 +3394,51 @@ function buscarProgramacao(){
 
     });
 
+   function filtrarProgramacaoPorJanela(){
+
+    const seletor =
+        document.getElementById(
+            "janelaProgramacao"
+        );
+
+
+    const janela =
+        seletor.value;
+
+
+    let lista = [
+        ...APP.listaProgramacaoBase
+    ];
+
+
+    if(janela){
+
+        lista =
+            lista.filter(registro=>{
+
+                return (
+                    registro.janela ===
+                    janela
+                );
+
+            });
+
+    }
+
+
+    APP.listaProgramacaoAtual =
+        lista;
+
+
+    APP.paginaProgramacao = 1;
+
+
+    renderTabelaProgramacao(
+        lista
+    );
+
+}
+
 
     /* =========================
        LOCALIZAÇÃO ATUAL
@@ -3136,12 +3459,75 @@ function buscarProgramacao(){
     );
 
 
-    APP.listaProgramacaoAtual =
-        lista;
+APP.listaProgramacaoBase =
+    lista;
 
-    APP.paginaProgramacao = 1;
 
-    renderTabelaProgramacao(lista);
+/* =========================================
+   GERA AS JANELAS DO PERÍODO
+========================================= */
+
+const selectJanela =
+    document.getElementById(
+        "janelaProgramacao"
+    );
+
+
+const janelaSelecionadaAnterior =
+    selectJanela.value;
+
+
+const janelas = [
+    ...new Set(
+        lista
+            .map(registro=>
+                registro.janela
+            )
+            .filter(janela=>
+                janela
+            )
+    )
+];
+
+
+janelas.sort();
+
+
+selectJanela.innerHTML = `
+
+    <option value="">
+        TODAS AS JANELAS
+    </option>
+
+`;
+
+
+janelas.forEach(janela=>{
+
+    selectJanela.innerHTML += `
+
+        <option value="${janela}">
+            ${janela}
+        </option>
+
+    `;
+
+});
+
+
+if(
+    janelas.includes(
+        janelaSelecionadaAnterior
+    )
+){
+
+    selectJanela.value =
+        janelaSelecionadaAnterior;
+
+}
+
+
+filtrarProgramacaoPorJanela();
 
 }
    
@@ -3575,7 +3961,13 @@ window.fecharSolicitacoesArea = fecharSolicitacoesArea;
 
 window.concluirSolicitacoesArea = concluirSolicitacoesArea;
 
-window.concluirSolicitacoesSelecionadas =concluirSolicitacoesSelecionadas;
+window.concluirSolicitacoesSelecionadas = concluirSolicitacoesSelecionadas;
+
+window.filtrarProgramacaoPorJanela = filtrarProgramacaoPorJanela;
+
+window.alterarConcluidoProgramacao = alterarConcluidoProgramacao;
+
+window.alterarObservacaoProgramacao = alterarObservacaoProgramacao;
 
 /* ==========================================================
    FIM DO ARQUIVO
