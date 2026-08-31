@@ -1032,6 +1032,64 @@ function resetarLocalizacoes(){
 }
 
 /* ==========================================================
+   TESTE SUPABASE - DEV
+========================================================== */
+
+async function testarSupabase(){
+
+    try{
+
+        const { data, error } =
+            await supabaseClient
+                .from("portal_eventos")
+                .insert([
+                    {
+                        tipo: "TESTE",
+                        usuario: "DEV",
+                        detalhes: "Teste de conexão do Portal CDI"
+                    }
+                ])
+                .select();
+
+        if(error){
+            console.error(
+                "Erro ao gravar no Supabase:",
+                error
+            );
+
+            alert(
+                "Erro ao gravar no Supabase."
+            );
+
+            return;
+        }
+
+        console.log(
+            "Evento gravado no Supabase:",
+            data
+        );
+
+        alert(
+            "Evento gravado com sucesso!"
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado:",
+            erro
+        );
+
+        alert(
+            "Erro inesperado ao conectar com o Supabase."
+        );
+
+    }
+
+}
+
+/* ==========================================================
    MAPA
 ========================================================== */
 
@@ -3987,6 +4045,8 @@ window.filtrarProgramacaoPorJanela = filtrarProgramacaoPorJanela;
 window.alterarConcluidoProgramacao = alterarConcluidoProgramacao;
 
 window.alterarObservacaoProgramacao = alterarObservacaoProgramacao;
+
+window.testarSupabase = testarSupabase;
 
 /* ==========================================================
    FIM DO ARQUIVO
