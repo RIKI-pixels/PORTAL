@@ -1,4 +1,4 @@
-/* ==========================================================
+ /* ==========================================================
    PORTAL OPERACIONAL CDI
    Versão 1.5.1 SUBPASE REAL TESTE 1
 ========================================================== */
@@ -3740,9 +3740,8 @@ function obterControleProgramacao(){
 
 function salvarControleProgramacao(controle){
 
-    localStorage.setItem(
-        "controleProgramacao",
-        JSON.stringify(controle)
+    console.warn(
+        "salvarControleProgramacao ignorado: Programação agora utiliza Supabase."
     );
 
 }
