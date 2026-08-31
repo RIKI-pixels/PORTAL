@@ -1727,6 +1727,19 @@ async function atualizarTSVGlobal(){
             "Atualização global enviada."
         );
 
+       await registrarLog({
+
+    area:
+        "DEV",
+
+    acao:
+        "ATUALIZOU TSV",
+
+    detalhes:
+        "Atualização global do TSV Transporte"
+
+   });
+
         alert(
             "TSV atualizado para todos os usuários!"
         );
