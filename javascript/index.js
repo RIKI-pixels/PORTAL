@@ -275,6 +275,8 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
+       restaurarSessaoPortal();
+
         const botao =
             document.getElementById(
                 "btnLogin"
@@ -319,6 +321,117 @@ document.addEventListener(
 
     }
 );
+
+async function restaurarSessaoPortal() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if (error) {
+
+            console.error(
+                "Erro ao verificar sessão:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !data.session ||
+            !data.session.user
+        ) {
+
+            return;
+
+        }
+
+
+        const userId =
+            data.session.user.id;
+
+
+        const {
+            data: perfil,
+            error: erroPerfil
+        } =
+            await supabaseClient
+                .from(
+                    "portal_usuarios"
+                )
+                .select(
+                    "id, nome, cpf, nivel, ativo"
+                )
+                .eq(
+                    "id",
+                    userId
+                )
+                .maybeSingle();
+
+
+        if (
+            erroPerfil ||
+            !perfil ||
+            !perfil.ativo
+        ) {
+
+            console.warn(
+                "Sessão existente sem perfil válido."
+            );
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            return;
+
+        }
+
+
+        USUARIO_PORTAL =
+            perfil;
+
+
+        console.log(
+            "Sessão restaurada:",
+            USUARIO_PORTAL
+        );
+
+
+        const telaLogin =
+            document.getElementById(
+                "telaLogin"
+            );
+
+
+        if (telaLogin) {
+
+            telaLogin.style.display =
+                "none";
+
+        }
+
+    }
+    catch (erro) {
+
+        console.error(
+            "Erro ao restaurar sessão:",
+            erro
+        );
+
+    }
+
+}
 
 const URLS_PADRAO = {
 
