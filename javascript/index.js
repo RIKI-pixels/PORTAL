@@ -4629,6 +4629,12 @@ function renderTabelaProgramacao(lista){
                 registro
             );
 
+     console.log(
+    "RENDER PROGRAMAÇÃO:",
+    registro.container,
+    estado
+);
+
 
         const classeLinha =
             estado.concluido
