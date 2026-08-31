@@ -177,7 +177,99 @@ async function entrarPortal() {
 
         }
 
-       /* ==========================================================
+        /* =========================================
+           SALVA SESSÃO NO SUPABASE
+        ========================================= */
+
+        const {
+            error: erroSessao
+        } =
+            await supabaseClient
+                .auth
+                .setSession({
+
+                    access_token:
+                        resultado
+                            .session
+                            .access_token,
+
+                    refresh_token:
+                        resultado
+                            .session
+                            .refresh_token
+
+                });
+
+
+        if (erroSessao) {
+
+            console.error(
+                "Erro ao salvar sessão:",
+                erroSessao
+            );
+
+            mostrarErroLogin(
+                "Não foi possível iniciar a sessão."
+            );
+
+            return;
+
+        }
+
+
+        /* =========================================
+           USUÁRIO LOGADO
+        ========================================= */
+
+        USUARIO_PORTAL =
+            resultado.usuario;
+
+
+        console.log(
+            "Usuário conectado:",
+            USUARIO_PORTAL
+        );
+
+
+        document
+            .getElementById(
+                "telaLogin"
+            )
+            .style
+            .display =
+                "none";
+
+
+        inputSenha.value = "";
+
+
+    }
+    catch (erro) {
+
+        console.error(
+            "Erro no login:",
+            erro
+        );
+
+
+        mostrarErroLogin(
+            "Erro de conexão com o servidor."
+        );
+
+    }
+    finally {
+
+        botao.disabled =
+            false;
+
+        botao.textContent =
+            "ENTRAR";
+
+    }
+
+}
+
+ /* ==========================================================
    LOG DE ATIVIDADES
 ========================================================== */
 
@@ -273,99 +365,6 @@ async function registrarLog({
         );
 
         return false;
-
-    }
-
-}
-
-
-        /* =========================================
-           SALVA SESSÃO NO SUPABASE
-        ========================================= */
-
-        const {
-            error: erroSessao
-        } =
-            await supabaseClient
-                .auth
-                .setSession({
-
-                    access_token:
-                        resultado
-                            .session
-                            .access_token,
-
-                    refresh_token:
-                        resultado
-                            .session
-                            .refresh_token
-
-                });
-
-
-        if (erroSessao) {
-
-            console.error(
-                "Erro ao salvar sessão:",
-                erroSessao
-            );
-
-            mostrarErroLogin(
-                "Não foi possível iniciar a sessão."
-            );
-
-            return;
-
-        }
-
-
-        /* =========================================
-           USUÁRIO LOGADO
-        ========================================= */
-
-        USUARIO_PORTAL =
-            resultado.usuario;
-
-
-        console.log(
-            "Usuário conectado:",
-            USUARIO_PORTAL
-        );
-
-
-        document
-            .getElementById(
-                "telaLogin"
-            )
-            .style
-            .display =
-                "none";
-
-
-        inputSenha.value = "";
-
-
-    }
-    catch (erro) {
-
-        console.error(
-            "Erro no login:",
-            erro
-        );
-
-
-        mostrarErroLogin(
-            "Erro de conexão com o servidor."
-        );
-
-    }
-    finally {
-
-        botao.disabled =
-            false;
-
-        botao.textContent =
-            "ENTRAR";
 
     }
 
