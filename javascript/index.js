@@ -1229,67 +1229,69 @@ function iniciarRealtimeSupabase(){
                 table: "portal_eventos"
             },
 
-payload => {
-
-    console.log(
-        "Evento realtime recebido:",
-        payload.new
-    );
-
-    const evento =
-        payload.new;
-
-    /*
-    TESTE DE COMUNICAÇÃO
-    */
-
-    if(
-        evento.tipo ===
-        "TESTE"
-    ){
-
-        console.log(
-            "TESTE recebido:",
-            evento
-        );
-
-        return;
-
-    }
-
-
-    /*
-    ATUALIZAÇÃO GLOBAL DO TSV
-    */
-
-    if(
-        evento.tipo ===
-        "ATUALIZAR_TSV"
-    ){
-
-        console.log(
-            "Solicitação global de atualização TSV recebida."
-        );
-
-        carregarPlanilha()
-            .then(()=>{
+            payload => {
 
                 console.log(
-                    "TSV atualizado através do Realtime."
+                    "Evento realtime recebido:",
+                    payload.new
                 );
 
-            })
-            .catch(erro=>{
+                const evento =
+                    payload.new;
 
-                console.error(
-                    "Erro ao atualizar TSV pelo Realtime:",
-                    erro
-                );
 
-            });
+                /* =========================
+                   TESTE
+                ========================= */
 
-    }
+                if(
+                    evento.tipo ===
+                    "TESTE"
+                ){
 
+                    console.log(
+                        "TESTE recebido:",
+                        evento
+                    );
+
+                    return;
+                }
+
+
+                /* =========================
+                   ATUALIZAÇÃO GLOBAL TSV
+                ========================= */
+
+                if(
+                    evento.tipo ===
+                    "ATUALIZAR_TSV"
+                ){
+
+                    console.log(
+                        "Solicitação global de atualização TSV recebida."
+                    );
+
+                    carregarPlanilha()
+                        .then(()=>{
+
+                            console.log(
+                                "TSV atualizado através do Realtime."
+                            );
+
+                        })
+                        .catch(erro=>{
+
+                            console.error(
+                                "Erro ao atualizar TSV pelo Realtime:",
+                                erro
+                            );
+
+                        });
+
+                }
+
+            }
+        )
 
         .subscribe(status => {
 
