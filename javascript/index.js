@@ -3705,7 +3705,9 @@ const chave = [
                     registro.id,
 
                 concluido:
-                    registro.concluido === true,
+                  registro.concluido === true ||
+                  registro.concluido === "true" ||
+                  registro.concluido === 1,
 
                 observacao:
                     registro.observacao || ""
