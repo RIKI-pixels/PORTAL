@@ -3680,11 +3680,6 @@ async function carregarControleProgramacaoSupabase(){
             return false;
 
         }
-     
-     console.log(
-    "REGISTROS RECEBIDOS DO SUPABASE:",
-    data
-);
 
 
         CONTROLE_PROGRAMACAO = {};
@@ -3775,17 +3770,6 @@ function obterEstadoProgramacao(registro){
 
     const estado =
         controle[chave];
-
-    console.log(
-        "PROGRAMACAO DEBUG",
-        {
-            chaveLinha: chave,
-            encontrado: !!estado,
-            estado: estado,
-            chavesSupabase:
-                Object.keys(controle)
-        }
-    );
 
     return estado || {
         concluido:false,
@@ -4630,13 +4614,6 @@ function renderTabelaProgramacao(lista){
             obterEstadoProgramacao(
                 registro
             );
-
-     console.log(
-    "RENDER PROGRAMAÇÃO:",
-    registro.container,
-    estado
-);
-
 
         const classeLinha =
             estado.concluido
