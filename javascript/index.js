@@ -3717,15 +3717,37 @@ function alterarConcluidoProgramacao(
     controle[chave].concluido =
         marcado;
 
-    salvarControleProgramacao(
-        controle
-    );
+salvarControleProgramacao(
+    controle
+);
 
-    renderTabelaProgramacao(
-        APP.listaProgramacaoAtual
-    );
 
-}
+/* ==========================================================
+   REGISTRA LOG
+========================================================== */
+
+registrarLog({
+
+    area:
+        "PROGRAMAÇÃO",
+
+    acao:
+        marcado
+            ? "MARCOU CONCLUÍDO"
+            : "REMOVEU CONCLUÍDO",
+
+    container:
+        container,
+
+    detalhes:
+        `Data: ${data} | Janela: ${janela}`
+
+});
+
+
+renderTabelaProgramacao(
+    APP.listaProgramacaoAtual
+);
 
 
 function alterarObservacaoProgramacao(
