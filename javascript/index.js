@@ -3766,13 +3766,26 @@ function obterEstadoProgramacao(registro){
     const chave =
         chaveRegistroProgramacao(registro);
 
-    return controle[chave] || {
+    const estado =
+        controle[chave];
+
+    console.log(
+        "PROGRAMACAO DEBUG",
+        {
+            chaveLinha: chave,
+            encontrado: !!estado,
+            estado: estado,
+            chavesSupabase:
+                Object.keys(controle)
+        }
+    );
+
+    return estado || {
         concluido:false,
         observacao:""
     };
 
 }
-
 
 async function alterarConcluidoProgramacao(
     container,
