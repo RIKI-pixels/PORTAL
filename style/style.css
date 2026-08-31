@@ -2681,11 +2681,6 @@ SOLICITAÇÕES
     font-family:inherit;
     font-size:12px;
 }
-
-
-/* mantém o texto da observação legível
-   mesmo quando a unidade está concluída */
-
 .programacao-concluida
 .observacao-programacao{
     color:#299447;
@@ -2693,4 +2688,22 @@ SOLICITAÇÕES
     border-color:#b9dec3;
 
     background:#f5fff7;
+}
+
+/* ==========================================================
+   CORREÇÃO DE ALTURA - PROGRAMAÇÃO
+========================================================== */
+
+#programacao{
+    min-height:auto;
+    height:auto;
+}
+
+#programacao .grid-panel{
+    margin-top:0;
+}
+
+#programacao .grid-table{
+    max-height:600px;
+    overflow:auto;
 }
