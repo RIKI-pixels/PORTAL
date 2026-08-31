@@ -3717,55 +3717,95 @@ function alterarConcluidoProgramacao(
     controle[chave].concluido =
         marcado;
 
-salvarControleProgramacao(
-    controle
-);
+    salvarControleProgramacao(
+        controle
+    );
 
-registrarLog({
 
-    area:
-        "PROGRAMAÇÃO",
+    registrarLog({
 
-    acao:
-        "ALTEROU OBSERVAÇÃO",
+        area:
+            "PROGRAMAÇÃO",
 
-    container:
-        container,
+        acao:
+            marcado
+                ? "MARCOU CONCLUÍDO"
+                : "REMOVEU CONCLUÍDO",
 
-    detalhes:
-        `Data: ${data} | Janela: ${janela} | Observação: ${observacao || "REMOVIDA"}`
+        container:
+            container,
 
-});
+        detalhes:
+            `Data: ${data} | Janela: ${janela}`
+
+    });
+
+
+    renderTabelaProgramacao(
+        APP.listaProgramacaoAtual
+    );
+
+}
+
+
+function alterarConcluidoProgramacao(
+    container,
+    data,
+    janela,
+    marcado
+){
+
+    const controle =
+        obterControleProgramacao();
+
+    const chave = [
+        normalizarContainer(container),
+        data,
+        janela
+    ].join("|");
+
+    if(!controle[chave]){
+
+        controle[chave] = {
+            concluido:false,
+            observacao:""
+        };
+
+    }
+
+    controle[chave].concluido =
+        marcado;
+
+    salvarControleProgramacao(
+        controle
+    );
+
+
+    registrarLog({
+
+        area:
+            "PROGRAMAÇÃO",
+
+        acao:
+            marcado
+                ? "MARCOU CONCLUÍDO"
+                : "REMOVEU CONCLUÍDO",
+
+        container:
+            container,
+
+        detalhes:
+            `Data: ${data} | Janela: ${janela}`
+
+    });
+
+
+    renderTabelaProgramacao(
+        APP.listaProgramacaoAtual
+    );
 
 }
 
-/* ==========================================================
-   REGISTRA LOG
-========================================================== */
-
-registrarLog({
-
-    area:
-        "PROGRAMAÇÃO",
-
-    acao:
-        marcado
-            ? "MARCOU CONCLUÍDO"
-            : "REMOVEU CONCLUÍDO",
-
-    container:
-        container,
-
-    detalhes:
-        `Data: ${data} | Janela: ${janela}`
-
-});
-
-   renderTabelaProgramacao(
-    APP.listaProgramacaoAtual
-);
-
-}
 
 function alterarObservacaoProgramacao(
     container,
@@ -3798,6 +3838,23 @@ function alterarObservacaoProgramacao(
     salvarControleProgramacao(
         controle
     );
+
+
+    registrarLog({
+
+        area:
+            "PROGRAMAÇÃO",
+
+        acao:
+            "ALTEROU OBSERVAÇÃO",
+
+        container:
+            container,
+
+        detalhes:
+            `Data: ${data} | Janela: ${janela} | Observação: ${observacao || "REMOVIDA"}`
+
+    });
 
 }
 
