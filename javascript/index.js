@@ -1,12 +1,33 @@
 /* ==========================================================
    PORTAL OPERACIONAL CDI
-   Versão 1.4.9 SOLICITAÇÕES 0.2
+   Versão 1.5.1 SUBPASE REAL TESTE 1
 ========================================================== */
 
 
 /* ==========================================================
    CONFIGURAÇÕES
 ========================================================== */
+
+/* ==========================================================
+   SUPABASE
+========================================================== */
+
+const SUPABASE_URL =
+    "https://pkgqdwkueimfznhamtgv.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_3SWvnPPmmHJme5Xp57CQkg_8IwwJtBE";
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+console.log(
+    "Supabase conectado:",
+    supabaseClient
+);
 
 const URLS_PADRAO = {
 
