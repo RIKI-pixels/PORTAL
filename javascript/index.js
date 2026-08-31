@@ -3744,6 +3744,12 @@ registrarLog({
 
 });
 
+   renderTabelaProgramacao(
+    APP.listaProgramacaoAtual
+);
+
+}
+
 /* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
 ========================================================== */
