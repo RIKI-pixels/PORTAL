@@ -458,52 +458,98 @@ function criarRegistroEstoque(linha){
 
 function carregarPlanilha() {
 
-    console.log("URL utilizada:", CONFIG.URL_PLANILHA);
+    console.log(
+        "Atualizando TSV Transporte..."
+    );
 
-    Papa.parse(CONFIG.URL_PLANILHA, {
+    return new Promise(
+        (resolve, reject) => {
 
-        download: true,
-        delimiter: "\t",
-        skipEmptyLines: true,
+            Papa.parse(
+                CONFIG.URL_PLANILHA,
+                {
 
-        complete(resultado) {
+                    download: true,
+                    delimiter: "\t",
+                    skipEmptyLines: true,
 
-            APP.dados = resultado.data
-                .slice(1)
-                .map(criarRegistro);
+                    complete(resultado) {
 
-            APP.carregado = true;
-            APP.ultimaAtualizacao = new Date();
+                        APP.dados =
+                            resultado.data
+                                .slice(1)
+                                .map(criarRegistro);
 
-            debug(
-                "Planilha carregada.",
-                APP.dados.length,
-                "registros."
+                        APP.carregado = true;
+
+                        APP.ultimaAtualizacao =
+                            new Date();
+
+                        document
+                            .getElementById(
+                                "linhasTransporte"
+                            )
+                            .textContent =
+                                APP.dados.length
+                                    .toLocaleString(
+                                        "pt-BR"
+                                    );
+
+                        document
+                            .getElementById(
+                                "dataTransporte"
+                            )
+                            .textContent =
+                                APP
+                                    .ultimaAtualizacao
+                                    .toLocaleString(
+                                        "pt-BR"
+                                    );
+
+                        console.log(
+                            "TSV Transporte atualizado:",
+                            APP.dados.length,
+                            "registros"
+                        );
+
+                        resolve(
+                            APP.dados
+                        );
+
+                    },
+
+                    error(erro) {
+
+                        console.error(
+                            "Erro ao atualizar TSV:",
+                            erro
+                        );
+
+                        document
+                            .getElementById(
+                                "linhasTransporte"
+                            )
+                            .textContent =
+                                "--";
+
+                        document
+                            .getElementById(
+                                "dataTransporte"
+                            )
+                            .textContent =
+                                "Erro ao carregar";
+
+                        reject(erro);
+
+                    }
+
+                }
             );
 
-            document.getElementById("linhasTransporte").textContent =
-                APP.dados.length.toLocaleString("pt-BR");
-
-            document.getElementById("dataTransporte").textContent =
-                APP.ultimaAtualizacao.toLocaleString("pt-BR");
-
-        },
-
-        error(erro) {
-
-            console.error(erro);
-
-            document.getElementById("linhasTransporte").textContent = "--";
-
-            document.getElementById("dataTransporte").textContent =
-                "Erro ao carregar";
-
         }
-
-    });
+    );
 
 }
-
 function carregarEstoque(){
 
     Papa.parse(
