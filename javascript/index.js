@@ -3744,46 +3744,6 @@ registrarLog({
 
 });
 
-
-renderTabelaProgramacao(
-    APP.listaProgramacaoAtual
-);
-
-
-function alterarObservacaoProgramacao(
-    container,
-    data,
-    janela,
-    observacao
-){
-
-    const controle =
-        obterControleProgramacao();
-
-    const chave = [
-        normalizarContainer(container),
-        data,
-        janela
-    ].join("|");
-
-    if(!controle[chave]){
-
-        controle[chave] = {
-            concluido:false,
-            observacao:""
-        };
-
-    }
-
-    controle[chave].observacao =
-        observacao;
-
-    salvarControleProgramacao(
-        controle
-    );
-
-}
-
 /* ==========================================================
    COLUNAS DA PROGRAMAÇÃO
 ========================================================== */
