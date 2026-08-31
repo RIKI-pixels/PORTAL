@@ -3680,6 +3680,11 @@ async function carregarControleProgramacaoSupabase(){
             return false;
 
         }
+     
+     console.log(
+    "REGISTROS RECEBIDOS DO SUPABASE:",
+    data
+);
 
 
         CONTROLE_PROGRAMACAO = {};
