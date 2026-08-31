@@ -3687,11 +3687,11 @@ async function carregarControleProgramacaoSupabase(){
 
         for(const registro of data){
 
-            const chave = [
-                normalizarContainer(registro.container),
-                registro.data,
-                registro.janela
-            ].join("|");
+const chave = [
+    normalizarContainer(registro.container),
+    String(registro.data || "").trim(),
+    String(registro.janela || "").trim()
+].join("|");
 
 
             CONTROLE_PROGRAMACAO[chave] = {
@@ -3751,8 +3751,8 @@ function chaveRegistroProgramacao(registro){
 
     return [
         normalizarContainer(registro.container),
-        registro.dataTexto,
-        registro.janela
+        String(registro.dataTexto || "").trim(),
+        String(registro.janela || "").trim()
     ].join("|");
 
 }
