@@ -125,7 +125,6 @@ async function entrarPortal() {
 
     }
 
-
     botao.disabled = true;
     botao.textContent = "ENTRANDO...";
 
@@ -177,6 +176,107 @@ async function entrarPortal() {
             return;
 
         }
+
+       /* ==========================================================
+   LOG DE ATIVIDADES
+========================================================== */
+
+async function registrarLog({
+    area,
+    acao,
+    container = null,
+    detalhes = null
+}) {
+
+    if (!USUARIO_PORTAL) {
+
+        console.warn(
+            "Log ignorado: usuário não identificado."
+        );
+
+        return false;
+
+    }
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "portal_logs"
+                )
+                .insert({
+
+                    usuario_id:
+                        USUARIO_PORTAL.id,
+
+                    usuario:
+                        USUARIO_PORTAL.nome,
+
+                    nivel:
+                        USUARIO_PORTAL.nivel,
+
+                    area:
+                        String(area || "")
+                            .trim()
+                            .toUpperCase(),
+
+                    acao:
+                        String(acao || "")
+                            .trim()
+                            .toUpperCase(),
+
+                    container:
+                        container
+                            ? String(container)
+                                .trim()
+                                .toUpperCase()
+                            : null,
+
+                    detalhes:
+                        detalhes
+                            ? String(detalhes)
+                            : null
+
+                });
+
+
+        if (error) {
+
+            console.error(
+                "Erro ao registrar log:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        console.log(
+            "Log registrado:",
+            area,
+            acao
+        );
+
+        return true;
+
+    }
+    catch (erro) {
+
+        console.error(
+            "Erro inesperado no log:",
+            erro
+        );
+
+        return false;
+
+    }
+
+}
 
 
         /* =========================================
@@ -4704,6 +4804,8 @@ window.alterarObservacaoProgramacao = alterarObservacaoProgramacao;
 window.testarSupabase = testarSupabase;
 
 window.atualizarTSVGlobal = atualizarTSVGlobal;
+
+window.registrarLog = registrarLog;
 
 iniciarRealtimeSupabase();
 
