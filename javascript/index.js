@@ -3656,11 +3656,84 @@ function concluirSolicitacoesArea(destino){
    CONTROLE OPERACIONAL DA PROGRAMAÇÃO
 ========================================================== */
 
+let CONTROLE_PROGRAMACAO = {};
+
+async function carregarControleProgramacaoSupabase(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("portal_programacao")
+                .select("*");
+
+        if(error){
+
+            console.error(
+                "Erro ao carregar Programação do Supabase:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        CONTROLE_PROGRAMACAO = {};
+
+
+        for(const registro of data){
+
+            const chave = [
+                normalizarContainer(registro.container),
+                registro.data,
+                registro.janela
+            ].join("|");
+
+
+            CONTROLE_PROGRAMACAO[chave] = {
+
+                id:
+                    registro.id,
+
+                concluido:
+                    registro.concluido === true,
+
+                observacao:
+                    registro.observacao || ""
+
+            };
+
+        }
+
+
+        console.log(
+            "Controle da Programação carregado:",
+            CONTROLE_PROGRAMACAO
+        );
+
+        return true;
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao carregar Programação:",
+            erro
+        );
+
+        return false;
+
+    }
+
+}
+
 function obterControleProgramacao(){
 
-    return JSON.parse(
-        localStorage.getItem("controleProgramacao") || "{}"
-    );
+    return CONTROLE_PROGRAMACAO;
 
 }
 
@@ -4322,7 +4395,9 @@ function filtrarProgramacaoPorJanela(){
    BUSCAR PROGRAMAÇÃO
 ========================================================== */
 
-function buscarProgramacao(){
+async function buscarProgramacao(){
+
+   await carregarControleProgramacaoSupabase();
 
     if(!verificarCarregamento()){
 
