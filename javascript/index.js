@@ -3721,6 +3721,23 @@ salvarControleProgramacao(
     controle
 );
 
+registrarLog({
+
+    area:
+        "PROGRAMAÇÃO",
+
+    acao:
+        "ALTEROU OBSERVAÇÃO",
+
+    container:
+        container,
+
+    detalhes:
+        `Data: ${data} | Janela: ${janela} | Observação: ${observacao || "REMOVIDA"}`
+
+});
+
+}
 
 /* ==========================================================
    REGISTRA LOG
