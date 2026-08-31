@@ -3774,61 +3774,175 @@ function obterEstadoProgramacao(registro){
 }
 
 
-function alterarConcluidoProgramacao(
+async function alterarConcluidoProgramacao(
     container,
     data,
     janela,
     marcado
 ){
 
-    const controle =
-        obterControleProgramacao();
+    if(!USUARIO_PORTAL){
 
-    const chave = [
-        normalizarContainer(container),
-        data,
-        janela
-    ].join("|");
+        console.error(
+            "Usuário não identificado."
+        );
 
-    if(!controle[chave]){
-
-        controle[chave] = {
-            concluido:false,
-            observacao:""
-        };
+        return;
 
     }
 
-    controle[chave].concluido =
-        marcado;
 
-    salvarControleProgramacao(
-        controle
-    );
+    const containerNormalizado =
+        normalizarContainer(container);
 
 
-    registrarLog({
+    try{
 
-        area:
-            "PROGRAMAÇÃO",
-
-        acao:
-            marcado
-                ? "MARCOU CONCLUÍDO"
-                : "REMOVEU CONCLUÍDO",
-
-        container:
-            container,
-
-        detalhes:
-            `Data: ${data} | Janela: ${janela}`
-
-    });
+        const {
+            data: registros,
+            error: erroBusca
+        } =
+            await supabaseClient
+                .from("portal_programacao")
+                .select("id")
+                .eq("container", containerNormalizado)
+                .eq("data", data)
+                .eq("janela", janela)
+                .order("id", { ascending: false })
+                .limit(1);
 
 
-    renderTabelaProgramacao(
-        APP.listaProgramacaoAtual
-    );
+        if(erroBusca){
+
+            console.error(
+                "Erro ao localizar Programação:",
+                erroBusca
+            );
+
+            return;
+
+        }
+
+
+        if(registros.length > 0){
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("portal_programacao")
+                    .update({
+
+                        concluido:
+                            marcado,
+
+                        atualizado_por:
+                            USUARIO_PORTAL.id,
+
+                        atualizado_em:
+                            new Date().toISOString()
+
+                    })
+                    .eq(
+                        "id",
+                        registros[0].id
+                    );
+
+
+            if(error){
+
+                console.error(
+                    "Erro ao atualizar Programação:",
+                    error
+                );
+
+                return;
+
+            }
+
+        }
+        else{
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("portal_programacao")
+                    .insert({
+
+                        container:
+                            containerNormalizado,
+
+                        data:
+                            data,
+
+                        janela:
+                            janela,
+
+                        concluido:
+                            marcado,
+
+                        observacao:
+                            null,
+
+                        atualizado_por:
+                            USUARIO_PORTAL.id,
+
+                        atualizado_em:
+                            new Date().toISOString()
+
+                    });
+
+
+            if(error){
+
+                console.error(
+                    "Erro ao criar Programação:",
+                    error
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        await carregarControleProgramacaoSupabase();
+
+
+        await registrarLog({
+
+            area:
+                "PROGRAMAÇÃO",
+
+            acao:
+                marcado
+                    ? "MARCOU CONCLUÍDO"
+                    : "REMOVEU CONCLUÍDO",
+
+            container:
+                containerNormalizado,
+
+            detalhes:
+                `Data: ${data} | Janela: ${janela}`
+
+        });
+
+
+        renderTabelaProgramacao(
+            APP.listaProgramacaoAtual
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao alterar Programação:",
+            erro
+        );
+
+    }
 
 }
 
