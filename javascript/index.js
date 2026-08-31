@@ -3336,6 +3336,50 @@ function alterarLimiteProgramacao(){
 
 }
 
+function filtrarProgramacaoPorJanela(){
+
+    const seletor =
+        document.getElementById(
+            "janelaProgramacao"
+        );
+
+    const janela =
+        seletor.value;
+
+    let lista = [
+        ...APP.listaProgramacaoBase
+    ];
+
+    if(janela){
+
+        lista =
+            lista.filter(registro=>{
+
+                return (
+                    registro.janela ===
+                    janela
+                );
+
+            });
+
+    }
+
+    APP.listaProgramacaoAtual =
+        lista;
+
+    APP.paginaProgramacao = 1;
+
+    renderTabelaProgramacao(
+        lista
+    );
+
+}
+
+
+/* ==========================================================
+   BUSCAR PROGRAMAÇÃO
+========================================================== */
+
 function buscarProgramacao(){
 
     if(!verificarCarregamento()){
@@ -3393,52 +3437,6 @@ function buscarProgramacao(){
         return registro.tipo === tipo;
 
     });
-
-   function filtrarProgramacaoPorJanela(){
-
-    const seletor =
-        document.getElementById(
-            "janelaProgramacao"
-        );
-
-
-    const janela =
-        seletor.value;
-
-
-    let lista = [
-        ...APP.listaProgramacaoBase
-    ];
-
-
-    if(janela){
-
-        lista =
-            lista.filter(registro=>{
-
-                return (
-                    registro.janela ===
-                    janela
-                );
-
-            });
-
-    }
-
-
-    APP.listaProgramacaoAtual =
-        lista;
-
-
-    APP.paginaProgramacao = 1;
-
-
-    renderTabelaProgramacao(
-        lista
-    );
-
-}
-
 
     /* =========================
        LOCALIZAÇÃO ATUAL
