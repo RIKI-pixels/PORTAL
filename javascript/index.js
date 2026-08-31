@@ -506,15 +506,51 @@ function carregarPlanilha() {
                                         "pt-BR"
                                     );
 
-                        console.log(
+                           console.log(
                             "TSV Transporte atualizado:",
-                            APP.dados.length,
-                            "registros"
-                        );
+                              APP.dados.length,
+                              "registros"
+                            );
 
-                        resolve(
+
+   /* ==========================================================
+                     ATUALIZA PROGRAMAÇÃO ABERTA
+   ========================================================== */
+
+                                    const progInicio =
+                                        document.getElementById(
+                                      "progInicio"
+                                     );
+
+                                       const progFim =
+                                        document.getElementById(
+                                      "progFim"
+                                     );
+
+
+                                 if(
+                                    DOM.programacao &&
+                                    DOM.programacao.style.display !== "none" &&
+                                    progInicio &&
+                                    progFim &&
+                                    progInicio.value &&
+                                    progFim.value
+                                 ){
+
+                              console.log(
+                                "Atualizando programação exibida..."
+                               );
+
+                            buscarProgramacao();
+
+                        }
+
+
+                              resolve(
                             APP.dados
                         );
+
+                       
 
                     },
 
