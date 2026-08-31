@@ -2641,3 +2641,56 @@ SOLICITAÇÕES
     border-color:#587da0;
     color:#355b7c;
 }
+
+/* ==========================================================
+   PROGRAMAÇÃO - CONTROLE OPERACIONAL
+========================================================== */
+
+.coluna-concluido{
+    text-align:center;
+}
+
+.check-programacao{
+    width:18px;
+    height:18px;
+    cursor:pointer;
+}
+
+
+/* LINHA CONCLUÍDA */
+
+#tbodyProg tr.programacao-concluida td{
+    color:#299447;
+    font-weight:600;
+}
+
+
+/* OBSERVAÇÃO */
+
+.observacao-programacao{
+    width:220px;
+    min-width:180px;
+
+    padding:8px 10px;
+
+    border:1px solid #dbe2ea;
+    border-radius:8px;
+
+    background:#fff;
+
+    font-family:inherit;
+    font-size:12px;
+}
+
+
+/* mantém o texto da observação legível
+   mesmo quando a unidade está concluída */
+
+.programacao-concluida
+.observacao-programacao{
+    color:#299447;
+
+    border-color:#b9dec3;
+
+    background:#f5fff7;
+}
