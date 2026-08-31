@@ -4041,54 +4041,211 @@ async function alterarConcluidoProgramacao(
 
 }
 
-function alterarObservacaoProgramacao(
+async function alterarObservacaoProgramacao(
     container,
     data,
     janela,
     observacao
 ){
 
-    const controle =
-        obterControleProgramacao();
+    if(!USUARIO_PORTAL){
 
-    const chave = [
-        normalizarContainer(container),
-        data,
-        janela
-    ].join("|");
+        console.error(
+            "Usuário não identificado."
+        );
 
-    if(!controle[chave]){
-
-        controle[chave] = {
-            concluido:false,
-            observacao:""
-        };
+        return;
 
     }
 
-    controle[chave].observacao =
-        observacao;
 
-    salvarControleProgramacao(
-        controle
-    );
+    const containerNormalizado =
+        normalizarContainer(container);
+
+    const novaObservacao =
+        String(observacao || "").trim();
 
 
-    registrarLog({
+    try{
 
-        area:
-            "PROGRAMAÇÃO",
+        /* =========================================
+           VERIFICA SE JÁ EXISTE
+        ========================================= */
 
-        acao:
-            "ALTEROU OBSERVAÇÃO",
+        const {
+            data: registros,
+            error: erroBusca
+        } =
+            await supabaseClient
+                .from("portal_programacao")
+                .select("id, concluido")
+                .eq(
+                    "container",
+                    containerNormalizado
+                )
+                .eq(
+                    "data",
+                    data
+                )
+                .eq(
+                    "janela",
+                    janela
+                )
+                .order(
+                    "id",
+                    {
+                        ascending: false
+                    }
+                )
+                .limit(1);
 
-        container:
-            container,
 
-        detalhes:
-            `Data: ${data} | Janela: ${janela} | Observação: ${observacao || "REMOVIDA"}`
+        if(erroBusca){
 
-    });
+            console.error(
+                "Erro ao localizar Programação:",
+                erroBusca
+            );
+
+            return;
+
+        }
+
+
+        /* =========================================
+           SE EXISTE → UPDATE
+        ========================================= */
+
+        if(registros.length > 0){
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("portal_programacao")
+                    .update({
+
+                        observacao:
+                            novaObservacao || null,
+
+                        atualizado_por:
+                            USUARIO_PORTAL.id,
+
+                        atualizado_em:
+                            new Date().toISOString()
+
+                    })
+                    .eq(
+                        "id",
+                        registros[0].id
+                    );
+
+
+            if(error){
+
+                console.error(
+                    "Erro ao atualizar observação:",
+                    error
+                );
+
+                return;
+
+            }
+
+        }
+
+        /* =========================================
+           SE NÃO EXISTE → INSERT
+        ========================================= */
+
+        else{
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("portal_programacao")
+                    .insert({
+
+                        container:
+                            containerNormalizado,
+
+                        data:
+                            data,
+
+                        janela:
+                            janela,
+
+                        concluido:
+                            false,
+
+                        observacao:
+                            novaObservacao || null,
+
+                        atualizado_por:
+                            USUARIO_PORTAL.id,
+
+                        atualizado_em:
+                            new Date().toISOString()
+
+                    });
+
+
+            if(error){
+
+                console.error(
+                    "Erro ao criar observação:",
+                    error
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        /* =========================================
+           ATUALIZA ESTE COMPUTADOR
+        ========================================= */
+
+        await carregarControleProgramacaoSupabase();
+
+
+        /* =========================================
+           REGISTRA NO LOG
+        ========================================= */
+
+        await registrarLog({
+
+            area:
+                "PROGRAMAÇÃO",
+
+            acao:
+                "ALTEROU OBSERVAÇÃO",
+
+            container:
+                containerNormalizado,
+
+            detalhes:
+                `Data: ${data} | Janela: ${janela} | Observação: ${novaObservacao || "REMOVIDA"}`
+
+        });
+
+
+        renderTabelaProgramacao(
+            APP.listaProgramacaoAtual
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao alterar observação:",
+            erro
+        );
+
+    }
 
 }
 
