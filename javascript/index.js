@@ -1090,6 +1090,63 @@ async function testarSupabase(){
 }
 
 /* ==========================================================
+   REALTIME SUPABASE
+========================================================== */
+
+function iniciarRealtimeSupabase(){
+
+    console.log(
+        "Iniciando Realtime Supabase..."
+    );
+
+    supabaseClient
+        .channel("portal-eventos-global")
+
+        .on(
+            "postgres_changes",
+            {
+                event: "INSERT",
+                schema: "public",
+                table: "portal_eventos"
+            },
+
+            payload => {
+
+                console.log(
+                    "Evento realtime recebido:",
+                    payload.new
+                );
+
+                const evento =
+                    payload.new;
+
+                if(
+                    evento.tipo ===
+                    "TESTE"
+                ){
+
+                    console.log(
+                        "TESTE recebido de outro portal:",
+                        evento
+                    );
+
+                }
+
+            }
+        )
+
+        .subscribe(status => {
+
+            console.log(
+                "Status Realtime:",
+                status
+            );
+
+        });
+
+}
+
+/* ==========================================================
    MAPA
 ========================================================== */
 
@@ -4047,6 +4104,8 @@ window.alterarConcluidoProgramacao = alterarConcluidoProgramacao;
 window.alterarObservacaoProgramacao = alterarObservacaoProgramacao;
 
 window.testarSupabase = testarSupabase;
+
+iniciarRealtimeSupabase();
 
 /* ==========================================================
    FIM DO ARQUIVO
