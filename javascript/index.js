@@ -1136,6 +1136,79 @@ async function testarSupabase(){
 }
 
 /* ==========================================================
+   ATUALIZAÇÃO GLOBAL DO TSV
+========================================================== */
+
+async function atualizarTSVGlobal(){
+
+    try{
+
+        console.log(
+            "Iniciando atualização global do TSV..."
+        );
+
+        /*
+        Primeiro atualiza o computador
+        que clicou no botão.
+        */
+        await carregarPlanilha();
+
+        /*
+        Depois avisa todos os outros
+        portais através do Supabase.
+        */
+        const { error } =
+            await supabaseClient
+                .from("portal_eventos")
+                .insert([
+                    {
+                        tipo: "ATUALIZAR_TSV",
+                        usuario: "DEV",
+                        detalhes:
+                            "Atualização global do TSV Transporte"
+                    }
+                ]);
+
+        if(error){
+
+            console.error(
+                "Erro ao enviar atualização global:",
+                error
+            );
+
+            alert(
+                "TSV atualizado neste computador, mas houve erro ao avisar os outros usuários."
+            );
+
+            return;
+
+        }
+
+        console.log(
+            "Atualização global enviada."
+        );
+
+        alert(
+            "TSV atualizado para todos os usuários!"
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro na atualização global:",
+            erro
+        );
+
+        alert(
+            "Não foi possível atualizar o TSV."
+        );
+
+    }
+
+}
+
+/* ==========================================================
    REALTIME SUPABASE
 ========================================================== */
 
@@ -1156,30 +1229,68 @@ function iniciarRealtimeSupabase(){
                 table: "portal_eventos"
             },
 
-            payload => {
+payload => {
+
+    console.log(
+        "Evento realtime recebido:",
+        payload.new
+    );
+
+    const evento =
+        payload.new;
+
+    /*
+    TESTE DE COMUNICAÇÃO
+    */
+
+    if(
+        evento.tipo ===
+        "TESTE"
+    ){
+
+        console.log(
+            "TESTE recebido:",
+            evento
+        );
+
+        return;
+
+    }
+
+
+    /*
+    ATUALIZAÇÃO GLOBAL DO TSV
+    */
+
+    if(
+        evento.tipo ===
+        "ATUALIZAR_TSV"
+    ){
+
+        console.log(
+            "Solicitação global de atualização TSV recebida."
+        );
+
+        carregarPlanilha()
+            .then(()=>{
 
                 console.log(
-                    "Evento realtime recebido:",
-                    payload.new
+                    "TSV atualizado através do Realtime."
                 );
 
-                const evento =
-                    payload.new;
+            })
+            .catch(erro=>{
 
-                if(
-                    evento.tipo ===
-                    "TESTE"
-                ){
+                console.error(
+                    "Erro ao atualizar TSV pelo Realtime:",
+                    erro
+                );
 
-                    console.log(
-                        "TESTE recebido de outro portal:",
-                        evento
-                    );
+            });
 
-                }
+    }
 
-            }
-        )
+}
 
         .subscribe(status => {
 
@@ -4150,6 +4261,8 @@ window.alterarConcluidoProgramacao = alterarConcluidoProgramacao;
 window.alterarObservacaoProgramacao = alterarObservacaoProgramacao;
 
 window.testarSupabase = testarSupabase;
+
+window.atualizarTSVGlobal = atualizarTSVGlobal;
 
 iniciarRealtimeSupabase();
 
