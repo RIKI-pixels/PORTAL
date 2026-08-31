@@ -29,6 +29,297 @@ console.log(
     supabaseClient
 );
 
+/* ==========================================================
+   AUTENTICAÇÃO PORTAL
+========================================================== */
+
+let USUARIO_PORTAL = null;
+
+
+function normalizarCPFLogin(cpf) {
+
+    return String(cpf || "")
+        .replace(/\D/g, "");
+
+}
+
+
+function mostrarErroLogin(mensagem) {
+
+    const erro =
+        document.getElementById(
+            "loginErro"
+        );
+
+    if (!erro) {
+        return;
+    }
+
+    erro.textContent =
+        mensagem;
+
+    erro.style.display =
+        "block";
+
+}
+
+
+function limparErroLogin() {
+
+    const erro =
+        document.getElementById(
+            "loginErro"
+        );
+
+    if (!erro) {
+        return;
+    }
+
+    erro.textContent = "";
+
+    erro.style.display =
+        "none";
+
+}
+
+async function entrarPortal() {
+
+    const inputCPF =
+        document.getElementById(
+            "loginCPF"
+        );
+
+    const inputSenha =
+        document.getElementById(
+            "loginSenha"
+        );
+
+    const botao =
+        document.getElementById(
+            "btnLogin"
+        );
+
+
+    limparErroLogin();
+
+
+    const cpf =
+        normalizarCPFLogin(
+            inputCPF.value
+        );
+
+    const senha =
+        inputSenha.value;
+
+
+    if (
+        cpf.length !== 11 ||
+        !senha
+    ) {
+
+        mostrarErroLogin(
+            "Informe CPF e senha."
+        );
+
+        return;
+
+    }
+
+
+    botao.disabled = true;
+    botao.textContent = "ENTRANDO...";
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                `${SUPABASE_URL}/functions/v1/login-portal`,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "apikey":
+                            SUPABASE_KEY
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            cpf,
+                            senha
+                        })
+
+                }
+            );
+
+
+        const resultado =
+            await resposta.json();
+
+
+        if (
+            !resposta.ok ||
+            !resultado.sucesso
+        ) {
+
+            mostrarErroLogin(
+                resultado.erro ||
+                "Não foi possível realizar o login."
+            );
+
+            return;
+
+        }
+
+
+        /* =========================================
+           SALVA SESSÃO NO SUPABASE
+        ========================================= */
+
+        const {
+            error: erroSessao
+        } =
+            await supabaseClient
+                .auth
+                .setSession({
+
+                    access_token:
+                        resultado
+                            .session
+                            .access_token,
+
+                    refresh_token:
+                        resultado
+                            .session
+                            .refresh_token
+
+                });
+
+
+        if (erroSessao) {
+
+            console.error(
+                "Erro ao salvar sessão:",
+                erroSessao
+            );
+
+            mostrarErroLogin(
+                "Não foi possível iniciar a sessão."
+            );
+
+            return;
+
+        }
+
+
+        /* =========================================
+           USUÁRIO LOGADO
+        ========================================= */
+
+        USUARIO_PORTAL =
+            resultado.usuario;
+
+
+        console.log(
+            "Usuário conectado:",
+            USUARIO_PORTAL
+        );
+
+
+        document
+            .getElementById(
+                "telaLogin"
+            )
+            .style
+            .display =
+                "none";
+
+
+        inputSenha.value = "";
+
+
+    }
+    catch (erro) {
+
+        console.error(
+            "Erro no login:",
+            erro
+        );
+
+
+        mostrarErroLogin(
+            "Erro de conexão com o servidor."
+        );
+
+    }
+    finally {
+
+        botao.disabled =
+            false;
+
+        botao.textContent =
+            "ENTRAR";
+
+    }
+
+}
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const botao =
+            document.getElementById(
+                "btnLogin"
+            );
+
+
+        if (botao) {
+
+            botao.addEventListener(
+                "click",
+                entrarPortal
+            );
+
+        }
+
+
+        const senha =
+            document.getElementById(
+                "loginSenha"
+            );
+
+
+        if (senha) {
+
+            senha.addEventListener(
+                "keydown",
+                evento => {
+
+                    if (
+                        evento.key ===
+                        "Enter"
+                    ) {
+
+                        entrarPortal();
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+);
+
 const URLS_PADRAO = {
 
     transporte:
