@@ -17,6 +17,69 @@
 
 <body>
 
+    <!-- ======================================================
+     LOGIN PORTAL
+======================================================= -->
+
+<div id="telaLogin" class="login-screen">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+            <img src="CDI.png" alt="CDI">
+        </div>
+
+        <h1>PORTAL CDI</h1>
+
+        <p class="login-subtitulo">
+            Acesso ao Portal Operacional
+        </p>
+
+
+        <div class="login-form">
+
+            <label for="loginCPF">
+                CPF
+            </label>
+
+            <input
+                type="text"
+                id="loginCPF"
+                placeholder="000.000.000-00"
+                maxlength="14"
+                autocomplete="username">
+
+
+            <label for="loginSenha">
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="loginSenha"
+                placeholder="Digite sua senha"
+                autocomplete="current-password">
+
+
+            <div
+                id="loginErro"
+                class="login-erro"
+                style="display:none;">
+            </div>
+
+
+            <button
+                type="button"
+                id="btnLogin">
+                ENTRAR
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
     <!-- SIDEBAR -->
 
     <div class="sidebar">
