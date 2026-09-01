@@ -2019,37 +2019,57 @@ function iniciarRealtimeSupabase(){
                 =========================================
                 */
 
-                if(
-                    evento.tipo ===
-                    "ATUALIZAR_TSV"
-                ){
+if(
+    evento.tipo ===
+    "ATUALIZAR_TSV"
+){
 
-                    console.log(
-                        "Solicitação global de atualização TSV recebida."
-                    );
+    console.log(
+        "Solicitação global de atualização TSV recebida."
+    );
+
+    (async ()=>{
+
+        try{
+
+            /*
+            1. BUSCA OS LINKS GLOBAIS MAIS RECENTES
+            */
+
+            await carregarConfigGlobal();
 
 
-                    carregarPlanilha()
-                        .then(()=>{
+            /*
+            2. RECARREGA O TSV TRANSPORTE
+            */
 
-                            console.log(
-                                "TSV atualizado através do Realtime."
-                            );
+            await carregarPlanilha();
 
-                        })
-                        .catch(erro=>{
 
-                            console.error(
-                                "Erro ao atualizar TSV pelo Realtime:",
-                                erro
-                            );
+            /*
+            3. RECARREGA O TSV ESTOQUE
+            */
 
-                        });
+            carregarEstoque();
 
-                }
 
-            }
-        )
+            console.log(
+                "TSVs atualizados através do Realtime."
+            );
+
+        }
+        catch(erro){
+
+            console.error(
+                "Erro ao atualizar TSV pelo Realtime:",
+                erro
+            );
+
+        }
+
+    })();
+
+}
 
 
         /*
