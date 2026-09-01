@@ -201,31 +201,34 @@
 
             <div class="box" id="programacao">
 
-                <h2>PROGRAMAÇÃO</h2>
+    <h2>PROGRAMAÇÃO</h2>
 
-                    <select id="tipoProgramacao">
-                                    <option value="AZ">AZ</option>
-                                    <option value="RX">RX</option>
-                                    <option value="ESTUFAGEM">ESTUFAGEM</option>
-                                    </select>
+    <div class="filters active">
 
-                                <input type="date" id="progInicio">
-                                <input type="date" id="progFim">
+        <select id="tipoProgramacao">
+            <option value="AZ">AZ</option>
+            <option value="RX">RX</option>
+            <option value="ESTUFAGEM">ESTUFAGEM</option>
+        </select>
 
-                            <select
-                        id="janelaProgramacao"
-                        onchange="filtrarProgramacaoPorJanela()">
+        <input type="date" id="progInicio">
+        <input type="date" id="progFim">
 
-                                <option value="">
-                                TODAS AS JANELAS
-                                </option>
+        <select
+            id="janelaProgramacao"
+            onchange="filtrarProgramacaoPorJanela()">
 
-                        </select>
+            <option value="">
+                TODAS AS JANELAS
+            </option>
 
-                     <button onclick="buscarProgramacao()">
-                        Buscar
-                     </button>
-                </div>
+        </select>
+
+        <button onclick="buscarProgramacao()">
+            Buscar
+        </button>
+
+    </div>
 
                 <div class="grid-panel">
 
