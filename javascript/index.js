@@ -1926,6 +1926,44 @@ function iniciarRealtimeSupabase(){
             }
         )
 
+     .on(
+    "postgres_changes",
+    {
+        event: "*",
+        schema: "public",
+        table: "portal_solicitacoes"
+    },
+
+    async payload => {
+
+        console.log(
+            "Solicitação alterada em Realtime:",
+            payload
+        );
+
+
+        await carregarSolicitacoesSupabase();
+
+
+        renderSolicitacoesPendentes();
+
+        renderSolicitacoesEmAndamento();
+
+        renderSolicitacoesConcluidas();
+
+        atualizarDashboardSolicitacoes();
+
+        atualizarAreasSolicitadasMapa();
+
+        atualizarNotificacaoSolicitacoes();
+
+
+        console.log(
+            "Solicitações atualizadas pelo Realtime."
+        );
+
+    }
+)
 
         /*
         =========================================
