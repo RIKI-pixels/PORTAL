@@ -2613,9 +2613,9 @@ function obterSolicitacoes(){
 
 function salvarSolicitacoes(lista){
 
-    localStorage.setItem(
-        "solicitacoesPosicionamento",
-        JSON.stringify(lista)
+    console.warn(
+        "salvarSolicitacoes() está desativada. As solicitações agora são salvas no Supabase.",
+        lista
     );
 
 }
