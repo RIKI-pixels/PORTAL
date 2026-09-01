@@ -1965,6 +1965,51 @@ function iniciarRealtimeSupabase(){
     }
 )
 
+     .on(
+    "postgres_changes",
+    {
+        event: "*",
+        schema: "public",
+        table: "portal_programacao"
+    },
+
+    async payload => {
+
+        console.log(
+            "Programação alterada em Realtime:",
+            payload
+        );
+
+
+        await carregarControleProgramacaoSupabase();
+
+
+        /*
+        Só redesenha a tabela se a Programação
+        já estiver carregada.
+        */
+
+        if(
+            APP.listaProgramacaoAtual &&
+            Array.isArray(
+                APP.listaProgramacaoAtual
+            )
+        ){
+
+            renderTabelaProgramacao(
+                APP.listaProgramacaoAtual
+            );
+
+        }
+
+
+        console.log(
+            "Programação atualizada pelo Realtime."
+        );
+
+    }
+)
+
         /*
         =========================================
         CONEXÃO REALTIME
