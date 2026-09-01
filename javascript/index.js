@@ -2606,9 +2606,7 @@ async function carregarSolicitacoesSupabase(){
 
 function obterSolicitacoes(){
 
-    return JSON.parse(
-        localStorage.getItem("solicitacoesPosicionamento") || "[]"
-    );
+    return SOLICITACOES_PORTAL;
 
 }
 
@@ -5323,6 +5321,8 @@ function iniciarPortal(){
     carregarEstoque();
 
     carregarLocalizacoesSupabase();
+
+    carregarSolicitacoesSupabase();
    
      mostrarInicio();
 
