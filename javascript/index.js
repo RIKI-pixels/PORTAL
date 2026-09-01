@@ -239,6 +239,8 @@ async function entrarPortal() {
             .display =
                 "none";
 
+         await iniciarPortal();
+
 
         inputSenha.value = "";
 
@@ -5891,49 +5893,73 @@ function movimentarContainer(container){
    INICIALIZAÇÃO
 ========================================================== */
 
-function iniciarPortal(){
+async function iniciarPortal(){
 
     debug(
-
         "================================"
-
     );
 
     debug(
-
         "Portal Operacional CDI"
-
     );
 
     debug(
-
         "Versão:",
-
         CONFIG.VERSAO
-
     );
 
     debug(
-
         "================================"
-
     );
 
-   carregarPlanilha();
-   
+
+    console.log(
+        "Iniciando carregamento do portal..."
+    );
+
+
+    /*
+    =========================================
+    1. CARREGA DADOS DO SUPABASE PRIMEIRO
+    =========================================
+    */
+
+    await carregarLocalizacoesSupabase();
+
+    await carregarSolicitacoesSupabase();
+
+    await carregarControleProgramacaoSupabase();
+
+
+    /*
+    =========================================
+    2. CARREGA TSV
+    =========================================
+    */
+
+    await carregarPlanilha();
+
     carregarEstoque();
 
-    carregarLocalizacoesSupabase();
 
-    carregarSolicitacoesSupabase();
-   
-     mostrarInicio();
+    /*
+    =========================================
+    3. ATUALIZA TELA
+    =========================================
+    */
 
-     atualizarNotificacaoSolicitacoes();
+    mostrarInicio();
+
+    atualizarNotificacaoSolicitacoes();
+
+    atualizarAreasSolicitadasMapa();
+
+
+    console.log(
+        "Portal carregado."
+    );
 
 }
-
-
 
 /* ==========================================================
    EVENTOS
@@ -5944,8 +5970,6 @@ document.addEventListener(
     "DOMContentLoaded",
 
     ()=>{
-
-        iniciarPortal();
 
         document
             .getElementById("estoqueAnterior")
