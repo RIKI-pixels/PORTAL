@@ -956,6 +956,83 @@ function criarRegistroEstoque(linha){
 
 }
 
+async function carregarConfigGlobal(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("portal_config")
+                .select("chave, valor");
+
+        if(error){
+
+            console.error(
+                "Erro ao carregar configuração global:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        for(const item of data || []){
+
+            if(
+                item.chave ===
+                "tsv_transporte"
+            ){
+
+                CONFIG.URL_PLANILHA =
+                    item.valor;
+
+            }
+
+
+            if(
+                item.chave ===
+                "tsv_estoque"
+            ){
+
+                CONFIG.URL_ESTOQUE =
+                    item.valor;
+
+            }
+
+        }
+
+
+        console.log(
+            "Configuração global carregada:",
+            {
+                transporte:
+                    CONFIG.URL_PLANILHA,
+
+                estoque:
+                    CONFIG.URL_ESTOQUE
+            }
+        );
+
+
+        return true;
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao carregar configuração global:",
+            erro
+        );
+
+        return false;
+
+    }
+
+}
 
 /* ==========================================================
    CARREGAMENTO DA PLANILHA
@@ -1506,29 +1583,140 @@ function alterarLimiteEstoque(){
    ADM
 ========================================================== */
 
-function salvarTSV(){
+async function salvarTSV(){
 
-    localStorage.setItem(
-        "tsvTransporte",
-        document.getElementById("urlTransporte").value
-    );
+    if(!USUARIO_PORTAL){
 
-    localStorage.setItem(
-        "tsvEstoque",
-        document.getElementById("urlEstoque").value
-    );
+        alert(
+            "Usuário não identificado."
+        );
 
-   localStorage.setItem(
+        return;
 
-    "clientesEstufagem",
+    }
 
-    document
-        .getElementById("clientesEstufagem")
-        .value
 
-    );
+    const urlTransporte =
+        document
+            .getElementById(
+                "urlTransporte"
+            )
+            .value
+            .trim();
 
-    location.reload();
+
+    const urlEstoque =
+        document
+            .getElementById(
+                "urlEstoque"
+            )
+            .value
+            .trim();
+
+
+    if(
+        !urlTransporte ||
+        !urlEstoque
+    ){
+
+        alert(
+            "Informe os dois links TSV."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("portal_config")
+                .upsert(
+                    [
+                        {
+                            chave:
+                                "tsv_transporte",
+
+                            valor:
+                                urlTransporte,
+
+                            atualizado_por:
+                                USUARIO_PORTAL.id,
+
+                            atualizado_em:
+                                new Date()
+                                    .toISOString()
+                        },
+
+                        {
+                            chave:
+                                "tsv_estoque",
+
+                            valor:
+                                urlEstoque,
+
+                            atualizado_por:
+                                USUARIO_PORTAL.id,
+
+                            atualizado_em:
+                                new Date()
+                                    .toISOString()
+                        }
+                    ],
+                    {
+                        onConflict:
+                            "chave"
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Erro ao salvar TSV global:",
+                error
+            );
+
+            alert(
+                "Não foi possível salvar os TSVs."
+            );
+
+            return;
+
+        }
+
+
+        CONFIG.URL_PLANILHA = urlTransporte;
+
+        CONFIG.URL_ESTOQUE = urlEstoque;
+
+
+        console.log(
+            "TSVs globais salvos."
+        );
+
+
+        alert(
+            "TSVs salvos globalmente."
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao salvar TSV:",
+            erro
+        );
+
+        alert(
+            "Erro inesperado ao salvar TSV."
+        );
+
+    }
 
 }
 
@@ -5930,10 +6118,17 @@ async function iniciarPortal(){
 
     await carregarControleProgramacaoSupabase();
 
+     /*
+    =========================================
+    2. CONFIG GLOBAL
+    =========================================
+    */
 
+    await carregarConfigGlobal();
+ 
     /*
     =========================================
-    2. CARREGA TSV
+    3. CARREGA TSV
     =========================================
     */
 
@@ -5944,7 +6139,7 @@ async function iniciarPortal(){
 
     /*
     =========================================
-    3. ATUALIZA TELA
+    4. ATUALIZA TELA
     =========================================
     */
 
