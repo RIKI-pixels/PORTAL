@@ -1972,9 +1972,7 @@ function abrirLinha(nomeLinha){
 
 function obterLocalizacoes(){
 
-    return JSON.parse(
-        localStorage.getItem("localizacoesContainers") || "{}"
-    );
+    return LOCALIZACOES_CONTAINERS;
 
 }
 
@@ -5047,14 +5045,14 @@ async function carregarLocalizacoesSupabase(){
 
 function obterLocalizacao(container){
 
-    const mapa = JSON.parse(
-        localStorage.getItem("localizacoesContainers") || "{}"
-    );
-
     const numero =
         normalizarContainer(container);
 
-    return mapa[numero] || "";
+    return (
+        LOCALIZACOES_CONTAINERS[
+            numero
+        ] || ""
+    );
 
 }
 
@@ -5121,6 +5119,8 @@ function iniciarPortal(){
    carregarPlanilha();
    
     carregarEstoque();
+
+    carregarLocalizacoesSupabase();
    
      mostrarInicio();
 
