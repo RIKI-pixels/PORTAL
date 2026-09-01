@@ -4971,6 +4971,80 @@ filtrarProgramacaoPorJanela();
    LOCALIZAÇÃO
 ========================================================== */
 
+let LOCALIZACOES_CONTAINERS = {};
+
+
+async function carregarLocalizacoesSupabase(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("portal_localizacoes")
+                .select(
+                    "id, container, localizacao, atualizado_por, atualizado_em"
+                );
+
+        if(error){
+
+            console.error(
+                "Erro ao carregar localizações do Supabase:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        LOCALIZACOES_CONTAINERS = {};
+
+
+        for(const registro of data){
+
+            const container =
+                normalizarContainer(
+                    registro.container
+                );
+
+            if(!container){
+                continue;
+            }
+
+            LOCALIZACOES_CONTAINERS[
+                container
+            ] =
+                String(
+                    registro.localizacao || ""
+                ).trim();
+
+        }
+
+
+        console.log(
+            "Localizações carregadas do Supabase:",
+            LOCALIZACOES_CONTAINERS
+        );
+
+        return true;
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao carregar localizações:",
+            erro
+        );
+
+        return false;
+
+    }
+
+}
+
 function obterLocalizacao(container){
 
     const mapa = JSON.parse(
@@ -5004,37 +5078,6 @@ function movimentarContainer(container){
     return;
 
 }
-
-    APP.containerSelecionado =
-        normalizarContainer(container);
-
-    mostrarMapa();
-
-}
-
-
-/* ==========================================================
-   RENDER ESTOQUE
-========================================================== */
-
-function movimentarContainer(container){
-
-    const registro =
-        buscarContainerNoEstoque(container);
-
-    if(!registro){
-
-        alert(
-            "Container não localizado no estoque."
-        );
-
-        return;
-
-    }
-
-    if(!validarRetiradaContainer(container)){
-        return;
-    }
 
     APP.containerSelecionado =
         normalizarContainer(container);
