@@ -1979,9 +1979,9 @@ function obterLocalizacoes(){
 
 function salvarLocalizacoes(localizacoes){
 
-    localStorage.setItem(
-        "localizacoesContainers",
-        JSON.stringify(localizacoes)
+    console.warn(
+        "salvarLocalizacoes() está desativada. As localizações agora são salvas no Supabase.",
+        localizacoes
     );
 
 }
