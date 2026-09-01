@@ -2724,24 +2724,43 @@ function containerJaSolicitado(container){
 
 }
 
-function criarSolicitacoes(
+async function criarSolicitacoes(
     containers,
     destino,
     tipo
 ){
 
-    const solicitacoes =
+    if(!USUARIO_PORTAL){
+
+        alert(
+            "Usuário não identificado."
+        );
+
+        return;
+
+    }
+
+
+    const solicitacoesAtuais =
         obterSolicitacoes();
 
     const erros = [];
 
-    let adicionados = 0;
+    const novasSolicitacoes = [];
 
 
-    containers.forEach(container=>{
+    for(const containerOriginal of containers){
+
+        const container =
+            normalizarContainer(
+                containerOriginal
+            );
+
 
         const registro =
-            buscarContainerNoEstoque(container);
+            buscarContainerNoEstoque(
+                container
+            );
 
 
         // CONTAINER NÃO EXISTE
@@ -2752,7 +2771,7 @@ function criarSolicitacoes(
                 `${container}: não localizado no estoque`
             );
 
-            return;
+            continue;
 
         }
 
@@ -2760,7 +2779,10 @@ function criarSolicitacoes(
         // SEM LOCALIZAÇÃO
 
         const localAtual =
-            obterLocalizacao(container);
+            obterLocalizacao(
+                container
+            );
+
 
         if(!localAtual){
 
@@ -2768,13 +2790,15 @@ function criarSolicitacoes(
                 `${container}: container sem localização`
             );
 
-            return;
+            continue;
 
         }
 
 
         const estado =
-            textoMaiusculo(registro.estado);
+            textoMaiusculo(
+                registro.estado
+            );
 
 
         // ESTUFAGEM = SOMENTE VAZIO
@@ -2788,7 +2812,7 @@ function criarSolicitacoes(
                 `${container}: somente containers V podem ser solicitados para estufagem`
             );
 
-            return;
+            continue;
 
         }
 
@@ -2796,8 +2820,10 @@ function criarSolicitacoes(
         // MAPA/FUMIGAÇÃO NÃO ACEITAM VAZIO
 
         if(
-            (tipo === "MAPA" ||
-             tipo === "FUMIGACAO") &&
+            (
+                tipo === "MAPA" ||
+                tipo === "FUMIGACAO"
+            ) &&
             estado === "V"
         ){
 
@@ -2805,67 +2831,155 @@ function criarSolicitacoes(
                 `${container}: container V não pode ser solicitado para ${destino}`
             );
 
-            return;
+            continue;
 
         }
 
 
         // JÁ SOLICITADO
 
-        if(containerJaSolicitado(container)){
+        const jaSolicitado =
+            solicitacoesAtuais.some(
+                item =>
+                    normalizarContainer(
+                        item.container
+                    ) === container
+                    &&
+                    (
+                        item.status === "PENDENTE" ||
+                        item.status === "EM ANDAMENTO"
+                    )
+            );
+
+
+        if(jaSolicitado){
 
             erros.push(
                 `${container}: já possui solicitação pendente`
+            );
+
+            continue;
+
+        }
+
+
+        novasSolicitacoes.push({
+
+            container:
+                container,
+
+            origem:
+                localAtual,
+
+            destino:
+                destino,
+
+            tipo:
+                tipo,
+
+            status:
+                "PENDENTE",
+
+            atualizado_por:
+                USUARIO_PORTAL.id,
+
+            atualizado_em:
+                new Date().toISOString()
+
+        });
+
+    }
+
+
+    if(novasSolicitacoes.length > 0){
+
+        try{
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from(
+                        "portal_solicitacoes"
+                    )
+                    .insert(
+                        novasSolicitacoes
+                    );
+
+
+            if(error){
+
+                console.error(
+                    "Erro ao criar solicitações:",
+                    error
+                );
+
+                alert(
+                    "Não foi possível salvar as solicitações."
+                );
+
+                return;
+
+            }
+
+
+            await carregarSolicitacoesSupabase();
+
+
+            for(const solicitacao of novasSolicitacoes){
+
+                await registrarLog({
+
+                    area:
+                        "SOLICITAÇÕES",
+
+                    acao:
+                        "CRIOU SOLICITAÇÃO",
+
+                    container:
+                        solicitacao.container,
+
+                    detalhes:
+                        `Tipo: ${solicitacao.tipo} | Origem: ${solicitacao.origem} | Destino: ${solicitacao.destino}`
+
+                });
+
+            }
+
+        }
+        catch(erro){
+
+            console.error(
+                "Erro inesperado ao criar solicitações:",
+                erro
+            );
+
+            alert(
+                "Erro inesperado ao criar solicitações."
             );
 
             return;
 
         }
 
-
-        solicitacoes.push({
-
-            container: container,
-
-            origem: localAtual,
-
-            destino: destino,
-
-            tipo: tipo,
-
-            status: "PENDENTE",
-
-            data: new Date()
-                .toLocaleString("pt-BR")
-
-        });
+    }
 
 
-        adicionados++;
+    renderSolicitacoesPendentes();
 
-    });
+    renderSolicitacoesEmAndamento();
 
+    renderSolicitacoesConcluidas();
 
-    salvarSolicitacoes(
-        solicitacoes
-    );
+    atualizarDashboardSolicitacoes();
 
-
-renderSolicitacoesPendentes();
-
-renderSolicitacoesEmAndamento();
-
-renderSolicitacoesConcluidas();
-
-atualizarDashboardSolicitacoes();
-
-atualizarAreasSolicitadasMapa();
+    atualizarAreasSolicitadasMapa();
 
 
-    if(adicionados > 0){
+    if(novasSolicitacoes.length > 0){
 
         alert(
-            `${adicionados} solicitação(ões) criada(s) com sucesso.`
+            `${novasSolicitacoes.length} solicitação(ões) criada(s) com sucesso.`
         );
 
     }
