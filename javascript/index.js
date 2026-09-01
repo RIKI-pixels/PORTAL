@@ -2326,8 +2326,6 @@ function confirmarMovimentacao(){
 
     atualizarVisualLinha();
 
-}
-
 function fecharMovimentacao(){
 
     document.getElementById(
