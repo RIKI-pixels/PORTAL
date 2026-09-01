@@ -2513,6 +2513,97 @@ function atualizarContainerSelecionadoMapa(){
    SOLICITAÇÕES
 ========================================================== */
 
+let SOLICITACOES_PORTAL = [];
+
+
+async function carregarSolicitacoesSupabase(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("portal_solicitacoes")
+                .select("*")
+                .order(
+                    "id",
+                    {
+                        ascending: true
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Erro ao carregar solicitações do Supabase:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        SOLICITACOES_PORTAL =
+            (data || []).map(item=>{
+
+                return {
+
+                    id:
+                        item.id,
+
+                    container:
+                        normalizarContainer(
+                            item.container
+                        ),
+
+                    origem:
+                        item.origem || "",
+
+                    destino:
+                        item.destino || "",
+
+                    status:
+                        item.status || "",
+
+                    criadoEm:
+                        item.criado_em || "",
+
+                    posicionadoEm:
+                        item.posicionado_em || "",
+
+                    concluidoEm:
+                        item.concluido_em || ""
+
+                };
+
+            });
+
+
+        console.log(
+            "Solicitações carregadas do Supabase:",
+            SOLICITACOES_PORTAL
+        );
+
+        return true;
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao carregar solicitações:",
+            erro
+        );
+
+        return false;
+
+    }
+
+}
+
 function obterSolicitacoes(){
 
     return JSON.parse(
