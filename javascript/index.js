@@ -3561,6 +3561,7 @@ async function concluirSolicitacoesSelecionadas(){
         }
 
     }
+ 
 
 
     await carregarSolicitacoesSupabase();
@@ -3596,6 +3597,99 @@ async function concluirSolicitacoesSelecionadas(){
         );
 
     }
+
+}
+
+function atualizarAreasSolicitadasMapa(){
+
+    const solicitacoes =
+        obterSolicitacoes();
+
+    document
+        .querySelectorAll(".area-especial")
+        .forEach(area=>{
+
+            area.classList.remove(
+                "solicitacao-pendente",
+                "solicitacao-concluida",
+                "solicitacao-mista"
+            );
+
+            const local =
+                textoMaiusculo(
+                    area.dataset.local
+                );
+
+
+            const pendentes =
+                solicitacoes.filter(item=>{
+
+                    return (
+                        item.status === "PENDENTE" &&
+                        textoMaiusculo(item.destino) === local
+                    );
+
+                }).length;
+
+
+            const concluidasAtuais =
+                solicitacoes.filter(item=>{
+
+                    if(
+                        item.status !== "CONCLUÍDO" ||
+                        textoMaiusculo(item.destino) !== local
+                    ){
+
+                        return false;
+
+                    }
+
+                    const localAtual =
+                        obterLocalizacao(
+                            item.container
+                        );
+
+                    return (
+                        textoMaiusculo(localAtual) === local
+                    );
+
+                }).length;
+
+
+            if(
+                pendentes > 0 &&
+                concluidasAtuais > 0
+            ){
+
+                area.classList.add(
+                    "solicitacao-mista"
+                );
+
+                return;
+
+            }
+
+
+            if(pendentes > 0){
+
+                area.classList.add(
+                    "solicitacao-pendente"
+                );
+
+                return;
+
+            }
+
+
+            if(concluidasAtuais > 0){
+
+                area.classList.add(
+                    "solicitacao-concluida"
+                );
+
+            }
+
+        });
 
 }
 
