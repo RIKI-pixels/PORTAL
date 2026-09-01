@@ -3857,7 +3857,7 @@ function fecharSolicitacoesArea(){
 }
 
 
-function concluirSolicitacoesArea(destino){
+async function concluirSolicitacoesArea(destino){
 
     const modal =
         document.getElementById(
@@ -3869,7 +3869,11 @@ function concluirSolicitacoesArea(destino){
         [...modal.querySelectorAll(
             'input[type="checkbox"]:checked'
         )]
-        .map(input=>input.value);
+        .map(input=>
+            normalizarContainer(
+                input.value
+            )
+        );
 
 
     if(selecionados.length === 0){
@@ -3883,52 +3887,221 @@ function concluirSolicitacoesArea(destino){
     }
 
 
-    const solicitacoes =
-        obterSolicitacoes();
+    if(!USUARIO_PORTAL){
 
-    const localizacoes =
-        obterLocalizacoes();
+        alert(
+            "Usuário não identificado."
+        );
+
+        return;
+
+    }
 
 
-    selecionados.forEach(container=>{
+    let movimentados = 0;
 
-        localizacoes[container] =
-            destino;
+    const erros = [];
 
+
+    for(const container of selecionados){
 
         const solicitacao =
-            solicitacoes.find(item=>{
+            obterSolicitacoes()
+                .find(item=>{
 
-                return (
-                    item.container === container &&
-                    item.status === "PENDENTE" &&
-                    textoMaiusculo(item.destino) ===
-                    textoMaiusculo(destino)
+                    return (
+                        normalizarContainer(
+                            item.container
+                        ) === container
+                        &&
+                        item.status === "PENDENTE"
+                        &&
+                        textoMaiusculo(
+                            item.destino
+                        ) ===
+                        textoMaiusculo(
+                            destino
+                        )
+                    );
+
+                });
+
+
+        if(!solicitacao){
+
+            erros.push(
+                `${container}: solicitação pendente não localizada`
+            );
+
+            continue;
+
+        }
+
+
+        const origemAtual =
+            obterLocalizacao(
+                container
+            );
+
+
+        try{
+
+            /*
+            =========================================
+            ATUALIZA LOCALIZAÇÃO
+            =========================================
+            */
+
+            const {
+                error:
+                    erroLocalizacao
+            } =
+                await supabaseClient
+                    .from(
+                        "portal_localizacoes"
+                    )
+                    .upsert(
+                        {
+                            container:
+                                container,
+
+                            localizacao:
+                                destino,
+
+                            atualizado_por:
+                                USUARIO_PORTAL.id,
+
+                            atualizado_em:
+                                new Date()
+                                    .toISOString()
+                        },
+                        {
+                            onConflict:
+                                "container"
+                        }
+                    );
+
+
+            if(erroLocalizacao){
+
+                console.error(
+                    "Erro ao atualizar localização:",
+                    erroLocalizacao
                 );
+
+                erros.push(
+                    `${container}: erro ao atualizar localização`
+                );
+
+                continue;
+
+            }
+
+
+            /*
+            =========================================
+            SOLICITAÇÃO → EM ANDAMENTO
+            =========================================
+            */
+
+            const {
+                error:
+                    erroSolicitacao
+            } =
+                await supabaseClient
+                    .from(
+                        "portal_solicitacoes"
+                    )
+                    .update(
+                        {
+                            status:
+                                "EM ANDAMENTO",
+
+                            posicionado_em:
+                                new Date()
+                                    .toISOString(),
+
+                            atualizado_por:
+                                USUARIO_PORTAL.id,
+
+                            atualizado_em:
+                                new Date()
+                                    .toISOString()
+                        }
+                    )
+                    .eq(
+                        "id",
+                        solicitacao.id
+                    );
+
+
+            if(erroSolicitacao){
+
+                console.error(
+                    "Erro ao atualizar solicitação:",
+                    erroSolicitacao
+                );
+
+                erros.push(
+                    `${container}: localização alterada, mas houve erro ao atualizar solicitação`
+                );
+
+                continue;
+
+            }
+
+
+            /*
+            =========================================
+            LOG
+            =========================================
+            */
+
+            await registrarLog({
+
+                area:
+                    "SOLICITAÇÕES",
+
+                acao:
+                    "POSICIONOU SOLICITAÇÃO",
+
+                container:
+                    container,
+
+                detalhes:
+                    `De: ${origemAtual || "SEM LOCALIZAÇÃO"} | Para: ${destino} | Tipo: ${solicitacao.tipo || ""}`
 
             });
 
 
-         if(solicitacao){
+            movimentados++;
 
-             solicitacao.status =
-              "EM ANDAMENTO";
+        }
+        catch(erro){
 
-             solicitacao.posicionadoEm =
-                 new Date()
-                  .toLocaleString("pt-BR");
+            console.error(
+                "Erro inesperado ao posicionar solicitação:",
+                erro
+            );
 
-         }
-    });
+            erros.push(
+                `${container}: erro inesperado`
+            );
+
+        }
+
+    }
 
 
-    salvarLocalizacoes(
-        localizacoes
-    );
+    /*
+    =========================================
+    RECARREGA DADOS
+    =========================================
+    */
 
-    salvarSolicitacoes(
-        solicitacoes
-    );
+    await carregarLocalizacoesSupabase();
+
+    await carregarSolicitacoesSupabase();
 
 
     fecharSolicitacoesArea();
@@ -3940,8 +4113,8 @@ function concluirSolicitacoesArea(destino){
     renderSolicitacoesPendentes();
 
     renderSolicitacoesEmAndamento();
-   
-   atualizarNotificacaoSolicitacoes();
+
+    atualizarNotificacaoSolicitacoes();
 
 
     if(APP.carregadoEstoque){
@@ -3958,9 +4131,23 @@ function concluirSolicitacoesArea(destino){
     }
 
 
-    alert(
-        `${selecionados.length} container(s) movimentado(s) para ${destino}.`
-    );
+    if(movimentados > 0){
+
+        alert(
+            `${movimentados} container(s) movimentado(s) para ${destino}.`
+        );
+
+    }
+
+
+    if(erros.length > 0){
+
+        alert(
+            "Alguns containers não puderam ser movimentados:\n\n" +
+            erros.join("\n")
+        );
+
+    }
 
 }
 
