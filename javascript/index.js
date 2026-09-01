@@ -1583,6 +1583,214 @@ function alterarLimiteEstoque(){
    ADM
 ========================================================== */
 
+async function criarUsuarioPortal(){
+
+    const nome =
+        document
+            .getElementById("novoUsuarioNome")
+            .value
+            .trim();
+
+    const cpf =
+        document
+            .getElementById("novoUsuarioCPF")
+            .value
+            .trim();
+
+    const senha =
+        document
+            .getElementById("novoUsuarioSenha")
+            .value;
+
+    const nivel =
+        document
+            .getElementById("novoUsuarioNivel")
+            .value;
+
+    const mensagem =
+        document
+            .getElementById("mensagemCriarUsuario");
+
+
+    mensagem.style.display =
+        "none";
+
+    mensagem.textContent =
+        "";
+
+
+    if(
+        !nome ||
+        !cpf ||
+        !senha ||
+        !nivel
+    ){
+
+        mensagem.style.display =
+            "block";
+
+        mensagem.textContent =
+            "Preencha todos os campos.";
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            data: {
+                session
+            }
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if(
+            !session ||
+            !session.access_token
+        ){
+
+            mensagem.style.display =
+                "block";
+
+            mensagem.textContent =
+                "Sessão inválida. Faça login novamente.";
+
+            return;
+
+        }
+
+
+        const resposta =
+            await fetch(
+                SUPABASE_URL +
+                "/functions/v1/criar-usuario-portal",
+                {
+                    method:
+                        "POST",
+
+                    headers:
+                        {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " +
+                                session.access_token,
+
+                            "apikey":
+                                SUPABASE_KEY
+                        },
+
+                    body:
+                        JSON.stringify(
+                            {
+                                nome:
+                                    nome,
+
+                                cpf:
+                                    cpf,
+
+                                senha:
+                                    senha,
+
+                                nivel:
+                                    nivel
+                            }
+                        )
+                }
+            );
+
+
+        const resultado =
+            await resposta.json();
+
+
+        if(
+            !resposta.ok
+        ){
+
+            console.error(
+                "Erro ao criar usuário:",
+                resultado
+            );
+
+            mensagem.style.display =
+                "block";
+
+            mensagem.textContent =
+                resultado.error ||
+                resultado.message ||
+                "Não foi possível criar o usuário.";
+
+            return;
+
+        }
+
+
+        mensagem.style.display =
+            "block";
+
+        mensagem.textContent =
+            "Usuário criado com sucesso.";
+
+
+        document
+            .getElementById(
+                "novoUsuarioNome"
+            )
+            .value =
+                "";
+
+        document
+            .getElementById(
+                "novoUsuarioCPF"
+            )
+            .value =
+                "";
+
+        document
+            .getElementById(
+                "novoUsuarioSenha"
+            )
+            .value =
+                "";
+
+        document
+            .getElementById(
+                "novoUsuarioNivel"
+            )
+            .value =
+                "OPERADOR";
+
+
+        console.log(
+            "Usuário criado:",
+            resultado
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao criar usuário:",
+            erro
+        );
+
+        mensagem.style.display =
+            "block";
+
+        mensagem.textContent =
+            "Erro inesperado ao criar usuário.";
+
+    }
+
+}
+
 async function salvarTSV(){
 
     if(!USUARIO_PORTAL){
