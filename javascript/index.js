@@ -1788,6 +1788,52 @@ function iniciarRealtimeSupabase(){
                     payload.new
                 );
 
+             .on(
+    "postgres_changes",
+    {
+        event: "*",
+        schema: "public",
+        table: "portal_localizacoes"
+    },
+
+    async payload => {
+
+        console.log(
+            "Localização alterada em Realtime:",
+            payload
+        );
+
+
+        // Recarrega as localizações do Supabase
+        await carregarLocalizacoesSupabase();
+
+
+        // Atualiza o estoque em memória
+        if(APP.carregadoEstoque){
+
+            APP.dadosEstoque.forEach(registro=>{
+
+                registro.localizacao =
+                    obterLocalizacao(
+                        registro.container
+                    );
+
+            });
+
+        }
+
+
+        // Atualiza o mapa
+        atualizarAreasSolicitadasMapa();
+
+
+        console.log(
+            "Localizações atualizadas pelo Realtime."
+        );
+
+    }
+)
+
                 const evento =
                     payload.new;
 
