@@ -1770,8 +1770,17 @@ function iniciarRealtimeSupabase(){
         "Iniciando Realtime Supabase..."
     );
 
+
     supabaseClient
         .channel("portal-eventos-global")
+
+
+        /*
+        =========================================
+        EVENTOS GLOBAIS
+        TSV / TESTES
+        =========================================
+        */
 
         .on(
             "postgres_changes",
@@ -1788,55 +1797,152 @@ function iniciarRealtimeSupabase(){
                     payload.new
                 );
 
-             .on(
-    "postgres_changes",
-    {
-        event: "*",
-        schema: "public",
-        table: "portal_localizacoes"
-    },
-
-    async payload => {
-
-        console.log(
-            "Localização alterada em Realtime:",
-            payload
-        );
-
-
-        // Recarrega as localizações do Supabase
-        await carregarLocalizacoesSupabase();
-
-
-        // Atualiza o estoque em memória
-        if(APP.carregadoEstoque){
-
-            APP.dadosEstoque.forEach(registro=>{
-
-                registro.localizacao =
-                    obterLocalizacao(
-                        registro.container
-                    );
-
-            });
-
-        }
-
-
-        // Atualiza o mapa
-        atualizarAreasSolicitadasMapa();
-
-
-        console.log(
-            "Localizações atualizadas pelo Realtime."
-        );
-
-    }
-)
 
                 const evento =
                     payload.new;
 
+
+                /*
+                =========================================
+                TESTE
+                =========================================
+                */
+
+                if(
+                    evento.tipo ===
+                    "TESTE"
+                ){
+
+                    console.log(
+                        "TESTE recebido:",
+                        evento
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                =========================================
+                ATUALIZAÇÃO GLOBAL TSV
+                =========================================
+                */
+
+                if(
+                    evento.tipo ===
+                    "ATUALIZAR_TSV"
+                ){
+
+                    console.log(
+                        "Solicitação global de atualização TSV recebida."
+                    );
+
+
+                    carregarPlanilha()
+                        .then(()=>{
+
+                            console.log(
+                                "TSV atualizado através do Realtime."
+                            );
+
+                        })
+                        .catch(erro=>{
+
+                            console.error(
+                                "Erro ao atualizar TSV pelo Realtime:",
+                                erro
+                            );
+
+                        });
+
+                }
+
+            }
+        )
+
+
+        /*
+        =========================================
+        LOCALIZAÇÕES
+        MAPA / ESTOQUE
+        =========================================
+        */
+
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "portal_localizacoes"
+            },
+
+            async payload => {
+
+                console.log(
+                    "Localização alterada em Realtime:",
+                    payload
+                );
+
+
+                /*
+                RECARREGA LOCALIZAÇÕES
+                */
+
+                await carregarLocalizacoesSupabase();
+
+
+                /*
+                ATUALIZA ESTOQUE EM MEMÓRIA
+                */
+
+                if(APP.carregadoEstoque){
+
+                    APP.dadosEstoque.forEach(
+                        registro=>{
+
+                            registro.localizacao =
+                                obterLocalizacao(
+                                    registro.container
+                                );
+
+                        }
+                    );
+
+                }
+
+
+                /*
+                ATUALIZA CORES/ESTADO DO MAPA
+                */
+
+                atualizarAreasSolicitadasMapa();
+
+
+                console.log(
+                    "Localizações atualizadas pelo Realtime."
+                );
+
+            }
+        )
+
+
+        /*
+        =========================================
+        CONEXÃO REALTIME
+        =========================================
+        */
+
+        .subscribe(status => {
+
+            console.log(
+                "Status Realtime:",
+                status
+            );
+
+        });
+
+}
 
                 /* =========================
                    TESTE
