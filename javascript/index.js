@@ -3406,7 +3406,7 @@ function renderSolicitacoesConcluidas(){
 
 }
 
-function concluirSolicitacoesSelecionadas(){
+async function concluirSolicitacoesSelecionadas(){
 
     const selecionados = [
 
@@ -3414,7 +3414,12 @@ function concluirSolicitacoesSelecionadas(){
             ".check-solicitacao-andamento:checked"
         )
 
-    ].map(input=>input.value);
+    ].map(input=>
+        normalizarContainer(
+            input.value
+        )
+    );
+
 
     if(selecionados.length === 0){
 
@@ -3426,139 +3431,171 @@ function concluirSolicitacoesSelecionadas(){
 
     }
 
+
+    if(!USUARIO_PORTAL){
+
+        alert(
+            "Usuário não identificado."
+        );
+
+        return;
+
+    }
+
+
     const solicitacoes =
         obterSolicitacoes();
 
-    solicitacoes.forEach(item=>{
 
-        if(
-            selecionados.includes(item.container) &&
-            item.status === "EM ANDAMENTO"
-        ){
+    const erros = [];
 
-            item.status =
-                "CONCLUÍDO";
+    let concluidas = 0;
 
-            item.concluidoEm =
-                new Date()
-                    .toLocaleString("pt-BR");
+
+    for(const container of selecionados){
+
+        const solicitacao =
+            solicitacoes.find(item=>{
+
+                return (
+                    normalizarContainer(
+                        item.container
+                    ) === container
+                    &&
+                    item.status === "EM ANDAMENTO"
+                );
+
+            });
+
+
+        if(!solicitacao){
+
+            erros.push(
+                `${container}: solicitação em andamento não localizada`
+            );
+
+            continue;
 
         }
 
-    });
 
-    salvarSolicitacoes(
-        solicitacoes
-    );
+        try{
 
-renderSolicitacoesPendentes();
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from(
+                        "portal_solicitacoes"
+                    )
+                    .update({
 
-renderSolicitacoesEmAndamento();
+                        status:
+                            "CONCLUÍDO",
 
-renderSolicitacoesConcluidas();
+                        concluido_em:
+                            new Date()
+                                .toISOString(),
 
-atualizarDashboardSolicitacoes();
+                        atualizado_por:
+                            USUARIO_PORTAL.id,
 
-atualizarAreasSolicitadasMapa();
+                        atualizado_em:
+                            new Date()
+                                .toISOString()
 
-atualizarNotificacaoSolicitacoes();
+                    })
+                    .eq(
+                        "id",
+                        solicitacao.id
+                    );
 
-    alert(
-        `${selecionados.length} solicitação(ões) concluída(s).`
-    );
 
-}
+            if(error){
 
-function atualizarAreasSolicitadasMapa(){
+                console.error(
+                    "Erro ao concluir solicitação:",
+                    error
+                );
 
-    const solicitacoes =
-        obterSolicitacoes();
+                erros.push(
+                    `${container}: erro ao concluir solicitação`
+                );
 
-    document
-        .querySelectorAll(".area-especial")
-        .forEach(area=>{
+                continue;
 
-            area.classList.remove(
-                "solicitacao-pendente",
-                "solicitacao-concluida",
-                "solicitacao-mista"
+            }
+
+
+            await registrarLog({
+
+                area:
+                    "SOLICITAÇÕES",
+
+                acao:
+                    "CONCLUIU SOLICITAÇÃO",
+
+                container:
+                    container,
+
+                detalhes:
+                    `Tipo: ${solicitacao.tipo || ""} | Destino: ${solicitacao.destino || ""}`
+
+            });
+
+
+            concluidas++;
+
+        }
+        catch(erro){
+
+            console.error(
+                "Erro inesperado ao concluir solicitação:",
+                erro
             );
 
-            const local =
-                textoMaiusculo(
-                    area.dataset.local
-                );
+            erros.push(
+                `${container}: erro inesperado`
+            );
+
+        }
+
+    }
 
 
-            const pendentes =
-                solicitacoes.filter(item=>{
-
-                    return (
-                        item.status === "PENDENTE" &&
-                        textoMaiusculo(item.destino) === local
-                    );
-
-                }).length;
+    await carregarSolicitacoesSupabase();
 
 
-            const concluidasAtuais =
-                solicitacoes.filter(item=>{
+    renderSolicitacoesPendentes();
 
-                    if(
-                        item.status !== "CONCLUÍDO" ||
-                        textoMaiusculo(item.destino) !== local
-                    ){
+    renderSolicitacoesEmAndamento();
 
-                        return false;
+    renderSolicitacoesConcluidas();
 
-                    }
+    atualizarDashboardSolicitacoes();
 
-                    const localAtual =
-                        obterLocalizacao(
-                            item.container
-                        );
+    atualizarAreasSolicitadasMapa();
 
-                    return (
-                        textoMaiusculo(localAtual) === local
-                    );
-
-                }).length;
+    atualizarNotificacaoSolicitacoes();
 
 
-            if(
-                pendentes > 0 &&
-                concluidasAtuais > 0
-            ){
+    if(concluidas > 0){
 
-                area.classList.add(
-                    "solicitacao-mista"
-                );
+        alert(
+            `${concluidas} solicitação(ões) concluída(s).`
+        );
 
-                return;
-
-            }
+    }
 
 
-            if(pendentes > 0){
+    if(erros.length > 0){
 
-                area.classList.add(
-                    "solicitacao-pendente"
-                );
+        alert(
+            "Algumas solicitações não puderam ser concluídas:\n\n" +
+            erros.join("\n")
+        );
 
-                return;
-
-            }
-
-
-            if(concluidasAtuais > 0){
-
-                area.classList.add(
-                    "solicitacao-concluida"
-                );
-
-            }
-
-        });
+    }
 
 }
 
