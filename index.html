@@ -1488,6 +1488,79 @@
                         ATUALIZAR TSV PARA TODOS
                     </button>
 
+                    <hr>
+
+<h3>GERENCIAMENTO DE USUÁRIOS</h3>
+
+<div class="dev-usuarios-form">
+
+    <label>
+        NOME
+    </label>
+
+    <input
+        type="text"
+        id="novoUsuarioNome"
+        placeholder="Nome do usuário">
+
+
+    <label>
+        CPF
+    </label>
+
+    <input
+        type="text"
+        id="novoUsuarioCPF"
+        maxlength="14"
+        placeholder="000.000.000-00">
+
+
+    <label>
+        SENHA
+    </label>
+
+    <input
+        type="password"
+        id="novoUsuarioSenha"
+        placeholder="Senha inicial">
+
+
+    <label>
+        NÍVEL
+    </label>
+
+    <select id="novoUsuarioNivel">
+
+        <option value="OPERADOR">
+            OPERADOR
+        </option>
+
+        <option value="DEV">
+            DEV
+        </option>
+
+    </select>
+
+
+                             <button
+                                 type="button"
+                                 onclick="criarUsuarioPortal()">
+
+                                 CRIAR USUÁRIO
+
+                             </button>
+
+
+                             <div
+                                 id="mensagemCriarUsuario"
+                                 style="
+                                     display:none;
+                                     margin-top:10px;
+                                 ">
+                          </div>
+
+                    </div>
+
                 </div>
 
             </div>
