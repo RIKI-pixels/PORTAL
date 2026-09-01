@@ -2257,7 +2257,7 @@ function validarRetiradaContainer(container){
 
 }
 
-function confirmarMovimentacao(){
+async function confirmarMovimentacao(){
 
     const input =
         document.getElementById(
@@ -2307,24 +2307,137 @@ function confirmarMovimentacao(){
     }
 
 
-    const localizacoes =
-        obterLocalizacoes();
+    if(!USUARIO_PORTAL){
+
+        alert(
+            "Usuário não identificado."
+        );
+
+        return;
+
+    }
 
 
-    localizacoes[container] =
+    const origem =
+        obterLocalizacao(container);
+
+
+    const destino =
         APP.destinoSelecionado;
 
 
-    salvarLocalizacoes(
-        localizacoes
-    );
+    if(!destino){
 
-   APP.containerSelecionado = null;
+        alert(
+            "Destino não selecionado."
+        );
+
+        return;
+
+    }
 
 
-    fecharMovimentacao();
+    try{
 
-    atualizarVisualLinha();
+        const {
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "portal_localizacoes"
+                )
+                .upsert(
+                    {
+                        container:
+                            container,
+
+                        localizacao:
+                            destino,
+
+                        atualizado_por:
+                            USUARIO_PORTAL.id,
+
+                        atualizado_em:
+                            new Date().toISOString()
+                    },
+                    {
+                        onConflict:
+                            "container"
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Erro ao movimentar container:",
+                error
+            );
+
+            alert(
+                "Não foi possível salvar a movimentação."
+            );
+
+            return;
+
+        }
+
+
+        await carregarLocalizacoesSupabase();
+
+
+        await registrarLog({
+
+            area:
+                "MAPA",
+
+            acao:
+                "MOVIMENTOU CONTAINER",
+
+            container:
+                container,
+
+            detalhes:
+                "De: " +
+                (origem || "SEM LOCALIZAÇÃO") +
+                " | Para: " +
+                destino
+
+        });
+
+
+        APP.containerSelecionado =
+            null;
+
+
+        fecharMovimentacao();
+
+        atualizarVisualLinha();
+
+
+        console.log(
+            "Container movimentado:",
+            container,
+            origem,
+            "→",
+            destino
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado na movimentação:",
+            erro
+        );
+
+        alert(
+            "Erro inesperado ao movimentar container."
+        );
+
+    }
+
+}
 
 function fecharMovimentacao(){
 
