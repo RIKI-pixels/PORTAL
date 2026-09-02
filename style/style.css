@@ -1,121 +1,389 @@
+/* =========================================================
+PORTAL CDI
+BASE VISUAL
+========================================================= */
 
-/* =========================
+:root{
+
+    --azul-principal:#0B4EA2;
+    --azul-escuro:#073B7A;
+    --azul-profundo:#062D5E;
+    --azul-claro:#EAF2FF;
+
+    --fundo:#F3F6FA;
+    --superficie:#FFFFFF;
+    --superficie-secundaria:#F8FAFD;
+
+    --texto:#172033;
+    --texto-secundario:#6B7485;
+
+    --borda:#E2E8F0;
+
+    --sombra-sm:
+        0 2px 8px rgba(19,46,85,.05);
+
+    --sombra-md:
+        0 8px 25px rgba(19,46,85,.08);
+
+    --sombra-lg:
+        0 18px 45px rgba(19,46,85,.12);
+
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:24px;
+
+}
+
+
+/* =========================================================
 RESET
-========================= */
+========================================================= */
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+}
+
+html{
+    height:100%;
 }
 
 body{
+
     display:flex;
+
+    width:100%;
     height:100vh;
-    background:#edf2fb;
+
     overflow:hidden;
+
+    font-family:'Poppins',sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #F6F8FC 0%,
+            #EEF3F9 100%
+        );
+
+    color:var(--texto);
+
+    -webkit-font-smoothing:antialiased;
+
 }
 
-/* =========================
+
+/* =========================================================
+SCROLLBAR
+========================================================= */
+
+*{
+    scrollbar-width:thin;
+    scrollbar-color:
+        #BAC7D9
+        transparent;
+}
+
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#BAC7D9;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#95A8C2;
+}
+
+
+/* =========================================================
 SIDEBAR
-========================= */
+========================================================= */
 
 .sidebar{
-    width:250px;
-    background:#5a7eb9;
-    padding:25px 0;
+
+    width:255px;
+    min-width:255px;
+
+    height:100vh;
+
     display:flex;
     flex-direction:column;
+
+    padding:24px 16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0B4EA2 0%,
+            #083F85 55%,
+            #062F66 100%
+        );
+
+    box-shadow:
+        10px 0 35px
+        rgba(10,45,90,.10);
+
+    position:relative;
+    z-index:20;
+
 }
 
-.logo{
-    padding:0 25px;
-    cursor:pointer;
-}
 
-.logo img{
-    width:160px;
-}
-
-/* =========================
+/* =========================================================
 TOPO SIDEBAR
-========================= */
+========================================================= */
 
 .sidebar-top{
+
     display:flex;
+
     align-items:center;
     justify-content:space-between;
-    padding:0 20px;
+
+    gap:14px;
+
+    padding:0 8px 24px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.12);
+
 }
 
+
+/* =========================================================
+LOGO
+========================================================= */
+
 .logo{
-    padding:0;
+
+    display:flex;
+
+    align-items:center;
+
     cursor:pointer;
+
 }
 
 .logo img{
-    width:140px;
+
+    width:135px;
+
+    display:block;
+
+    transition:
+        transform .25s ease,
+        opacity .25s ease;
+
 }
 
-/* =========================
+.logo:hover img{
+
+    transform:scale(1.025);
+
+    opacity:.95;
+
+}
+
+
+/* =========================================================
 AVATAR
-========================= */
+========================================================= */
 
 .avatar{
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    background:white;
+
+    width:43px;
+    height:43px;
+
+    flex-shrink:0;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.96);
+
+    color:var(--azul-principal);
+
+    font-size:17px;
     font-weight:700;
-    color:#2b6ebf;
-    flex-shrink:0;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.12);
+
+    border:
+        1px solid
+        rgba(255,255,255,.40);
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
 }
+
+.avatar:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(0,0,0,.16);
+
+}
+
+
+/* =========================================================
+MENU
+========================================================= */
 
 .menu{
-    margin-top:40px;
+
+    margin-top:25px;
+
     display:flex;
+
     flex-direction:column;
-    gap:12px;
-    padding:0 15px;
+
+    gap:7px;
+
+    flex:1;
+
 }
 
+
+/* =========================================================
+ITEM MENU
+========================================================= */
+
 .menu-item{
+
+    min-height:54px;
+
     display:flex;
+
     align-items:center;
-    gap:15px;
-    padding:16px;
-    border-radius:18px;
+
+    gap:13px;
+
+    padding:9px 12px;
+
+    border-radius:14px;
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:14px;
+
+    font-weight:500;
+
     cursor:pointer;
-    transition:0.3s;
-    font-weight:600;
-    color:#0B4EA2;
+
+    position:relative;
+
+    transition:
+        background .22s ease,
+        color .22s ease,
+        transform .22s ease;
+
 }
 
 .menu-item:hover{
-    background:#ffffff55;
+
+    background:
+        rgba(255,255,255,.10);
+
+    color:#FFFFFF;
+
+    transform:translateX(2px);
+
 }
+
+
+/* =========================================================
+MENU ATIVO
+========================================================= */
 
 .menu-item.active{
-    background:#ffffffbb;
-    padding:13px;
-    
-    
+
+    background:
+        rgba(255,255,255,.96);
+
+    color:var(--azul-principal);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.10);
+
 }
+
+
+/* =========================================================
+ÍCONE MENU
+========================================================= */
 
 .menu-icon{
-    width:34px;
-    height:34px;
-    border-radius:12px;
-    background:#ffffffbb;
+
+    width:35px;
+    height:35px;
+
+    flex-shrink:0;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.11);
+
+    font-size:17px;
+
+    transition:
+        background .22s ease,
+        transform .22s ease;
+
 }
 
+.menu-item:hover .menu-icon{
+
+    background:
+        rgba(255,255,255,.16);
+
+}
+
+.menu-item.active .menu-icon{
+
+    background:
+        var(--azul-claro);
+
+}
+
+.menu-item:hover .menu-icon{
+
+    transform:scale(1.04);
+
+}
 /* =========================
 MAIN
 ========================= */
