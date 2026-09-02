@@ -78,7 +78,6 @@ body{
 
     -webkit-font-smoothing:
         antialiased;
-
 }
 
 
@@ -175,18 +174,30 @@ LOGO
     display:flex;
 
     align-items:center;
+    justify-content:center;
 
     cursor:pointer;
 
-    background:#fff;
+    background:#1010105c;
 
-    padding:7px 10px;
+    padding:8px 11px;
 
     border-radius:12px;
 
     box-shadow:
         0 5px 15px
         rgba(0,0,0,.10);
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.logo:hover{
+
+    background:#10101080;
+
+    transform:translateY(-1px);
 }
 
 .logo img{
@@ -198,7 +209,7 @@ LOGO
 
 
 /* =========================================================
-AVATAR
+AVATAR USUÁRIO
 ========================================================= */
 
 .avatar{
@@ -213,7 +224,7 @@ AVATAR
     align-items:center;
     justify-content:center;
 
-    border-radius:50%;
+    border-radius:11px;
 
     background:
         linear-gradient(
@@ -228,14 +239,27 @@ AVATAR
     font-weight:700;
 
     border:
-        2px solid
-        rgba(255,255,255,.20);
+        1px solid
+        rgba(255,255,255,.18);
 
     box-shadow:
         0 5px 16px
         rgba(0,0,0,.18);
 
     cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.avatar:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.22);
 }
 
 
@@ -530,7 +554,7 @@ DASHBOARD
 
 
 /* =========================================================
-CARD STATUS TSV
+CARDS STATUS
 ========================================================= */
 
 .status-card{
@@ -1027,6 +1051,12 @@ RESPONSIVIDADE
         padding-bottom:10px;
     }
 
+    .logo{
+
+        padding:
+            6px 9px;
+    }
+
     .logo img{
 
         width:100px;
@@ -1036,6 +1066,8 @@ RESPONSIVIDADE
 
         width:38px;
         height:38px;
+
+        border-radius:10px;
 
         font-size:14px;
     }
@@ -1077,7 +1109,8 @@ RESPONSIVIDADE
 
         height:auto;
 
-        min-height:calc(100vh - 120px);
+        min-height:
+            calc(100vh - 120px);
     }
 
     .content{
@@ -1119,19 +1152,28 @@ RESPONSIVIDADE
 
     .sidebar-top{
 
-        border-bottom:
-            none;
+        border-bottom:none;
     }
 
     .logo{
 
         padding:
             5px 8px;
+
+        border-radius:10px;
     }
 
     .logo img{
 
         width:90px;
+    }
+
+    .avatar{
+
+        width:36px;
+        height:36px;
+
+        border-radius:9px;
     }
 
     .menu{
@@ -1259,6 +1301,7 @@ RESPONSIVIDADE
     }
 
 }
+
 /* ==========================================================
 GRID PROFISSIONAL
 ========================================================== */
