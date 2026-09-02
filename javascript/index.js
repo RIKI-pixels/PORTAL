@@ -230,6 +230,8 @@ async function entrarPortal() {
             USUARIO_PORTAL
         );
 
+     atualizarIdentidadeUsuario();
+
 
         document
             .getElementById(
@@ -269,6 +271,37 @@ async function entrarPortal() {
 
     }
 
+}
+
+function atualizarIdentidadeUsuario(){
+
+    const avatar =
+        document.getElementById(
+            "avatarUsuario"
+        );
+
+    if(
+        !avatar ||
+        !USUARIO_PORTAL
+    ){
+        return;
+    }
+
+    const nome =
+        String(
+            USUARIO_PORTAL.nome || ""
+        ).trim();
+
+    const inicial =
+        nome
+            ? nome.charAt(0).toUpperCase()
+            : "U";
+
+    avatar.textContent =
+        inicial;
+
+    avatar.title =
+        nome || "Usuário";
 }
 
  /* ==========================================================
@@ -507,6 +540,8 @@ async function restaurarSessaoPortal() {
             "Sessão restaurada:",
             USUARIO_PORTAL
         );
+
+     atualizarIdentidadeUsuario();
 
 
         const telaLogin =
