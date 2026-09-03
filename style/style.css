@@ -5,13 +5,13 @@ IDENTIDADE VISUAL
 
 :root{
 
-    --navy-950:#073d77;
-    --navy-900:#011021;
+    --navy-950:#06192d;
+    --navy-900:#08213d;
     --navy-800:#0a2b50;
 
-    --white-700:#f7f7f7;
+    --blue-700:#0b4ea2;
     --blue-600:#1767d7;
-    --white-500:#f7f7f7;
+    --blue-500:#2f7df4;
     --blue-100:#eaf2ff;
 
     --bg:#f3f6fb;
@@ -117,12 +117,12 @@ SIDEBAR
 
 .sidebar{
 
-    width:230px;
-    min-width:230px;
+    width:160px;
+    min-width:160px;
 
     height:100vh;
 
-    padding:22px 14px;
+    padding:14px 10px;
 
     display:flex;
     flex-direction:column;
@@ -130,13 +130,17 @@ SIDEBAR
     background:
         linear-gradient(
             180deg,
-            var(--navy-900) 0%,
-            var(--navy-950) 100%
+            #06182c 0%,
+            #0d2a50 100%
         );
 
+    border-right:
+        1px solid
+        rgba(255,255,255,.04);
+
     box-shadow:
-        8px 0 30px
-        rgba(6,25,45,.10);
+        6px 0 20px
+        rgba(6,24,44,.08);
 
     position:relative;
     z-index:20;
@@ -147,17 +151,17 @@ SIDEBAR
 TOPO SIDEBAR
 ========================================================= */
 
-.sidebar-top{
+.sidebar .sidebar-top{
 
     display:flex;
 
     align-items:center;
     justify-content:space-between;
 
-    gap:14px;
+    gap:10px;
 
     padding:
-        0 8px 20px;
+        2px 2px 14px;
 
     border-bottom:
         1px solid
@@ -169,183 +173,43 @@ TOPO SIDEBAR
 LOGO
 ========================================================= */
 
-.logo{
+.sidebar .logo{
 
     display:flex;
 
     align-items:center;
     justify-content:center;
 
-    cursor:pointer;
+    padding:4px;
 
     background:#1010105c;
 
-    padding:8px 11px;
+    border-radius:10px;
 
-    border-radius:12px;
+    cursor:pointer;
 
-    box-shadow:
-        0 5px 15px
-        rgba(0,0,0,.10);
-
-    transition:
-        background .2s ease,
-        transform .2s ease;
+    box-shadow:none;
 }
 
-.logo:hover{
 
-    background:#10101080;
+.sidebar .logo img{
 
-    transform:translateY(-1px);
-}
-
-.logo img{
-
-    width:115px;
+    width:96px;
 
     display:block;
+
+    object-fit:contain;
 }
 
 
 /* =========================================================
-AVATAR USUÁRIO
+AVATAR
 ========================================================= */
 
-.avatar{
+.sidebar .avatar{
 
-    width:42px;
-    height:42px;
-
-    flex-shrink:0;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    border-radius:11px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--white-700),
-            var(--white-500)
-        );
-
-    color:#1e47a9;
-
-    font-size:16px;
-    font-weight:700;
-
-    border:
-        1px solid
-        rgb(30 71 169);
-
-    box-shadow:
-        0 5px 16px
-        rgba(0,0,0,.18);
-
-    cursor:pointer;
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-}
-
-.avatar:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 8px 20px
-        rgba(0,0,0,.22);
-}
-
-
-/* =========================================================
-MENU
-========================================================= */
-
-.menu{
-
-    margin-top:22px;
-
-    flex:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:6px;
-}
-
-
-.menu-item{
-
-    min-height:50px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    padding:9px 11px;
-
-    border-radius:12px;
-
-    color:
-        rgba(255,255,255,.74);
-
-    font-size:13px;
-
-    font-weight:500;
-
-    cursor:pointer;
-
-    position:relative;
-
-    transition:
-        background .2s ease,
-        color .2s ease,
-        transform .2s ease;
-}
-
-
-.menu-item:hover{
-
-    background:
-        rgba(255,255,255,.08);
-
-    color:#fff;
-
-    transform:
-        translateX(2px);
-}
-
-
-.menu-item.active{
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(23,103,215,.95),
-            rgba(47,125,244,.88)
-        );
-
-    color:#fff;
-
-    box-shadow:
-        0 7px 18px
-        rgba(0,0,0,.18);
-}
-
-
-.menu-icon{
-
-    width:32px;
-    height:32px;
+    width:34px;
+    height:34px;
 
     flex-shrink:0;
 
@@ -356,18 +220,197 @@ MENU
 
     border-radius:9px;
 
-    background:
-        rgba(255,255,255,.08);
+    background:#f8f9ff;
 
-    font-size:15px;
+    color:#1846a3;
+
+    font-size:13px;
+    font-weight:700;
+
+    border:
+        1px solid
+        #dce4ff;
+
+    box-shadow:
+        0 3px 8px
+        rgba(0,0,0,.10);
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
 }
 
-.menu-item.active .menu-icon{
 
-    background:
-        rgba(255,255,255,.15);
+.sidebar .avatar:hover{
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 5px 12px
+        rgba(0,0,0,.14);
 }
 
+
+/* =========================================================
+MENU
+========================================================= */
+
+.sidebar .menu{
+
+    margin-top:16px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+    padding:0;
+}
+
+
+/* =========================================================
+ITEM MENU
+========================================================= */
+
+.sidebar .menu-item{
+
+    width:100%;
+
+    min-height:40px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:
+        7px 8px;
+
+    border-radius:9px;
+
+    color:
+        #b7c3d4;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        background .18s ease,
+        color .18s ease,
+        transform .18s ease;
+
+    box-shadow:none;
+}
+
+
+/* =========================================================
+HOVER MENU
+========================================================= */
+
+.sidebar .menu-item:hover{
+
+    background:
+        rgba(255,255,255,.06);
+
+    color:#ffffff;
+
+    transform:
+        translateX(1px);
+}
+
+
+/* =========================================================
+MENU ATIVO
+========================================================= */
+
+.sidebar .menu-item.active{
+
+    background:
+        linear-gradient(
+            135deg,
+            #3574df,
+            #3972d7
+        );
+
+    color:#ffffff;
+
+    box-shadow:
+        0 5px 14px
+        rgba(27,83,180,.25);
+}
+
+
+/* =========================================================
+ÍCONE MENU
+========================================================= */
+
+.sidebar .menu-icon{
+
+    width:26px;
+    height:26px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:7px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    font-size:12px;
+
+    box-shadow:none;
+}
+
+
+.sidebar .menu-item.active .menu-icon{
+
+    background:
+        rgba(255,255,255,.14);
+}
+
+
+/* =========================================================
+NOTIFICAÇÃO SOLICITAÇÕES
+========================================================= */
+
+.sidebar .notificacao-solicitacoes{
+
+    min-width:18px;
+    height:18px;
+
+    margin-left:auto;
+
+    padding:
+        0 5px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:20px;
+
+    background:#e5484d;
+
+    color:#ffffff;
+
+    font-size:9px;
+
+    font-weight:700;
+}
 
 /* =========================================================
 MAIN
@@ -1301,7 +1344,6 @@ RESPONSIVIDADE
     }
 
 }
-
 /* ==========================================================
 GRID PROFISSIONAL
 ========================================================== */
