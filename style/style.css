@@ -117,12 +117,12 @@ SIDEBAR
 
 .sidebar{
 
-    width:160px;
-    min-width:160px;
+    width:230px;
+    min-width:230px;
 
     height:100vh;
 
-    padding:14px 10px;
+    padding:20px 14px;
 
     display:flex;
     flex-direction:column;
@@ -158,10 +158,10 @@ TOPO SIDEBAR
     align-items:center;
     justify-content:space-between;
 
-    gap:10px;
+    gap:12px;
 
     padding:
-        2px 2px 14px;
+        2px 4px 18px;
 
     border-bottom:
         1px solid
@@ -180,7 +180,8 @@ LOGO
     align-items:center;
     justify-content:center;
 
-    padding:4px;
+    padding:
+        6px 8px;
 
     background:#1010105c;
 
@@ -189,12 +190,25 @@ LOGO
     cursor:pointer;
 
     box-shadow:none;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+
+.sidebar .logo:hover{
+
+    background:#10101080;
+
+    transform:
+        translateY(-1px);
 }
 
 
 .sidebar .logo img{
 
-    width:96px;
+    width:118px;
 
     display:block;
 
@@ -208,8 +222,8 @@ AVATAR
 
 .sidebar .avatar{
 
-    width:34px;
-    height:34px;
+    width:40px;
+    height:40px;
 
     flex-shrink:0;
 
@@ -218,13 +232,13 @@ AVATAR
     align-items:center;
     justify-content:center;
 
-    border-radius:9px;
+    border-radius:10px;
 
     background:#f8f9ff;
 
     color:#1846a3;
 
-    font-size:13px;
+    font-size:15px;
     font-weight:700;
 
     border:
@@ -260,13 +274,13 @@ MENU
 
 .sidebar .menu{
 
-    margin-top:16px;
+    margin-top:18px;
 
     display:flex;
 
     flex-direction:column;
 
-    gap:6px;
+    gap:8px;
 
     padding:0;
 }
@@ -280,23 +294,22 @@ ITEM MENU
 
     width:100%;
 
-    min-height:40px;
+    min-height:48px;
 
     display:flex;
 
     align-items:center;
 
-    gap:9px;
+    gap:12px;
 
     padding:
-        7px 8px;
+        9px 11px;
 
-    border-radius:9px;
+    border-radius:10px;
 
-    color:
-        #b7c3d4;
+    color:#b7c3d4;
 
-    font-size:11px;
+    font-size:13px;
 
     font-weight:600;
 
@@ -354,8 +367,8 @@ MENU ATIVO
 
 .sidebar .menu-icon{
 
-    width:26px;
-    height:26px;
+    width:30px;
+    height:30px;
 
     flex-shrink:0;
 
@@ -364,12 +377,12 @@ MENU ATIVO
     align-items:center;
     justify-content:center;
 
-    border-radius:7px;
+    border-radius:8px;
 
     background:
         rgba(255,255,255,.07);
 
-    font-size:12px;
+    font-size:14px;
 
     box-shadow:none;
 }
@@ -410,6 +423,142 @@ NOTIFICAÇÃO SOLICITAÇÕES
     font-size:9px;
 
     font-weight:700;
+}
+
+
+/* =========================================================
+AJUSTE PARA TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+    .sidebar{
+
+        width:100%;
+        min-width:100%;
+
+        height:auto;
+
+        padding:
+            10px 14px;
+    }
+
+
+    .sidebar .sidebar-top{
+
+        padding-bottom:10px;
+    }
+
+
+    .sidebar .logo img{
+
+        width:100px;
+    }
+
+
+    .sidebar .avatar{
+
+        width:38px;
+        height:38px;
+
+        font-size:14px;
+    }
+
+
+    .sidebar .menu{
+
+        margin-top:8px;
+
+        flex-direction:row;
+
+        overflow-x:auto;
+
+        overflow-y:hidden;
+
+        gap:6px;
+    }
+
+
+    .sidebar .menu-item{
+
+        min-width:150px;
+
+        min-height:42px;
+
+        justify-content:center;
+
+        padding:
+            6px 10px;
+
+        font-size:12px;
+    }
+
+
+    .sidebar .menu-icon{
+
+        width:28px;
+        height:28px;
+    }
+
+}
+
+
+/* =========================================================
+AJUSTE PARA CELULAR
+========================================================= */
+
+@media(max-width:600px){
+
+    .sidebar{
+
+        padding:
+            8px 10px;
+    }
+
+
+    .sidebar .sidebar-top{
+
+        border-bottom:none;
+    }
+
+
+    .sidebar .logo{
+
+        padding:
+            5px 7px;
+    }
+
+
+    .sidebar .logo img{
+
+        width:90px;
+    }
+
+
+    .sidebar .avatar{
+
+        width:36px;
+        height:36px;
+
+        border-radius:9px;
+
+        font-size:13px;
+    }
+
+
+    .sidebar .menu{
+
+        margin-top:5px;
+    }
+
+
+    .sidebar .menu-item{
+
+        min-width:130px;
+
+        font-size:11px;
+    }
+
 }
 
 /* =========================================================
