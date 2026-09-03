@@ -5,13 +5,13 @@ IDENTIDADE VISUAL
 
 :root{
 
-    --navy-950:#06192d;
-    --navy-900:#08213d;
+    --navy-950:#073d77;
+    --navy-900:#011021;
     --navy-800:#0a2b50;
 
-    --blue-700:#0b4ea2;
+    --WHITE-700:#f7f7f7;
     --blue-600:#1767d7;
-    --blue-500:#2f7df4;
+    --WHITE-500:#f7f7f7;
     --blue-100:#eaf2ff;
 
     --bg:#f3f6fb;
@@ -229,18 +229,18 @@ AVATAR USUÁRIO
     background:
         linear-gradient(
             135deg,
-            var(--blue-700),
-            var(--blue-500)
+            var(--white-700),
+            var(--white-500)
         );
 
-    color:#fff;
+    color:#1e47a9;
 
     font-size:16px;
     font-weight:700;
 
     border:
         1px solid
-        rgba(255,255,255,.18);
+        rgb(30 71 169);
 
     box-shadow:
         0 5px 16px
