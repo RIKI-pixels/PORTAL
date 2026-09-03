@@ -4695,14 +4695,13 @@ CELULAR
 
 /* =========================================================
 PROGRAMAÇÃO MOBILE
-LISTA OPERACIONAL COMPACTA
-NÃO ALTERA DESKTOP / TABLET
+LINHA OPERACIONAL COMPACTA
 ========================================================= */
 
 @media(max-width:600px){
 
     /* =====================================================
-    ÁREA PROGRAMAÇÃO
+    ÁREA
     ===================================================== */
 
     #programacao{
@@ -4719,8 +4718,7 @@ NÃO ALTERA DESKTOP / TABLET
 
     #programacao > h2{
 
-        margin:
-            4px 0 12px;
+        margin:4px 0 12px;
 
         font-size:21px;
 
@@ -4741,22 +4739,17 @@ NÃO ALTERA DESKTOP / TABLET
         display:grid;
 
         grid-template-columns:
-            repeat(
-                2,
-                minmax(0,1fr)
-            );
+            repeat(2,minmax(0,1fr));
 
         gap:7px;
 
-        margin-bottom:10px;
-
         padding:10px;
+
+        margin-bottom:10px;
 
         background:#ffffff;
 
-        border:
-            1px solid
-            #e1e7ef;
+        border:1px solid #e1e7ef;
 
         border-radius:12px;
 
@@ -4776,12 +4769,9 @@ NÃO ALTERA DESKTOP / TABLET
         height:40px;
         min-height:40px;
 
-        padding:
-            0 10px;
+        padding:0 9px;
 
-        border:
-            1px solid
-            #dce4ee;
+        border:1px solid #dce4ee;
 
         border-radius:8px;
 
@@ -4795,8 +4785,7 @@ NÃO ALTERA DESKTOP / TABLET
 
     #programacao .filters button{
 
-        grid-column:
-            1 / -1;
+        grid-column:1 / -1;
 
         width:100%;
 
@@ -4808,8 +4797,6 @@ NÃO ALTERA DESKTOP / TABLET
         border-radius:8px;
 
         font-size:12px;
-
-        font-weight:600;
     }
 
 
@@ -4829,21 +4816,15 @@ NÃO ALTERA DESKTOP / TABLET
 
         background:#ffffff;
 
-        border:
-            1px solid
-            #e1e7ef;
+        border:1px solid #e1e7ef;
 
         border-radius:12px;
 
         box-shadow:
             0 4px 16px
-            rgba(8,33,61,.06);
+            rgba(8,33,61,.05);
     }
 
-
-    /* =====================================================
-    TABELA
-    ===================================================== */
 
     #programacao .grid-table{
 
@@ -4851,119 +4832,102 @@ NÃO ALTERA DESKTOP / TABLET
 
         max-height:none;
 
-        overflow-x:auto;
-        overflow-y:visible;
+        overflow:visible;
 
         background:#ffffff;
-
-        scrollbar-width:thin;
-
-        -webkit-overflow-scrolling:
-            touch;
     }
 
+
+    /* =====================================================
+    TABELA VIRA LISTA
+    ===================================================== */
 
     #programacao .grid-table table{
 
         width:100%;
 
-        /*
-        IMPORTANTE:
-        não deixar a tabela gigante como no desktop.
-        */
+        min-width:0;
 
-        min-width:760px;
+        display:block;
 
-        display:table;
-
-        border-collapse:collapse;
-
-        table-layout:fixed;
+        border-collapse:initial;
     }
 
 
-    /* =====================================================
-    CABEÇALHO
-    ===================================================== */
+    /* cabeçalho não é necessário no celular */
 
     #programacao .grid-table thead{
 
-        display:table-header-group;
-
-        background:#f1f4f8;
+        display:none;
     }
 
 
-    #programacao .grid-table thead tr{
+    #programacao .grid-table tbody{
 
-        display:table-row;
-    }
+        width:100%;
 
+        display:flex;
 
-    #programacao .grid-table th{
-
-        position:sticky;
-
-        top:0;
-
-        z-index:5;
-
-        height:36px;
-
-        padding:
-            7px 6px;
-
-        background:#f1f4f8;
-
-        border-bottom:
-            1px solid
-            #dce4ee;
-
-        color:#667085;
-
-        font-size:8px;
-
-        font-weight:700;
-
-        text-transform:uppercase;
-
-        letter-spacing:.15px;
-
-        white-space:nowrap;
-
-        overflow:hidden;
-
-        text-overflow:ellipsis;
+        flex-direction:column;
     }
 
 
     /* =====================================================
-    CORPO
+    CADA UNIDADE = UMA LINHA
     ===================================================== */
-
-    #programacao .grid-table tbody{
-
-        display:table-row-group;
-    }
-
 
     #programacao .grid-table tbody tr{
 
-        display:table-row;
+        width:100%;
 
-        height:47px;
+        min-height:78px;
 
-        padding:0;
+        display:grid;
+
+        /*
+        4 colunas internas
+        */
+
+        grid-template-columns:
+            48px
+            minmax(100px,1fr)
+            72px
+            58px;
+
+        grid-template-rows:
+            auto
+            auto;
+
+        align-items:center;
+
+        gap:
+            5px 7px;
 
         margin:0;
 
-        border:none;
-
-        border-radius:0;
+        padding:
+            10px 11px;
 
         background:#ffffff;
 
+        border:none;
+
+        border-bottom:
+            1px solid
+            #e7ecf2;
+
+        border-radius:0;
+
         box-shadow:none;
+
+        transition:
+            background .15s ease;
+    }
+
+
+    #programacao .grid-table tbody tr:last-child{
+
+        border-bottom:none;
     }
 
 
@@ -4977,32 +4941,39 @@ NÃO ALTERA DESKTOP / TABLET
 
         transform:none;
 
-        background:#f7faff;
+        background:#f5f9ff;
     }
 
 
+    /* =====================================================
+    TODAS AS CÉLULAS
+    ===================================================== */
+
     #programacao .grid-table td{
 
-        display:table-cell;
+        display:block;
 
-        height:47px;
+        width:auto;
 
-        padding:
-            6px 6px;
+        min-width:0;
 
-        border-bottom:
-            1px solid
-            #edf1f5;
+        max-width:none;
+
+        height:auto;
+
+        padding:0;
+
+        margin:0;
+
+        border:none;
 
         background:transparent;
 
         color:#344054;
 
-        font-size:9px;
+        font-size:10px;
 
-        line-height:1.25;
-
-        vertical-align:middle;
+        line-height:1.3;
 
         white-space:nowrap;
 
@@ -5013,92 +4984,165 @@ NÃO ALTERA DESKTOP / TABLET
 
 
     /* =====================================================
-    REMOVE REGRAS DO ANTIGO CARD MOBILE
+    PRIMEIRA LINHA
+
+    ☑ RX | CONTAINER | DATA | JANELA
     ===================================================== */
 
-    #programacao .grid-table td:nth-child(1),
-    #programacao .grid-table td:nth-child(2),
-    #programacao .grid-table td:nth-child(3),
-    #programacao .grid-table td:last-child{
 
-        grid-column:auto;
-
-        width:auto;
-
-        max-width:none;
-
-        padding:
-            6px 6px;
-
-        border-radius:0;
-
-        background:transparent;
-    }
-
-
-    /* =====================================================
-    PRIMEIRAS COLUNAS MAIS IMPORTANTES
-    ===================================================== */
+    /* TIPO / CHECK */
 
     #programacao .grid-table td:nth-child(1){
 
+        grid-column:1;
+
+        grid-row:1;
+
+        display:flex;
+
+        align-items:center;
+
+        gap:4px;
+
         font-weight:700;
 
         color:#142033;
     }
 
+
+    /* CONTAINER */
 
     #programacao .grid-table td:nth-child(2){
 
-        font-weight:700;
+        grid-column:2;
 
-        color:#142033;
+        grid-row:1;
+
+        color:#0b4ea2;
+
+        font-size:11px;
+
+        font-weight:700;
     }
 
 
+    /* DATA */
+
     #programacao .grid-table td:nth-child(3){
 
-        color:#0b4ea2;
+        grid-column:3;
+
+        grid-row:1;
+
+        color:#344054;
+
+        font-size:9px;
+
+        font-weight:600;
+    }
+
+
+    /* JANELA */
+
+    #programacao .grid-table td:nth-child(4){
+
+        grid-column:4;
+
+        grid-row:1;
+
+        text-align:right;
+
+        color:#142033;
+
+        font-size:10px;
 
         font-weight:700;
     }
 
 
     /* =====================================================
-    CHECKBOX
+    SEGUNDA LINHA
+
+    CLIENTE | STATUS/LOCAL | OBSERVAÇÃO
     ===================================================== */
 
-    #programacao input[type="checkbox"]{
 
-        width:17px;
-        height:17px;
+    #programacao .grid-table td:nth-child(5){
 
-        min-width:17px;
-        min-height:17px;
+        grid-column:
+            1 / 2;
 
-        margin:auto;
+        grid-row:2;
 
-        display:block;
+        color:#344054;
 
-        accent-color:#3574df;
+        font-size:9px;
+
+        font-weight:700;
+    }
+
+
+    #programacao .grid-table td:nth-child(6){
+
+        grid-column:
+            2 / 3;
+
+        grid-row:2;
+
+        color:#38965c;
+
+        font-size:9px;
+
+        font-weight:700;
+    }
+
+
+    #programacao .grid-table td:nth-child(7){
+
+        grid-column:
+            3 / 5;
+
+        grid-row:2;
+
+        color:#667085;
+
+        font-size:9px;
     }
 
 
     /* =====================================================
     OBSERVAÇÃO
+    Caso seja a última coluna da tabela
     ===================================================== */
 
-    #programacao .grid-table td input[type="text"]{
+    #programacao .grid-table td:last-child{
+
+        grid-column:
+            3 / 5;
+
+        grid-row:2;
+
+        width:100%;
+
+        padding:0;
+
+        background:transparent;
+
+        border-radius:0;
+    }
+
+
+    #programacao .grid-table td:last-child input[type="text"]{
 
         width:100%;
 
         min-width:0;
 
-        height:29px;
-        min-height:29px;
+        height:27px;
+        min-height:27px;
 
         padding:
-            4px 6px;
+            4px 7px;
 
         border:
             1px solid
@@ -5108,99 +5152,43 @@ NÃO ALTERA DESKTOP / TABLET
 
         background:#f8fafc;
 
-        font-size:8px;
+        color:#475467;
+
+        font-size:9px;
     }
 
 
-    /* =====================================================
-    LARGURAS DAS COLUNAS
-    ===================================================== */
-
-    #programacao .grid-table th:nth-child(1),
-    #programacao .grid-table td:nth-child(1){
-
-        width:48px;
-    }
-
-
-    #programacao .grid-table th:nth-child(2),
-    #programacao .grid-table td:nth-child(2){
-
-        width:70px;
-    }
-
-
-    #programacao .grid-table th:nth-child(3),
-    #programacao .grid-table td:nth-child(3){
-
-        width:110px;
-    }
-
-
-    #programacao .grid-table th:nth-child(4),
-    #programacao .grid-table td:nth-child(4){
-
-        width:85px;
-    }
-
-
-    #programacao .grid-table th:nth-child(5),
-    #programacao .grid-table td:nth-child(5){
-
-        width:100px;
-    }
-
-
-    #programacao .grid-table th:nth-child(6),
-    #programacao .grid-table td:nth-child(6){
-
-        width:95px;
-    }
-
-
-    #programacao .grid-table th:nth-child(7),
-    #programacao .grid-table td:nth-child(7){
-
-        width:95px;
-    }
-
-
-    #programacao .grid-table th:nth-child(8),
-    #programacao .grid-table td:nth-child(8){
-
-        width:150px;
-    }
-
-
-    /* =====================================================
-    PRIMEIRAS COLUNAS FIXAS
-    ===================================================== */
-
-    #programacao .grid-table th:nth-child(1),
-    #programacao .grid-table td:nth-child(1){
-
-        position:sticky;
-
-        left:0;
-
-        z-index:3;
+    #programacao .grid-table td:last-child input[type="text"]:focus{
 
         background:#ffffff;
+
+        border-color:#3574df;
+
+        box-shadow:
+            0 0 0 2px
+            rgba(53,116,223,.08);
     }
 
 
-    #programacao .grid-table th:nth-child(1){
+    /* =====================================================
+    CHECKBOX
+    ===================================================== */
 
-        z-index:7;
+    #programacao input[type="checkbox"]{
 
-        background:#f1f4f8;
-    }
+        width:16px;
+        height:16px;
 
+        min-width:16px;
+        min-height:16px;
 
-    #programacao .grid-table tbody tr:nth-child(even)
-    td:nth-child(1){
+        margin:0;
 
-        background:#fbfcfe;
+        display:inline-block;
+
+        accent-color:#3574df;
+
+        cursor:pointer;
     }
 
 
@@ -5226,21 +5214,17 @@ NÃO ALTERA DESKTOP / TABLET
 
         padding:9px 10px;
 
+        background:#fafbfd;
+
+        border:none;
+
         border-top:
             1px solid
             #e4eaf2;
 
         border-radius:0;
 
-        background:#fafbfd;
-
         color:#667085;
-
-        font-size:9px;
-    }
-
-
-    #programacao .grid-total{
 
         font-size:9px;
     }
@@ -5274,6 +5258,11 @@ NÃO ALTERA DESKTOP / TABLET
 
         width:29px;
         height:29px;
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
 
         font-size:9px;
 
