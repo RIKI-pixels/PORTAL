@@ -3950,3 +3950,744 @@ SIDEBAR MOBILE - AJUSTE FINAL
     }
 
 }
+
+/* =========================================================
+PROGRAMAÇÃO - NOVO VISUAL
+========================================================= */
+
+#programacao{
+
+    background:#f7f9fc;
+
+    border-radius:20px;
+
+    padding:22px;
+}
+
+
+/* =========================================================
+TÍTULO
+========================================================= */
+
+#programacao > h2{
+
+    margin-bottom:18px;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#142033;
+}
+
+
+/* =========================================================
+FILTROS
+========================================================= */
+
+#programacao .filters{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(150px,180px)
+        minmax(150px,180px)
+        minmax(150px,180px)
+        minmax(180px,1fr)
+        auto;
+
+    gap:10px;
+
+    align-items:end;
+
+    margin-bottom:18px;
+
+    padding:14px;
+
+    background:#ffffff;
+
+    border:1px solid #e4eaf2;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(8,33,61,.04);
+}
+
+
+#programacao .filters input,
+#programacao .filters select{
+
+    width:100%;
+
+    min-width:0;
+
+    height:42px;
+
+    border:1px solid #dce4ee;
+
+    border-radius:9px;
+
+    background:#ffffff;
+
+    color:#142033;
+
+    font-size:12px;
+
+    padding:0 11px;
+}
+
+
+#programacao .filters input:focus,
+#programacao .filters select:focus{
+
+    border-color:#3574df;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(53,116,223,.10);
+}
+
+
+#programacao .filters button{
+
+    height:42px;
+
+    padding:0 20px;
+
+    border-radius:9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3574df,
+            #2465d4
+        );
+
+    box-shadow:
+        0 5px 14px
+        rgba(36,101,212,.18);
+}
+
+
+/* =========================================================
+PAINEL DA TABELA
+========================================================= */
+
+#programacao .grid-panel{
+
+    overflow:hidden;
+
+    background:#ffffff;
+
+    border:1px solid #e4eaf2;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 6px 20px
+        rgba(8,33,61,.05);
+}
+
+
+/* =========================================================
+TABELA
+========================================================= */
+
+#programacao .grid-table{
+
+    width:100%;
+
+    max-height:calc(100vh - 250px);
+
+    overflow:auto;
+
+    background:#ffffff;
+}
+
+
+#programacao .grid-table table{
+
+    width:100%;
+
+    min-width:1050px;
+
+    border-collapse:separate;
+
+    border-spacing:0;
+}
+
+
+/* =========================================================
+CABEÇALHO
+========================================================= */
+
+#programacao .grid-table thead{
+
+    background:#f2f5f9;
+
+    color:#475467;
+}
+
+
+#programacao .grid-table thead tr{
+
+    background:#f2f5f9;
+}
+
+
+#programacao .grid-table th{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:4;
+
+    padding:12px 14px;
+
+    background:#f2f5f9;
+
+    border-bottom:1px solid #dfe6ef;
+
+    color:#475467;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+LINHAS
+========================================================= */
+
+#programacao .grid-table td{
+
+    padding:12px 14px;
+
+    border-bottom:1px solid #edf1f5;
+
+    color:#344054;
+
+    font-size:12px;
+
+    background:#ffffff;
+}
+
+
+#programacao .grid-table tbody tr{
+
+    transition:
+        background .15s ease,
+        transform .15s ease;
+}
+
+
+#programacao .grid-table tbody tr:hover td{
+
+    background:#f8fbff;
+}
+
+
+/* =========================================================
+CHECKBOX
+========================================================= */
+
+#programacao input[type="checkbox"]{
+
+    width:17px;
+    height:17px;
+
+    min-width:17px;
+
+    accent-color:#3574df;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+OBSERVAÇÃO
+========================================================= */
+
+#programacao .grid-table td input[type="text"]{
+
+    width:100%;
+
+    min-width:150px;
+
+    height:34px;
+
+    min-height:34px;
+
+    padding:6px 9px;
+
+    border:1px solid #dce4ee;
+
+    border-radius:7px;
+
+    font-size:11px;
+
+    background:#f9fbfd;
+}
+
+
+#programacao .grid-table td input[type="text"]:focus{
+
+    background:#ffffff;
+
+    border-color:#3574df;
+}
+
+
+/* =========================================================
+RODAPÉ
+========================================================= */
+
+#programacao .grid-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:14px;
+
+    padding:12px 16px;
+
+    background:#fafbfd;
+
+    border-top:1px solid #e6ebf2;
+
+    color:#667085;
+
+    font-size:11px;
+}
+
+
+#programacao .grid-total strong{
+
+    color:#142033;
+}
+
+
+#programacao .grid-pagination{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+}
+
+
+#programacao .grid-pagination button{
+
+    width:32px;
+    height:32px;
+
+    min-height:32px;
+
+    padding:0;
+
+    border-radius:8px;
+}
+
+
+#programacao .page-active{
+
+    width:32px;
+    height:32px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:8px;
+
+    background:#3574df;
+
+    color:#ffffff;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+#programacao .grid-limit select{
+
+    height:34px;
+
+    min-height:34px;
+
+    padding:4px 8px;
+
+    border-radius:8px;
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+    #programacao{
+
+        padding:14px;
+
+        border-radius:15px;
+    }
+
+
+    #programacao > h2{
+
+        font-size:23px;
+
+        margin-bottom:14px;
+    }
+
+
+    #programacao .filters{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        padding:11px;
+
+        gap:8px;
+    }
+
+
+    #programacao .filters button{
+
+        width:100%;
+    }
+
+
+    #programacao .grid-table{
+
+        max-height:none;
+    }
+
+}
+
+
+/* =========================================================
+CELULAR
+========================================================= */
+
+@media(max-width:600px){
+
+    #programacao{
+
+        padding:8px;
+
+        background:#f5f7fb;
+
+        border-radius:12px;
+    }
+
+
+    #programacao > h2{
+
+        font-size:20px;
+
+        margin-bottom:10px;
+    }
+
+
+    /* =============================
+       FILTROS MOBILE
+    ============================== */
+
+    #programacao .filters{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        gap:7px;
+
+        padding:9px;
+
+        margin-bottom:10px;
+
+        border-radius:11px;
+    }
+
+
+    #programacao .filters input,
+    #programacao .filters select{
+
+        width:100%;
+
+        min-width:0;
+
+        height:38px;
+
+        min-height:38px;
+
+        padding:0 8px;
+
+        font-size:10px;
+
+        border-radius:8px;
+    }
+
+
+    #programacao .filters button{
+
+        grid-column:1 / -1;
+
+        width:100%;
+
+        height:38px;
+
+        min-height:38px;
+
+        font-size:11px;
+
+        border-radius:8px;
+    }
+
+
+    /* =============================
+       REMOVE VISUAL DE TABELA
+       E TRANSFORMA EM CARDS
+    ============================== */
+
+    #programacao .grid-panel{
+
+        overflow:visible;
+
+        border:none;
+
+        background:transparent;
+
+        box-shadow:none;
+    }
+
+
+    #programacao .grid-table{
+
+        max-height:none;
+
+        overflow:visible;
+
+        background:transparent;
+    }
+
+
+    #programacao .grid-table table{
+
+        min-width:0;
+
+        width:100%;
+
+        display:block;
+    }
+
+
+    #programacao .grid-table thead{
+
+        display:none;
+    }
+
+
+    #programacao .grid-table tbody{
+
+        width:100%;
+
+        display:flex;
+
+        flex-direction:column;
+
+        gap:8px;
+    }
+
+
+    #programacao .grid-table tbody tr{
+
+        width:100%;
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        gap:7px 10px;
+
+        padding:12px;
+
+        border:1px solid #e2e8f0;
+
+        border-radius:12px;
+
+        background:#ffffff;
+
+        box-shadow:
+            0 3px 12px
+            rgba(8,33,61,.05);
+    }
+
+
+    #programacao .grid-table tbody tr:hover{
+
+        transform:none;
+    }
+
+
+    #programacao .grid-table tbody tr:hover td{
+
+        background:transparent;
+    }
+
+
+    #programacao .grid-table td{
+
+        width:auto;
+
+        max-width:none;
+
+        display:block;
+
+        padding:0;
+
+        border:none;
+
+        white-space:normal;
+
+        overflow-wrap:anywhere;
+
+        background:transparent;
+
+        font-size:11px;
+    }
+
+
+    /* células principais ganham destaque */
+
+    #programacao .grid-table td:nth-child(1),
+    #programacao .grid-table td:nth-child(2){
+
+        font-weight:700;
+
+        color:#142033;
+    }
+
+
+    /* container ocupa largura completa */
+
+    #programacao .grid-table td:nth-child(3){
+
+        grid-column:1 / -1;
+
+        padding:
+            7px 9px;
+
+        border-radius:8px;
+
+        background:#f3f7fc;
+
+        color:#0b4ea2;
+
+        font-weight:700;
+
+        letter-spacing:.2px;
+    }
+
+
+    /* observação ocupa largura completa */
+
+    #programacao .grid-table td:last-child{
+
+        grid-column:1 / -1;
+    }
+
+
+    #programacao .grid-table td input[type="text"]{
+
+        width:100%;
+
+        min-width:0;
+
+        height:34px;
+
+        font-size:10px;
+    }
+
+
+    #programacao input[type="checkbox"]{
+
+        width:18px;
+        height:18px;
+    }
+
+
+    /* =============================
+       RODAPÉ MOBILE
+    ============================== */
+
+    #programacao .grid-footer{
+
+        margin-top:8px;
+
+        display:grid;
+
+        grid-template-columns:
+            1fr auto;
+
+        gap:8px;
+
+        padding:10px;
+
+        border:1px solid #e4eaf2;
+
+        border-radius:11px;
+
+        background:#ffffff;
+    }
+
+
+    #programacao .grid-pagination{
+
+        justify-content:flex-end;
+    }
+
+
+    #programacao .grid-limit{
+
+        grid-column:1 / -1;
+
+        width:100%;
+    }
+
+
+    #programacao .grid-limit select{
+
+        width:100%;
+    }
+
+}
