@@ -6746,6 +6746,191 @@ window.registrarLog = registrarLog;
 
 iniciarRealtimeSupabase();
 
+
+/* ==========================================================
+CLASSES SEMÂNTICAS DA PROGRAMAÇÃO
+MOBILE
+========================================================== */
+
+function aplicarClassesSemanticasProgramacao(){
+
+    const cabecalhos =
+        [
+            ...document.querySelectorAll(
+                "#theadProg th"
+            )
+        ];
+
+    const linhas =
+        [
+            ...document.querySelectorAll(
+                "#tbodyProg tr"
+            )
+        ];
+
+
+    if(
+        cabecalhos.length === 0 ||
+        linhas.length === 0
+    ){
+        return;
+    }
+
+
+    const identificarClasse = titulo => {
+
+        const textoTitulo =
+            String(
+                titulo || ""
+            )
+            .trim()
+            .toUpperCase();
+
+
+        if(
+            textoTitulo === "OK" ||
+            textoTitulo.includes("CONCLU")
+        ){
+            return "prog-check";
+        }
+
+
+        if(
+            textoTitulo === "TIPO" ||
+            textoTitulo === "MODAL"
+        ){
+            return "prog-tipo";
+        }
+
+
+        if(
+            textoTitulo.includes("CONTAINER")
+        ){
+            return "prog-container";
+        }
+
+
+        if(
+            textoTitulo === "CLIENTE"
+        ){
+            return "prog-cliente";
+        }
+
+
+        if(
+            textoTitulo === "DATA"
+        ){
+            return "prog-data";
+        }
+
+
+        if(
+            textoTitulo.includes("JANELA")
+        ){
+            return "prog-janela";
+        }
+
+
+        if(
+            textoTitulo.includes("LOCALIZA")
+        ){
+            return "prog-localizacao";
+        }
+
+
+        if(
+            textoTitulo.includes("OBSERVA")
+        ){
+            return "prog-observacao";
+        }
+
+
+        if(
+            textoTitulo.includes("BOOKING")
+        ){
+            return "prog-booking";
+        }
+
+
+        if(
+            textoTitulo.includes("MOTORISTA")
+        ){
+            return "prog-motorista";
+        }
+
+
+        if(
+            textoTitulo.includes("PLACA")
+        ){
+            return "prog-placa";
+        }
+
+
+        if(
+            textoTitulo.includes("STATUS")
+        ){
+            return "prog-status";
+        }
+
+
+        return "";
+    };
+
+
+    const classesColunas =
+        cabecalhos.map(th =>
+            identificarClasse(
+                th.textContent
+            )
+        );
+
+
+    linhas.forEach(linha => {
+
+        const celulas =
+            [
+                ...linha.querySelectorAll(
+                    "td"
+                )
+            ];
+
+
+        celulas.forEach(
+            (celula, indice) => {
+
+                const classe =
+                    classesColunas[indice];
+
+                if(classe){
+
+                    celula.classList.add(
+                        classe
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+const renderTabelaProgramacaoOriginal =
+    renderTabelaProgramacao;
+
+
+renderTabelaProgramacao =
+    function(lista){
+
+        renderTabelaProgramacaoOriginal(
+            lista
+        );
+
+        aplicarClassesSemanticasProgramacao();
+
+    };
+
 /* ==========================================================
    FIM DO ARQUIVO
 ========================================================== */
