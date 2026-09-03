@@ -4695,185 +4695,13 @@ CELULAR
 
 /* =========================================================
 PROGRAMAÇÃO MOBILE
-LINHA OPERACIONAL COMPACTA
+LAYOUT SEMÂNTICO DEFINITIVO
 ========================================================= */
 
 @media(max-width:600px){
 
     /* =====================================================
-    ÁREA
-    ===================================================== */
-
-    #programacao{
-
-        width:100%;
-
-        padding:8px;
-
-        background:#f4f7fb;
-
-        border-radius:0;
-    }
-
-
-    #programacao > h2{
-
-        margin:4px 0 12px;
-
-        font-size:21px;
-
-        font-weight:700;
-
-        color:#142033;
-    }
-
-
-    /* =====================================================
-    FILTROS
-    ===================================================== */
-
-    #programacao .filters{
-
-        width:100%;
-
-        display:grid;
-
-        grid-template-columns:
-            repeat(2,minmax(0,1fr));
-
-        gap:7px;
-
-        padding:10px;
-
-        margin-bottom:10px;
-
-        background:#ffffff;
-
-        border:1px solid #e1e7ef;
-
-        border-radius:12px;
-
-        box-shadow:
-            0 3px 12px
-            rgba(8,33,61,.05);
-    }
-
-
-    #programacao .filters input,
-    #programacao .filters select{
-
-        width:100%;
-
-        min-width:0;
-
-        height:40px;
-        min-height:40px;
-
-        padding:0 9px;
-
-        border:1px solid #dce4ee;
-
-        border-radius:8px;
-
-        background:#ffffff;
-
-        color:#142033;
-
-        font-size:11px;
-    }
-
-
-    #programacao .filters button{
-
-        grid-column:1 / -1;
-
-        width:100%;
-
-        height:40px;
-        min-height:40px;
-
-        margin:0;
-
-        border-radius:8px;
-
-        font-size:12px;
-    }
-
-
-    /* =====================================================
-    PAINEL
-    ===================================================== */
-
-    #programacao .grid-panel{
-
-        width:100%;
-
-        margin-top:10px;
-
-        padding:0;
-
-        overflow:hidden;
-
-        background:#ffffff;
-
-        border:1px solid #e1e7ef;
-
-        border-radius:12px;
-
-        box-shadow:
-            0 4px 16px
-            rgba(8,33,61,.05);
-    }
-
-
-    #programacao .grid-table{
-
-        width:100%;
-
-        max-height:none;
-
-        overflow:visible;
-
-        background:#ffffff;
-    }
-
-
-    /* =====================================================
-    TABELA VIRA LISTA
-    ===================================================== */
-
-    #programacao .grid-table table{
-
-        width:100%;
-
-        min-width:0;
-
-        display:block;
-
-        border-collapse:initial;
-    }
-
-
-    /* cabeçalho não é necessário no celular */
-
-    #programacao .grid-table thead{
-
-        display:none;
-    }
-
-
-    #programacao .grid-table tbody{
-
-        width:100%;
-
-        display:flex;
-
-        flex-direction:column;
-    }
-
-
-    /* =====================================================
-    CADA UNIDADE = UMA LINHA
+    LINHA
     ===================================================== */
 
     #programacao .grid-table tbody tr{
@@ -4882,52 +4710,35 @@ LINHA OPERACIONAL COMPACTA
 
         min-height:78px;
 
-        display:grid;
-
-        /*
-        4 colunas internas
-        */
+        display:grid !important;
 
         grid-template-columns:
+            34px
             48px
-            minmax(100px,1fr)
-            72px
-            58px;
+            minmax(125px,1fr)
+            66px;
 
         grid-template-rows:
-            auto
-            auto;
+            28px
+            32px
+            18px;
 
-        align-items:center;
+        gap:3px 6px;
 
-        gap:
-            5px 7px;
+        padding:8px 9px;
 
         margin:0;
 
-        padding:
-            10px 11px;
-
-        background:#ffffff;
+        background:#fff;
 
         border:none;
 
         border-bottom:
-            1px solid
-            #e7ecf2;
+            1px solid #e5eaf1;
 
         border-radius:0;
 
         box-shadow:none;
-
-        transition:
-            background .15s ease;
-    }
-
-
-    #programacao .grid-table tbody tr:last-child{
-
-        border-bottom:none;
     }
 
 
@@ -4937,43 +4748,40 @@ LINHA OPERACIONAL COMPACTA
     }
 
 
-    #programacao .grid-table tbody tr:hover{
-
-        transform:none;
-
-        background:#f5f9ff;
-    }
-
-
     /* =====================================================
-    TODAS AS CÉLULAS
+    RESET DAS CÉLULAS
+    Remove posicionamentos antigos por nth-child
     ===================================================== */
 
-    #programacao .grid-table td{
+    #programacao .grid-table tbody tr > td{
 
-        display:block;
+        grid-column:auto !important;
+        grid-row:auto !important;
 
-        width:auto;
+        width:auto !important;
+        min-width:0 !important;
+        max-width:none !important;
 
-        min-width:0;
+        height:auto !important;
 
-        max-width:none;
+        padding:0 !important;
+        margin:0 !important;
 
-        height:auto;
+        position:static !important;
 
-        padding:0;
+        display:block !important;
 
-        margin:0;
+        border:none !important;
 
-        border:none;
+        border-radius:0 !important;
 
-        background:transparent;
+        background:transparent !important;
 
-        color:#344054;
+        text-align:left !important;
 
-        font-size:10px;
+        font-size:9px;
 
-        line-height:1.3;
+        line-height:1.2;
 
         white-space:nowrap;
 
@@ -4984,197 +4792,22 @@ LINHA OPERACIONAL COMPACTA
 
 
     /* =====================================================
-    PRIMEIRA LINHA
-
-    ☑ RX | CONTAINER | DATA | JANELA
-    ===================================================== */
-
-
-    /* TIPO / CHECK */
-
-    #programacao .grid-table td:nth-child(1){
-
-        grid-column:1;
-
-        grid-row:1;
-
-        display:flex;
-
-        align-items:center;
-
-        gap:4px;
-
-        font-weight:700;
-
-        color:#142033;
-    }
-
-
-    /* CONTAINER */
-
-    #programacao .grid-table td:nth-child(2){
-
-        grid-column:2;
-
-        grid-row:1;
-
-        color:#0b4ea2;
-
-        font-size:11px;
-
-        font-weight:700;
-    }
-
-
-    /* DATA */
-
-    #programacao .grid-table td:nth-child(3){
-
-        grid-column:3;
-
-        grid-row:1;
-
-        color:#344054;
-
-        font-size:9px;
-
-        font-weight:600;
-    }
-
-
-    /* JANELA */
-
-    #programacao .grid-table td:nth-child(4){
-
-        grid-column:4;
-
-        grid-row:1;
-
-        text-align:right;
-
-        color:#142033;
-
-        font-size:10px;
-
-        font-weight:700;
-    }
-
-
-    /* =====================================================
-    SEGUNDA LINHA
-
-    CLIENTE | STATUS/LOCAL | OBSERVAÇÃO
-    ===================================================== */
-
-
-    #programacao .grid-table td:nth-child(5){
-
-        grid-column:
-            1 / 2;
-
-        grid-row:2;
-
-        color:#344054;
-
-        font-size:9px;
-
-        font-weight:700;
-    }
-
-
-    #programacao .grid-table td:nth-child(6){
-
-        grid-column:
-            2 / 3;
-
-        grid-row:2;
-
-        color:#38965c;
-
-        font-size:9px;
-
-        font-weight:700;
-    }
-
-
-    #programacao .grid-table td:nth-child(7){
-
-        grid-column:
-            3 / 5;
-
-        grid-row:2;
-
-        color:#667085;
-
-        font-size:9px;
-    }
-
-
-    /* =====================================================
-    OBSERVAÇÃO
-    Caso seja a última coluna da tabela
-    ===================================================== */
-
-    #programacao .grid-table td:last-child{
-
-        grid-column:
-            3 / 5;
-
-        grid-row:2;
-
-        width:100%;
-
-        padding:0;
-
-        background:transparent;
-
-        border-radius:0;
-    }
-
-
-    #programacao .grid-table td:last-child input[type="text"]{
-
-        width:100%;
-
-        min-width:0;
-
-        height:27px;
-        min-height:27px;
-
-        padding:
-            4px 7px;
-
-        border:
-            1px solid
-            #dce4ee;
-
-        border-radius:6px;
-
-        background:#f8fafc;
-
-        color:#475467;
-
-        font-size:9px;
-    }
-
-
-    #programacao .grid-table td:last-child input[type="text"]:focus{
-
-        background:#ffffff;
-
-        border-color:#3574df;
-
-        box-shadow:
-            0 0 0 2px
-            rgba(53,116,223,.08);
-    }
-
-
-    /* =====================================================
     CHECKBOX
     ===================================================== */
 
-    #programacao input[type="checkbox"]{
+    #programacao .grid-table td.prog-check{
+
+        grid-column:1 !important;
+        grid-row:1 !important;
+
+        display:flex !important;
+
+        align-items:center;
+        justify-content:flex-start;
+    }
+
+
+    #programacao .prog-check input[type="checkbox"]{
 
         width:16px;
         height:16px;
@@ -5184,205 +4817,57 @@ LINHA OPERACIONAL COMPACTA
 
         margin:0;
 
-        display:inline-block;
-
         accent-color:#3574df;
-
-        cursor:pointer;
     }
 
 
     /* =====================================================
-    RODAPÉ
+    TIPO
     ===================================================== */
 
-    #programacao .grid-footer{
+    #programacao .grid-table td.prog-tipo{
 
-        width:100%;
-
-        display:flex;
-
-        flex-wrap:wrap;
-
-        align-items:center;
-
-        justify-content:space-between;
-
-        gap:7px;
-
-        margin:0;
-
-        padding:9px 10px;
-
-        background:#fafbfd;
-
-        border:none;
-
-        border-top:
-            1px solid
-            #e4eaf2;
-
-        border-radius:0;
-
-        color:#667085;
-
-        font-size:9px;
-    }
-
-
-    #programacao .grid-pagination{
-
-        display:flex;
-
-        gap:4px;
-    }
-
-
-    #programacao .grid-pagination button{
-
-        width:29px;
-        height:29px;
-
-        min-width:29px;
-        min-height:29px;
-
-        padding:0;
-
-        font-size:9px;
-
-        border-radius:6px;
-    }
-
-
-    #programacao .page-active{
-
-        width:29px;
-        height:29px;
-
-        display:flex;
-
-        align-items:center;
-        justify-content:center;
-
-        font-size:9px;
-
-        border-radius:6px;
-    }
-
-
-    #programacao .grid-limit{
-
-        width:100%;
-    }
-
-
-    #programacao .grid-limit select{
-
-        width:100%;
-
-        height:32px;
-        min-height:32px;
-
-        font-size:9px;
-    }
-
-}
-/* =========================================================
-PROGRAMAÇÃO MOBILE
-AJUSTE COMPACTO + PRIORIDADE CONTAINER
-========================================================= */
-
-@media(max-width:600px){
-
-    /* Cada unidade fica mais compacta */
-
-    #programacao .grid-table tbody tr{
-
-        min-height:64px;
-
-        grid-template-columns:
-            34px
-            54px
-            minmax(105px,1fr)
-            68px;
-
-        grid-template-rows:
-            24px
-            30px;
-
-        gap:3px 6px;
-
-        padding:7px 9px;
-    }
-
-
-    /* Todas as informações um pouco mais compactas */
-
-    #programacao .grid-table td{
-
-        font-size:9px;
-
-        line-height:1.15;
-    }
-
-
-    /* CHECK */
-
-    #programacao .grid-table td:nth-child(1){
-
-        grid-column:1;
-        grid-row:1;
+        grid-column:2 !important;
+        grid-row:1 !important;
 
         align-self:center;
-    }
 
-
-    #programacao input[type="checkbox"]{
-
-        width:15px;
-        height:15px;
-
-        min-width:15px;
-        min-height:15px;
-    }
-
-
-    /* RX */
-
-    #programacao .grid-table td:nth-child(2){
-
-        grid-column:2;
-        grid-row:1;
+        color:#0b5b9d;
 
         font-size:10px;
 
-        font-weight:700;
-
-        color:#0b4ea2;
+        font-weight:800;
     }
 
 
     /* =====================================================
     CONTAINER
-    MAIOR PRIORIDADE VISUAL
+    INFORMAÇÃO PRINCIPAL
     ===================================================== */
 
-    #programacao .grid-table td:nth-child(3){
+    #programacao .grid-table td.prog-container{
 
-        grid-column:3;
-        grid-row:1;
+        grid-column:3 !important;
+        grid-row:1 !important;
 
-        min-width:0;
+        align-self:center;
+
+        padding:
+            5px 8px !important;
+
+        background:
+            #f2f5fa !important;
+
+        border-radius:
+            7px !important;
+
+        color:#142033;
 
         font-size:11px;
 
         font-weight:800;
 
-        color:#142033;
-
         letter-spacing:.1px;
-
-        white-space:nowrap;
 
         overflow:visible;
 
@@ -5390,75 +4875,43 @@ AJUSTE COMPACTO + PRIORIDADE CONTAINER
     }
 
 
-    /* DATA */
+    /* =====================================================
+    JANELA
+    ===================================================== */
 
-    #programacao .grid-table td:nth-child(4){
+    #programacao .grid-table td.prog-janela{
 
-        grid-column:1 / 3;
-        grid-row:2;
+        grid-column:4 !important;
+        grid-row:1 !important;
 
-        text-align:left;
+        align-self:center;
 
-        font-size:9px;
+        text-align:right !important;
 
-        font-weight:600;
-
-        color:#475467;
-    }
-
-
-    /* JANELA */
-
-    #programacao .grid-table td:nth-child(5){
-
-        grid-column:3;
-        grid-row:2;
+        color:#344054;
 
         font-size:9px;
 
         font-weight:700;
-
-        color:#38965c;
     }
 
 
-    /* CLIENTE */
+    /* =====================================================
+    CLIENTE
+    ===================================================== */
 
-    #programacao .grid-table td:nth-child(6){
+    #programacao .grid-table td.prog-cliente{
 
-        grid-column:4;
-        grid-row:1;
+        grid-column:1 / 3 !important;
+        grid-row:2 !important;
 
-        font-size:8px;
-
-        font-weight:600;
+        align-self:center;
 
         color:#475467;
 
-        white-space:nowrap;
+        font-size:9px;
 
-        overflow:hidden;
-
-        text-overflow:ellipsis;
-    }
-
-
-    /* STATUS / LOCALIZAÇÃO */
-
-    #programacao .grid-table td:nth-child(7){
-
-        grid-column:1 / 3;
-        grid-row:3;
-
-        font-size:8px;
-
-        color:#667085;
-
-        white-space:nowrap;
-
-        overflow:hidden;
-
-        text-overflow:ellipsis;
+        font-weight:700;
     }
 
 
@@ -5466,96 +4919,83 @@ AJUSTE COMPACTO + PRIORIDADE CONTAINER
     OBSERVAÇÃO
     ===================================================== */
 
-    #programacao .grid-table td:last-child{
+    #programacao .grid-table td.prog-observacao{
 
-        grid-column:3 / 5;
-
-        grid-row:2 / 4;
+        grid-column:3 / 5 !important;
+        grid-row:2 !important;
 
         align-self:center;
-
-        width:100%;
     }
 
 
-    #programacao .grid-table td:last-child input[type="text"]{
+    #programacao .prog-observacao input{
 
-        width:100%;
+        width:100% !important;
 
-        height:28px;
-        min-height:28px;
+        height:29px !important;
+        min-height:29px !important;
 
-        padding:3px 7px;
+        padding:
+            4px 7px !important;
 
-        font-size:8px;
+        background:#f8fafc !important;
 
-        border-radius:6px;
-    }
+        border:
+            1px solid #dce4ee !important;
 
-}
+        border-radius:
+            6px !important;
 
-/* =========================================================
-PROGRAMAÇÃO MOBILE
-CONTAINER COMO INFORMAÇÃO PRINCIPAL
-========================================================= */
+        color:#475467;
 
-@media(max-width:600px){
-
-    /*
-    CONTAINER
-    Vai para o espaço principal onde hoje aparece o cliente
-    */
-
-    #programacao .grid-table td:nth-child(6){
-
-        grid-column:3;
-        grid-row:1;
-
-        padding:7px 10px;
-
-        background:#f3f6fa;
-
-        border-radius:8px;
-
-        color:#142033;
-
-        font-size:11px;
-
-        font-weight:800;
-
-        white-space:nowrap;
-
-        overflow:visible;
-
-        text-overflow:clip;
+        font-size:9px;
     }
 
 
-    /*
-    CLIENTE
-    Vai para baixo, no espaço onde o container estava
-    */
+    /* =====================================================
+    DATA
+    ===================================================== */
 
-    #programacao .grid-table td:nth-child(3){
+    #programacao .grid-table td.prog-data{
 
-        grid-column:1 / 3;
-        grid-row:2;
-
-        padding:0;
-
-        background:transparent;
+        grid-column:1 / 2 !important;
+        grid-row:3 !important;
 
         color:#667085;
 
-        font-size:9px;
+        font-size:8px;
 
         font-weight:600;
+    }
 
-        white-space:nowrap;
 
-        overflow:hidden;
+    /* =====================================================
+    LOCALIZAÇÃO / STATUS
+    ===================================================== */
 
-        text-overflow:ellipsis;
+    #programacao .grid-table td.prog-localizacao,
+    #programacao .grid-table td.prog-status{
+
+        grid-column:2 / 5 !important;
+        grid-row:3 !important;
+
+        color:#38965c;
+
+        font-size:8px;
+
+        font-weight:700;
+    }
+
+
+    /* =====================================================
+    CAMPOS MENOS IMPORTANTES NO MOBILE
+    ===================================================== */
+
+    #programacao .grid-table td.prog-booking,
+    #programacao .grid-table td.prog-motorista,
+    #programacao .grid-table td.prog-placa{
+
+        display:none !important;
     }
 
 }
