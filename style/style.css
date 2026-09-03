@@ -4691,3 +4691,610 @@ CELULAR
     }
 
 }
+
+
+/* =========================================================
+PROGRAMAÇÃO MOBILE
+LISTA OPERACIONAL COMPACTA
+NÃO ALTERA DESKTOP / TABLET
+========================================================= */
+
+@media(max-width:600px){
+
+    /* =====================================================
+    ÁREA PROGRAMAÇÃO
+    ===================================================== */
+
+    #programacao{
+
+        width:100%;
+
+        padding:8px;
+
+        background:#f4f7fb;
+
+        border-radius:0;
+    }
+
+
+    #programacao > h2{
+
+        margin:
+            4px 0 12px;
+
+        font-size:21px;
+
+        font-weight:700;
+
+        color:#142033;
+    }
+
+
+    /* =====================================================
+    FILTROS
+    ===================================================== */
+
+    #programacao .filters{
+
+        width:100%;
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        gap:7px;
+
+        margin-bottom:10px;
+
+        padding:10px;
+
+        background:#ffffff;
+
+        border:
+            1px solid
+            #e1e7ef;
+
+        border-radius:12px;
+
+        box-shadow:
+            0 3px 12px
+            rgba(8,33,61,.05);
+    }
+
+
+    #programacao .filters input,
+    #programacao .filters select{
+
+        width:100%;
+
+        min-width:0;
+
+        height:40px;
+        min-height:40px;
+
+        padding:
+            0 10px;
+
+        border:
+            1px solid
+            #dce4ee;
+
+        border-radius:8px;
+
+        background:#ffffff;
+
+        color:#142033;
+
+        font-size:11px;
+    }
+
+
+    #programacao .filters button{
+
+        grid-column:
+            1 / -1;
+
+        width:100%;
+
+        height:40px;
+        min-height:40px;
+
+        margin:0;
+
+        border-radius:8px;
+
+        font-size:12px;
+
+        font-weight:600;
+    }
+
+
+    /* =====================================================
+    PAINEL
+    ===================================================== */
+
+    #programacao .grid-panel{
+
+        width:100%;
+
+        margin-top:10px;
+
+        padding:0;
+
+        overflow:hidden;
+
+        background:#ffffff;
+
+        border:
+            1px solid
+            #e1e7ef;
+
+        border-radius:12px;
+
+        box-shadow:
+            0 4px 16px
+            rgba(8,33,61,.06);
+    }
+
+
+    /* =====================================================
+    TABELA
+    ===================================================== */
+
+    #programacao .grid-table{
+
+        width:100%;
+
+        max-height:none;
+
+        overflow-x:auto;
+        overflow-y:visible;
+
+        background:#ffffff;
+
+        scrollbar-width:thin;
+
+        -webkit-overflow-scrolling:
+            touch;
+    }
+
+
+    #programacao .grid-table table{
+
+        width:100%;
+
+        /*
+        IMPORTANTE:
+        não deixar a tabela gigante como no desktop.
+        */
+
+        min-width:760px;
+
+        display:table;
+
+        border-collapse:collapse;
+
+        table-layout:fixed;
+    }
+
+
+    /* =====================================================
+    CABEÇALHO
+    ===================================================== */
+
+    #programacao .grid-table thead{
+
+        display:table-header-group;
+
+        background:#f1f4f8;
+    }
+
+
+    #programacao .grid-table thead tr{
+
+        display:table-row;
+    }
+
+
+    #programacao .grid-table th{
+
+        position:sticky;
+
+        top:0;
+
+        z-index:5;
+
+        height:36px;
+
+        padding:
+            7px 6px;
+
+        background:#f1f4f8;
+
+        border-bottom:
+            1px solid
+            #dce4ee;
+
+        color:#667085;
+
+        font-size:8px;
+
+        font-weight:700;
+
+        text-transform:uppercase;
+
+        letter-spacing:.15px;
+
+        white-space:nowrap;
+
+        overflow:hidden;
+
+        text-overflow:ellipsis;
+    }
+
+
+    /* =====================================================
+    CORPO
+    ===================================================== */
+
+    #programacao .grid-table tbody{
+
+        display:table-row-group;
+    }
+
+
+    #programacao .grid-table tbody tr{
+
+        display:table-row;
+
+        height:47px;
+
+        padding:0;
+
+        margin:0;
+
+        border:none;
+
+        border-radius:0;
+
+        background:#ffffff;
+
+        box-shadow:none;
+    }
+
+
+    #programacao .grid-table tbody tr:nth-child(even){
+
+        background:#fbfcfe;
+    }
+
+
+    #programacao .grid-table tbody tr:hover{
+
+        transform:none;
+
+        background:#f7faff;
+    }
+
+
+    #programacao .grid-table td{
+
+        display:table-cell;
+
+        height:47px;
+
+        padding:
+            6px 6px;
+
+        border-bottom:
+            1px solid
+            #edf1f5;
+
+        background:transparent;
+
+        color:#344054;
+
+        font-size:9px;
+
+        line-height:1.25;
+
+        vertical-align:middle;
+
+        white-space:nowrap;
+
+        overflow:hidden;
+
+        text-overflow:ellipsis;
+    }
+
+
+    /* =====================================================
+    REMOVE REGRAS DO ANTIGO CARD MOBILE
+    ===================================================== */
+
+    #programacao .grid-table td:nth-child(1),
+    #programacao .grid-table td:nth-child(2),
+    #programacao .grid-table td:nth-child(3),
+    #programacao .grid-table td:last-child{
+
+        grid-column:auto;
+
+        width:auto;
+
+        max-width:none;
+
+        padding:
+            6px 6px;
+
+        border-radius:0;
+
+        background:transparent;
+    }
+
+
+    /* =====================================================
+    PRIMEIRAS COLUNAS MAIS IMPORTANTES
+    ===================================================== */
+
+    #programacao .grid-table td:nth-child(1){
+
+        font-weight:700;
+
+        color:#142033;
+    }
+
+
+    #programacao .grid-table td:nth-child(2){
+
+        font-weight:700;
+
+        color:#142033;
+    }
+
+
+    #programacao .grid-table td:nth-child(3){
+
+        color:#0b4ea2;
+
+        font-weight:700;
+    }
+
+
+    /* =====================================================
+    CHECKBOX
+    ===================================================== */
+
+    #programacao input[type="checkbox"]{
+
+        width:17px;
+        height:17px;
+
+        min-width:17px;
+        min-height:17px;
+
+        margin:auto;
+
+        display:block;
+
+        accent-color:#3574df;
+    }
+
+
+    /* =====================================================
+    OBSERVAÇÃO
+    ===================================================== */
+
+    #programacao .grid-table td input[type="text"]{
+
+        width:100%;
+
+        min-width:0;
+
+        height:29px;
+        min-height:29px;
+
+        padding:
+            4px 6px;
+
+        border:
+            1px solid
+            #dce4ee;
+
+        border-radius:6px;
+
+        background:#f8fafc;
+
+        font-size:8px;
+    }
+
+
+    /* =====================================================
+    LARGURAS DAS COLUNAS
+    ===================================================== */
+
+    #programacao .grid-table th:nth-child(1),
+    #programacao .grid-table td:nth-child(1){
+
+        width:48px;
+    }
+
+
+    #programacao .grid-table th:nth-child(2),
+    #programacao .grid-table td:nth-child(2){
+
+        width:70px;
+    }
+
+
+    #programacao .grid-table th:nth-child(3),
+    #programacao .grid-table td:nth-child(3){
+
+        width:110px;
+    }
+
+
+    #programacao .grid-table th:nth-child(4),
+    #programacao .grid-table td:nth-child(4){
+
+        width:85px;
+    }
+
+
+    #programacao .grid-table th:nth-child(5),
+    #programacao .grid-table td:nth-child(5){
+
+        width:100px;
+    }
+
+
+    #programacao .grid-table th:nth-child(6),
+    #programacao .grid-table td:nth-child(6){
+
+        width:95px;
+    }
+
+
+    #programacao .grid-table th:nth-child(7),
+    #programacao .grid-table td:nth-child(7){
+
+        width:95px;
+    }
+
+
+    #programacao .grid-table th:nth-child(8),
+    #programacao .grid-table td:nth-child(8){
+
+        width:150px;
+    }
+
+
+    /* =====================================================
+    PRIMEIRAS COLUNAS FIXAS
+    ===================================================== */
+
+    #programacao .grid-table th:nth-child(1),
+    #programacao .grid-table td:nth-child(1){
+
+        position:sticky;
+
+        left:0;
+
+        z-index:3;
+
+        background:#ffffff;
+    }
+
+
+    #programacao .grid-table th:nth-child(1){
+
+        z-index:7;
+
+        background:#f1f4f8;
+    }
+
+
+    #programacao .grid-table tbody tr:nth-child(even)
+    td:nth-child(1){
+
+        background:#fbfcfe;
+    }
+
+
+    /* =====================================================
+    RODAPÉ
+    ===================================================== */
+
+    #programacao .grid-footer{
+
+        width:100%;
+
+        display:flex;
+
+        flex-wrap:wrap;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        gap:7px;
+
+        margin:0;
+
+        padding:9px 10px;
+
+        border-top:
+            1px solid
+            #e4eaf2;
+
+        border-radius:0;
+
+        background:#fafbfd;
+
+        color:#667085;
+
+        font-size:9px;
+    }
+
+
+    #programacao .grid-total{
+
+        font-size:9px;
+    }
+
+
+    #programacao .grid-pagination{
+
+        display:flex;
+
+        gap:4px;
+    }
+
+
+    #programacao .grid-pagination button{
+
+        width:29px;
+        height:29px;
+
+        min-width:29px;
+        min-height:29px;
+
+        padding:0;
+
+        font-size:9px;
+
+        border-radius:6px;
+    }
+
+
+    #programacao .page-active{
+
+        width:29px;
+        height:29px;
+
+        font-size:9px;
+
+        border-radius:6px;
+    }
+
+
+    #programacao .grid-limit{
+
+        width:100%;
+    }
+
+
+    #programacao .grid-limit select{
+
+        width:100%;
+
+        height:32px;
+        min-height:32px;
+
+        font-size:9px;
+    }
+
+}
