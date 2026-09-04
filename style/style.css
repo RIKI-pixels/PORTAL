@@ -4999,3 +4999,981 @@ LAYOUT SEMÂNTICO DEFINITIVO
     }
 
 }
+
+/* =========================================================
+ESTOQUE
+NOVO VISUAL DESKTOP + MOBILE
+========================================================= */
+
+
+/* =========================================================
+DESKTOP
+========================================================= */
+
+#estoque{
+
+    width:100%;
+
+    padding:22px;
+
+    background:#f5f7fb;
+
+    border-radius:18px;
+}
+
+
+#estoque > h2{
+
+    margin:0 0 18px;
+
+    color:#142033;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    letter-spacing:-.4px;
+}
+
+
+/* =========================================================
+FILTROS ESTOQUE
+========================================================= */
+
+#estoque .filters{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        180px
+        minmax(250px,1fr)
+        120px;
+
+    gap:10px;
+
+    align-items:center;
+
+    margin-bottom:16px;
+
+    padding:14px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(8,33,61,.04);
+}
+
+
+#estoque .filters select,
+#estoque .filters input{
+
+    width:100%;
+
+    min-width:0;
+
+    height:42px;
+
+    min-height:42px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        #d9e1eb;
+
+    border-radius:9px;
+
+    background:#fff;
+
+    color:#142033;
+
+    font-size:12px;
+}
+
+
+#estoque .filters button{
+
+    width:100%;
+
+    height:42px;
+
+    min-height:42px;
+
+    border-radius:9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3574df,
+            #2465d4
+        );
+
+    font-size:12px;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+PAINEL
+========================================================= */
+
+#estoque .grid-panel{
+
+    width:100%;
+
+    overflow:hidden;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 6px 20px
+        rgba(8,33,61,.05);
+}
+
+
+/* =========================================================
+TABELA
+========================================================= */
+
+#estoque .grid-table{
+
+    width:100%;
+
+    max-height:
+        calc(100vh - 225px);
+
+    overflow:auto;
+
+    background:#fff;
+}
+
+
+#estoque .grid-table table{
+
+    width:100%;
+
+    min-width:900px;
+
+    border-collapse:separate;
+
+    border-spacing:0;
+}
+
+
+/* cabeçalho */
+
+#estoque .grid-table thead{
+
+    background:#f1f4f8;
+
+    color:#475467;
+}
+
+
+#estoque .grid-table th{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:4;
+
+    padding:
+        12px 14px;
+
+    background:#f1f4f8;
+
+    border-bottom:
+        1px solid
+        #dce4ee;
+
+    color:#475467;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.2px;
+
+    white-space:nowrap;
+}
+
+
+/* linhas */
+
+#estoque .grid-table td{
+
+    padding:
+        12px 14px;
+
+    background:#fff;
+
+    border-bottom:
+        1px solid
+        #edf1f5;
+
+    color:#475467;
+
+    font-size:11px;
+
+    vertical-align:middle;
+}
+
+
+#estoque .grid-table tbody tr{
+
+    transition:
+        background .15s ease;
+}
+
+
+#estoque .grid-table tbody tr:hover td{
+
+    background:#f8fbff;
+}
+
+
+/* CONTAINER */
+
+#estoque .grid-table td:nth-child(1){
+
+    color:#142033;
+
+    font-weight:800;
+
+    letter-spacing:.1px;
+}
+
+
+/* ISO */
+
+#estoque .grid-table td:nth-child(2){
+
+    color:#0b5b9d;
+
+    font-weight:700;
+}
+
+
+/* CLIENTE */
+
+#estoque .grid-table td:nth-child(4){
+
+    color:#344054;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+LOCALIZAÇÃO
+========================================================= */
+
+#estoque .localizacao-estoque{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:8px;
+}
+
+
+#estoque .localizacao-estoque span{
+
+    min-width:0;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+    color:#38965c;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+
+#estoque .localizacao-estoque button{
+
+    flex-shrink:0;
+
+    min-height:30px;
+
+    padding:
+        5px 9px;
+
+    border-radius:7px;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+RODAPÉ
+========================================================= */
+
+#estoque .grid-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    padding:
+        11px 14px;
+
+    background:#fafbfd;
+
+    border-top:
+        1px solid
+        #e4eaf2;
+
+    color:#667085;
+
+    font-size:10px;
+}
+
+
+#estoque .grid-total strong{
+
+    color:#142033;
+}
+
+
+#estoque .grid-pagination{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+}
+
+
+#estoque .grid-pagination button{
+
+    width:31px;
+
+    height:31px;
+
+    min-height:31px;
+
+    padding:0;
+
+    border-radius:7px;
+}
+
+
+#estoque .page-active{
+
+    width:31px;
+
+    height:31px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:7px;
+
+    background:#3574df;
+
+    color:#fff;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+
+#estoque .grid-limit select{
+
+    height:32px;
+
+    min-height:32px;
+
+    padding:
+        3px 8px;
+
+    border-radius:7px;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+    #estoque{
+
+        padding:14px;
+
+        border-radius:15px;
+    }
+
+
+    #estoque > h2{
+
+        margin-bottom:14px;
+
+        font-size:23px;
+    }
+
+
+    #estoque .filters{
+
+        grid-template-columns:
+            160px
+            minmax(180px,1fr)
+            110px;
+
+        padding:11px;
+
+        gap:8px;
+    }
+
+
+    #estoque .grid-table{
+
+        max-height:none;
+    }
+
+}
+
+
+/* =========================================================
+CELULAR
+========================================================= */
+
+@media(max-width:600px){
+
+    /* =====================================================
+    ÁREA
+    ===================================================== */
+
+    #estoque{
+
+        width:100%;
+
+        padding:8px;
+
+        background:#f4f7fb;
+
+        border-radius:0;
+    }
+
+
+    #estoque > h2{
+
+        margin:
+            4px 0 12px;
+
+        font-size:21px;
+
+        font-weight:700;
+    }
+
+
+    /* =====================================================
+    FILTRO
+    ===================================================== */
+
+    #estoque .filters{
+
+        width:100%;
+
+        display:grid;
+
+        grid-template-columns:
+            120px
+            minmax(0,1fr);
+
+        gap:7px;
+
+        padding:10px;
+
+        margin-bottom:10px;
+
+        border-radius:12px;
+
+        background:#fff;
+
+        border:
+            1px solid
+            #e1e7ef;
+
+        box-shadow:
+            0 3px 12px
+            rgba(8,33,61,.05);
+    }
+
+
+    #estoque .filters select,
+    #estoque .filters input{
+
+        width:100%;
+
+        min-width:0;
+
+        height:40px;
+
+        min-height:40px;
+
+        padding:
+            0 9px;
+
+        border-radius:8px;
+
+        font-size:10px;
+    }
+
+
+    #estoque .filters button{
+
+        grid-column:
+            1 / -1;
+
+        width:100%;
+
+        height:39px;
+
+        min-height:39px;
+
+        font-size:11px;
+
+        border-radius:8px;
+    }
+
+
+    /* =====================================================
+    PAINEL
+    ===================================================== */
+
+    #estoque .grid-panel{
+
+        overflow:hidden;
+
+        border-radius:12px;
+
+        background:#fff;
+    }
+
+
+    #estoque .grid-table{
+
+        max-height:none;
+
+        overflow:visible;
+    }
+
+
+    #estoque .grid-table table{
+
+        width:100%;
+
+        min-width:0 !important;
+
+        display:block;
+
+        border-collapse:initial;
+    }
+
+
+    /* esconde cabeçalho */
+
+    #estoque .grid-table thead{
+
+        display:none;
+    }
+
+
+    #estoque .grid-table tbody{
+
+        width:100%;
+
+        display:flex;
+
+        flex-direction:column;
+    }
+
+
+    /* =====================================================
+    UMA UNIDADE POR LINHA
+    ===================================================== */
+
+    #estoque .grid-table tbody tr{
+
+        width:100%;
+
+        min-height:92px;
+
+        display:grid;
+
+        grid-template-columns:
+            minmax(135px,1fr)
+            62px;
+
+        grid-template-rows:
+            28px
+            22px
+            32px;
+
+        gap:
+            2px 8px;
+
+        padding:
+            9px 10px;
+
+        margin:0;
+
+        border:none;
+
+        border-bottom:
+            1px solid
+            #e5eaf1;
+
+        border-radius:0;
+
+        background:#fff;
+
+        box-shadow:none;
+    }
+
+
+    #estoque .grid-table tbody tr:nth-child(even){
+
+        background:#fbfcfe;
+    }
+
+
+    /* =====================================================
+    RESET
+    ===================================================== */
+
+    #estoque .grid-table tbody tr > td{
+
+        width:auto !important;
+
+        min-width:0 !important;
+
+        max-width:none !important;
+
+        height:auto !important;
+
+        padding:0 !important;
+
+        margin:0 !important;
+
+        display:block !important;
+
+        position:static !important;
+
+        border:none !important;
+
+        background:transparent !important;
+
+        border-radius:0 !important;
+
+        white-space:nowrap;
+
+        overflow:hidden;
+
+        text-overflow:ellipsis;
+
+        font-size:9px;
+
+        line-height:1.2;
+    }
+
+
+    /* =====================================================
+    CONTAINER
+    ===================================================== */
+
+    #estoque .grid-table td:nth-child(1){
+
+        grid-column:1;
+
+        grid-row:1;
+
+        align-self:center;
+
+        color:#142033;
+
+        font-size:11px;
+
+        font-weight:800;
+
+        letter-spacing:.15px;
+
+        overflow:visible;
+
+        text-overflow:clip;
+    }
+
+
+    /* =====================================================
+    ISO
+    ===================================================== */
+
+    #estoque .grid-table td:nth-child(2){
+
+        grid-column:2;
+
+        grid-row:1;
+
+        align-self:center;
+
+        text-align:right;
+
+        color:#0b5b9d;
+
+        font-size:9px;
+
+        font-weight:800;
+    }
+
+
+    /* =====================================================
+    ESTADO
+    ===================================================== */
+
+    #estoque .grid-table td:nth-child(3){
+
+        grid-column:2;
+
+        grid-row:2;
+
+        align-self:center;
+
+        text-align:right;
+
+        color:#38965c;
+
+        font-size:8px;
+
+        font-weight:700;
+    }
+
+
+    /* =====================================================
+    CLIENTE
+    ===================================================== */
+
+    #estoque .grid-table td:nth-child(4){
+
+        grid-column:1;
+
+        grid-row:2;
+
+        align-self:center;
+
+        color:#667085;
+
+        font-size:9px;
+
+        font-weight:600;
+    }
+
+
+    /* =====================================================
+    BOOKING
+    Menos importante no celular
+    ===================================================== */
+
+    #estoque .grid-table td:nth-child(5){
+
+        display:none !important;
+    }
+
+
+    /* =====================================================
+    LOCALIZAÇÃO
+    ===================================================== */
+
+    #estoque .grid-table td:nth-child(6){
+
+        grid-column:
+            1 / -1;
+
+        grid-row:3;
+
+        align-self:end;
+    }
+
+
+    #estoque .localizacao-estoque{
+
+        width:100%;
+
+        height:30px;
+
+        display:grid;
+
+        grid-template-columns:
+            minmax(0,1fr)
+            auto;
+
+        gap:6px;
+
+        align-items:center;
+    }
+
+
+    #estoque .localizacao-estoque span{
+
+        min-width:0;
+
+        padding:
+            6px 8px;
+
+        background:#f3f7fc;
+
+        border-radius:6px;
+
+        color:#38965c;
+
+        font-size:8px;
+
+        font-weight:700;
+
+        overflow:hidden;
+
+        white-space:nowrap;
+
+        text-overflow:ellipsis;
+    }
+
+
+    #estoque .localizacao-estoque button{
+
+        width:auto !important;
+
+        min-width:72px;
+
+        height:29px;
+
+        min-height:29px;
+
+        padding:
+            4px 8px;
+
+        margin:0;
+
+        border-radius:6px;
+
+        font-size:8px;
+    }
+
+
+    /* =====================================================
+    RODAPÉ MOBILE
+    ===================================================== */
+
+    #estoque .grid-footer{
+
+        width:100%;
+
+        display:grid;
+
+        grid-template-columns:
+            1fr
+            auto;
+
+        gap:7px;
+
+        padding:
+            9px 10px;
+
+        background:#fafbfd;
+
+        font-size:9px;
+    }
+
+
+    #estoque .grid-pagination{
+
+        justify-content:flex-end;
+    }
+
+
+    #estoque .grid-pagination button{
+
+        width:29px;
+
+        height:29px;
+
+        min-width:29px;
+
+        min-height:29px;
+
+        padding:0;
+
+        font-size:9px;
+    }
+
+
+    #estoque .page-active{
+
+        width:29px;
+
+        height:29px;
+
+        font-size:9px;
+    }
+
+
+    #estoque .grid-limit{
+
+        grid-column:
+            1 / -1;
+
+        width:100%;
+    }
+
+
+    #estoque .grid-limit select{
+
+        width:100%;
+
+        height:31px;
+
+        min-height:31px;
+
+        font-size:9px;
+    }
+
+}
