@@ -805,6 +805,154 @@
 
 
     <!-- =====================================================
+     SISTEMA DE JANELAS FLUTUANTES DO MAPA
+====================================================== -->
+
+<!--
+Camada onde ficarão as janelas abertas.
+Praça A, Praça B, Programação etc.
+-->
+<div
+    id="mapaJanelasFlutuantes"
+    class="mapa-janelas-flutuantes">
+</div>
+
+
+<!--
+Barra onde ficarão as janelas minimizadas.
+-->
+<div
+    id="mapaJanelasMinimizadas"
+    class="mapa-janelas-minimizadas">
+</div>
+
+
+<!-- =====================================================
+     TEMPLATE DA JANELA FLUTUANTE
+====================================================== -->
+
+<template id="templateJanelaMapa">
+
+    <section
+        class="mapa-janela"
+        data-janela="">
+
+        <!-- =============================================
+             CABEÇALHO
+        ============================================== -->
+
+        <header class="mapa-janela-header">
+
+            <div class="mapa-janela-identificacao">
+
+                <span class="mapa-janela-subtitulo">
+                    PRAÇA
+                </span>
+
+                <strong class="mapa-janela-titulo">
+                    PRAÇA A
+                </strong>
+
+            </div>
+
+
+            <div class="mapa-janela-acoes">
+
+                <!-- MINIMIZAR -->
+
+                <button
+                    type="button"
+                    class="mapa-janela-botao"
+                    data-acao="minimizar"
+                    title="Minimizar">
+
+                    −
+
+                </button>
+
+
+                <!-- MAXIMIZAR / RESTAURAR -->
+
+                <button
+                    type="button"
+                    class="mapa-janela-botao"
+                    data-acao="maximizar"
+                    title="Maximizar">
+
+                    □
+
+                </button>
+
+
+                <!-- FECHAR -->
+
+                <button
+                    type="button"
+                    class="mapa-janela-botao mapa-janela-fechar"
+                    data-acao="fechar"
+                    title="Fechar">
+
+                    ×
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =============================================
+             BARRA INTERNA
+        ============================================== -->
+
+        <div class="mapa-janela-toolbar">
+
+            <button
+                type="button"
+                class="mapa-janela-voltar"
+                style="display:none;">
+
+                ← Voltar
+
+            </button>
+
+
+            <div class="mapa-janela-resumo">
+
+                <span class="mapa-janela-resumo-texto">
+                    0 containers
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             CONTEÚDO DINÂMICO
+
+             Aqui o JS posteriormente colocará:
+
+             - todas as linhas da praça
+             - ou as 4 pilhas da linha selecionada
+        ============================================== -->
+
+        <div class="mapa-janela-conteudo">
+
+            <div class="mapa-janela-loading">
+
+                Selecione uma praça.
+
+            </div>
+
+        </div>
+
+    </section>
+
+</template>
+    
+    
+    <!-- =====================================================
          VISÃO DA PRAÇA
     ====================================================== -->
 
