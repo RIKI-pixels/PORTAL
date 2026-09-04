@@ -7392,3 +7392,636 @@ NÃO USA BOTÃO DE RECOLHER
     }
 
 }
+
+/* =========================================================
+JANELAS FLUTUANTES DO MAPA
+DESKTOP + TABLET
+========================================================= */
+
+
+/* =========================================================
+CAMADA DAS JANELAS
+========================================================= */
+
+.mapa-janelas-flutuantes{
+
+    /*
+    Não ocupa visualmente o mapa.
+    As janelas serão posicionadas pelo JS.
+    */
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:80;
+}
+
+
+/* Garante referência para posicionamento */
+
+#mapa{
+
+    position:relative;
+}
+
+
+/* =========================================================
+JANELA
+========================================================= */
+
+.mapa-janela{
+
+    position:absolute;
+
+    top:70px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:min(860px, calc(100% - 60px));
+
+    height:min(620px, calc(100vh - 150px));
+
+    min-width:520px;
+    min-height:360px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+    pointer-events:auto;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #dce3ec;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 18px 55px
+        rgba(8,25,45,.20);
+
+    z-index:1;
+}
+
+
+/* Janela que estiver sendo utilizada */
+
+.mapa-janela.mapa-janela-ativa{
+
+    z-index:20;
+
+    box-shadow:
+        0 22px 65px
+        rgba(8,25,45,.27);
+}
+
+
+/* =========================================================
+CABEÇALHO
+========================================================= */
+
+.mapa-janela-header{
+
+    width:100%;
+
+    min-height:58px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:14px;
+
+    padding:
+        10px 12px
+        10px 16px;
+
+    flex-shrink:0;
+
+    background:#101b2b;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+    cursor:grab;
+
+    user-select:none;
+
+    touch-action:none;
+}
+
+
+.mapa-janela-header:active{
+
+    cursor:grabbing;
+}
+
+
+/* =========================================================
+IDENTIFICAÇÃO
+========================================================= */
+
+.mapa-janela-identificacao{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1px;
+}
+
+
+.mapa-janela-subtitulo{
+
+    color:#8492a6;
+
+    font-size:8px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+}
+
+
+.mapa-janela-titulo{
+
+    color:#ffffff;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:.1px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+
+/* =========================================================
+BOTÕES DA JANELA
+========================================================= */
+
+.mapa-janela-acoes{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+    flex-shrink:0;
+}
+
+
+.mapa-janela-botao{
+
+    width:30px;
+    height:30px;
+
+    min-width:30px;
+    min-height:30px;
+
+    padding:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:transparent;
+
+    border:none;
+
+    border-radius:7px;
+
+    color:#d4dbe5;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    line-height:1;
+
+    box-shadow:none;
+
+    cursor:pointer;
+
+    transition:
+        background .15s ease,
+        color .15s ease;
+}
+
+
+.mapa-janela-botao:hover{
+
+    background:
+        rgba(255,255,255,.09);
+
+    color:#ffffff;
+}
+
+
+.mapa-janela-fechar:hover{
+
+    background:#d94848;
+
+    color:#ffffff;
+}
+
+
+/* =========================================================
+TOOLBAR INTERNA
+========================================================= */
+
+.mapa-janela-toolbar{
+
+    min-height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:
+        7px 12px;
+
+    flex-shrink:0;
+
+    background:#f7f9fc;
+
+    border-bottom:
+        1px solid
+        #e4e9f0;
+}
+
+
+/* =========================================================
+VOLTAR
+========================================================= */
+
+.mapa-janela-voltar{
+
+    min-height:30px;
+
+    padding:
+        5px 10px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #dce3ec;
+
+    border-radius:7px;
+
+    color:#344054;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    box-shadow:none;
+}
+
+
+.mapa-janela-voltar:hover{
+
+    background:#edf3fb;
+
+    color:#0b4ea2;
+}
+
+
+/* =========================================================
+RESUMO
+========================================================= */
+
+.mapa-janela-resumo{
+
+    min-width:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:7px;
+}
+
+
+.mapa-janela-resumo-texto{
+
+    padding:
+        5px 9px;
+
+    background:#edf3fb;
+
+    border-radius:20px;
+
+    color:#0b4ea2;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+}
+
+
+/* =========================================================
+CONTEÚDO
+========================================================= */
+
+.mapa-janela-conteudo{
+
+    position:relative;
+
+    flex:1;
+
+    min-height:0;
+
+    padding:14px;
+
+    overflow:auto;
+
+    background:#f4f7fb;
+
+    scrollbar-width:thin;
+}
+
+
+.mapa-janela-loading{
+
+    width:100%;
+
+    height:100%;
+
+    min-height:180px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#98a2b3;
+
+    font-size:11px;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+BARRA DE JANELAS MINIMIZADAS
+========================================================= */
+
+.mapa-janelas-minimizadas{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:18px;
+
+    transform:translateX(-50%);
+
+    max-width:
+        calc(100vw - 40px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:6px;
+
+    z-index:150;
+
+    pointer-events:none;
+}
+
+
+/* botão que representará uma janela minimizada */
+
+.mapa-janela-minimizada{
+
+    min-width:110px;
+
+    min-height:34px;
+
+    padding:
+        6px 11px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:6px;
+
+    pointer-events:auto;
+
+    background:#101b2b;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:8px;
+
+    color:#ffffff;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    box-shadow:
+        0 7px 20px
+        rgba(8,25,45,.22);
+
+    cursor:pointer;
+}
+
+
+.mapa-janela-minimizada:hover{
+
+    background:#17263a;
+}
+
+
+/* =========================================================
+MAXIMIZADA
+========================================================= */
+
+.mapa-janela.mapa-janela-maximizada{
+
+    position:fixed;
+
+    top:12px !important;
+    left:12px !important;
+
+    transform:none !important;
+
+    width:
+        calc(100vw - 24px) !important;
+
+    height:
+        calc(100vh - 24px) !important;
+
+    max-width:none !important;
+    max-height:none !important;
+
+    border-radius:12px;
+
+    z-index:200;
+}
+
+
+/* =========================================================
+ESTRUTURA FUTURA DAS LINHAS
+Já deixamos pronta para o próximo passo
+========================================================= */
+
+.mapa-janela-linhas{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:10px;
+}
+
+
+.mapa-janela-linha{
+
+    min-height:110px;
+
+    padding:11px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #dfe5ed;
+
+    border-radius:10px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(8,33,61,.035);
+
+    cursor:pointer;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease,
+        transform .15s ease;
+}
+
+
+.mapa-janela-linha:hover{
+
+    transform:
+        translateY(-1px);
+
+    border-color:#b8c9df;
+
+    box-shadow:
+        0 5px 14px
+        rgba(8,33,61,.08);
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(
+    min-width:601px
+)
+and
+(
+    max-width:1100px
+){
+
+    .mapa-janela{
+
+        top:55px;
+
+        width:
+            calc(100% - 30px);
+
+        height:
+            min(
+                620px,
+                calc(100vh - 110px)
+            );
+
+        min-width:0;
+    }
+
+
+    .mapa-janela-linhas{
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0,1fr)
+            );
+    }
+
+
+    .mapa-janela-header{
+
+        min-height:54px;
+    }
+
+}
+
+
+/* =========================================================
+CELULAR
+
+Por enquanto mantemos o MAPA atual.
+As janelas avançadas ficarão escondidas.
+========================================================= */
+
+@media(max-width:600px){
+
+    .mapa-janelas-flutuantes,
+    .mapa-janelas-minimizadas{
+
+        display:none !important;
+    }
+
+}
