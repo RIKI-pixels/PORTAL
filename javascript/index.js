@@ -6932,5 +6932,54 @@ renderTabelaProgramacao =
     };
 
 /* ==========================================================
+SIDEBAR RECOLHÍVEL
+========================================================== */
+
+function alternarSidebar(){
+
+    const sidebar =
+        document.querySelector(
+            ".sidebar"
+        );
+
+    const botao =
+        document.getElementById(
+            "sidebarToggle"
+        );
+
+
+    if(
+        !sidebar ||
+        !botao
+    ){
+        return;
+    }
+
+
+    sidebar.classList.toggle(
+        "sidebar-recolhida"
+    );
+
+
+    const recolhida =
+        sidebar.classList.contains(
+            "sidebar-recolhida"
+        );
+
+
+    botao.textContent =
+        recolhida
+            ? "›"
+            : "‹";
+
+
+    botao.title =
+        recolhida
+            ? "Expandir menu"
+            : "Recolher menu";
+
+}
+
+/* ==========================================================
    FIM DO ARQUIVO
 ========================================================== */
