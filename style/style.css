@@ -5977,3 +5977,1133 @@ CELULAR
     }
 
 }
+
+/* =========================================================
+SOLICITAÇÕES
+NOVO VISUAL DESKTOP + MOBILE
+========================================================= */
+
+
+/* =========================================================
+DESKTOP
+========================================================= */
+
+#solicitacoes{
+
+    width:100%;
+
+    padding:22px;
+
+    background:#f5f7fb;
+
+    border-radius:18px;
+}
+
+
+#solicitacoes > h2{
+
+    margin:0 0 18px;
+
+    color:#142033;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    letter-spacing:-.4px;
+}
+
+
+/* =========================================================
+DASHBOARD
+========================================================= */
+
+#solicitacoes .solicitacoes-dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:14px;
+
+    margin-bottom:16px;
+}
+
+
+#solicitacoes .solicitacao-card{
+
+    position:relative;
+
+    min-height:116px;
+
+    padding:
+        18px 20px;
+
+    overflow:hidden;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(8,33,61,.04);
+}
+
+
+#solicitacoes .solicitacao-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #3574df,
+            #2465d4
+        );
+}
+
+
+#solicitacoes .solicitacao-card h3{
+
+    margin:0 0 8px;
+
+    color:#0b4ea2;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes .solicitacao-card strong{
+
+    display:block;
+
+    margin-bottom:4px;
+
+    color:#142033;
+
+    font-size:27px;
+
+    line-height:1;
+
+    font-weight:800;
+}
+
+
+#solicitacoes .solicitacao-card span{
+
+    color:#667085;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+AÇÕES
+========================================================= */
+
+#solicitacoes .solicitacoes-acoes{
+
+    display:flex;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin-bottom:22px;
+}
+
+
+#solicitacoes .solicitacoes-acoes button{
+
+    min-height:38px;
+
+    padding:
+        8px 13px;
+
+    border-radius:8px;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    box-shadow:
+        0 4px 12px
+        rgba(36,101,212,.12);
+}
+
+
+/* =========================================================
+FORMULÁRIOS
+========================================================= */
+
+#solicitacoes .solicitacao-form{
+
+    margin-bottom:20px;
+
+    padding:18px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(8,33,61,.04);
+}
+
+
+#solicitacoes .solicitacao-form h3{
+
+    margin-bottom:12px;
+
+    color:#142033;
+
+    font-size:15px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes .solicitacao-form p,
+#solicitacoes .solicitacao-form label{
+
+    color:#667085;
+
+    font-size:10px;
+}
+
+
+#solicitacoes .solicitacao-form textarea{
+
+    width:100%;
+
+    margin:
+        8px 0 10px;
+
+    min-height:130px;
+
+    border:
+        1px solid
+        #dce4ee;
+
+    border-radius:9px;
+
+    background:#f8fafc;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+LOCAIS ESTUFAGEM
+========================================================= */
+
+#solicitacoes .locais-solicitacao{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin:
+        10px 0 14px;
+}
+
+
+#solicitacoes .local-solicitacao{
+
+    min-height:34px;
+
+    padding:
+        6px 10px;
+
+    border-radius:7px;
+
+    background:#eef4ff;
+
+    color:#0b4ea2;
+
+    box-shadow:none;
+
+    font-size:9px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes .local-solicitacao:hover{
+
+    background:#dfeaff;
+}
+
+
+/* =========================================================
+SEÇÕES DAS SOLICITAÇÕES
+========================================================= */
+
+#solicitacoes .solicitacoes-pendentes,
+#solicitacoes .solicitacoes-andamento,
+#solicitacoes .solicitacoes-concluidas{
+
+    margin-top:20px;
+}
+
+
+#solicitacoes .solicitacoes-pendentes > h3,
+#solicitacoes .solicitacoes-titulo-linha h3{
+
+    margin:0;
+
+    color:#142033;
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes .solicitacoes-pendentes > h3{
+
+    margin-bottom:10px;
+}
+
+
+/* =========================================================
+TÍTULO + BOTÃO
+========================================================= */
+
+#solicitacoes .solicitacoes-titulo-linha{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:10px;
+}
+
+
+#solicitacoes .solicitacoes-titulo-linha button{
+
+    min-height:34px;
+
+    padding:
+        6px 11px;
+
+    border-radius:7px;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+PAINÉIS / TABELAS
+========================================================= */
+
+#solicitacoes .grid-panel{
+
+    overflow:hidden;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius:12px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(8,33,61,.04);
+}
+
+
+#solicitacoes .grid-table{
+
+    width:100%;
+
+    overflow:auto;
+}
+
+
+#solicitacoes .grid-table table{
+
+    width:100%;
+
+    min-width:720px;
+
+    border-collapse:separate;
+
+    border-spacing:0;
+}
+
+
+/* =========================================================
+CABEÇALHOS
+========================================================= */
+
+#solicitacoes .grid-table thead{
+
+    background:#f1f4f8;
+
+    color:#475467;
+}
+
+
+#solicitacoes .grid-table th{
+
+    padding:
+        11px 12px;
+
+    background:#f1f4f8;
+
+    border-bottom:
+        1px solid
+        #dce4ee;
+
+    color:#475467;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.2px;
+
+    white-space:nowrap;
+}
+
+
+/* =========================================================
+LINHAS
+========================================================= */
+
+#solicitacoes .grid-table td{
+
+    padding:
+        11px 12px;
+
+    background:#fff;
+
+    border-bottom:
+        1px solid
+        #edf1f5;
+
+    color:#475467;
+
+    font-size:10px;
+
+    vertical-align:middle;
+}
+
+
+#solicitacoes .grid-table tbody tr:hover td{
+
+    background:#f8fbff;
+}
+
+
+#solicitacoes .grid-table td:first-child{
+
+    color:#142033;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+STATUS
+========================================================= */
+
+#solicitacoes #tbodySolicitacoes td:last-child{
+
+    color:#d97706;
+
+    font-weight:700;
+}
+
+
+#solicitacoes #tbodySolicitacoesAndamento td:last-child{
+
+    color:#2465d4;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+CHECKBOX
+========================================================= */
+
+#solicitacoes input[type="checkbox"]{
+
+    width:16px;
+    height:16px;
+
+    min-width:16px;
+
+    accent-color:#3574df;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+    #solicitacoes{
+
+        padding:14px;
+
+        border-radius:15px;
+    }
+
+
+    #solicitacoes > h2{
+
+        font-size:23px;
+
+        margin-bottom:14px;
+    }
+
+
+    #solicitacoes .solicitacao-card{
+
+        min-height:100px;
+
+        padding:15px;
+    }
+
+}
+
+
+/* =========================================================
+CELULAR
+========================================================= */
+
+@media(max-width:600px){
+
+    /* =====================================================
+    ÁREA
+    ===================================================== */
+
+    #solicitacoes{
+
+        width:100%;
+
+        padding:8px;
+
+        background:#f4f7fb;
+
+        border-radius:0;
+    }
+
+
+    #solicitacoes > h2{
+
+        margin:
+            4px 0 12px;
+
+        font-size:21px;
+    }
+
+
+    /* =====================================================
+    CARDS
+    ===================================================== */
+
+    #solicitacoes .solicitacoes-dashboard{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        gap:7px;
+
+        margin-bottom:9px;
+    }
+
+
+    #solicitacoes .solicitacao-card{
+
+        min-height:86px;
+
+        padding:
+            12px 11px;
+
+        border-radius:11px;
+    }
+
+
+    #solicitacoes .solicitacao-card::before{
+
+        width:3px;
+    }
+
+
+    #solicitacoes .solicitacao-card h3{
+
+        margin-bottom:6px;
+
+        font-size:9px;
+    }
+
+
+    #solicitacoes .solicitacao-card strong{
+
+        font-size:22px;
+    }
+
+
+    #solicitacoes .solicitacao-card span{
+
+        font-size:8px;
+    }
+
+
+    /* =====================================================
+    BOTÕES PRINCIPAIS
+    ===================================================== */
+
+    #solicitacoes .solicitacoes-acoes{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0,1fr)
+            );
+
+        gap:5px;
+
+        margin-bottom:15px;
+    }
+
+
+    #solicitacoes .solicitacoes-acoes button{
+
+        width:100%;
+
+        min-width:0;
+
+        min-height:38px;
+
+        padding:
+            6px 4px;
+
+        font-size:8px;
+
+        line-height:1.15;
+
+        border-radius:7px;
+    }
+
+
+    /* =====================================================
+    FORMULÁRIO
+    ===================================================== */
+
+    #solicitacoes .solicitacao-form{
+
+        padding:12px;
+
+        margin-bottom:14px;
+
+        border-radius:11px;
+    }
+
+
+    #solicitacoes .solicitacao-form h3{
+
+        font-size:12px;
+    }
+
+
+    #solicitacoes .solicitacao-form textarea{
+
+        min-height:105px;
+
+        font-size:10px;
+    }
+
+
+    #solicitacoes .locais-solicitacao{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        gap:5px;
+    }
+
+
+    #solicitacoes .local-solicitacao{
+
+        width:100%;
+
+        min-height:34px;
+
+        padding:5px;
+
+        font-size:8px;
+    }
+
+
+    /* =====================================================
+    SEÇÕES
+    ===================================================== */
+
+    #solicitacoes .solicitacoes-pendentes,
+    #solicitacoes .solicitacoes-andamento,
+    #solicitacoes .solicitacoes-concluidas{
+
+        margin-top:15px;
+    }
+
+
+    #solicitacoes .solicitacoes-pendentes > h3,
+    #solicitacoes .solicitacoes-titulo-linha h3{
+
+        font-size:11px;
+    }
+
+
+    #solicitacoes .solicitacoes-titulo-linha{
+
+        align-items:center;
+
+        margin-bottom:7px;
+    }
+
+
+    #solicitacoes .solicitacoes-titulo-linha button{
+
+        min-height:30px;
+
+        padding:
+            5px 8px;
+
+        font-size:8px;
+    }
+
+
+    /* =====================================================
+    TABELAS VIRAM LISTAS
+    ===================================================== */
+
+    #solicitacoes .grid-panel{
+
+        overflow:hidden;
+
+        border-radius:10px;
+    }
+
+
+    #solicitacoes .grid-table{
+
+        overflow:visible;
+    }
+
+
+    #solicitacoes .grid-table table{
+
+        width:100%;
+
+        min-width:0 !important;
+
+        display:block;
+
+        border-collapse:initial;
+    }
+
+
+    #solicitacoes .grid-table thead{
+
+        display:none;
+    }
+
+
+    #solicitacoes .grid-table tbody{
+
+        width:100%;
+
+        display:flex;
+
+        flex-direction:column;
+    }
+
+
+    #solicitacoes .grid-table tbody tr{
+
+        width:100%;
+
+        display:grid;
+
+        padding:
+            9px 10px;
+
+        margin:0;
+
+        background:#fff;
+
+        border:none;
+
+        border-bottom:
+            1px solid
+            #e5eaf1;
+
+        box-shadow:none;
+    }
+
+
+    #solicitacoes .grid-table tbody tr:nth-child(even){
+
+        background:#fbfcfe;
+    }
+
+
+    #solicitacoes .grid-table tbody tr > td{
+
+        width:auto !important;
+
+        min-width:0 !important;
+
+        max-width:none !important;
+
+        height:auto !important;
+
+        padding:0 !important;
+
+        margin:0 !important;
+
+        display:block !important;
+
+        position:static !important;
+
+        border:none !important;
+
+        background:transparent !important;
+
+        white-space:nowrap;
+
+        overflow:hidden;
+
+        text-overflow:ellipsis;
+
+        font-size:8px;
+
+        line-height:1.25;
+    }
+
+
+    /* =====================================================
+    PENDENTES
+    CONTAINER / LOCAL / DESTINO / STATUS
+    ===================================================== */
+
+    #solicitacoes #tbodySolicitacoes tr{
+
+        grid-template-columns:
+            minmax(130px,1fr)
+            auto;
+
+        grid-template-rows:
+            24px
+            20px;
+        
+        gap:3px 7px;
+    }
+
+
+    #solicitacoes #tbodySolicitacoes td:nth-child(1){
+
+        grid-column:1;
+
+        grid-row:1;
+
+        align-self:center;
+
+        color:#142033;
+
+        font-size:10px;
+
+        font-weight:800;
+    }
+
+
+    #solicitacoes #tbodySolicitacoes td:nth-child(4){
+
+        grid-column:2;
+
+        grid-row:1;
+
+        align-self:center;
+
+        color:#d97706;
+
+        font-size:8px;
+
+        font-weight:700;
+    }
+
+
+    #solicitacoes #tbodySolicitacoes td:nth-child(2){
+
+        grid-column:1;
+
+        grid-row:2;
+
+        color:#667085;
+    }
+
+
+    #solicitacoes #tbodySolicitacoes td:nth-child(3){
+
+        grid-column:2;
+
+        grid-row:2;
+
+        text-align:right;
+
+        color:#0b5b9d;
+
+        font-weight:700;
+    }
+
+
+    /* =====================================================
+    EM ANDAMENTO
+    ===================================================== */
+
+    #solicitacoes #tbodySolicitacoesAndamento tr{
+
+        grid-template-columns:
+            26px
+            minmax(120px,1fr)
+            auto;
+
+        grid-template-rows:
+            25px
+            20px;
+        
+        gap:3px 6px;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesAndamento td:nth-child(1){
+
+        grid-column:1;
+
+        grid-row:
+            1 / 3;
+
+        align-self:center;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesAndamento td:nth-child(2){
+
+        grid-column:2;
+
+        grid-row:1;
+
+        align-self:center;
+
+        color:#142033;
+
+        font-size:10px;
+
+        font-weight:800;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesAndamento td:nth-child(5){
+
+        grid-column:3;
+
+        grid-row:1;
+
+        align-self:center;
+
+        color:#2465d4;
+
+        font-weight:700;
+
+        font-size:8px;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesAndamento td:nth-child(3){
+
+        grid-column:2;
+
+        grid-row:2;
+
+        color:#0b5b9d;
+
+        font-weight:700;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesAndamento td:nth-child(4){
+
+        grid-column:3;
+
+        grid-row:2;
+
+        text-align:right;
+
+        color:#667085;
+
+        font-size:7px;
+    }
+
+
+    /* =====================================================
+    CONCLUÍDAS
+    ===================================================== */
+
+    #solicitacoes #tbodySolicitacoesConcluidas tr{
+
+        grid-template-columns:
+            minmax(130px,1fr)
+            auto;
+
+        grid-template-rows:
+            24px
+            20px
+            20px;
+
+        gap:
+            2px 7px;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesConcluidas td:nth-child(1){
+
+        grid-column:1;
+
+        grid-row:1;
+
+        color:#142033;
+
+        font-size:10px;
+
+        font-weight:800;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesConcluidas td:nth-child(3){
+
+        grid-column:2;
+
+        grid-row:1;
+
+        text-align:right;
+
+        color:#0b5b9d;
+
+        font-weight:700;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesConcluidas td:nth-child(2){
+
+        grid-column:1 / -1;
+
+        grid-row:2;
+
+        color:#667085;
+
+        font-size:8px;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesConcluidas td:nth-child(4){
+
+        grid-column:1;
+
+        grid-row:3;
+
+        color:#667085;
+
+        font-size:7px;
+    }
+
+
+    #solicitacoes #tbodySolicitacoesConcluidas td:nth-child(5){
+
+        grid-column:2;
+
+        grid-row:3;
+
+        text-align:right;
+
+        color:#38965c;
+
+        font-size:7px;
+
+        font-weight:700;
+    }
+
+
+    /* =====================================================
+    ESTADO VAZIO
+    ===================================================== */
+
+    #solicitacoes .loading{
+
+        grid-column:
+            1 / -1 !important;
+
+        padding:
+            12px !important;
+
+        color:#98a2b3 !important;
+
+        font-size:9px !important;
+
+        text-align:left !important;
+    }
+
+}
