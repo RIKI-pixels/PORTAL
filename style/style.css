@@ -7107,3 +7107,288 @@ CELULAR
     }
 
 }
+
+/* =========================================================
+SIDEBAR RECOLHÍVEL
+DESKTOP / TABLET GRANDE
+========================================================= */
+
+@media(min-width:901px){
+
+    /* animação da sidebar */
+
+    .sidebar{
+
+        transition:
+            width .25s ease,
+            min-width .25s ease,
+            padding .25s ease;
+    }
+
+
+    /* =====================================================
+    BOTÃO RECOLHER
+    ===================================================== */
+
+    .sidebar .sidebar-toggle{
+
+        position:absolute;
+
+        top:82px;
+        right:-13px;
+
+        width:27px;
+        height:27px;
+
+        min-width:27px;
+        min-height:27px;
+
+        padding:0;
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
+
+        border-radius:50%;
+
+        background:#ffffff;
+
+        border:
+            1px solid
+            #dce4ee;
+
+        color:#0b4ea2;
+
+        font-size:20px;
+
+        font-weight:700;
+
+        line-height:1;
+
+        box-shadow:
+            0 3px 10px
+            rgba(6,24,44,.16);
+
+        z-index:30;
+
+        cursor:pointer;
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease;
+    }
+
+
+    .sidebar .sidebar-toggle:hover{
+
+        transform:
+            scale(1.05);
+
+        box-shadow:
+            0 5px 14px
+            rgba(6,24,44,.20);
+    }
+
+
+    /* =====================================================
+    SIDEBAR RECOLHIDA
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida{
+
+        width:74px;
+        min-width:74px;
+
+        padding:
+            20px 10px;
+    }
+
+
+    /* =====================================================
+    TOPO RECOLHIDO
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida
+    .sidebar-top{
+
+        justify-content:center;
+
+        padding:
+            2px 0 18px;
+    }
+
+
+    /* Esconde logo */
+
+    .sidebar.sidebar-recolhida
+    .logo{
+
+        display:none;
+    }
+
+
+    /* Avatar continua visível */
+
+    .sidebar.sidebar-recolhida
+    .avatar{
+
+        width:42px;
+        height:42px;
+
+        margin:auto;
+
+        flex-shrink:0;
+    }
+
+
+    /* =====================================================
+    BOTÃO QUANDO RECOLHIDO
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida
+    .sidebar-toggle{
+
+        right:-13px;
+    }
+
+
+    /* =====================================================
+    MENU
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida
+    .menu{
+
+        width:100%;
+
+        align-items:center;
+
+        gap:8px;
+    }
+
+
+    .sidebar.sidebar-recolhida
+    .menu-item{
+
+        width:48px;
+        min-width:48px;
+
+        height:48px;
+        min-height:48px;
+
+        padding:0;
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
+
+        gap:0;
+
+        border-radius:10px;
+
+        transform:none;
+    }
+
+
+    .sidebar.sidebar-recolhida
+    .menu-item:hover{
+
+        transform:none;
+    }
+
+
+    /* =====================================================
+    ESCONDE TEXTO DOS MENUS
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida
+    .menu-item > div:not(.menu-icon){
+
+        display:none;
+    }
+
+
+    /* =====================================================
+    ÍCONES
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida
+    .menu-icon{
+
+        width:34px;
+        height:34px;
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
+
+        margin:0;
+
+        font-size:15px;
+
+        border-radius:8px;
+    }
+
+
+    /* =====================================================
+    ITEM ATIVO
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida
+    .menu-item.active{
+
+        background:
+            linear-gradient(
+                135deg,
+                #3574df,
+                #3972d7
+            );
+
+        box-shadow:
+            0 5px 14px
+            rgba(27,83,180,.25);
+    }
+
+
+    /* =====================================================
+    NOTIFICAÇÃO
+    ===================================================== */
+
+    .sidebar.sidebar-recolhida
+    .notificacao-solicitacoes{
+
+        position:absolute;
+
+        top:3px;
+        right:3px;
+
+        min-width:15px;
+        height:15px;
+
+        padding:
+            0 4px;
+
+        margin:0;
+
+        font-size:7px;
+    }
+
+}
+
+
+/* =========================================================
+CELULAR / TABLET PEQUENO
+NÃO USA BOTÃO DE RECOLHER
+========================================================= */
+
+@media(max-width:900px){
+
+    .sidebar .sidebar-toggle{
+
+        display:none !important;
+    }
+
+}
