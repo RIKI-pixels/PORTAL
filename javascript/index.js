@@ -6981,5 +6981,513 @@ function alternarSidebar(){
 }
 
 /* ==========================================================
+JANELAS FLUTUANTES DO MAPA
+BASE
+========================================================== */
+
+let Z_INDEX_JANELAS_MAPA = 100;
+
+
+/* ==========================================================
+ABRIR JANELA DA PRAÇA
+========================================================== */
+
+function abrirJanelaPraca(praca){
+
+    const areaJanelas =
+        document.getElementById(
+            "mapaJanelasFlutuantes"
+        );
+
+    const template =
+        document.getElementById(
+            "templateJanelaMapa"
+        );
+
+    if(
+        !areaJanelas ||
+        !template
+    ){
+        return;
+    }
+
+
+    const idJanela =
+        `praca-${String(praca).toUpperCase()}`;
+
+
+    /*
+    Se a janela já estiver aberta,
+    apenas trazemos ela para frente.
+    */
+    const existente =
+        areaJanelas.querySelector(
+            `[data-janela="${idJanela}"]`
+        );
+
+
+    if(existente){
+
+        ativarJanelaMapa(
+            existente
+        );
+
+        return;
+    }
+
+
+    /*
+    Clona o template
+    */
+    const fragmento =
+        template.content.cloneNode(true);
+
+
+    const janela =
+        fragmento.querySelector(
+            ".mapa-janela"
+        );
+
+
+    janela.dataset.janela =
+        idJanela;
+
+
+    /*
+    Título
+    */
+    const subtitulo =
+        janela.querySelector(
+            ".mapa-janela-subtitulo"
+        );
+
+
+    const titulo =
+        janela.querySelector(
+            ".mapa-janela-titulo"
+        );
+
+
+    if(subtitulo){
+        subtitulo.textContent =
+            "PRAÇA";
+    }
+
+
+    if(titulo){
+        titulo.textContent =
+            `PRAÇA ${praca}`;
+    }
+
+
+    /*
+    Conteúdo provisório
+    */
+    const conteudo =
+        janela.querySelector(
+            ".mapa-janela-conteudo"
+        );
+
+
+    if(conteudo){
+
+        conteudo.innerHTML = `
+            <div class="mapa-janela-loading">
+                Praça ${praca} aberta com sucesso.
+            </div>
+        `;
+
+    }
+
+
+    /*
+    Ações
+    */
+    const botaoFechar =
+        janela.querySelector(
+            '[data-acao="fechar"]'
+        );
+
+
+    if(botaoFechar){
+
+        botaoFechar.addEventListener(
+            "click",
+            () => {
+                janela.remove();
+            }
+        );
+
+    }
+
+
+    /*
+    Os outros botões ficam sem ação
+    por enquanto.
+    */
+    const botaoMinimizar =
+        janela.querySelector(
+            '[data-acao="minimizar"]'
+        );
+
+
+    const botaoMaximizar =
+        janela.querySelector(
+            '[data-acao="maximizar"]'
+        );
+
+
+    if(botaoMinimizar){
+
+        botaoMinimizar.addEventListener(
+            "click",
+            evento => {
+
+                evento.stopPropagation();
+
+            }
+        );
+
+    }
+
+
+    if(botaoMaximizar){
+
+        botaoMaximizar.addEventListener(
+            "click",
+            evento => {
+
+                evento.stopPropagation();
+
+            }
+        );
+
+    }
+
+
+    /*
+    Clicar na janela traz ela para frente
+    */
+    janela.addEventListener(
+        "pointerdown",
+        () => {
+            ativarJanelaMapa(
+                janela
+            );
+        }
+    );
+
+
+    /*
+    Arraste
+    */
+    ativarArrasteJanelaMapa(
+        janela
+    );
+
+
+    /*
+    Adiciona ao mapa
+    */
+    areaJanelas.appendChild(
+        janela
+    );
+
+
+    /*
+    Pequeno deslocamento para
+    janelas não nascerem exatamente
+    uma em cima da outra.
+    */
+    const quantidade =
+        areaJanelas.querySelectorAll(
+            ".mapa-janela"
+        ).length;
+
+
+    janela.style.left =
+        `${Math.min(
+            120 + ((quantidade - 1) * 28),
+            300
+        )}px`;
+
+
+    janela.style.top =
+        `${Math.min(
+            55 + ((quantidade - 1) * 24),
+            160
+        )}px`;
+
+
+    /*
+    Remove o translateX do CSS
+    porque daqui em diante
+    o posicionamento será manual.
+    */
+    janela.style.transform =
+        "none";
+
+
+    ativarJanelaMapa(
+        janela
+    );
+
+}
+
+
+
+/* ==========================================================
+TRAZER JANELA PARA FRENTE
+========================================================== */
+
+function ativarJanelaMapa(janela){
+
+    if(!janela){
+        return;
+    }
+
+
+    document
+        .querySelectorAll(
+            ".mapa-janela"
+        )
+        .forEach(item => {
+
+            item.classList.remove(
+                "mapa-janela-ativa"
+            );
+
+        });
+
+
+    Z_INDEX_JANELAS_MAPA++;
+
+
+    janela.classList.add(
+        "mapa-janela-ativa"
+    );
+
+
+    janela.style.zIndex =
+        Z_INDEX_JANELAS_MAPA;
+
+}
+
+
+
+/* ==========================================================
+ARRASTAR JANELA
+========================================================== */
+
+function ativarArrasteJanelaMapa(janela){
+
+    const cabecalho =
+        janela.querySelector(
+            ".mapa-janela-header"
+        );
+
+
+    if(!cabecalho){
+        return;
+    }
+
+
+    let arrastando =
+        false;
+
+
+    let inicioX =
+        0;
+
+
+    let inicioY =
+        0;
+
+
+    let inicioLeft =
+        0;
+
+
+    let inicioTop =
+        0;
+
+
+    cabecalho.addEventListener(
+        "pointerdown",
+        evento => {
+
+            /*
+            Não inicia arraste
+            ao clicar nos botões.
+            */
+            if(
+                evento.target.closest(
+                    ".mapa-janela-acoes"
+                )
+            ){
+                return;
+            }
+
+
+            if(
+                janela.classList.contains(
+                    "mapa-janela-maximizada"
+                )
+            ){
+                return;
+            }
+
+
+            arrastando =
+                true;
+
+
+            inicioX =
+                evento.clientX;
+
+
+            inicioY =
+                evento.clientY;
+
+
+            inicioLeft =
+                janela.offsetLeft;
+
+
+            inicioTop =
+                janela.offsetTop;
+
+
+            ativarJanelaMapa(
+                janela
+            );
+
+
+            cabecalho.setPointerCapture(
+                evento.pointerId
+            );
+
+        }
+    );
+
+
+    cabecalho.addEventListener(
+        "pointermove",
+        evento => {
+
+            if(!arrastando){
+                return;
+            }
+
+
+            const deslocamentoX =
+                evento.clientX -
+                inicioX;
+
+
+            const deslocamentoY =
+                evento.clientY -
+                inicioY;
+
+
+            let novoLeft =
+                inicioLeft +
+                deslocamentoX;
+
+
+            let novoTop =
+                inicioTop +
+                deslocamentoY;
+
+
+            /*
+            Evita perder completamente
+            a janela para fora da tela.
+            */
+            const limiteDireito =
+                window.innerWidth -
+                120;
+
+
+            const limiteInferior =
+                window.innerHeight -
+                60;
+
+
+            novoLeft =
+                Math.max(
+                    -janela.offsetWidth + 120,
+                    Math.min(
+                        novoLeft,
+                        limiteDireito
+                    )
+                );
+
+
+            novoTop =
+                Math.max(
+                    0,
+                    Math.min(
+                        novoTop,
+                        limiteInferior
+                    )
+                );
+
+
+            janela.style.left =
+                `${novoLeft}px`;
+
+
+            janela.style.top =
+                `${novoTop}px`;
+
+        }
+    );
+
+
+    const finalizarArraste =
+        evento => {
+
+            if(!arrastando){
+                return;
+            }
+
+
+            arrastando =
+                false;
+
+
+            try{
+
+                cabecalho.releasePointerCapture(
+                    evento.pointerId
+                );
+
+            }catch(erro){
+
+                /*
+                Sem problema caso
+                o pointer já tenha sido liberado.
+                */
+
+            }
+
+        };
+
+
+    cabecalho.addEventListener(
+        "pointerup",
+        finalizarArraste
+    );
+
+
+    cabecalho.addEventListener(
+        "pointercancel",
+        finalizarArraste
+    );
+
+}
+
+/* ==========================================================
    FIM DO ARQUIVO
 ========================================================== */
