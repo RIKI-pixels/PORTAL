@@ -6444,8 +6444,7 @@ document.addEventListener(
             .getElementById("limiteEstoque")
             .addEventListener("change", alterarLimiteEstoque);
 
-        document
-            document
+document
     .querySelectorAll(".praca")
     .forEach(praca=>{
 
@@ -6461,21 +6460,6 @@ document.addEventListener(
         );
 
     });
-            .forEach(praca=>{
-
-                praca.addEventListener(
-                    "click",
-                    ()=>{
-
-                        abrirPraca(
-                            praca.dataset.local
-                        );
-
-                    }
-                );
-
-            });
-
         DOM.voltarMapaGeral
             .addEventListener(
                 "click",
