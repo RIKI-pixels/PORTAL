@@ -6445,7 +6445,22 @@ document.addEventListener(
             .addEventListener("change", alterarLimiteEstoque);
 
         document
-            .querySelectorAll(".praca")
+            document
+    .querySelectorAll(".praca")
+    .forEach(praca=>{
+
+        praca.addEventListener(
+            "click",
+            ()=>{
+
+                abrirJanelaPraca(
+                    praca.dataset.local
+                );
+
+            }
+        );
+
+    });
             .forEach(praca=>{
 
                 praca.addEventListener(
