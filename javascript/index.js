@@ -8503,6 +8503,49 @@ function renderizarPracaCompacta(
     conteudo.innerHTML =
         html;
 
+/* ==========================================================
+MOVIMENTAÇÃO VINDO DO ESTOQUE
+
+Se existir um container selecionado no Estoque,
+clicar em uma posição vazia movimenta ele.
+========================================================== */
+
+conteudo
+    .querySelectorAll(
+        ".mapa-linha-popup-nivel.vazio"
+    )
+    .forEach(nivel=>{
+
+        nivel.addEventListener(
+            "click",
+            ()=>{
+
+                if(
+                    !APP.containerSelecionado
+                ){
+                    return;
+                }
+
+
+                const container =
+                    APP.containerSelecionado;
+
+
+                const destino =
+                    nivel.dataset.posicao;
+
+
+                movimentarContainerSelecionadoMapa(
+                    container,
+                    destino
+                );
+
+            }
+        );
+
+    });
+ 
+
 
     /*
     =========================================
