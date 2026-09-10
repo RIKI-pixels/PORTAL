@@ -9200,3 +9200,77 @@ SEM PROGRAMAÇÃO
     font-weight:500;
 
 }
+
+/* =========================================================
+PROGRAMAÇÃO FLUTUANTE
+CABEÇALHO FIXO + SCROLL SOMENTE NA LISTA
+========================================================= */
+
+
+/* o conteúdo da janela não faz mais o scroll inteiro */
+
+.mapa-janela-programacao
+.mapa-janela-conteudo{
+
+    padding:0;
+
+    overflow:hidden;
+
+}
+
+
+/* ocupa toda a área disponível */
+
+.mapa-janela-programacao
+.mapa-programacao{
+
+    width:100%;
+    height:100%;
+
+    min-height:0;
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+
+/* cabeçalho sempre parado */
+
+.mapa-janela-programacao
+.mapa-programacao-cabecalho{
+
+    position:relative;
+
+    top:auto;
+
+    flex-shrink:0;
+
+    z-index:5;
+
+    padding:8px 10px;
+
+    background:#eef2f6;
+
+    border-bottom:
+        1px solid
+        #d7dfe8;
+
+}
+
+
+/* somente os containers possuem scroll */
+
+.mapa-janela-programacao
+.mapa-programacao-lista{
+
+    flex:1;
+
+    min-height:0;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    scrollbar-width:thin;
+
+}
