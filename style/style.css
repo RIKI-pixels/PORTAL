@@ -9274,3 +9274,79 @@ CABEÇALHO FIXO + SCROLL SOMENTE NA LISTA
     scrollbar-width:thin;
 
 }
+
+/* =========================================================
+CORREÇÃO DEFINITIVA
+SCROLL JANELA PROGRAMAÇÃO
+========================================================= */
+
+.mapa-janela-programacao
+.mapa-janela-conteudo{
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+    min-height:0 !important;
+
+    padding:0 !important;
+
+    overflow:hidden !important;
+
+}
+
+
+/* estrutura inteira */
+
+.mapa-janela-programacao
+.mapa-programacao{
+
+    flex:1 1 0 !important;
+
+    width:100% !important;
+
+    height:auto !important;
+
+    min-height:0 !important;
+
+    overflow:hidden !important;
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+}
+
+
+/* CABEÇALHO NÃO SE MOVE */
+
+.mapa-janela-programacao
+.mapa-programacao-cabecalho{
+
+    position:static !important;
+
+    flex:0 0 auto !important;
+
+    width:100%;
+
+    z-index:10;
+
+}
+
+
+/* SOMENTE ESSA ÁREA ROLA */
+
+.mapa-janela-programacao
+.mapa-programacao-lista{
+
+    flex:1 1 0 !important;
+
+    height:0 !important;
+
+    min-height:0 !important;
+
+    overflow-y:auto !important;
+
+    overflow-x:hidden !important;
+
+}
