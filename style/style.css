@@ -8574,3 +8574,270 @@ TELAS MAIS ESTREITAS
     }
 
 }
+
+/* =========================================================
+LINHA DETALHADA DENTRO DO POPUP
+========================================================= */
+
+.mapa-linha-popup{
+
+    width:100%;
+}
+
+
+.mapa-linha-popup-topo{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:10px;
+}
+
+
+.mapa-linha-popup-topo strong{
+
+    color:#142033;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+
+.mapa-linha-popup-topo span{
+
+    color:#8793a3;
+
+    font-size:7px;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+4 PILHAS
+========================================================= */
+
+.mapa-linha-popup-estrutura{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:8px;
+
+    align-items:end;
+}
+
+
+/* =========================================================
+PILHA
+========================================================= */
+
+.mapa-linha-popup-pilha{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+}
+
+
+.mapa-linha-popup-pilha-titulo{
+
+    text-align:center;
+
+    color:#667085;
+
+    font-size:7px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+NÍVEIS
+========================================================= */
+
+.mapa-linha-popup-niveis{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+    padding:5px;
+
+    background:#eef3f8;
+
+    border:
+        1px solid
+        #d8e0e9;
+
+    border-radius:7px;
+}
+
+
+.mapa-linha-popup-nivel{
+
+    width:100%;
+
+    min-height:48px;
+
+    padding:5px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:2px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #cad5e2;
+
+    border-radius:5px;
+
+    box-shadow:none;
+
+    cursor:default;
+
+    transition:
+        border-color .15s ease,
+        background .15s ease;
+}
+
+
+.mapa-linha-popup-nivel strong{
+
+    max-width:100%;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+    color:#5f6b7a;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+
+.mapa-linha-popup-nivel span{
+
+    color:#98a2b3;
+
+    font-size:5px;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+OCUPADO
+========================================================= */
+
+.mapa-linha-popup-nivel.ocupado{
+
+    background:#e4f2fd;
+
+    border-color:#66a5d4;
+}
+
+
+.mapa-linha-popup-nivel.ocupado strong{
+
+    color:#174f7a;
+
+    font-size:8px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+VAZIO
+========================================================= */
+
+.mapa-linha-popup-nivel.vazio{
+
+    background:#ffffff;
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(
+    min-width:601px
+)
+and
+(
+    max-width:1280px
+){
+
+    .mapa-linha-popup-estrutura{
+
+        gap:5px;
+    }
+
+
+    .mapa-linha-popup-niveis{
+
+        gap:3px;
+
+        padding:3px;
+    }
+
+
+    .mapa-linha-popup-nivel{
+
+        min-height:42px;
+
+        padding:4px;
+    }
+
+
+    .mapa-linha-popup-nivel strong{
+
+        font-size:6px;
+    }
+
+
+    .mapa-linha-popup-nivel.ocupado strong{
+
+        font-size:7px;
+    }
+
+
+    .mapa-linha-popup-nivel span{
+
+        font-size:5px;
+    }
+
+}
