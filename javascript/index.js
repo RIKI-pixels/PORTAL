@@ -6980,6 +6980,470 @@ function alternarSidebar(){
 }
 
 /* ==========================================================
+JANELA FLUTUANTE - PROGRAMAÇÃO
+========================================================== */
+
+function abrirJanelaProgramacao(){
+
+    const areaJanelas =
+        document.getElementById(
+            "mapaJanelasFlutuantes"
+        );
+
+
+    const template =
+        document.getElementById(
+            "templateJanelaMapa"
+        );
+
+
+    if(
+        !areaJanelas ||
+        !template
+    ){
+        return;
+    }
+
+
+    const idJanela =
+        "programacao";
+
+
+    /* =========================================
+    SE JÁ ESTIVER ABERTA
+    ========================================= */
+
+    const existente =
+        areaJanelas.querySelector(
+            `[data-janela="${idJanela}"]`
+        );
+
+
+    if(existente){
+
+        existente.style.display =
+            "flex";
+
+
+        /*
+        Remove botão da barra de minimizadas,
+        caso a janela estivesse minimizada.
+        */
+
+        const botaoMinimizado =
+            document.querySelector(
+                `[data-restaurar="${idJanela}"]`
+            );
+
+
+        if(botaoMinimizado){
+
+            botaoMinimizado.remove();
+
+        }
+
+
+        renderizarJanelaProgramacao(
+            existente
+        );
+
+
+        ativarJanelaMapa(
+            existente
+        );
+
+
+        return;
+    }
+
+
+    /* =========================================
+    CRIA JANELA
+    ========================================= */
+
+    const fragmento =
+        template.content.cloneNode(
+            true
+        );
+
+
+    const janela =
+        fragmento.querySelector(
+            ".mapa-janela"
+        );
+
+
+    janela.dataset.janela =
+        idJanela;
+
+
+    janela.classList.add(
+        "mapa-janela-programacao"
+    );
+
+
+    /* =========================================
+    TÍTULO
+    ========================================= */
+
+    const subtitulo =
+        janela.querySelector(
+            ".mapa-janela-subtitulo"
+        );
+
+
+    const titulo =
+        janela.querySelector(
+            ".mapa-janela-titulo"
+        );
+
+
+    if(subtitulo){
+
+        subtitulo.textContent =
+            "OPERAÇÃO";
+
+    }
+
+
+    if(titulo){
+
+        titulo.textContent =
+            "PROGRAMAÇÃO";
+
+    }
+
+
+    /* =========================================
+    BOTÃO VOLTAR NÃO É NECESSÁRIO
+    ========================================= */
+
+    const botaoVoltar =
+        janela.querySelector(
+            ".mapa-janela-voltar"
+        );
+
+
+    if(botaoVoltar){
+
+        botaoVoltar.style.display =
+            "none";
+
+    }
+
+
+    /* =========================================
+    FECHAR
+    ========================================= */
+
+    const botaoFechar =
+        janela.querySelector(
+            '[data-acao="fechar"]'
+        );
+
+
+    if(botaoFechar){
+
+        botaoFechar.addEventListener(
+            "click",
+            ()=>{
+
+                janela.remove();
+
+                const botaoMinimizado =
+                    document.querySelector(
+                        '[data-restaurar="programacao"]'
+                    );
+
+
+                if(botaoMinimizado){
+
+                    botaoMinimizado.remove();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+    MINIMIZAR
+    ========================================= */
+
+    const botaoMinimizar =
+        janela.querySelector(
+            '[data-acao="minimizar"]'
+        );
+
+
+    if(botaoMinimizar){
+
+        botaoMinimizar.addEventListener(
+            "click",
+            evento=>{
+
+                evento.stopPropagation();
+
+
+                minimizarJanelaMapa(
+                    janela
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+    MAXIMIZAR
+    ========================================= */
+
+    const botaoMaximizar =
+        janela.querySelector(
+            '[data-acao="maximizar"]'
+        );
+
+
+    if(botaoMaximizar){
+
+        botaoMaximizar.addEventListener(
+            "click",
+            evento=>{
+
+                evento.stopPropagation();
+
+
+                alternarMaximizacaoJanelaMapa(
+                    janela
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+    TRAZER PARA FRENTE
+    ========================================= */
+
+    janela.addEventListener(
+        "pointerdown",
+        ()=>{
+
+            ativarJanelaMapa(
+                janela
+            );
+
+        }
+    );
+
+
+    /* =========================================
+    MOVE + RESIZE
+    ========================================= */
+
+    ativarArrasteJanelaMapa(
+        janela
+    );
+
+
+    ativarResizeJanelaMapa(
+        janela
+    );
+
+
+    /* =========================================
+    INSERE NA TELA
+    ========================================= */
+
+    areaJanelas.appendChild(
+        janela
+    );
+
+
+    janela.style.left =
+        "160px";
+
+
+    janela.style.top =
+        "90px";
+
+
+    janela.style.transform =
+        "none";
+
+
+    renderizarJanelaProgramacao(
+        janela
+    );
+
+
+    ativarJanelaMapa(
+        janela
+    );
+
+}
+
+/* ==========================================================
+CONTEÚDO DA JANELA DE PROGRAMAÇÃO
+========================================================== */
+
+function renderizarJanelaProgramacao(
+    janela
+){
+
+    if(!janela){
+        return;
+    }
+
+
+    const conteudo =
+        janela.querySelector(
+            ".mapa-janela-conteudo"
+        );
+
+
+    const resumo =
+        janela.querySelector(
+            ".mapa-janela-resumo-texto"
+        );
+
+
+    if(!conteudo){
+        return;
+    }
+
+
+    /*
+    Usa exatamente a programação
+    que está atualmente carregada
+    no portal.
+    */
+
+    const programacao =
+        Array.isArray(
+            APP.listaProgramacaoAtual
+        )
+            ? APP.listaProgramacaoAtual
+            : [];
+
+
+    if(resumo){
+
+        resumo.textContent =
+            `${programacao.length} unidades`;
+
+    }
+
+
+    if(
+        programacao.length === 0
+    ){
+
+        conteudo.innerHTML = `
+
+            <div class="mapa-programacao-vazia">
+
+                Nenhuma programação carregada.
+
+                <small>
+                    Realize uma consulta na aba Programação.
+                </small>
+
+            </div>
+
+        `;
+
+
+        return;
+    }
+
+
+    let html = `
+
+        <div class="mapa-programacao">
+
+            <div class="mapa-programacao-cabecalho">
+
+                <span>CONTAINER</span>
+                <span>JANELA</span>
+                <span>LOCALIZAÇÃO</span>
+
+            </div>
+
+            <div class="mapa-programacao-lista">
+
+    `;
+
+
+    programacao.forEach(
+        linha=>{
+
+            const container =
+                normalizarContainer(
+                    linha[
+                        COL.CONTAINER
+                    ]
+                );
+
+
+            const janelaOperacao =
+                String(
+                    linha[
+                        COL.JANELA
+                    ] || "-"
+                ).trim();
+
+
+            const localizacao =
+                obterLocalizacao(
+                    container
+                ) || "-";
+
+
+            html += `
+
+                <div class="mapa-programacao-item">
+
+                    <strong>
+                        ${container || "-"}
+                    </strong>
+
+                    <span>
+                        ${janelaOperacao}
+                    </span>
+
+                    <span class="mapa-programacao-local">
+                        ${localizacao}
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    conteudo.innerHTML =
+        html;
+
+}
+
+/* ==========================================================
 JANELAS FLUTUANTES DO MAPA
 BASE
 ========================================================== */
