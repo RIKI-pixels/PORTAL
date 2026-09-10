@@ -7785,30 +7785,285 @@ function renderizarPracaCompacta(
     =========================================
     */
 
-    conteudo
-        .querySelectorAll(
-            ".mapa-janela-linha"
-        )
-        .forEach(botao=>{
+conteudo
+    .querySelectorAll(
+        ".mapa-janela-linha"
+    )
+    .forEach(botao=>{
 
-            botao.addEventListener(
-                "click",
-                ()=>{
+        botao.addEventListener(
+            "click",
+            ()=>{
 
-                    const linha =
-                        botao.dataset.linha;
+                const linha =
+                    botao.dataset.linha;
 
 
-                    console.log(
-                        "Linha selecionada:",
-                        linha
-                    );
+                renderizarLinhaDetalhada(
+                    janela,
+                    praca,
+                    linha
+                );
+
+            }
+        );
+
+    });
+/* ==========================================================
+VISÃO DETALHADA DA LINHA DENTRO DO POPUP
+========================================================== */
+
+function renderizarLinhaDetalhada(
+    janela,
+    praca,
+    linha
+){
+
+    if(
+        !janela ||
+        !praca ||
+        !linha
+    ){
+        return;
+    }
+
+
+    const conteudo =
+        janela.querySelector(
+            ".mapa-janela-conteudo"
+        );
+
+
+    const resumo =
+        janela.querySelector(
+            ".mapa-janela-resumo-texto"
+        );
+
+
+    const botaoVoltar =
+        janela.querySelector(
+            ".mapa-janela-voltar"
+        );
+
+
+    const titulo =
+        janela.querySelector(
+            ".mapa-janela-titulo"
+        );
+
+
+    if(!conteudo){
+        return;
+    }
+
+
+    /*
+    Atualiza título
+    */
+    if(titulo){
+
+        titulo.textContent =
+            linha;
+
+    }
+
+
+    /*
+    Botão voltar aparece
+    */
+    if(botaoVoltar){
+
+        botaoVoltar.style.display =
+            "inline-flex";
+
+
+        botaoVoltar.textContent =
+            `← PRAÇA ${praca}`;
+
+
+        botaoVoltar.onclick =
+            ()=>{
+
+                if(titulo){
+
+                    titulo.textContent =
+                        `PRAÇA ${praca}`;
 
                 }
-            );
 
-        });
 
+                renderizarPracaCompacta(
+                    janela,
+                    praca
+                );
+
+            };
+
+    }
+
+
+    let totalContainers =
+        0;
+
+
+    let html = `
+
+        <div class="mapa-linha-popup">
+
+            <div class="mapa-linha-popup-topo">
+
+                <strong>
+                    LINHA ${linha}
+                </strong>
+
+                <span>
+                    4 pilhas • 4 níveis
+                </span>
+
+            </div>
+
+
+            <div class="mapa-linha-popup-estrutura">
+
+    `;
+
+
+    /*
+    =========================================
+    4 PILHAS
+    =========================================
+    */
+
+    for(
+        let pilha = 1;
+        pilha <= 4;
+        pilha++
+    ){
+
+        html += `
+
+            <div class="mapa-linha-popup-pilha">
+
+                <div class="mapa-linha-popup-pilha-titulo">
+
+                    PILHA ${pilha}
+
+                </div>
+
+
+                <div class="mapa-linha-popup-niveis">
+
+        `;
+
+
+        /*
+        Nível 4 em cima,
+        nível 1 embaixo.
+        */
+        for(
+            let nivel = 4;
+            nivel >= 1;
+            nivel--
+        ){
+
+            const posicao =
+                `${linha}-${pilha}-${nivel}`;
+
+
+            const container =
+                obterContainerNaPosicao(
+                    posicao
+                );
+
+
+            if(container){
+
+                totalContainers++;
+
+            }
+
+
+            html += `
+
+                <button
+                    type="button"
+                    class="
+                        mapa-linha-popup-nivel
+                        ${
+                            container
+                                ? "ocupado"
+                                : "vazio"
+                        }
+                    "
+                    data-posicao="${posicao}"
+                    data-container="${container || ""}">
+
+                    <strong>
+
+                        ${
+                            container ||
+                            "VAZIO"
+                        }
+
+                    </strong>
+
+
+                    <span>
+
+                        ${posicao}
+
+                    </span>
+
+                </button>
+
+            `;
+
+        }
+
+
+        html += `
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    html += `
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    conteudo.innerHTML =
+        html;
+
+
+    /*
+    Atualiza resumo
+    */
+    if(resumo){
+
+        resumo.textContent =
+            `${totalContainers}/16 ocupados`;
+
+    }
+
+
+    /*
+    IMPORTANTE:
+    por enquanto nenhum clique movimenta nada.
+
+    Esses botões já ficam preparados
+    com data-posicao e data-container
+    para o drag-and-drop futuro.
+    */
 }
 
 /* ==========================================================
