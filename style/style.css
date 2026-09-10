@@ -8987,3 +8987,216 @@ RESIZE DAS JANELAS DO MAPA
     display:none;
 
 }
+
+/* =========================================================
+BOTÃO PROGRAMAÇÃO NO MAPA
+========================================================= */
+
+.mapa-programacao-btn{
+
+    min-height:34px;
+
+    padding:7px 12px;
+
+    background:#142033;
+
+    border:1px solid #142033;
+
+    border-radius:7px;
+
+    color:#ffffff;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    white-space:nowrap;
+
+}
+
+
+.mapa-programacao-btn:hover{
+
+    background:#1e3150;
+
+}
+
+
+/* =========================================================
+JANELA DA PROGRAMAÇÃO
+========================================================= */
+
+.mapa-janela-programacao{
+
+    width:520px;
+
+    height:420px;
+
+    min-width:400px;
+
+    min-height:280px;
+
+}
+
+
+/* =========================================================
+LISTA
+========================================================= */
+
+.mapa-programacao{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+.mapa-programacao-cabecalho,
+.mapa-programacao-item{
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(130px,1.4fr)
+        minmax(70px,.7fr)
+        minmax(100px,1fr);
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+
+.mapa-programacao-cabecalho{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:2;
+
+    padding:7px 9px;
+
+    background:#eef2f6;
+
+    border-bottom:1px solid #d7dfe8;
+
+    color:#697586;
+
+    font-size:7px;
+
+    font-weight:800;
+
+}
+
+
+.mapa-programacao-lista{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+.mapa-programacao-item{
+
+    min-height:36px;
+
+    padding:6px 9px;
+
+    background:#ffffff;
+
+    border-bottom:1px solid #edf0f3;
+
+}
+
+
+.mapa-programacao-item:hover{
+
+    background:#f7f9fb;
+
+}
+
+
+.mapa-programacao-item strong{
+
+    overflow:hidden;
+
+    color:#152236;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+.mapa-programacao-item span{
+
+    color:#5f6b7a;
+
+    font-size:8px;
+
+    font-weight:600;
+
+}
+
+
+.mapa-programacao-local{
+
+    color:#21835a !important;
+
+    font-weight:800 !important;
+
+}
+
+
+/* =========================================================
+SEM PROGRAMAÇÃO
+========================================================= */
+
+.mapa-programacao-vazia{
+
+    min-height:160px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    color:#667085;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    text-align:center;
+
+}
+
+
+.mapa-programacao-vazia small{
+
+    color:#98a2b3;
+
+    font-size:7px;
+
+    font-weight:500;
+
+}
