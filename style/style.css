@@ -8511,66 +8511,6 @@ QUANTIDADE DE CONTAINERS
     white-space:nowrap;
 }
 
-
-/* =========================================================
-TABLET
-========================================================= */
-
-@media(
-    min-width:601px
-)
-and
-(
-    max-width:1100px
-){
-
-    .mapa-janela-linha{
-
-        grid-template-columns:
-            90px
-            1fr
-            80px;
-
-        gap:10px;
-
-        min-height:82px;
-
-        padding:9px 10px;
-    }
-
-
-    .mapa-mini-linha-topo strong{
-
-        font-size:12px;
-    }
-
-
-    .mapa-mini-estrutura{
-
-        gap:6px;
-    }
-
-
-    .mapa-mini-pilha{
-
-        padding:3px;
-    }
-
-
-    .mapa-mini-nivel{
-
-        height:9px;
-    }
-
-
-    .mapa-mini-linha-rodape span{
-
-        font-size:7px;
-    }
-
-}
-
-
 /* =========================================================
 TELAS MAIS ESTREITAS
 ========================================================= */
