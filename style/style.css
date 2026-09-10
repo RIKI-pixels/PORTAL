@@ -8930,3 +8930,60 @@ JANELAS MINIMIZADAS DO MAPA
     transform:translateY(-1px);
 
 }
+
+/* =========================================================
+RESIZE DAS JANELAS DO MAPA
+========================================================= */
+
+.mapa-janela-resize{
+
+    position:absolute;
+
+    right:0;
+
+    bottom:0;
+
+    width:18px;
+
+    height:18px;
+
+    z-index:20;
+
+    cursor:nwse-resize;
+
+}
+
+
+/* desenho discreto no canto */
+
+.mapa-janela-resize::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:4px;
+
+    bottom:4px;
+
+    width:8px;
+
+    height:8px;
+
+    border-right:2px solid #8d99a8;
+
+    border-bottom:2px solid #8d99a8;
+
+    opacity:.7;
+
+}
+
+
+/* enquanto maximizada, resize desativado */
+
+.mapa-janela-maximizada
+.mapa-janela-resize{
+
+    display:none;
+
+}
