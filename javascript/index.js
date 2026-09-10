@@ -7115,18 +7115,22 @@ function abrirJanelaPraca(praca){
         );
 
 
-    if(botaoMinimizar){
+if(botaoMinimizar){
 
-        botaoMinimizar.addEventListener(
-            "click",
-            evento => {
+    botaoMinimizar.addEventListener(
+        "click",
+        evento=>{
 
-                evento.stopPropagation();
+            evento.stopPropagation();
 
-            }
-        );
+            minimizarJanelaMapa(
+                janela
+            );
 
-    }
+        }
+    );
+
+}
 
 
     if(botaoMaximizar){
@@ -7261,6 +7265,140 @@ function ativarJanelaMapa(janela){
 
 }
 
+/* ==========================================================
+MINIMIZAR JANELA DO MAPA
+========================================================== */
+
+function minimizarJanelaMapa(janela){
+
+    if(!janela){
+        return;
+    }
+
+
+    const areaMinimizadas =
+        document.getElementById(
+            "mapaJanelasMinimizadas"
+        );
+
+
+    if(!areaMinimizadas){
+        return;
+    }
+
+
+    const idJanela =
+        janela.dataset.janela;
+
+
+    if(!idJanela){
+        return;
+    }
+
+
+    /*
+    Evita criar dois botões
+    para a mesma janela
+    */
+
+    const botaoExistente =
+        areaMinimizadas.querySelector(
+            `[data-restaurar="${idJanela}"]`
+        );
+
+
+    if(botaoExistente){
+
+        janela.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    /* =========================================
+    NOME QUE SERÁ MOSTRADO NA BARRA
+    ========================================= */
+
+    const titulo =
+        janela.querySelector(
+            ".mapa-janela-titulo"
+        );
+
+
+    const nomeJanela =
+        titulo
+            ? titulo.textContent.trim()
+            : idJanela;
+
+
+    /* =========================================
+    CRIA BOTÃO MINIMIZADO
+    ========================================= */
+
+    const botao =
+        document.createElement(
+            "button"
+        );
+
+
+    botao.type =
+        "button";
+
+
+    botao.className =
+        "mapa-janela-minimizada";
+
+
+    botao.dataset.restaurar =
+        idJanela;
+
+
+    botao.textContent =
+        nomeJanela;
+
+
+    botao.title =
+        `Restaurar ${nomeJanela}`;
+
+
+    /* =========================================
+    RESTAURA
+    ========================================= */
+
+    botao.addEventListener(
+        "click",
+        ()=>{
+
+            janela.style.display =
+                "flex";
+
+
+            botao.remove();
+
+
+            ativarJanelaMapa(
+                janela
+            );
+
+        }
+    );
+
+
+    areaMinimizadas.appendChild(
+        botao
+    );
+
+
+    /* =========================================
+    ESCONDE A JANELA
+    ========================================= */
+
+    janela.style.display =
+        "none";
+
+}
 
 
 /* ==========================================================
