@@ -7964,6 +7964,7 @@ Já deixamos pronta para o próximo passo
 
 /* =========================================================
 JANELA FLUTUANTE - TABLET
+COMPACTA PARA DUAS JANELAS
 ========================================================= */
 
 @media(
@@ -7971,80 +7972,72 @@ JANELA FLUTUANTE - TABLET
 )
 and
 (
-    max-width:1380px
+    max-width:1280px
 ){
 
     .mapa-janela{
 
-        /* tamanho mais compacto */
+        width:
+            min(
+                520px,
+                44vw
+            );
 
-width:
-    min(
-        650px,
-        64vw
-    );
+        height:
+            min(
+                390px,
+                54vh
+            );
 
-height:
-    min(
-        460px,
-        60vh
-    );
+        min-width:420px;
+        min-height:300px;
 
-min-width:450px;
-min-height:300px;
-
-
-        /* posição inicial */
-
-        top:70px;
+        top:60px;
 
         left:50%;
 
         transform:
             translateX(-50%);
 
-
-        border-radius:12px;
+        border-radius:10px;
     }
 
 
     /* =============================================
-    CABEÇALHO MAIS FINO
+    CABEÇALHO
     ============================================= */
 
     .mapa-janela-header{
 
-        min-height:48px;
+        min-height:42px;
 
         padding:
-            7px 9px
-            7px 13px;
+            5px 8px
+            5px 10px;
     }
 
 
     .mapa-janela-titulo{
 
-        font-size:12px;
+        font-size:11px;
     }
 
 
     .mapa-janela-subtitulo{
 
-        font-size:7px;
+        font-size:6px;
     }
 
 
     .mapa-janela-botao{
 
-        width:27px;
+        width:24px;
+        height:24px;
 
-        height:27px;
+        min-width:24px;
+        min-height:24px;
 
-        min-width:27px;
-
-        min-height:27px;
-
-        font-size:14px;
+        font-size:12px;
     }
 
 
@@ -8054,127 +8047,44 @@ min-height:300px;
 
     .mapa-janela-toolbar{
 
-        min-height:38px;
+        min-height:32px;
 
         padding:
-            5px 10px;
+            4px 7px;
     }
 
 
     .mapa-janela-resumo-texto{
 
         padding:
-            4px 7px;
+            3px 6px;
 
-        font-size:8px;
+        font-size:7px;
+    }
+
+
+    .mapa-janela-voltar{
+
+        min-height:25px;
+
+        padding:
+            3px 7px;
+
+        font-size:7px;
     }
 
 
     /* =============================================
-    ÁREA INTERNA
+    CONTEÚDO
     ============================================= */
 
     .mapa-janela-conteudo{
 
-        padding:10px;
-
-        /*
-        As demais linhas ficam aqui dentro
-        sem aumentar a janela.
-        */
+        padding:6px;
 
         overflow-y:auto;
 
         overflow-x:hidden;
-    }
-
-
-    /* =============================================
-    LINHAS MAIS COMPACTAS
-    ============================================= */
-
-    .mapa-janela-linhas{
-
-        gap:6px;
-    }
-
-
-    .mapa-janela-linha{
-
-        grid-template-columns:
-            72px
-            1fr
-            72px;
-
-        min-height:68px;
-
-        gap:8px;
-
-        padding:
-            6px 8px;
-
-        border-radius:7px;
-    }
-
-
-    /* A-01 */
-
-    .mapa-mini-linha-topo{
-
-        gap:2px;
-    }
-
-
-    .mapa-mini-linha-topo strong{
-
-        font-size:10px;
-    }
-
-
-    .mapa-mini-linha-topo span{
-
-        padding:
-            2px 4px;
-
-        font-size:7px;
-    }
-
-
-    /* =============================================
-    PILHAS
-    ============================================= */
-
-    .mapa-mini-estrutura{
-
-        gap:5px;
-    }
-
-
-    .mapa-mini-pilha{
-
-        gap:2px;
-
-        padding:3px;
-
-        border-radius:4px;
-    }
-
-
-    .mapa-mini-nivel{
-
-        height:7px;
-
-        border-radius:1px;
-    }
-
-
-    /* =============================================
-    CONTAGEM
-    ============================================= */
-
-    .mapa-mini-linha-rodape span{
-
-        font-size:7px;
     }
 
 
@@ -8184,19 +8094,142 @@ min-height:300px;
 
     .mapa-janela-praca-topo{
 
-        margin-bottom:7px;
+        margin-bottom:5px;
+    }
+
+
+    .mapa-janela-praca-topo > div{
+
+        gap:5px;
     }
 
 
     .mapa-janela-praca-topo strong{
 
-        font-size:10px;
+        font-size:9px;
     }
 
 
     .mapa-janela-praca-topo span{
 
-        font-size:7px;
+        font-size:6px;
+    }
+
+
+    /* =============================================
+    LISTA DE LINHAS
+    ============================================= */
+
+    .mapa-janela-linhas{
+
+        display:flex;
+
+        flex-direction:column;
+
+        gap:4px;
+    }
+
+
+    /* =============================================
+    LINHA
+    ============================================= */
+
+    .mapa-janela-linha{
+
+        width:100%;
+
+        min-height:58px;
+
+        grid-template-columns:
+            58px
+            1fr
+            58px;
+
+        align-items:center;
+
+        gap:5px;
+
+        padding:
+            5px 6px;
+
+        border-radius:6px;
+    }
+
+
+    /* =============================================
+    NOME DA LINHA
+    ============================================= */
+
+    .mapa-mini-linha-topo{
+
+        gap:1px;
+    }
+
+
+    .mapa-mini-linha-topo strong{
+
+        font-size:9px;
+    }
+
+
+    .mapa-mini-linha-topo span{
+
+        padding:
+            1px 3px;
+
+        font-size:6px;
+    }
+
+
+    /* =============================================
+    4 PILHAS
+    ============================================= */
+
+    .mapa-mini-estrutura{
+
+        gap:3px;
+    }
+
+
+    .mapa-mini-pilha{
+
+        gap:1px;
+
+        padding:2px;
+
+        border-radius:3px;
+    }
+
+
+    /* =============================================
+    NÍVEIS
+    ============================================= */
+
+    .mapa-mini-nivel{
+
+        height:6px;
+
+        border-radius:1px;
+    }
+
+
+    /* =============================================
+    QUANTIDADE
+    ============================================= */
+
+    .mapa-mini-linha-rodape{
+
+        padding:0;
+
+        border:none;
+
+        justify-content:flex-end;
+    }
+
+
+    .mapa-mini-linha-rodape span{
+
+        font-size:6px;
     }
 
 }
