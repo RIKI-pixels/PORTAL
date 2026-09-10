@@ -7380,29 +7380,25 @@ function renderizarJanelaProgramacao(
     `;
 
 
-    programacao.forEach(
-        linha=>{
+programacao.forEach(
+    linha=>{
 
-            const container =
-                normalizarContainer(
-                    linha[
-                        COL.CONTAINER
-                    ]
-                );
+        const container =
+            normalizarContainer(
+                linha.container
+            );
 
 
-            const janelaOperacao =
-                String(
-                    linha[
-                        COL.JANELA
-                    ] || "-"
-                ).trim();
+        const janelaOperacao =
+            String(
+                linha.janela || "-"
+            ).trim();
 
 
-            const localizacao =
-                obterLocalizacao(
-                    container
-                ) || "-";
+        const localizacao =
+            obterLocalizacao(
+                container
+            ) || "-";
 
 
             html += `
