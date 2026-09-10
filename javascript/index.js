@@ -7133,18 +7133,22 @@ if(botaoMinimizar){
 }
 
 
-    if(botaoMaximizar){
+if(botaoMaximizar){
 
-        botaoMaximizar.addEventListener(
-            "click",
-            evento => {
+    botaoMaximizar.addEventListener(
+        "click",
+        evento=>{
 
-                evento.stopPropagation();
+            evento.stopPropagation();
 
-            }
-        );
+            alternarMaximizacaoJanelaMapa(
+                janela
+            );
 
-    }
+        }
+    );
+
+}
 
 
     /*
@@ -7315,6 +7319,162 @@ function minimizarJanelaMapa(janela){
         return;
 
     }
+
+ /* ==========================================================
+MAXIMIZAR / RESTAURAR JANELA DO MAPA
+========================================================== */
+
+function alternarMaximizacaoJanelaMapa(janela){
+
+    if(!janela){
+        return;
+    }
+
+
+    const maximizada =
+        janela.classList.contains(
+            "mapa-janela-maximizada"
+        );
+
+
+    const botao =
+        janela.querySelector(
+            '[data-acao="maximizar"]'
+        );
+
+
+    /* =========================================
+    RESTAURA
+    ========================================= */
+
+    if(maximizada){
+
+        const estado =
+            janela._estadoAntesMaximizar;
+
+
+        janela.classList.remove(
+            "mapa-janela-maximizada"
+        );
+
+
+        if(estado){
+
+            janela.style.left =
+                estado.left;
+
+            janela.style.top =
+                estado.top;
+
+            janela.style.width =
+                estado.width;
+
+            janela.style.height =
+                estado.height;
+
+            janela.style.transform =
+                estado.transform;
+
+        }
+
+
+        janela._estadoAntesMaximizar =
+            null;
+
+
+        if(botao){
+
+            botao.textContent =
+                "□";
+
+            botao.title =
+                "Maximizar";
+
+        }
+
+
+        ativarJanelaMapa(
+            janela
+        );
+
+
+        return;
+    }
+
+
+    /* =========================================
+    GUARDA ESTADO ATUAL
+    ========================================= */
+
+    const estiloAtual =
+        window.getComputedStyle(
+            janela
+        );
+
+
+    janela._estadoAntesMaximizar = {
+
+        left:
+            janela.style.left,
+
+        top:
+            janela.style.top,
+
+        width:
+            janela.style.width ||
+            estiloAtual.width,
+
+        height:
+            janela.style.height ||
+            estiloAtual.height,
+
+        transform:
+            janela.style.transform
+
+    };
+
+
+    /* =========================================
+    MAXIMIZA
+    ========================================= */
+
+    janela.classList.add(
+        "mapa-janela-maximizada"
+    );
+
+
+    janela.style.left =
+        "";
+
+    janela.style.top =
+        "";
+
+    janela.style.width =
+        "";
+
+    janela.style.height =
+        "";
+
+    janela.style.transform =
+        "";
+
+
+    if(botao){
+
+        botao.textContent =
+            "❐";
+
+        botao.title =
+            "Restaurar";
+
+    }
+
+
+    ativarJanelaMapa(
+        janela
+    );
+
+}
 
 
     /* =========================================
