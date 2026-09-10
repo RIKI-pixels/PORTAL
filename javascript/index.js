@@ -7163,7 +7163,9 @@ if(botaoMaximizar){
         }
     );
 
-
+ativarResizeJanelaMapa(
+    janela
+);
     /*
     Arraste
     */
@@ -8096,6 +8098,8 @@ conteudo
     });
 
  }
+
+
 /* ==========================================================
 VISÃO DETALHADA DA LINHA DENTRO DO POPUP
 ========================================================== */
@@ -8354,6 +8358,244 @@ Nesta etapa NÃO movimenta no Supabase.
 ativarDragDropTesteLinha(
     janela
 );
+}
+
+/* ==========================================================
+REDIMENSIONAR JANELA DO MAPA
+========================================================== */
+
+function ativarResizeJanelaMapa(janela){
+
+    if(!janela){
+        return;
+    }
+
+
+    /* =========================================
+    CRIA O PEGADOR DE RESIZE
+    ========================================= */
+
+    const resize =
+        document.createElement(
+            "div"
+        );
+
+
+    resize.className =
+        "mapa-janela-resize";
+
+
+    janela.appendChild(
+        resize
+    );
+
+
+    let redimensionando =
+        false;
+
+
+    let inicioX =
+        0;
+
+
+    let inicioY =
+        0;
+
+
+    let larguraInicial =
+        0;
+
+
+    let alturaInicial =
+        0;
+
+
+    resize.addEventListener(
+        "pointerdown",
+        evento=>{
+
+            evento.preventDefault();
+
+            evento.stopPropagation();
+
+
+            if(
+                janela.classList.contains(
+                    "mapa-janela-maximizada"
+                )
+            ){
+                return;
+            }
+
+
+            redimensionando =
+                true;
+
+
+            inicioX =
+                evento.clientX;
+
+
+            inicioY =
+                evento.clientY;
+
+
+            larguraInicial =
+                janela.offsetWidth;
+
+
+            alturaInicial =
+                janela.offsetHeight;
+
+
+            ativarJanelaMapa(
+                janela
+            );
+
+
+            resize.setPointerCapture(
+                evento.pointerId
+            );
+
+        }
+    );
+
+
+    resize.addEventListener(
+        "pointermove",
+        evento=>{
+
+            if(
+                !redimensionando
+            ){
+                return;
+            }
+
+
+            const deltaX =
+                evento.clientX -
+                inicioX;
+
+
+            const deltaY =
+                evento.clientY -
+                inicioY;
+
+
+            let novaLargura =
+                larguraInicial +
+                deltaX;
+
+
+            let novaAltura =
+                alturaInicial +
+                deltaY;
+
+
+            /* =========================================
+            LIMITES MÍNIMOS
+            ========================================= */
+
+            const larguraMinima =
+                420;
+
+
+            const alturaMinima =
+                300;
+
+
+            novaLargura =
+                Math.max(
+                    larguraMinima,
+                    novaLargura
+                );
+
+
+            novaAltura =
+                Math.max(
+                    alturaMinima,
+                    novaAltura
+                );
+
+
+            /* =========================================
+            LIMITES MÁXIMOS NA TELA
+            ========================================= */
+
+            const maxLargura =
+                window.innerWidth -
+                janela.offsetLeft -
+                20;
+
+
+            const maxAltura =
+                window.innerHeight -
+                janela.offsetTop -
+                20;
+
+
+            novaLargura =
+                Math.min(
+                    novaLargura,
+                    maxLargura
+                );
+
+
+            novaAltura =
+                Math.min(
+                    novaAltura,
+                    maxAltura
+                );
+
+
+            janela.style.width =
+                `${novaLargura}px`;
+
+
+            janela.style.height =
+                `${novaAltura}px`;
+
+        }
+    );
+
+
+    const finalizarResize =
+        evento=>{
+
+            if(
+                !redimensionando
+            ){
+                return;
+            }
+
+
+            redimensionando =
+                false;
+
+
+            try{
+
+                resize.releasePointerCapture(
+                    evento.pointerId
+                );
+
+            }
+            catch(erro){}
+
+        };
+
+
+    resize.addEventListener(
+        "pointerup",
+        finalizarResize
+    );
+
+
+    resize.addEventListener(
+        "pointercancel",
+        finalizarResize
+    );
+
 }
 
 /* ==========================================================
