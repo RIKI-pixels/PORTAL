@@ -8058,14 +8058,237 @@ function renderizarLinhaDetalhada(
     }
 
 
-    /*
-    IMPORTANTE:
-    por enquanto nenhum clique movimenta nada.
+ /*
+=========================================
+DRAG AND DROP - TESTE VISUAL
 
-    Esses botões já ficam preparados
-    com data-posicao e data-container
-    para o drag-and-drop futuro.
-    */
+Nesta etapa NÃO movimenta no Supabase.
+=========================================
+*/
+
+ativarDragDropTesteLinha(
+    janela
+);
+}
+
+/* ==========================================================
+DRAG AND DROP - TESTE VISUAL
+NÃO ALTERA SUPABASE
+========================================================== */
+
+function ativarDragDropTesteLinha(janela){
+
+    if(!janela){
+        return;
+    }
+
+
+    const niveis =
+        janela.querySelectorAll(
+            ".mapa-linha-popup-nivel"
+        );
+
+
+    niveis.forEach(nivel=>{
+
+        const container =
+            nivel.dataset.container;
+
+        const posicao =
+            nivel.dataset.posicao;
+
+
+        /* =========================================
+        POSIÇÃO OCUPADA = ORIGEM
+        ========================================= */
+
+        if(container){
+
+            nivel.draggable = true;
+
+            nivel.classList.add(
+                "arrastavel"
+            );
+
+
+            nivel.addEventListener(
+                "dragstart",
+                evento=>{
+
+                    evento.dataTransfer.effectAllowed =
+                        "move";
+
+
+                    evento.dataTransfer.setData(
+                        "text/plain",
+                        JSON.stringify({
+                            container,
+                            origem:posicao
+                        })
+                    );
+
+
+                    nivel.classList.add(
+                        "arrastando"
+                    );
+
+
+                    janela.classList.add(
+                        "mapa-drag-ativo"
+                    );
+
+                }
+            );
+
+
+            nivel.addEventListener(
+                "dragend",
+                ()=>{
+
+                    nivel.classList.remove(
+                        "arrastando"
+                    );
+
+
+                    document
+                        .querySelectorAll(
+                            ".mapa-linha-popup-nivel"
+                        )
+                        .forEach(item=>{
+
+                            item.classList.remove(
+                                "destino-drag"
+                            );
+
+                        });
+
+
+                    document
+                        .querySelectorAll(
+                            ".mapa-janela"
+                        )
+                        .forEach(item=>{
+
+                            item.classList.remove(
+                                "mapa-drag-ativo"
+                            );
+
+                        });
+
+                }
+            );
+
+        }
+
+
+        /* =========================================
+        POSIÇÃO VAZIA = DESTINO
+        ========================================= */
+
+        if(!container){
+
+            nivel.addEventListener(
+                "dragover",
+                evento=>{
+
+                    evento.preventDefault();
+
+                    evento.dataTransfer.dropEffect =
+                        "move";
+
+
+                    nivel.classList.add(
+                        "destino-drag"
+                    );
+
+                }
+            );
+
+
+            nivel.addEventListener(
+                "dragleave",
+                ()=>{
+
+                    nivel.classList.remove(
+                        "destino-drag"
+                    );
+
+                }
+            );
+
+
+            nivel.addEventListener(
+                "drop",
+                evento=>{
+
+                    evento.preventDefault();
+
+
+                    nivel.classList.remove(
+                        "destino-drag"
+                    );
+
+
+                    let dados;
+
+
+                    try{
+
+                        dados =
+                            JSON.parse(
+                                evento
+                                    .dataTransfer
+                                    .getData(
+                                        "text/plain"
+                                    )
+                            );
+
+                    }
+                    catch(erro){
+
+                        console.error(
+                            "Erro ao ler movimentação:",
+                            erro
+                        );
+
+                        return;
+
+                    }
+
+
+                    const destino =
+                        nivel.dataset.posicao;
+
+
+                    console.log(
+                        "TESTE DE MOVIMENTAÇÃO"
+                    );
+
+
+                    console.log(
+                        "Container:",
+                        dados.container
+                    );
+
+
+                    console.log(
+                        "Origem:",
+                        dados.origem
+                    );
+
+
+                    console.log(
+                        "Destino:",
+                        destino
+                    );
+
+                }
+            );
+
+        }
+
+    });
+
 }
 
 /* ==========================================================
