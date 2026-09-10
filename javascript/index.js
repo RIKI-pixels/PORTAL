@@ -9664,6 +9664,322 @@ async function movimentarContainerPorDrag(
 }
 
 /* ==========================================================
+MOVIMENTAÇÃO DE CONTAINER SELECIONADO NO ESTOQUE
+========================================================== */
+
+async function movimentarContainerSelecionadoMapa(
+    container,
+    destino
+){
+
+    container =
+        normalizarContainer(
+            container
+        );
+
+
+    if(
+        !container ||
+        !destino
+    ){
+        return;
+    }
+
+
+    /* =========================================
+    DESTINO OCUPADO
+    ========================================= */
+
+    const containerDestino =
+        obterContainerNaPosicao(
+            destino
+        );
+
+
+    if(containerDestino){
+
+        alert(
+            `A posição ${destino} já está ocupada por ${containerDestino}.`
+        );
+
+        return;
+    }
+
+
+    /* =========================================
+    LOCAL ATUAL
+    ========================================= */
+
+    const origem =
+        obterLocalizacao(
+            container
+        );
+
+
+    /* =========================================
+    SE JÁ ESTIVER EMPILHADO,
+    VALIDA SE PODE RETIRAR
+    ========================================= */
+
+    if(
+        origem &&
+        !validarRetiradaContainer(
+            container
+        )
+    ){
+
+        return;
+    }
+
+
+    /* =========================================
+    INTERPRETA DESTINO
+
+    Exemplo:
+    A-01-2-1
+    ========================================= */
+
+    const partes =
+        String(destino)
+            .split("-");
+
+
+    if(
+        partes.length !== 4
+    ){
+
+        alert(
+            "Posição de destino inválida."
+        );
+
+        return;
+    }
+
+
+    const praca =
+        partes[0];
+
+
+    const numeroLinha =
+        partes[1];
+
+
+    const pilha =
+        Number(
+            partes[2]
+        );
+
+
+    const nivel =
+        Number(
+            partes[3]
+        );
+
+
+    const linha =
+        `${praca}-${numeroLinha}`;
+
+
+    /* =========================================
+    USA A VALIDAÇÃO DE EMPILHAMENTO EXISTENTE
+    ========================================= */
+
+    const estadoAnterior = {
+
+        pracaSelecionada:
+            APP.pracaSelecionada,
+
+        linhaSelecionada:
+            APP.linhaSelecionada,
+
+        pilhaSelecionada:
+            APP.pilhaSelecionada,
+
+        nivelSelecionado:
+            APP.nivelSelecionado,
+
+        destinoSelecionado:
+            APP.destinoSelecionado
+
+    };
+
+
+    APP.pracaSelecionada =
+        praca;
+
+    APP.linhaSelecionada =
+        linha;
+
+    APP.pilhaSelecionada =
+        pilha;
+
+    APP.nivelSelecionado =
+        nivel;
+
+    APP.destinoSelecionado =
+        destino;
+
+
+    const empilhamentoValido =
+        validarEmpilhamento();
+
+
+    APP.pracaSelecionada =
+        estadoAnterior.pracaSelecionada;
+
+    APP.linhaSelecionada =
+        estadoAnterior.linhaSelecionada;
+
+    APP.pilhaSelecionada =
+        estadoAnterior.pilhaSelecionada;
+
+    APP.nivelSelecionado =
+        estadoAnterior.nivelSelecionado;
+
+    APP.destinoSelecionado =
+        estadoAnterior.destinoSelecionado;
+
+
+    if(
+        !empilhamentoValido
+    ){
+
+        alert(
+            "Não é possível utilizar este nível porque existem níveis vazios abaixo."
+        );
+
+        return;
+    }
+
+
+    /* =========================================
+    CONFIRMA
+    ========================================= */
+
+    const confirmar =
+        window.confirm(
+            `Movimentar ${container}?\n\n` +
+            `${origem || "SEM LOCALIZAÇÃO"}\n` +
+            `→\n${destino}`
+        );
+
+
+    if(
+        !confirmar
+    ){
+        return;
+    }
+
+
+    /* =========================================
+    SUPABASE
+    ========================================= */
+
+    try{
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "portal_localizacoes"
+                )
+                .upsert(
+                    {
+
+                        container:
+                            container,
+
+                        localizacao:
+                            destino,
+
+                        atualizado_por:
+                            USUARIO_PORTAL.id,
+
+                        atualizado_em:
+                            new Date()
+                                .toISOString()
+
+                    },
+                    {
+
+                        onConflict:
+                            "container"
+
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Erro ao movimentar container:",
+                error
+            );
+
+            alert(
+                "Não foi possível realizar a movimentação."
+            );
+
+            return;
+        }
+
+
+        await carregarLocalizacoesSupabase();
+
+
+        await registrarLog({
+
+            area:
+                "MAPA",
+
+            acao:
+                "MOVIMENTOU CONTAINER PELO ESTOQUE",
+
+            container:
+                container,
+
+            detalhes:
+                `${origem || "SEM LOCALIZAÇÃO"} → ${destino}`
+
+        });
+
+
+        /* =========================================
+        LIMPA SELEÇÃO
+        ========================================= */
+
+        APP.containerSelecionado =
+            null;
+
+
+        atualizarContainerSelecionadoMapa();
+
+
+        atualizarJanelasMapaAbertas();
+
+
+        alert(
+            `${container} movimentado para ${destino}.`
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado:",
+            erro
+        );
+
+        alert(
+            "Erro inesperado ao movimentar o container."
+        );
+
+    }
+
+}
+
+/* ==========================================================
 ATUALIZA JANELAS DE PRAÇA QUE ESTÃO ABERTAS
 ========================================================== */
 
