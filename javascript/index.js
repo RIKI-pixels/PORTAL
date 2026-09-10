@@ -8260,27 +8260,11 @@ function ativarDragDropTesteLinha(janela){
                         nivel.dataset.posicao;
 
 
-                    console.log(
-                        "TESTE DE MOVIMENTAÇÃO"
-                    );
-
-
-                    console.log(
-                        "Container:",
-                        dados.container
-                    );
-
-
-                    console.log(
-                        "Origem:",
-                        dados.origem
-                    );
-
-
-                    console.log(
-                        "Destino:",
+                        movimentarContainerPorDrag(
+                         dados.container,
+                        dados.origem,
                         destino
-                    );
+                  );
 
                 }
             );
@@ -8288,6 +8272,436 @@ function ativarDragDropTesteLinha(janela){
         }
 
     });
+
+}
+
+/* ==========================================================
+MOVIMENTAÇÃO REAL POR DRAG AND DROP
+========================================================== */
+
+async function movimentarContainerPorDrag(
+    container,
+    origem,
+    destino
+){
+
+    container =
+        normalizarContainer(
+            container
+        );
+
+
+    if(
+        !container ||
+        !origem ||
+        !destino
+    ){
+        return;
+    }
+
+
+    /* =========================================
+    GARANTE QUE O DESTINO CONTINUA VAZIO
+    ========================================= */
+
+    const containerDestino =
+        obterContainerNaPosicao(
+            destino
+        );
+
+
+    if(containerDestino){
+
+        alert(
+            `A posição ${destino} já está ocupada por ${containerDestino}.`
+        );
+
+        return;
+    }
+
+
+    /* =========================================
+    CONFERE SE A ORIGEM AINDA É A MESMA
+    ========================================= */
+
+    const localAtual =
+        obterLocalizacao(
+            container
+        );
+
+
+    if(
+        localAtual !== origem
+    ){
+
+        alert(
+            `A localização do container foi alterada.\n\nLocal atual: ${localAtual || "SEM LOCALIZAÇÃO"}`
+        );
+
+        await carregarLocalizacoesSupabase();
+
+        atualizarJanelasMapaAbertas();
+
+        return;
+    }
+
+
+    /* =========================================
+    VALIDA RETIRADA
+    Não deixa tirar container com outro em cima.
+    ========================================= */
+
+    if(
+        !validarRetiradaContainer(
+            container
+        )
+    ){
+
+        alert(
+            "Não é possível movimentar este container porque existe outro container acima dele."
+        );
+
+        return;
+    }
+
+
+    /* =========================================
+    INTERPRETA O DESTINO
+
+    Exemplo:
+    B-07-2-3
+
+    praça: B
+    linha: B-07
+    pilha: 2
+    nível: 3
+    ========================================= */
+
+    const partesDestino =
+        String(destino)
+            .split("-");
+
+
+    if(
+        partesDestino.length !== 4
+    ){
+
+        alert(
+            "Posição de destino inválida."
+        );
+
+        return;
+    }
+
+
+    const pracaDestino =
+        partesDestino[0];
+
+
+    const numeroLinha =
+        partesDestino[1];
+
+
+    const pilhaDestino =
+        Number(
+            partesDestino[2]
+        );
+
+
+    const nivelDestino =
+        Number(
+            partesDestino[3]
+        );
+
+
+    const linhaDestino =
+        `${pracaDestino}-${numeroLinha}`;
+
+
+    /* =========================================
+    SALVA ESTADO ATUAL DO MAPA
+
+    A função validarEmpilhamento()
+    trabalha usando APP.
+    ========================================= */
+
+    const estadoAnterior = {
+
+        pracaSelecionada:
+            APP.pracaSelecionada,
+
+        linhaSelecionada:
+            APP.linhaSelecionada,
+
+        pilhaSelecionada:
+            APP.pilhaSelecionada,
+
+        nivelSelecionado:
+            APP.nivelSelecionado,
+
+        destinoSelecionado:
+            APP.destinoSelecionado
+
+    };
+
+
+    /* =========================================
+    PREPARA APP TEMPORARIAMENTE
+    PARA USAR A VALIDAÇÃO EXISTENTE
+    ========================================= */
+
+    APP.pracaSelecionada =
+        pracaDestino;
+
+    APP.linhaSelecionada =
+        linhaDestino;
+
+    APP.pilhaSelecionada =
+        pilhaDestino;
+
+    APP.nivelSelecionado =
+        nivelDestino;
+
+    APP.destinoSelecionado =
+        destino;
+
+
+    const empilhamentoValido =
+        validarEmpilhamento();
+
+
+    /* =========================================
+    RESTAURA O ESTADO ORIGINAL
+    ========================================= */
+
+    APP.pracaSelecionada =
+        estadoAnterior.pracaSelecionada;
+
+    APP.linhaSelecionada =
+        estadoAnterior.linhaSelecionada;
+
+    APP.pilhaSelecionada =
+        estadoAnterior.pilhaSelecionada;
+
+    APP.nivelSelecionado =
+        estadoAnterior.nivelSelecionado;
+
+    APP.destinoSelecionado =
+        estadoAnterior.destinoSelecionado;
+
+
+    if(
+        !empilhamentoValido
+    ){
+
+        alert(
+            "Não é possível utilizar este nível porque existem níveis vazios abaixo."
+        );
+
+        return;
+    }
+
+
+    /* =========================================
+    CONFIRMAÇÃO
+    ========================================= */
+
+    const confirmar =
+        confirm(
+            `Movimentar ${container}?\n\n${origem}\n→\n${destino}`
+        );
+
+
+    if(
+        !confirmar
+    ){
+        return;
+    }
+
+
+    /* =========================================
+    SUPABASE
+    ========================================= */
+
+    try{
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "portal_localizacoes"
+                )
+                .upsert(
+                    {
+
+                        container:
+                            container,
+
+                        localizacao:
+                            destino,
+
+                        atualizado_por:
+                            USUARIO_PORTAL
+                                ? USUARIO_PORTAL.id
+                                : null,
+
+                        atualizado_em:
+                            new Date()
+                                .toISOString()
+
+                    },
+                    {
+
+                        onConflict:
+                            "container"
+
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Erro na movimentação por drag:",
+                error
+            );
+
+            alert(
+                "Não foi possível realizar a movimentação."
+            );
+
+            return;
+        }
+
+
+        /* =========================================
+        RECARREGA LOCALIZAÇÕES
+        ========================================= */
+
+        await carregarLocalizacoesSupabase();
+
+
+        /* =========================================
+        LOG
+        ========================================= */
+
+        await registrarLog({
+
+            area:
+                "MAPA",
+
+            acao:
+                "MOVIMENTAÇÃO DRAG",
+
+            container:
+                container,
+
+            detalhes:
+                `${origem} → ${destino}`
+
+        });
+
+
+        /* =========================================
+        ATUALIZA POPUPS
+        ========================================= */
+
+        atualizarJanelasMapaAbertas();
+
+
+        console.log(
+            "Movimentação concluída:",
+            container,
+            origem,
+            destino
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado na movimentação por drag:",
+            erro
+        );
+
+        alert(
+            "Erro inesperado ao movimentar o container."
+        );
+
+    }
+
+}
+
+/* ==========================================================
+ATUALIZA JANELAS DE PRAÇA QUE ESTÃO ABERTAS
+========================================================== */
+
+function atualizarJanelasMapaAbertas(){
+
+    document
+        .querySelectorAll(
+            ".mapa-janela[data-janela^='praca-']"
+        )
+        .forEach(janela=>{
+
+            const id =
+                janela.dataset.janela;
+
+
+            const praca =
+                String(id)
+                    .replace(
+                        "praca-",
+                        ""
+                    )
+                    .toUpperCase();
+
+
+            const titulo =
+                janela.querySelector(
+                    ".mapa-janela-titulo"
+                );
+
+
+            /*
+            Se o título estiver como A-01,
+            significa que estamos vendo
+            uma linha detalhada.
+            */
+            const tituloAtual =
+                titulo
+                    ? titulo.textContent.trim()
+                    : "";
+
+
+            const padraoLinha =
+                /^[A-D]-\d{2}$/;
+
+
+            if(
+                padraoLinha.test(
+                    tituloAtual
+                )
+            ){
+
+                renderizarLinhaDetalhada(
+                    janela,
+                    praca,
+                    tituloAtual
+                );
+
+            }
+            else{
+
+                renderizarPracaCompacta(
+                    janela,
+                    praca
+                );
+
+            }
+
+        });
 
 }
 
