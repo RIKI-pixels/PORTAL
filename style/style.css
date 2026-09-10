@@ -7963,7 +7963,7 @@ Já deixamos pronta para o próximo passo
 
 
 /* =========================================================
-TABLET
+JANELA FLUTUANTE - TABLET
 ========================================================= */
 
 @media(
@@ -7976,38 +7976,231 @@ and
 
     .mapa-janela{
 
-        top:55px;
+        /* tamanho mais compacto */
 
         width:
-            calc(100% - 30px);
+            min(
+                720px,
+                72vw
+            );
 
         height:
             min(
-                620px,
-                calc(100vh - 110px)
+                520px,
+                68vh
             );
 
-        min-width:0;
+        min-width:480px;
+
+        min-height:320px;
+
+
+        /* posição inicial */
+
+        top:70px;
+
+        left:50%;
+
+        transform:
+            translateX(-50%);
+
+
+        border-radius:12px;
     }
 
 
-    .mapa-janela-linhas{
-
-        grid-template-columns:
-            repeat(
-                3,
-                minmax(0,1fr)
-            );
-    }
-
+    /* =============================================
+    CABEÇALHO MAIS FINO
+    ============================================= */
 
     .mapa-janela-header{
 
-        min-height:54px;
+        min-height:48px;
+
+        padding:
+            7px 9px
+            7px 13px;
+    }
+
+
+    .mapa-janela-titulo{
+
+        font-size:12px;
+    }
+
+
+    .mapa-janela-subtitulo{
+
+        font-size:7px;
+    }
+
+
+    .mapa-janela-botao{
+
+        width:27px;
+
+        height:27px;
+
+        min-width:27px;
+
+        min-height:27px;
+
+        font-size:14px;
+    }
+
+
+    /* =============================================
+    TOOLBAR
+    ============================================= */
+
+    .mapa-janela-toolbar{
+
+        min-height:38px;
+
+        padding:
+            5px 10px;
+    }
+
+
+    .mapa-janela-resumo-texto{
+
+        padding:
+            4px 7px;
+
+        font-size:8px;
+    }
+
+
+    /* =============================================
+    ÁREA INTERNA
+    ============================================= */
+
+    .mapa-janela-conteudo{
+
+        padding:10px;
+
+        /*
+        As demais linhas ficam aqui dentro
+        sem aumentar a janela.
+        */
+
+        overflow-y:auto;
+
+        overflow-x:hidden;
+    }
+
+
+    /* =============================================
+    LINHAS MAIS COMPACTAS
+    ============================================= */
+
+    .mapa-janela-linhas{
+
+        gap:6px;
+    }
+
+
+    .mapa-janela-linha{
+
+        grid-template-columns:
+            72px
+            1fr
+            72px;
+
+        min-height:68px;
+
+        gap:8px;
+
+        padding:
+            6px 8px;
+
+        border-radius:7px;
+    }
+
+
+    /* A-01 */
+
+    .mapa-mini-linha-topo{
+
+        gap:2px;
+    }
+
+
+    .mapa-mini-linha-topo strong{
+
+        font-size:10px;
+    }
+
+
+    .mapa-mini-linha-topo span{
+
+        padding:
+            2px 4px;
+
+        font-size:7px;
+    }
+
+
+    /* =============================================
+    PILHAS
+    ============================================= */
+
+    .mapa-mini-estrutura{
+
+        gap:5px;
+    }
+
+
+    .mapa-mini-pilha{
+
+        gap:2px;
+
+        padding:3px;
+
+        border-radius:4px;
+    }
+
+
+    .mapa-mini-nivel{
+
+        height:7px;
+
+        border-radius:1px;
+    }
+
+
+    /* =============================================
+    CONTAGEM
+    ============================================= */
+
+    .mapa-mini-linha-rodape span{
+
+        font-size:7px;
+    }
+
+
+    /* =============================================
+    TOPO DA PRAÇA
+    ============================================= */
+
+    .mapa-janela-praca-topo{
+
+        margin-bottom:7px;
+    }
+
+
+    .mapa-janela-praca-topo strong{
+
+        font-size:10px;
+    }
+
+
+    .mapa-janela-praca-topo span{
+
+        font-size:7px;
     }
 
 }
-
 
 /* =========================================================
 CELULAR
