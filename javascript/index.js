@@ -1,6 +1,6 @@
  /* ==========================================================
    PORTAL OPERACIONAL CDI
-   Versão 1.5.1 SUBPASE REAL TESTE 1
+   Versão 1.6.3 JANELAS FLUTUANTES MAPA
 ========================================================== */
 
 
@@ -7078,27 +7078,6 @@ function abrirJanelaPraca(praca){
             `PRAÇA ${praca}`;
     }
 
-
-    /*
-    Conteúdo provisório
-    */
-    const conteudo =
-        janela.querySelector(
-            ".mapa-janela-conteudo"
-        );
-
-
-    if(conteudo){
-
-        conteudo.innerHTML = `
-            <div class="mapa-janela-loading">
-                Praça ${praca} aberta com sucesso.
-            </div>
-        `;
-
-    }
-
-
     /*
     Ações
     */
@@ -7188,9 +7167,19 @@ function abrirJanelaPraca(praca){
     /*
     Adiciona ao mapa
     */
-    areaJanelas.appendChild(
-        janela
-    );
+   areaJanelas.appendChild(
+    janela
+);
+
+
+/*
+Renderiza todas as linhas
+da praça dentro da janela.
+*/
+renderizarPracaCompacta(
+    janela,
+    praca
+);
 
 
     /*
@@ -7484,6 +7473,341 @@ function ativarArrasteJanelaMapa(janela){
         "pointercancel",
         finalizarArraste
     );
+
+}
+
+
+/* ==========================================================
+VISÃO COMPACTA DA PRAÇA
+========================================================== */
+
+function renderizarPracaCompacta(
+    janela,
+    praca
+){
+
+    if(
+        !janela ||
+        !praca
+    ){
+        return;
+    }
+
+
+    praca =
+        String(praca)
+            .trim()
+            .toUpperCase();
+
+
+    const quantidadeLinhas =
+        PRACAS_PATIO[praca];
+
+
+    if(!quantidadeLinhas){
+        return;
+    }
+
+
+    const conteudo =
+        janela.querySelector(
+            ".mapa-janela-conteudo"
+        );
+
+
+    const resumo =
+        janela.querySelector(
+            ".mapa-janela-resumo-texto"
+        );
+
+
+    const botaoVoltar =
+        janela.querySelector(
+            ".mapa-janela-voltar"
+        );
+
+
+    if(!conteudo){
+        return;
+    }
+
+
+    /*
+    Na visão geral da praça
+    não precisamos do botão voltar.
+    */
+    if(botaoVoltar){
+
+        botaoVoltar.style.display =
+            "none";
+
+    }
+
+
+    let totalContainers =
+        0;
+
+
+    let html = `
+
+        <div class="mapa-janela-praca-topo">
+
+            <div>
+
+                <strong>
+                    PRAÇA ${praca}
+                </strong>
+
+                <span>
+                    ${quantidadeLinhas}
+                    ${
+                        quantidadeLinhas === 1
+                            ? "linha"
+                            : "linhas"
+                    }
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="mapa-janela-linhas">
+
+    `;
+
+
+    /*
+    =========================================
+    GERA TODAS AS LINHAS DA PRAÇA
+    =========================================
+    */
+
+    for(
+        let numeroLinha = 1;
+        numeroLinha <= quantidadeLinhas;
+        numeroLinha++
+    ){
+
+        const linha =
+            `${praca}-${String(
+                numeroLinha
+            ).padStart(
+                2,
+                "0"
+            )}`;
+
+
+        let ocupadosLinha =
+            0;
+
+
+        let miniPilhasHTML =
+            "";
+
+
+        /*
+        =====================================
+        4 PILHAS
+        =====================================
+        */
+
+        for(
+            let pilha = 1;
+            pilha <= 4;
+            pilha++
+        ){
+
+            let niveisHTML =
+                "";
+
+
+            /*
+            Nível 4 fica visualmente em cima.
+            Nível 1 embaixo.
+            */
+
+            for(
+                let nivel = 4;
+                nivel >= 1;
+                nivel--
+            ){
+
+                const posicao =
+                    `${linha}-${pilha}-${nivel}`;
+
+
+                const container =
+                    obterContainerNaPosicao(
+                        posicao
+                    );
+
+
+                const ocupado =
+                    Boolean(container);
+
+
+                if(ocupado){
+
+                    ocupadosLinha++;
+                    totalContainers++;
+
+                }
+
+
+                niveisHTML += `
+
+                    <span
+                        class="
+                            mapa-mini-nivel
+                            ${
+                                ocupado
+                                    ? "ocupado"
+                                    : ""
+                            }
+                        "
+                        title="${
+                            ocupado
+                                ? `${posicao} - ${container}`
+                                : `${posicao} - VAZIO`
+                        }">
+                    </span>
+
+                `;
+
+            }
+
+
+            miniPilhasHTML += `
+
+                <div
+                    class="mapa-mini-pilha"
+                    title="Pilha ${pilha}">
+
+                    ${niveisHTML}
+
+                </div>
+
+            `;
+
+        }
+
+
+        /*
+        =====================================
+        CARD DA LINHA
+        =====================================
+        */
+
+        html += `
+
+            <button
+                type="button"
+                class="mapa-janela-linha"
+                data-linha="${linha}">
+
+                <div class="mapa-mini-linha-topo">
+
+                    <strong>
+                        ${linha}
+                    </strong>
+
+                    <span>
+                        ${ocupadosLinha}/16
+                    </span>
+
+                </div>
+
+
+                <div class="mapa-mini-estrutura">
+
+                    ${miniPilhasHTML}
+
+                </div>
+
+
+                <div class="mapa-mini-linha-rodape">
+
+                    <span>
+                        ${ocupadosLinha}
+                        ${
+                            ocupadosLinha === 1
+                                ? "container"
+                                : "containers"
+                        }
+                    </span>
+
+                </div>
+
+            </button>
+
+        `;
+
+    }
+
+
+    html += `
+
+        </div>
+
+    `;
+
+
+    conteudo.innerHTML =
+        html;
+
+
+    /*
+    =========================================
+    RESUMO DO CABEÇALHO
+    =========================================
+    */
+
+    if(resumo){
+
+        resumo.textContent =
+            `${totalContainers} ${
+                totalContainers === 1
+                    ? "container"
+                    : "containers"
+            }`;
+
+    }
+
+
+    /*
+    =========================================
+    CLIQUE NAS LINHAS
+
+    Por enquanto apenas identifica.
+    No próximo passo abriremos
+    a visualização detalhada.
+    =========================================
+    */
+
+    conteudo
+        .querySelectorAll(
+            ".mapa-janela-linha"
+        )
+        .forEach(botao=>{
+
+            botao.addEventListener(
+                "click",
+                ()=>{
+
+                    const linha =
+                        botao.dataset.linha;
+
+
+                    console.log(
+                        "Linha selecionada:",
+                        linha
+                    );
+
+                }
+            );
+
+        });
 
 }
 
