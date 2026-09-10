@@ -8841,3 +8841,92 @@ and
     }
 
 }
+
+/* =========================================================
+JANELAS MINIMIZADAS DO MAPA
+========================================================= */
+
+.mapa-janelas-minimizadas{
+
+    position:fixed;
+
+    left:50%;
+    bottom:14px;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:6px;
+
+    background:rgba(
+        16,
+        27,
+        43,
+        .94
+    );
+
+    border-radius:10px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(0,0,0,.18);
+
+    z-index:500;
+
+}
+
+
+.mapa-janelas-minimizadas:empty{
+
+    display:none;
+
+}
+
+
+.mapa-janela-minimizada{
+
+    min-height:30px;
+
+    padding:5px 10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#ffffff;
+
+    border:1px solid #d7e0ea;
+
+    border-radius:6px;
+
+    color:#152236;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    white-space:nowrap;
+
+    transition:
+        background .12s ease,
+        transform .12s ease;
+
+}
+
+
+.mapa-janela-minimizada:hover{
+
+    background:#edf5fc;
+
+    transform:translateY(-1px);
+
+}
