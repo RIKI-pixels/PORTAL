@@ -7971,28 +7971,27 @@ JANELA FLUTUANTE - TABLET
 )
 and
 (
-    max-width:1100px
+    max-width:1380px
 ){
 
     .mapa-janela{
 
         /* tamanho mais compacto */
 
-        width:
-            min(
-                720px,
-                72vw
-            );
+width:
+    min(
+        650px,
+        64vw
+    );
 
-        height:
-            min(
-                520px,
-                68vh
-            );
+height:
+    min(
+        460px,
+        60vh
+    );
 
-        min-width:480px;
-
-        min-height:320px;
+min-width:450px;
+min-height:300px;
 
 
         /* posição inicial */
