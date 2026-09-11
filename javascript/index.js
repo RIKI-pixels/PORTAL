@@ -8486,7 +8486,8 @@ function renderizarPracaCompacta(
             let pilha = 1;
             pilha <= 4;
             pilha++
-        ){
+        ){ 
+        
 
             let niveisHTML =
                 "";
@@ -8811,7 +8812,11 @@ function renderizarLinhaDetalhada(
         let pilha = 1;
         pilha <= 4;
         pilha++
-    ){
+    ){ 
+    const letraLastro =
+    ["A", "B", "C", "D"][
+        pilha - 1
+    ];
 
         html += `
 
@@ -8819,7 +8824,7 @@ function renderizarLinhaDetalhada(
 
                 <div class="mapa-linha-popup-pilha-titulo">
 
-                    PILHA ${pilha}
+                    LASTRO ${letraLastro}
 
                 </div>
 
