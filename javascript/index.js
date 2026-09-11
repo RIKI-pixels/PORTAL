@@ -1972,78 +1972,201 @@ function restaurarTSV(){
 
 }
 
-function resetarLocalizacoes(){
+/* ==========================================================
+RESETAR TODAS AS LOCALIZAÇÕES DO MAPA
+========================================================== */
 
-    const confirmar = confirm(
-        "Deseja realmente apagar todas as localizações salvas?\n\nSolicitações pendentes e em andamento também serão removidas."
-    );
+async function resetarLocalizacoes(){
+
+    const confirmar =
+        confirm(
+            "ATENÇÃO!\n\n" +
+            "Isso removerá TODAS as localizações dos containers do mapa.\n\n" +
+            "Os containers continuarão existindo no Estoque, porém ficarão SEM LOCALIZAÇÃO.\n\n" +
+            "Deseja continuar?"
+        );
+
 
     if(!confirmar){
         return;
     }
 
 
-    // REMOVE TODAS AS LOCALIZAÇÕES
-
-    localStorage.removeItem(
-        "localizacoesContainers"
-    );
-
-
-    // MANTÉM SOMENTE O HISTÓRICO CONCLUÍDO
-
-    const solicitacoes =
-        obterSolicitacoes();
-
-    const historico =
-        solicitacoes.filter(item=>{
-
-            return item.status === "CONCLUÍDO";
-
-        });
-
-    salvarSolicitacoes(
-        historico
-    );
+    const confirmarNovamente =
+        confirm(
+            "CONFIRMAÇÃO FINAL\n\n" +
+            "Deseja realmente apagar TODAS as posições do mapa?"
+        );
 
 
-    // ATUALIZA O ESTADO EM MEMÓRIA DO ESTOQUE
-
-    if(APP.carregadoEstoque){
-
-        APP.dadosEstoque.forEach(registro=>{
-
-            registro.localizacao = "";
-
-        });
-
+    if(!confirmarNovamente){
+        return;
     }
 
 
-    APP.containerSelecionado = null;
+    if(!USUARIO_PORTAL){
+
+        alert(
+            "Usuário não identificado."
+        );
+
+        return;
+    }
 
 
-    atualizarDashboardSolicitacoes();
+    try{
 
-    renderSolicitacoesPendentes();
+        /* =========================================
+        APAGA TODAS AS LOCALIZAÇÕES DO SUPABASE
+        ========================================= */
 
-    renderSolicitacoesEmAndamento();
+        const {
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "portal_localizacoes"
+                )
+                .delete()
+                .not(
+                    "container",
+                    "is",
+                    null
+                );
 
-    renderSolicitacoesConcluidas();
 
-    atualizarAreasSolicitadasMapa();
+        if(error){
 
-    atualizarNotificacaoSolicitacoes();
-
-
-    alert(
-        "Localizações resetadas.\nSolicitações pendentes e em andamento foram removidas."
-    );
+            console.error(
+                "Erro ao resetar localizações:",
+                error
+            );
 
 
-    if(APP.carregadoEstoque){
+            alert(
+                "Não foi possível apagar as localizações.\n\n" +
+                "Verifique o console."
+            );
 
-        buscarEstoque();
+            return;
+        }
+
+
+        /* =========================================
+        LIMPA MEMÓRIA LOCAL
+        ========================================= */
+
+        LOCALIZACOES_CONTAINERS =
+            {};
+
+
+        APP.containerSelecionado =
+            null;
+
+
+        /* =========================================
+        ATUALIZA ESTOQUE
+        ========================================= */
+
+        if(APP.carregadoEstoque){
+
+            APP.dadosEstoque.forEach(
+                registro=>{
+
+                    registro.localizacao =
+                        "";
+
+                }
+            );
+
+        }
+
+
+        /* =========================================
+        ATUALIZA MAPA
+        ========================================= */
+
+        atualizarJanelasMapaAbertas();
+
+
+        atualizarContainerSelecionadoMapa();
+
+
+        atualizarAreasSolicitadasMapa();
+
+
+        /* =========================================
+        ATUALIZA ESTOQUE VISUAL
+        ========================================= */
+
+        if(
+            APP.listaEstoqueAtual &&
+            Array.isArray(
+                APP.listaEstoqueAtual
+            )
+        ){
+
+            renderTabelaEstoque(
+                APP.listaEstoqueAtual
+            );
+
+        }
+
+
+        /* =========================================
+        ATUALIZA JANELA DA PROGRAMAÇÃO
+        SE ESTIVER ABERTA
+        ========================================= */
+
+        const janelaProgramacao =
+            document.querySelector(
+                '.mapa-janela[data-janela="programacao"]'
+            );
+
+
+        if(janelaProgramacao){
+
+            renderizarJanelaProgramacao(
+                janelaProgramacao
+            );
+
+        }
+
+
+        /* =========================================
+        LOG
+        ========================================= */
+
+        await registrarLog({
+
+            area:
+                "MAPA",
+
+            acao:
+                "RESETOU TODAS AS LOCALIZAÇÕES",
+
+            detalhes:
+                "Todas as localizações de containers foram removidas do mapa."
+
+        });
+
+
+        alert(
+            "Todas as localizações foram removidas com sucesso."
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro inesperado ao resetar mapa:",
+            erro
+        );
+
+
+        alert(
+            "Erro inesperado ao resetar as localizações."
+        );
 
     }
 
