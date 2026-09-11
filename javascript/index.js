@@ -983,6 +983,45 @@ function criarRegistro(linha){
     };
 
 }
+
+function formatarLocalizacaoEstoque(localizacao){
+
+    if(!localizacao){
+        return "";
+    }
+
+    const partes =
+        String(localizacao).split("-");
+
+    if(partes.length !== 4){
+        return localizacao;
+    }
+
+    const praca =
+        partes[0];
+
+    const linha =
+        partes[1];
+
+    const numeroLastro =
+        Number(partes[2]);
+
+    const nivel =
+        partes[3];
+
+    const letrasLastro =
+        ["A", "B", "C", "D", "E", "F"];
+
+    const lastro =
+        letrasLastro[numeroLastro - 1];
+
+    if(!lastro){
+        return localizacao;
+    }
+
+    return `${praca}-${linha} • LASTRO ${lastro} • N${nivel}`;
+}
+
 function criarRegistroEstoque(linha){
 
     const container = textoMaiusculo(linha[0]);
@@ -994,7 +1033,8 @@ function criarRegistroEstoque(linha){
         estado: textoMaiusculo(linha[2]),
         cliente: textoMaiusculo(linha[3]),
         booking: textoMaiusculo(linha[4]),
-        localizacao: obterLocalizacao(container)
+       localizaca: formatarLocalizacaoEstoque(obterLocalizacao(container)
+       )
 
     };
 
@@ -2073,6 +2113,8 @@ async function resetarLocalizacoes(){
             null;
 
 
+
+     
         /* =========================================
         ATUALIZA ESTOQUE
         ========================================= */
@@ -6271,7 +6313,7 @@ async function buscarProgramacao(){
 
     lista.forEach(registro=>{
 
-        registro.localizacao =
+        o =
             obterLocalizacao(
                 registro.container
             ) || "AGUARDANDO MAPEAMENTO";
@@ -6407,7 +6449,7 @@ async function carregarLocalizacoesSupabase(){
                 container
             ] =
                 String(
-                    registro.localizacao || ""
+                    o || ""
                 ).trim();
 
         }
