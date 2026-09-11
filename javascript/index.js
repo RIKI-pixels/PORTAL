@@ -667,7 +667,7 @@ const CLIENTES_ESTUFAGEM =
     CLIENTES_PADRAO;
 
 /* ==========================================================
-   PRÇAS
+   PRÇAS e LASTROS
 ========================================================== */
 
 const PRACAS_PATIO = {
@@ -676,6 +676,15 @@ const PRACAS_PATIO = {
     B: 37,
     C: 37,
     D: 37
+
+};
+
+const LASTROS_POR_PRACA = {
+
+    A: 4,
+    B: 4,
+    C: 6,
+    D: 4
 
 };
 
@@ -8482,9 +8491,12 @@ function renderizarPracaCompacta(
         =====================================
         */
 
+    const quantidadeLastros =
+    LASTROS_POR_PRACA[praca] || 4;
+     
         for(
             let pilha = 1;
-            pilha <= 4;
+            pilha <= quantidadeLastros;
             pilha++
         ){ 
         
@@ -8584,7 +8596,7 @@ function renderizarPracaCompacta(
                     </strong>
 
                     <span>
-                        ${ocupadosLinha}/16
+                        ${ocupadosLinha}/${quantidadeLastros * 4}
                     </span>
 
                 </div>
@@ -8779,6 +8791,9 @@ function renderizarLinhaDetalhada(
     let totalContainers =
         0;
 
+  const quantidadeLastros =
+    LASTROS_POR_PRACA[praca] || 4;
+
 
     let html = `
 
@@ -8810,11 +8825,11 @@ function renderizarLinhaDetalhada(
 
     for(
         let pilha = 1;
-        pilha <= 4;
+        pilha <= quantidadeLastros;
         pilha++
     ){ 
     const letraLastro =
-    ["A", "B", "C", "D"][
+      ["A", "B", "C", "D", "E", "F"][
         pilha - 1
     ];
 
@@ -8967,7 +8982,7 @@ conteudo
     if(resumo){
 
         resumo.textContent =
-            `${totalContainers}/16 ocupados`;
+            `${totalContainers}/${quantidadeLastros * 4} ocupados`
 
     }
 
@@ -9519,14 +9534,6 @@ async function movimentarContainerPorDrag(
 
     /* =========================================
     INTERPRETA O DESTINO
-
-    Exemplo:
-    B-07-2-3
-
-    praça: B
-    linha: B-07
-    pilha: 2
-    nível: 3
     ========================================= */
 
     const partesDestino =
