@@ -6449,7 +6449,7 @@ async function carregarLocalizacoesSupabase(){
                 container
             ] =
                 String(
-                    o || ""
+                     || ""
                 ).trim();
 
         }
