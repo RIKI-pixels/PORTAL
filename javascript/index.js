@@ -8806,7 +8806,7 @@ function renderizarLinhaDetalhada(
                 </strong>
 
                 <span>
-                    4 pilhas • 4 níveis
+                    ${quantidadeLastros} lastros • 4 níveis
                 </span>
 
             </div>
