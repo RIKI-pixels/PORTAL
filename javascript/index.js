@@ -1570,8 +1570,12 @@ function renderTabelaEstoque(lista){
 
         pagina.forEach(registro=>{
 
-            const localizacao =
-                obterLocalizacao(registro.container);
+const localizacao =
+    formatarLocalizacaoEstoque(
+        obterLocalizacao(
+            registro.container
+        )
+    );
 
             DOM.tbodyEstoque.innerHTML += `
 
