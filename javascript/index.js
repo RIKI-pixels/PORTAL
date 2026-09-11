@@ -1019,7 +1019,7 @@ function formatarLocalizacaoEstoque(localizacao){
         return localizacao;
     }
 
-    return `${praca}-${linha} • LASTRO ${lastro} • N${nivel}`;
+    return `${praca}-${linha}-${lastro}-${nivel}`;
 }
 
 function criarRegistroEstoque(linha){
