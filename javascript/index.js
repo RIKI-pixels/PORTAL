@@ -6434,25 +6434,26 @@ async function carregarLocalizacoesSupabase(){
         LOCALIZACOES_CONTAINERS = {};
 
 
-        for(const registro of data){
+for(const registro of data){
 
-            const container =
-                normalizarContainer(
-                    registro.container
-                );
+    const container =
+        normalizarContainer(
+            registro.container
+        );
 
-            if(!container){
-                continue;
-            }
+    if(!container){
+        continue;
+    }
 
-            LOCALIZACOES_CONTAINERS[
-                container
-            ] =
-                String(
-                     || ""
-                ).trim();
+    const localizacao =
+        registro.localizacao
+            ? String(registro.localizacao).trim()
+            : "";
 
-        }
+    LOCALIZACOES_CONTAINERS[container] =
+        localizacao;
+
+}
 
 
         console.log(
