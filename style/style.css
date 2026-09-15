@@ -3475,268 +3475,846 @@ SOLICITAÇÕES
     overflow:auto;
 }
 
-/* ==========================================================
-   LOGIN PORTAL
-========================================================== */
+/* =========================================================
+LOGIN PORTAL
+DESKTOP + TABLET
+========================================================= */
 
-.login-screen {
+.login-screen{
 
-    position: fixed;
+    position:fixed;
+    inset:0;
 
-    top: 0;
-    left: 0;
+    width:100%;
+    height:100vh;
 
-    width: 100%;
-    height: 100vh;
+    display:grid;
+
+    grid-template-columns:
+        minmax(420px, 1fr)
+        minmax(500px, 1fr);
+
+    background:#f5f8fc;
+
+    z-index:99999;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+LADO ESQUERDO
+========================================================= */
+
+.login-visual{
+
+    position:relative;
+
+    min-width:0;
+    height:100%;
+
+    overflow:hidden;
 
     background:
-        #eef4fd;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        linear-gradient(
+            90deg,
+            rgba(4,23,49,.94) 0%,
+            rgba(4,31,68,.88) 50%,
+            rgba(3,35,76,.72) 100%
+        ),
 
-    z-index: 99999;
+        url("../login-fundo.jpg");
 
-    font-family:
-        "Poppins",
-        sans-serif;
-
+    background-size:cover;
+    background-position:center;
 }
 
 
-.login-card {
+/* LUZ AZUL SUTIL */
 
-    width: 380px;
+.login-visual::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
 
     background:
-        #ffffff;
 
-    border-radius:
-        18px;
+        linear-gradient(
+            135deg,
+            transparent 0%,
+            transparent 48%,
+            rgba(39,112,255,.20) 48.2%,
+            transparent 48.6%
+        );
+}
+
+
+/* ESCURECIMENTO INFERIOR */
+
+.login-visual::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:42%;
+
+    pointer-events:none;
+
+    background:
+
+        linear-gradient(
+            0deg,
+            rgba(1,18,40,.78),
+            transparent
+        );
+}
+
+
+.login-visual-conteudo{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+    height:100%;
 
     padding:
-        42px 42px 38px;
+        clamp(45px, 6vh, 80px)
+        clamp(45px, 7vw, 110px);
 
-    box-shadow:
-        0 15px 45px
-        rgba(0, 58, 120, 0.12);
+    display:flex;
 
-    text-align: center;
+    flex-direction:column;
 
+    align-items:flex-start;
 }
 
 
-.login-logo {
+/* =========================================================
+LOGO CDI
+========================================================= */
 
-    display: flex;
-    justify-content: center;
+.login-visual-logo{
 
-    margin-bottom: 18px;
+    width:
+        clamp(180px, 15vw, 250px);
 
+    max-width:55%;
+
+    height:auto;
+
+    object-fit:contain;
 }
 
 
-.login-logo img {
+/* =========================================================
+SLOGAN
+========================================================= */
 
-    width: 150px;
-    height: auto;
+.login-slogan{
 
-}
+    margin-top:20px;
 
+    display:flex;
 
-.login-card h1 {
+    align-items:center;
 
-    margin:
-        0 0 4px;
-
-    font-size:
-        26px;
-
-    font-weight:
-        700;
+    gap:12px;
 
     color:
-        #0753a5;
-
-}
-
-
-.login-subtitulo {
-
-    margin:
-        0 0 30px;
+        rgba(255,255,255,.78);
 
     font-size:
-        13px;
+        clamp(9px, .8vw, 12px);
 
-    color:
-        #77849a;
+    font-weight:500;
 
+    letter-spacing:4px;
+
+    white-space:nowrap;
 }
 
 
-.login-form {
+.login-slogan span{
 
-    display: flex;
-    flex-direction: column;
+    display:block;
 
-    text-align: left;
+    width:22px;
+    height:2px;
 
+    background:#3b8cff;
 }
 
 
-.login-form label {
+/* =========================================================
+BEM-VINDO
+========================================================= */
 
-    margin-bottom: 6px;
-
-    font-size:
-        12px;
-
-    font-weight:
-        600;
-
-    color:
-        #34445c;
-
-}
-
-
-.login-form input {
-
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding:
-        12px 14px;
-
-    margin-bottom:
-        18px;
-
-    border:
-        1px solid #d8e1ee;
-
-    border-radius:
-        8px;
-
-    outline:
-        none;
-
-    font-family:
-        "Poppins",
-        sans-serif;
-
-    font-size:
-        13px;
-
-    transition:
-        0.2s;
-
-}
-
-
-.login-form input:focus {
-
-    border-color:
-        #0753a5;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(7, 83, 165, 0.08);
-
-}
-
-
-#btnLogin {
-
-    width: 100%;
+.login-boas-vindas{
 
     margin-top:
-        4px;
+        clamp(80px, 16vh, 180px);
+
+    display:flex;
+
+    flex-direction:column;
+
+    line-height:1.08;
+}
+
+
+.login-boas-vindas span{
+
+    color:#ffffff;
+
+    font-size:
+        clamp(30px, 3vw, 52px);
+
+    font-weight:600;
+}
+
+
+.login-boas-vindas strong{
+
+    margin-top:4px;
+
+    color:#55a0ff;
+
+    font-size:
+        clamp(35px, 3.6vw, 62px);
+
+    font-weight:700;
+
+    letter-spacing:-1px;
+}
+
+
+/* =========================================================
+LADO DIREITO
+========================================================= */
+
+.login-acesso{
+
+    position:relative;
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
 
     padding:
-        13px;
-
-    border:
-        none;
-
-    border-radius:
-        8px;
+        60px
+        clamp(45px, 7vw, 120px);
 
     background:
-        #0753a5;
 
-    color:
-        white;
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(47,125,244,.07),
+            transparent 32%
+        ),
+
+        #f8fafc;
+}
+
+
+/* TRIÂNGULO DECORATIVO */
+
+.login-acesso::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-80px;
+    bottom:-100px;
+
+    width:300px;
+    height:300px;
+
+    border-radius:35px;
+
+    transform:rotate(45deg);
+
+    background:
+        rgba(47,125,244,.04);
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+MARCA SUPERIOR
+========================================================= */
+
+.login-sistema{
+
+    position:absolute;
+
+    top:45px;
+    right:8%;
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+    color:#536680;
+}
+
+
+.login-sistema > span{
+
+    width:28px;
+    height:2px;
+
+    margin-top:7px;
+
+    background:#2f7df4;
+}
+
+
+.login-sistema div{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+}
+
+
+.login-sistema strong{
+
+    color:#4d617c;
+
+    font-size:11px;
+
+    font-weight:500;
+
+    letter-spacing:4px;
+}
+
+
+.login-sistema small{
+
+    color:#687b94;
+
+    font-size:9px;
+
+    font-weight:500;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+CARD LOGIN
+========================================================= */
+
+.login-card{
+
+    position:relative;
+
+    z-index:2;
+
+    width:min(
+        100%,
+        610px
+    );
+
+    padding:
+        clamp(38px, 5vh, 58px)
+        clamp(38px, 4vw, 58px);
+
+    background:
+        rgba(255,255,255,.96);
+
+    border:
+        1px solid
+        rgba(221,229,239,.90);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(18,46,84,.12);
+
+    text-align:left;
+}
+
+
+/* =========================================================
+CABEÇALHO CARD
+========================================================= */
+
+.login-card-cabecalho{
+
+    margin-bottom:34px;
+
+    text-align:center;
+}
+
+
+.login-card-cabecalho h1{
+
+    margin:0;
+
+    color:#102a54;
+
+    font-size:
+        clamp(26px, 2vw, 36px);
+
+    font-weight:700;
+
+    letter-spacing:-.6px;
+}
+
+
+.login-card-cabecalho p{
+
+    margin-top:5px;
+
+    color:#7a8799;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+FORM
+========================================================= */
+
+.login-form{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+
+.login-form label{
+
+    margin:
+        0 0 7px;
+
+    color:#142c55;
+
+    font-size:13px;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+INPUT WRAPPER
+========================================================= */
+
+.login-input{
+
+    position:relative;
+
+    width:100%;
+
+    margin-bottom:20px;
+}
+
+
+.login-input-icone{
+
+    position:absolute;
+
+    left:17px;
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    z-index:2;
+
+    width:21px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#36557e;
+
+    font-size:15px;
+
+    pointer-events:none;
+}
+
+
+.login-form .login-input input{
+
+    width:100%;
+    height:58px;
+
+    margin:0;
+
+    padding:
+        0 18px
+        0 51px;
+
+    border:
+        1px solid
+        #d7dfeb;
+
+    border-radius:10px;
+
+    background:#ffffff;
+
+    color:#24364f;
 
     font-family:
         "Poppins",
         sans-serif;
 
-    font-size:
-        13px;
+    font-size:14px;
 
-    font-weight:
-        600;
-
-    cursor:
-        pointer;
+    outline:none;
 
     transition:
-        0.2s;
-
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
 }
 
 
-#btnLogin:hover {
+.login-form .login-input input::placeholder{
+
+    color:#a3adbc;
+}
+
+
+.login-form .login-input input:focus{
+
+    border-color:#2f7df4;
+
+    background:#ffffff;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(47,125,244,.10);
+}
+
+
+/* =========================================================
+ERRO
+========================================================= */
+
+.login-erro{
+
+    margin:
+        -5px
+        0
+        18px;
+
+    padding:
+        11px 13px;
+
+    border:
+        1px solid
+        #ffd5d5;
+
+    border-radius:8px;
+
+    background:#fff4f4;
+
+    color:#c73535;
+
+    font-size:11px;
+
+    text-align:center;
+}
+
+
+/* =========================================================
+BOTÃO
+========================================================= */
+
+#btnLogin{
+
+    width:100%;
+    height:58px;
+
+    margin-top:7px;
+
+    padding:
+        0 25px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #1767d7,
+            #2582ff
+        );
+
+    color:#ffffff;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 9px 22px
+        rgba(23,103,215,.22);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+
+#btnLogin:hover{
 
     transform:
         translateY(-1px);
 
-    box-shadow:
-        0 6px 16px
-        rgba(7, 83, 165, 0.20);
+    filter:brightness(1.03);
 
+    box-shadow:
+        0 12px 27px
+        rgba(23,103,215,.27);
 }
 
 
-#btnLogin:disabled {
-
-    opacity:
-        0.65;
-
-    cursor:
-        not-allowed;
+#btnLogin:active{
 
     transform:
-        none;
+        translateY(0);
+}
+
+
+#btnLogin:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+}
+
+
+.login-seta{
+
+    font-size:22px;
+
+    line-height:1;
+}
+
+
+/* =========================================================
+VERSÃO
+========================================================= */
+
+.login-versao{
+
+    position:absolute;
+
+    bottom:35px;
+
+    color:#718199;
+
+    font-size:11px;
+
+    font-weight:400;
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(
+    min-width:701px
+)
+and
+(
+    max-width:1100px
+){
+
+    .login-screen{
+
+        grid-template-columns:
+            44%
+            56%;
+    }
+
+
+    .login-visual-conteudo{
+
+        padding:
+            48px
+            38px;
+    }
+
+
+    .login-visual-logo{
+
+        width:170px;
+
+        max-width:75%;
+    }
+
+
+    .login-slogan{
+
+        font-size:8px;
+
+        letter-spacing:2.5px;
+    }
+
+
+    .login-boas-vindas{
+
+        margin-top:
+            clamp(80px, 15vh, 140px);
+    }
+
+
+    .login-boas-vindas span{
+
+        font-size:28px;
+    }
+
+
+    .login-boas-vindas strong{
+
+        font-size:38px;
+    }
+
+
+    .login-acesso{
+
+        padding:
+            50px
+            38px;
+    }
+
+
+    .login-card{
+
+        width:100%;
+
+        max-width:500px;
+
+        padding:
+            38px 34px;
+    }
+
+
+    .login-sistema{
+
+        top:28px;
+        right:35px;
+    }
+
+
+    .login-versao{
+
+        bottom:20px;
+    }
 
 }
 
 
-.login-erro {
+/* =========================================================
+CELULAR
+TEMPORÁRIO
+========================================================= */
 
-    margin:
-        -5px 0 15px;
+@media(max-width:700px){
 
-    padding:
-        9px 11px;
+    .login-screen{
 
-    border-radius:
-        6px;
+        display:flex;
 
-    background:
-        #fff0f0;
+        align-items:center;
+        justify-content:center;
 
-    color:
-        #c62828;
+        background:#f3f6fb;
+    }
 
-    font-size:
-        11px;
 
-    text-align:
-        center;
+    .login-visual{
+
+        display:none;
+    }
+
+
+    .login-acesso{
+
+        width:100%;
+        height:100%;
+
+        padding:25px;
+    }
+
+
+    .login-sistema{
+
+        display:none;
+    }
+
+
+    .login-card{
+
+        width:100%;
+
+        max-width:420px;
+
+        padding:30px 24px;
+    }
+
+
+    .login-versao{
+
+        bottom:18px;
+    }
 
 }
 
