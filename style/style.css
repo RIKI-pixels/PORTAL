@@ -9928,3 +9928,722 @@ SCROLL JANELA PROGRAMAÇÃO
     overflow-x:hidden !important;
 
 }
+
+/* =========================================================
+ÁREA INICIAL
+NOVO VISUAL - DESKTOP / TABLET
+========================================================= */
+
+#inicio.home-screen{
+
+    min-height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:stretch;
+
+    gap:18px;
+
+    padding:0;
+
+    overflow:hidden;
+
+    background:#f5f8fc;
+
+    border:
+        1px solid
+        #dce4ef;
+
+    border-radius:20px;
+}
+
+
+/* =========================================================
+HERO
+========================================================= */
+
+#inicio .home-hero{
+
+    position:relative;
+
+    min-height:235px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    padding:
+        35px
+        44px;
+
+    overflow:hidden;
+
+    border-radius:
+        19px
+        19px
+        0
+        0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(5,27,55,.94) 0%,
+            rgba(5,38,79,.82) 45%,
+            rgba(7,48,95,.38) 100%
+        ),
+
+        url("../login-fundo.png");
+
+    background-size:cover;
+
+    background-position:
+        center 62%;
+}
+
+
+/* LINHAS DECORATIVAS */
+
+#inicio .home-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            transparent 0%,
+            transparent 54%,
+            rgba(57,126,240,.22) 54.2%,
+            transparent 54.6%
+        );
+}
+
+
+#inicio .home-hero-conteudo{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+}
+
+
+#inicio .home-hero-logo{
+
+    width:95px;
+    height:auto;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(
+            0 7px 14px
+            rgba(0,0,0,.15)
+        );
+}
+
+
+#inicio .home-hero-texto{
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+
+#inicio .home-hero-texto > span{
+
+    margin-bottom:2px;
+
+    color:
+        rgba(255,255,255,.70);
+
+    font-size:11px;
+
+    font-weight:500;
+
+    letter-spacing:3px;
+}
+
+
+#inicio .home-hero-texto h1{
+
+    margin:0;
+
+    color:#ffffff;
+
+    text-align:left;
+
+    font-size:
+        clamp(32px,3vw,48px);
+
+    font-weight:700;
+
+    letter-spacing:-1px;
+}
+
+
+#inicio .home-hero-texto p{
+
+    margin-top:1px;
+
+    color:#76adff;
+
+    font-size:15px;
+
+    font-weight:400;
+}
+
+
+#inicio .home-hero-versao{
+
+    position:absolute;
+
+    z-index:2;
+
+    right:34px;
+    bottom:22px;
+
+    padding:
+        7px
+        12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    border-radius:20px;
+
+    background:
+        rgba(5,25,53,.38);
+
+    backdrop-filter:
+        blur(5px);
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+SEÇÕES
+========================================================= */
+
+#inicio .home-secao{
+
+    padding:
+        0
+        22px;
+}
+
+
+#inicio .home-secao:last-child{
+
+    padding-bottom:22px;
+}
+
+
+#inicio .home-secao-titulo{
+
+    margin-bottom:10px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+}
+
+
+#inicio .home-secao-titulo > div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+
+#inicio .home-secao-icone{
+
+    width:31px;
+    height:31px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:9px;
+
+    background:#eaf2ff;
+
+    color:#1767d7;
+
+    font-size:15px;
+}
+
+
+#inicio .home-secao-titulo h3{
+
+    margin:0;
+
+    color:#17263b;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+#inicio .home-secao-titulo p{
+
+    margin-top:1px;
+
+    color:#8996a8;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+ATALHOS
+========================================================= */
+
+#inicio .home-atalhos{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(180px,1fr)
+        );
+
+    gap:12px;
+}
+
+
+#inicio .home-atalho{
+
+    min-width:0;
+    min-height:88px;
+
+    padding:
+        13px
+        14px;
+
+    display:grid;
+
+    grid-template-columns:
+        45px
+        minmax(0,1fr)
+        28px;
+
+    align-items:center;
+
+    gap:11px;
+
+    text-align:left;
+
+    border:
+        1px solid
+        #e2e8f1;
+
+    border-radius:13px;
+
+    background:#ffffff;
+
+    color:#17263b;
+
+    box-shadow:
+        0 4px 14px
+        rgba(8,33,61,.045);
+
+    cursor:pointer;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        border-color .18s ease;
+}
+
+
+#inicio .home-atalho:hover{
+
+    transform:
+        translateY(-2px);
+
+    border-color:#c8d8ee;
+
+    box-shadow:
+        0 8px 22px
+        rgba(8,33,61,.08);
+}
+
+
+#inicio .home-atalho-icone{
+
+    width:45px;
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    font-size:19px;
+}
+
+
+#inicio .home-atalho div{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:3px;
+}
+
+
+#inicio .home-atalho strong{
+
+    color:#17263b;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+#inicio .home-atalho small{
+
+    overflow:hidden;
+
+    color:#7e8b9d;
+
+    font-size:9px;
+
+    line-height:1.4;
+}
+
+
+#inicio .home-atalho-seta{
+
+    width:27px;
+    height:27px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#edf4ff;
+
+    color:#1767d7;
+
+    font-size:20px;
+}
+
+
+/* CORES */
+
+#inicio .home-atalho-programacao
+.home-atalho-icone{
+
+    background:#e7f0ff;
+}
+
+
+#inicio .home-atalho-estoque
+.home-atalho-icone{
+
+    background:#fff0df;
+}
+
+
+#inicio .home-atalho-mapa
+.home-atalho-icone{
+
+    background:#e6f7ed;
+}
+
+
+#inicio .home-atalho-solicitacoes
+.home-atalho-icone{
+
+    background:#f0eafe;
+}
+
+
+/* =========================================================
+STATUS TSV
+========================================================= */
+
+#inicio .home-status-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(300px,1fr)
+        );
+
+    gap:12px;
+}
+
+
+#inicio .home-status-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:
+        18px
+        20px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e2e8f1;
+
+    border-radius:13px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(8,33,61,.04);
+}
+
+
+#inicio .home-status-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:3px;
+
+    background:#2f7df4;
+}
+
+
+#inicio .home-status-card.estoque::before{
+
+    background:#efa33c;
+}
+
+
+#inicio .home-status-topo{
+
+    margin-bottom:10px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+
+#inicio .home-status-identificacao{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+}
+
+
+#inicio .home-status-icone{
+
+    width:31px;
+    height:31px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:9px;
+
+    background:#eaf2ff;
+
+    font-size:15px;
+}
+
+
+#inicio
+.home-status-card.estoque
+.home-status-icone{
+
+    background:#fff2e4;
+}
+
+
+#inicio .home-status-identificacao strong{
+
+    color:#17263b;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+#inicio .home-status-online{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    padding:
+        4px
+        9px;
+
+    border-radius:20px;
+
+    background:#e9f9ef;
+
+    color:#18864b;
+
+    font-size:9px;
+
+    font-weight:600;
+}
+
+
+#inicio .home-status-online i{
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#1caf62;
+}
+
+
+#inicio .home-status-linha{
+
+    min-height:37px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    border-top:
+        1px solid
+        #edf1f5;
+}
+
+
+#inicio .home-status-linha span{
+
+    color:#7d899a;
+
+    font-size:10px;
+}
+
+
+#inicio .home-status-linha strong{
+
+    color:#17263b;
+
+    font-size:11px;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(
+    min-width:601px
+)
+and
+(
+    max-width:1200px
+){
+
+    #inicio .home-hero{
+
+        min-height:200px;
+
+        padding:
+            28px
+            30px;
+    }
+
+
+    #inicio .home-hero-logo{
+
+        width:75px;
+    }
+
+
+    #inicio .home-hero-texto h1{
+
+        font-size:34px;
+    }
+
+
+    #inicio .home-atalhos{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(200px,1fr)
+            );
+    }
+
+
+    #inicio .home-status-grid{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(250px,1fr)
+            );
+    }
+
+}
