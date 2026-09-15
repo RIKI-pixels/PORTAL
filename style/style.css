@@ -9990,9 +9990,10 @@ HERO
 
         linear-gradient(
             90deg,
-            rgba(5,27,55,.94) 0%,
-            rgba(5,38,79,.82) 45%,
-            rgba(7,48,95,.38) 100%
+            rgba(255,255,255,1) 0%,
+            rgba(255,255,255,.98) 42%,
+            rgba(248,251,255,.88) 67%,
+            rgba(239,246,255,.72) 100%
         ),
 
         url("../login-fundo.png");
@@ -10000,7 +10001,11 @@ HERO
     background-size:cover;
 
     background-position:
-        center 62%;
+        center 55%;
+
+    border-bottom:
+        1px solid
+        #e4eaf2;
 }
 
 
@@ -10018,12 +10023,18 @@ HERO
 
     background:
 
+        radial-gradient(
+            circle at 75% 40%,
+            rgba(47,125,244,.08),
+            transparent 30%
+        ),
+
         linear-gradient(
             135deg,
             transparent 0%,
-            transparent 54%,
-            rgba(57,126,240,.22) 54.2%,
-            transparent 54.6%
+            transparent 67%,
+            rgba(47,125,244,.06) 67.2%,
+            transparent 67.6%
         );
 }
 
@@ -10069,8 +10080,7 @@ HERO
 
     margin-bottom:2px;
 
-    color:
-        rgba(255,255,255,.70);
+    color:#72819a;
 
     font-size:11px;
 
@@ -10084,7 +10094,7 @@ HERO
 
     margin:0;
 
-    color:#ffffff;
+    color:#0b2447;
 
     text-align:left;
 
@@ -10101,7 +10111,7 @@ HERO
 
     margin-top:1px;
 
-    color:#76adff;
+    color:#5f7190;
 
     font-size:15px;
 
@@ -10124,20 +10134,23 @@ HERO
 
     border:
         1px solid
-        rgba(255,255,255,.15);
+        #dce6f2;
 
     border-radius:20px;
 
     background:
-        rgba(5,25,53,.38);
+        rgba(255,255,255,.82);
 
     backdrop-filter:
-        blur(5px);
+        blur(8px);
 
-    color:
-        rgba(255,255,255,.78);
+    color:#718199;
 
     font-size:10px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(8,33,61,.05);
 }
 
 
