@@ -256,57 +256,339 @@
 
         <div class="content">
 
-            <!-- HOME -->
+<!-- HOME -->
 
-            <div class="box home-screen" id="inicio">
+<div
+    class="box home-screen"
+    id="inicio"
+>
 
-                <div class="watermark">
-                    <img src="LOGO.png" alt="Logo">
-                </div>
+    <!-- =====================================================
+         APRESENTAÇÃO
+    ====================================================== -->
 
-                <h1>PORTAL CDI</h1>
+    <section class="home-hero">
 
-                <p class="versao">
-                    Versão 1.9.1 • BETA TEST
+        <div class="home-hero-conteudo">
+
+            <img
+                src="LOGO.png"
+                alt="CDI"
+                class="home-hero-logo"
+            >
+
+            <div class="home-hero-texto">
+
+                <span>
+                    BEM-VINDO AO
+                </span>
+
+                <h1>
+                    PORTAL CDI
+                </h1>
+
+                <p>
+                    Gestão operacional integrada
                 </p>
 
-                <div class="dashboard">
+            </div>
 
-                    <div class="status-card">
+        </div>
 
-                        <h3>🚛 TSV TRANSPORTE</h3>
 
-                        <div class="status-item">
-                            <span>Última atualização</span>
-                            <strong id="dataTransporte">00/00/0000 00:00</strong>
-                        </div>
+        <div class="home-hero-versao">
+            Versão 1.9.1 • BETA TEST
+        </div>
 
-                        <div class="status-item">
-                            <span>Registros carregados</span>
-                            <strong id="linhasTransporte">0000</strong>
-                        </div>
+    </section>
 
-                    </div>
 
-                    <div class="status-card">
+    <!-- =====================================================
+         ACESSO RÁPIDO
+    ====================================================== -->
 
-                        <h3>📦 TSV ESTOQUE</h3>
+    <section class="home-secao">
 
-                        <div class="status-item">
-                            <span>Última atualização</span>
-                            <strong id="dataEstoque">00/00/0000 00:00</strong>
-                        </div>
+        <div class="home-secao-titulo">
 
-                        <div class="status-item">
-                            <span>Registros carregados</span>
-                            <strong id="linhasEstoque">0000</strong>
-                        </div>
+            <div>
+                <span class="home-secao-icone">
+                    ⚡
+                </span>
 
-                    </div>
+                <div>
+                    <h3>
+                        ACESSO RÁPIDO
+                    </h3>
+
+                    <p>
+                        Acesse os módulos do portal
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="home-atalhos">
+
+            <button
+                type="button"
+                class="home-atalho home-atalho-programacao"
+                onclick="mostrarProgramacao()"
+            >
+
+                <span class="home-atalho-icone">
+                    📊
+                </span>
+
+                <div>
+                    <strong>
+                        Programação
+                    </strong>
+
+                    <small>
+                        Janelas e planejamento operacional
+                    </small>
+                </div>
+
+                <span class="home-atalho-seta">
+                    ›
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="home-atalho home-atalho-estoque"
+                onclick="mostrarEstoque()"
+            >
+
+                <span class="home-atalho-icone">
+                    📦
+                </span>
+
+                <div>
+                    <strong>
+                        Estoque
+                    </strong>
+
+                    <small>
+                        Containers e posições no pátio
+                    </small>
+                </div>
+
+                <span class="home-atalho-seta">
+                    ›
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="home-atalho home-atalho-mapa"
+                onclick="mostrarMapa()"
+            >
+
+                <span class="home-atalho-icone">
+                    🗺️
+                </span>
+
+                <div>
+                    <strong>
+                        Mapa do Pátio
+                    </strong>
+
+                    <small>
+                        Visualize as áreas operacionais
+                    </small>
+                </div>
+
+                <span class="home-atalho-seta">
+                    ›
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="home-atalho home-atalho-solicitacoes"
+                onclick="mostrarSolicitacoes()"
+            >
+
+                <span class="home-atalho-icone">
+                    📋
+                </span>
+
+                <div>
+                    <strong>
+                        Solicitações
+                    </strong>
+
+                    <small>
+                        Acompanhe as movimentações
+                    </small>
+                </div>
+
+                <span class="home-atalho-seta">
+                    ›
+                </span>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATUS DAS FONTES
+    ====================================================== -->
+
+    <section class="home-secao">
+
+        <div class="home-secao-titulo">
+
+            <div>
+
+                <span class="home-secao-icone">
+                    ↻
+                </span>
+
+                <div>
+
+                    <h3>
+                        FONTES DE DADOS
+                    </h3>
+
+                    <p>
+                        Status das informações operacionais
+                    </p>
 
                 </div>
 
             </div>
+
+        </div>
+
+
+        <div class="home-status-grid">
+
+            <!-- TSV TRANSPORTE -->
+
+            <article class="home-status-card transporte">
+
+                <div class="home-status-topo">
+
+                    <div class="home-status-identificacao">
+
+                        <span class="home-status-icone">
+                            🚛
+                        </span>
+
+                        <strong>
+                            TSV TRANSPORTE
+                        </strong>
+
+                    </div>
+
+                    <span class="home-status-online">
+                        <i></i>
+                        Online
+                    </span>
+
+                </div>
+
+
+                <div class="home-status-linha">
+
+                    <span>
+                        Última atualização
+                    </span>
+
+                    <strong id="dataTransporte">
+                        00/00/0000 00:00
+                    </strong>
+
+                </div>
+
+
+                <div class="home-status-linha">
+
+                    <span>
+                        Registros carregados
+                    </span>
+
+                    <strong id="linhasTransporte">
+                        0000
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+            <!-- TSV ESTOQUE -->
+
+            <article class="home-status-card estoque">
+
+                <div class="home-status-topo">
+
+                    <div class="home-status-identificacao">
+
+                        <span class="home-status-icone">
+                            📦
+                        </span>
+
+                        <strong>
+                            TSV ESTOQUE
+                        </strong>
+
+                    </div>
+
+                    <span class="home-status-online">
+                        <i></i>
+                        Online
+                    </span>
+
+                </div>
+
+
+                <div class="home-status-linha">
+
+                    <span>
+                        Última atualização
+                    </span>
+
+                    <strong id="dataEstoque">
+                        00/00/0000 00:00
+                    </strong>
+
+                </div>
+
+
+                <div class="home-status-linha">
+
+                    <span>
+                        Registros carregados
+                    </span>
+
+                    <strong id="linhasEstoque">
+                        0000
+                    </strong>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</div>
 
             <!-- PROGRAMAÇÃO -->
 
