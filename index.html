@@ -17,66 +17,163 @@
 
 <body>
 
-    <!-- ======================================================
+<!-- ======================================================
      LOGIN PORTAL
 ======================================================= -->
 
-<div id="telaLogin" class="login-screen">
+<div
+    id="telaLogin"
+    class="login-screen"
+>
 
-    <div class="login-card">
+    <!-- =========================
+         LADO ESQUERDO
+    ========================== -->
 
-        <div class="login-logo">
-            <img src="CDI.png" alt="CDI">
+    <section class="login-visual">
+
+        <div class="login-visual-conteudo">
+
+            <img
+                src="CDI.png"
+                alt="CDI Terminais"
+                class="login-visual-logo"
+            >
+
+            <div class="login-slogan">
+                <span></span>
+                LOGÍSTICA QUE CONECTA O BRASIL
+            </div>
+
+            <div class="login-boas-vindas">
+
+                <span>
+                    Bem-vindo ao
+                </span>
+
+                <strong>
+                    Portal CDI
+                </strong>
+
+            </div>
+
         </div>
 
-        <h1>PORTAL CDI</h1>
-
-        <p class="login-subtitulo">
-            Acesso ao Portal Operacional
-        </p>
+    </section>
 
 
-        <div class="login-form">
+    <!-- =========================
+         LADO DIREITO
+    ========================== -->
 
-            <label for="loginCPF">
-                CPF
-            </label>
+    <section class="login-acesso">
 
-            <input
-                type="text"
-                id="loginCPF"
-                placeholder="000.000.000-00"
-                maxlength="14"
-                autocomplete="username">
+        <div class="login-sistema">
 
+            <span></span>
 
-            <label for="loginSenha">
-                Senha
-            </label>
+            <div>
+                <strong>
+                    PORTAL CDI
+                </strong>
 
-            <input
-                type="password"
-                id="loginSenha"
-                placeholder="Digite sua senha"
-                autocomplete="current-password">
+                <small>
+                    SISTEMA INTEGRADO<br>
+                    DE OPERAÇÕES LOGÍSTICAS
+                </small>
+            </div>
+
+        </div>
 
 
-            <div
-                id="loginErro"
-                class="login-erro"
-                style="display:none;">
+        <div class="login-card">
+
+            <div class="login-card-cabecalho">
+
+                <h1>
+                    Acessar Portal
+                </h1>
+
+                <p>
+                    Informe seus dados para continuar
+                </p>
+
             </div>
 
 
-            <button
-                type="button"
-                id="btnLogin">
-                ENTRAR
-            </button>
+            <div class="login-form">
+
+                <label for="loginCPF">
+                    CPF
+                </label>
+
+                <div class="login-input">
+
+                    <span class="login-input-icone">
+                        ♙
+                    </span>
+
+                    <input
+                        type="text"
+                        id="loginCPF"
+                        placeholder="000.000.000-00"
+                        maxlength="14"
+                        autocomplete="username"
+                    >
+
+                </div>
+
+
+                <label for="loginSenha">
+                    Senha
+                </label>
+
+                <div class="login-input">
+
+                    <span class="login-input-icone">
+                        🔒
+                    </span>
+
+                    <input
+                        type="password"
+                        id="loginSenha"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                    >
+
+                </div>
+
+
+                <div
+                    id="loginErro"
+                    class="login-erro"
+                    style="display:none;"
+                ></div>
+
+
+                <button
+                    type="button"
+                    id="btnLogin"
+                >
+                    <span>
+                        ENTRAR
+                    </span>
+
+                    <span class="login-seta">
+                        →
+                    </span>
+                </button>
+
+            </div>
 
         </div>
 
-    </div>
+
+        <div class="login-versao">
+            Versão 1.9.1 • BETA TEST
+        </div>
+
+    </section>
 
 </div>
 
