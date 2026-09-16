@@ -1526,11 +1526,112 @@ function buscarEstoque(){
 }
 
 /* ==========================================================
+RESUMO VISUAL DO ESTOQUE
+========================================================== */
+
+function atualizarResumoEstoque(lista){
+
+    if(!Array.isArray(lista)){
+
+        lista = [];
+
+    }
+
+
+    let mapeados = 0;
+    let semLocalizacao = 0;
+
+
+    lista.forEach(registro=>{
+
+        const localizacao =
+            obterLocalizacao(
+                registro.container
+            );
+
+
+        if(localizacao){
+
+            mapeados++;
+
+        }else{
+
+            semLocalizacao++;
+
+        }
+
+    });
+
+
+    /* =========================
+       ELEMENTOS
+    ========================= */
+
+    const total =
+        document.getElementById(
+            "resumoEstoqueTotal"
+        );
+
+
+    const totalMapeados =
+        document.getElementById(
+            "resumoEstoqueMapeados"
+        );
+
+
+    const totalSemLocalizacao =
+        document.getElementById(
+            "resumoEstoqueSemLocalizacao"
+        );
+
+
+    /* =========================
+       ATUALIZA VISUAL
+    ========================= */
+
+    if(total){
+
+        total.textContent =
+            lista.length
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+    }
+
+
+    if(totalMapeados){
+
+        totalMapeados.textContent =
+            mapeados
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+    }
+
+
+    if(totalSemLocalizacao){
+
+        totalSemLocalizacao.textContent =
+            semLocalizacao
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+    }
+
+}
+
+/* ==========================================================
    PROGRAMAÇÃO
 ========================================================== */
 
 function renderTabelaEstoque(lista){
 
+ atualizarResumoEstoque(
+    lista
+);
     const inicio =
         (APP.paginaEstoque - 1) * APP.limiteEstoque;
 
