@@ -5952,6 +5952,110 @@ function renderTabela(
 
 }
 
+/* ==========================================================
+RESUMO VISUAL DA PROGRAMAÇÃO
+========================================================== */
+
+function atualizarResumoProgramacao(lista){
+
+    if(!Array.isArray(lista)){
+        lista = [];
+    }
+
+
+    let concluidos = 0;
+    let aguardandoMapeamento = 0;
+
+
+    lista.forEach(registro=>{
+
+        /* =========================
+           CONCLUÍDOS
+        ========================= */
+
+        const estado =
+            obterEstadoProgramacao(
+                registro
+            );
+
+        if(
+            estado &&
+            estado.concluido
+        ){
+            concluidos++;
+        }
+
+
+        /* =========================
+           SEM LOCALIZAÇÃO
+        ========================= */
+
+        const localizacao =
+            obterLocalizacao(
+                registro.container
+            );
+
+        if(!localizacao){
+            aguardandoMapeamento++;
+        }
+
+    });
+
+
+    /* =========================
+       ATUALIZA CARDS
+    ========================= */
+
+    const total =
+        document.getElementById(
+            "resumoProgramacaoTotal"
+        );
+
+    const totalConcluidos =
+        document.getElementById(
+            "resumoProgramacaoConcluidos"
+        );
+
+    const totalMapeamento =
+        document.getElementById(
+            "resumoProgramacaoMapeamento"
+        );
+
+
+    if(total){
+
+        total.textContent =
+            lista.length
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+    }
+
+
+    if(totalConcluidos){
+
+        totalConcluidos.textContent =
+            concluidos
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+    }
+
+
+    if(totalMapeamento){
+
+        totalMapeamento.textContent =
+            aguardandoMapeamento
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+    }
+
+}
+
 
 /* ==========================================================
    RENDER PROGRAMAÇÃO
@@ -5962,6 +6066,11 @@ function renderTabelaProgramacao(lista){
     document.getElementById(
         "totalProgramacao"
     ).textContent = lista.length;
+
+ atualizarResumoProgramacao(
+    lista
+);
+ 
 
 
     const totalPaginas = Math.max(
