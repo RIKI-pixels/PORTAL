@@ -12279,3 +12279,935 @@ and
     }
 
 }
+
+/* =========================================================
+SOLICITAÇÕES
+INTERFACE NOVA - DESKTOP / TABLET
+========================================================= */
+
+#solicitacoes{
+
+    padding:24px;
+
+    background:#f6f8fc;
+
+    border:
+        1px solid
+        #dce4ef;
+
+    border-radius:20px;
+}
+
+
+/* =========================================================
+CABEÇALHO
+========================================================= */
+
+#solicitacoes
+.solicitacoes-cabecalho{
+
+    margin-bottom:18px;
+}
+
+
+#solicitacoes
+.solicitacoes-cabecalho h2{
+
+    margin:0;
+
+    color:#0b2344;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:-.7px;
+}
+
+
+#solicitacoes
+.solicitacoes-cabecalho p{
+
+    margin-top:3px;
+
+    color:#78879b;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+CARDS RESUMO
+========================================================= */
+
+#solicitacoes
+.solicitacoes-dashboard{
+
+    margin-bottom:16px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(180px,1fr)
+        );
+
+    gap:12px;
+}
+
+
+#solicitacoes
+.solicitacao-resumo-card{
+
+    min-width:0;
+
+    min-height:92px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:
+        15px
+        17px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e1e8f1;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(8,33,61,.04);
+}
+
+
+/* =========================================================
+ÍCONE RESUMO
+========================================================= */
+
+#solicitacoes
+.solicitacao-resumo-icone{
+
+    width:48px;
+    height:48px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:#e8f1ff;
+
+    color:#1767d7;
+
+    font-size:21px;
+
+    font-weight:700;
+}
+
+
+/* PENDENTES */
+
+#solicitacoes
+.resumo-pendentes
+.solicitacao-resumo-icone{
+
+    background:#fff1df;
+
+    color:#e77d14;
+}
+
+
+/* ANDAMENTO */
+
+#solicitacoes
+.resumo-andamento
+.solicitacao-resumo-icone{
+
+    background:#eeeaff;
+
+    color:#7557d8;
+}
+
+
+/* =========================================================
+INFORMAÇÃO RESUMO
+========================================================= */
+
+#solicitacoes
+.solicitacao-resumo-info{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+
+#solicitacoes
+.solicitacao-resumo-info > span{
+
+    margin-bottom:1px;
+
+    color:#77869a;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+}
+
+
+#solicitacoes
+.solicitacao-resumo-info > div{
+
+    display:flex;
+
+    align-items:baseline;
+
+    gap:7px;
+}
+
+
+#solicitacoes
+.solicitacao-resumo-info strong{
+
+    color:#10284c;
+
+    font-size:26px;
+
+    font-weight:700;
+
+    line-height:1.15;
+}
+
+
+#solicitacoes
+.solicitacao-resumo-info small{
+
+    color:#596b85;
+
+    font-size:10px;
+}
+
+
+#solicitacoes
+.solicitacao-resumo-info p{
+
+    margin-top:2px;
+
+    color:#94a0af;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+ÁREA NOVA SOLICITAÇÃO
+========================================================= */
+
+#solicitacoes
+.solicitacoes-acoes-area{
+
+    margin-bottom:18px;
+
+    padding:14px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e1e8f1;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(8,33,61,.04);
+}
+
+
+#solicitacoes
+.solicitacoes-acoes-titulo{
+
+    margin-bottom:10px;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes-titulo div{
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes-titulo strong{
+
+    color:#263a55;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes-titulo span{
+
+    margin-top:1px;
+
+    color:#8c99aa;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+BOTÕES DE SOLICITAÇÃO
+========================================================= */
+
+#solicitacoes
+.solicitacoes-acoes{
+
+    margin:0;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(180px,1fr)
+        );
+
+    gap:10px;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes button{
+
+    width:100%;
+
+    min-height:66px;
+
+    margin:0;
+
+    padding:
+        10px
+        13px;
+
+    display:grid;
+
+    grid-template-columns:
+        38px
+        minmax(0,1fr);
+
+    align-items:center;
+
+    gap:10px;
+
+    text-align:left;
+
+    border:
+        1px solid
+        #dfe7f1;
+
+    border-radius:10px;
+
+    background:#f9fbfe;
+
+    color:#263a55;
+
+    box-shadow:none;
+
+    transition:
+        border-color .18s ease,
+        background .18s ease,
+        transform .18s ease;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes button:hover{
+
+    transform:
+        translateY(-1px);
+
+    border-color:#bcd0ea;
+
+    background:#f3f7fd;
+}
+
+
+#solicitacoes
+.solicitacao-acao-icone{
+
+    width:38px;
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:9px;
+
+    background:#e8f1ff;
+
+    color:#1767d7;
+
+    font-size:17px;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes button div{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:2px;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes button strong{
+
+    color:#1e3657;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes
+.solicitacoes-acoes button small{
+
+    color:#8290a3;
+
+    font-size:8px;
+
+    line-height:1.35;
+}
+
+
+/* MAPA */
+
+#solicitacoes
+.acao-mapa
+.solicitacao-acao-icone{
+
+    background:#e8f7ed;
+
+    color:#198b54;
+}
+
+
+/* FUMIGAÇÃO */
+
+#solicitacoes
+.acao-fumigacao
+.solicitacao-acao-icone{
+
+    background:#fff0df;
+
+    color:#dc7d1b;
+}
+
+
+/* =========================================================
+FORMULÁRIOS
+========================================================= */
+
+#solicitacoes
+.solicitacao-form{
+
+    margin-bottom:18px;
+
+    padding:18px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #dfe7f0;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(8,33,61,.045);
+}
+
+
+#solicitacoes
+.solicitacao-form h3{
+
+    margin-bottom:4px;
+
+    color:#17345d;
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes
+.solicitacao-form p{
+
+    margin-bottom:12px;
+
+    color:#8290a3;
+
+    font-size:10px;
+}
+
+
+#solicitacoes
+.solicitacao-form label{
+
+    display:block;
+
+    margin:
+        12px
+        0
+        6px;
+
+    color:#52657e;
+
+    font-size:10px;
+
+    font-weight:600;
+}
+
+
+#solicitacoes
+.solicitacao-form textarea{
+
+    width:100%;
+
+    min-height:115px;
+
+    padding:11px;
+
+    resize:vertical;
+
+    border:
+        1px solid
+        #dce4ee;
+
+    border-radius:9px;
+
+    background:#fbfcfe;
+
+    color:#263a55;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size:11px;
+}
+
+
+#solicitacoes
+.solicitacao-form textarea:focus{
+
+    border-color:#2f7df4;
+
+    background:#ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(47,125,244,.08);
+}
+
+
+/* =========================================================
+LOCAIS ESTUFAGEM
+========================================================= */
+
+#solicitacoes
+.locais-solicitacao{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin-bottom:12px;
+}
+
+
+#solicitacoes
+.local-solicitacao{
+
+    width:auto;
+
+    min-height:34px;
+
+    margin:0;
+
+    padding:
+        0
+        11px;
+
+    border:
+        1px solid
+        #d9e3ef;
+
+    border-radius:8px;
+
+    background:#f7f9fc;
+
+    color:#53657e;
+
+    font-size:9px;
+
+    font-weight:600;
+
+    box-shadow:none;
+}
+
+
+#solicitacoes
+.local-solicitacao.selecionado{
+
+    border-color:#2f7df4;
+
+    background:#eaf2ff;
+
+    color:#1767d7;
+}
+
+
+/* =========================================================
+BOTÃO SOLICITAR DOS FORMULÁRIOS
+========================================================= */
+
+#solicitacoes
+.solicitacao-form > button{
+
+    width:auto;
+
+    min-width:120px;
+
+    height:39px;
+
+    margin-top:12px;
+
+    padding:
+        0
+        16px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1767d7,
+            #2f7df4
+        );
+
+    color:#ffffff;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+BLOCOS DAS LISTAS
+========================================================= */
+
+#solicitacoes
+.solicitacoes-pendentes,
+
+#solicitacoes
+.solicitacoes-andamento,
+
+#solicitacoes
+.solicitacoes-concluidas{
+
+    margin-top:18px;
+}
+
+
+#solicitacoes
+.solicitacoes-pendentes > h3,
+
+#solicitacoes
+.solicitacoes-titulo-linha h3{
+
+    margin:0;
+
+    color:#1e3657;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+TÍTULO + AÇÃO
+========================================================= */
+
+#solicitacoes
+.solicitacoes-titulo-linha{
+
+    min-height:40px;
+
+    margin-bottom:8px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+}
+
+
+#solicitacoes
+.solicitacoes-pendentes > h3{
+
+    margin-bottom:8px;
+}
+
+
+/* CONCLUIR SELECIONADAS */
+
+#solicitacoes
+.solicitacoes-titulo-linha button{
+
+    width:auto;
+
+    min-height:34px;
+
+    margin:0;
+
+    padding:
+        0
+        12px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#e9f7ef;
+
+    color:#208a55;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    box-shadow:none;
+}
+
+
+/* =========================================================
+TABELAS
+========================================================= */
+
+#solicitacoes
+.grid-panel{
+
+    overflow:hidden;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #dfe7f0;
+
+    border-radius:12px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(8,33,61,.04);
+}
+
+
+#solicitacoes
+.grid-table{
+
+    max-height:320px;
+
+    overflow:auto;
+}
+
+
+#solicitacoes
+.grid-table table{
+
+    width:100%;
+
+    min-width:720px;
+}
+
+
+#solicitacoes
+.grid-table th{
+
+    padding:
+        11px
+        13px;
+
+    background:#f1f4f8;
+
+    border-bottom:
+        1px solid
+        #dce4ee;
+
+    color:#526074;
+
+    font-size:9px;
+
+    font-weight:700;
+}
+
+
+#solicitacoes
+.grid-table td{
+
+    padding:
+        11px
+        13px;
+
+    background:#ffffff;
+
+    border-bottom:
+        1px solid
+        #edf1f5;
+
+    color:#475467;
+
+    font-size:10px;
+}
+
+
+#solicitacoes
+.grid-table tbody tr:hover td{
+
+    background:#f8fbff;
+}
+
+
+/* CONTAINER */
+
+#solicitacoes
+.grid-table td:first-child{
+
+    color:#183656;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+CHECKBOX ANDAMENTO
+========================================================= */
+
+#solicitacoes
+.check-solicitacao-andamento{
+
+    width:16px;
+    height:16px;
+
+    accent-color:#3574df;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(
+    min-width:601px
+)
+and
+(
+    max-width:1050px
+){
+
+    #solicitacoes{
+
+        padding:14px;
+    }
+
+
+    #solicitacoes
+    .solicitacoes-cabecalho h2{
+
+        font-size:24px;
+    }
+
+
+    #solicitacoes
+    .solicitacoes-dashboard{
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(150px,1fr)
+            );
+    }
+
+
+    #solicitacoes
+    .solicitacao-resumo-icone{
+
+        width:42px;
+        height:42px;
+
+        font-size:18px;
+    }
+
+
+    #solicitacoes
+    .solicitacao-resumo-info strong{
+
+        font-size:21px;
+    }
+
+
+    #solicitacoes
+    .solicitacoes-acoes{
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(150px,1fr)
+            );
+    }
+
+}
