@@ -3528,28 +3528,112 @@ function salvarSolicitacoes(lista){
 
 function atualizarDashboardSolicitacoes(){
 
-    const vazios = APP.dadosEstoque.filter(registro=>{
+    /* =========================
+       CONTAINERS VAZIOS
+    ========================= */
 
-        return textoMaiusculo(registro.estado) === "V";
+    const vazios =
+        APP.dadosEstoque.filter(
+            registro=>{
 
-    }).length;
+                return (
+                    textoMaiusculo(
+                        registro.estado
+                    ) === "V"
+                );
 
-
-    const pendentes = obterSolicitacoes().filter(item=>{
-
-        return item.status === "PENDENTE";
-
-    }).length;
-
-
-    document.getElementById(
-        "totalContainersVazios"
-    ).textContent = vazios;
+            }
+        ).length;
 
 
-    document.getElementById(
-        "totalSolicitacoesPendentes"
-    ).textContent = pendentes;
+    /* =========================
+       PENDENTES
+    ========================= */
+
+    const pendentes =
+        obterSolicitacoes().filter(
+            item=>{
+
+                return (
+                    item.status ===
+                    "PENDENTE"
+                );
+
+            }
+        ).length;
+
+
+    /* =========================
+       EM ANDAMENTO
+    ========================= */
+
+    const andamento =
+        obterSolicitacoes().filter(
+            item=>{
+
+                return (
+                    item.status ===
+                    "EM ANDAMENTO"
+                );
+
+            }
+        ).length;
+
+
+    /* =========================
+       ELEMENTOS
+    ========================= */
+
+    const totalVazios =
+        document.getElementById(
+            "totalContainersVazios"
+        );
+
+
+    const totalPendentes =
+        document.getElementById(
+            "totalSolicitacoesPendentes"
+        );
+
+
+    const totalAndamento =
+        document.getElementById(
+            "totalSolicitacoesAndamento"
+        );
+
+
+    /* =========================
+       ATUALIZA VISUAL
+    ========================= */
+
+    if(totalVazios){
+
+        totalVazios.textContent =
+            vazios.toLocaleString(
+                "pt-BR"
+            );
+
+    }
+
+
+    if(totalPendentes){
+
+        totalPendentes.textContent =
+            pendentes.toLocaleString(
+                "pt-BR"
+            );
+
+    }
+
+
+    if(totalAndamento){
+
+        totalAndamento.textContent =
+            andamento.toLocaleString(
+                "pt-BR"
+            );
+
+    }
 
 }
 
