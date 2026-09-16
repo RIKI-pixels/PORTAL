@@ -2031,34 +2031,157 @@ Barra onde ficarão as janelas minimizadas.
 
 <div class="box" id="solicitacoes">
 
-    <h2>SOLICITAÇÕES</h2>
+<!-- =====================================================
+     CABEÇALHO SOLICITAÇÕES
+====================================================== -->
 
-    <div class="solicitacoes-dashboard">
+<div class="solicitacoes-cabecalho">
 
-        <div class="solicitacao-card">
+    <div>
 
-            <h3>Containers Vazios</h3>
+        <h2>
+            SOLICITAÇÕES
+        </h2>
 
-            <strong id="totalContainersVazios">
-                0
-            </strong>
+        <p>
+            Gerencie solicitações de posicionamento e acompanhe o andamento das operações.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     RESUMO
+====================================================== -->
+
+<div class="solicitacoes-dashboard">
+
+
+    <!-- CONTAINERS VAZIOS -->
+
+    <article class="solicitacao-resumo-card resumo-vazios">
+
+        <div class="solicitacao-resumo-icone">
+            ▤
+        </div>
+
+        <div class="solicitacao-resumo-info">
 
             <span>
-                containers disponíveis
+                CONTAINERS VAZIOS
             </span>
+
+            <div>
+
+                <strong id="totalContainersVazios">
+                    0
+                </strong>
+
+                <small>
+                    unidades
+                </small>
+
+            </div>
+
+            <p>
+                Containers disponíveis
+            </p>
 
         </div>
 
-        <div class="solicitacao-card">
+    </article>
 
-            <h3>Solicitações Pendentes</h3>
 
-            <strong id="totalSolicitacoesPendentes">
-                0
+    <!-- PENDENTES -->
+
+    <article class="solicitacao-resumo-card resumo-pendentes">
+
+        <div class="solicitacao-resumo-icone">
+            ◷
+        </div>
+
+        <div class="solicitacao-resumo-info">
+
+            <span>
+                PENDENTES
+            </span>
+
+            <div>
+
+                <strong id="totalSolicitacoesPendentes">
+                    0
+                </strong>
+
+                <small>
+                    solicitações
+                </small>
+
+            </div>
+
+            <p>
+                Aguardando posicionamento
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- EM ANDAMENTO -->
+
+    <article class="solicitacao-resumo-card resumo-andamento">
+
+        <div class="solicitacao-resumo-icone">
+            ↻
+        </div>
+
+        <div class="solicitacao-resumo-info">
+
+            <span>
+                EM ANDAMENTO
+            </span>
+
+            <div>
+
+                <strong id="totalSolicitacoesAndamento">
+                    0
+                </strong>
+
+                <small>
+                    solicitações
+                </small>
+
+            </div>
+
+            <p>
+                Aguardando conclusão
+            </p>
+
+        </div>
+
+    </article>
+
+</div>
+
+
+<!-- =====================================================
+     NOVA SOLICITAÇÃO
+====================================================== -->
+
+<div class="solicitacoes-acoes-area">
+
+    <div class="solicitacoes-acoes-titulo">
+
+        <div>
+
+            <strong>
+                NOVA SOLICITAÇÃO
             </strong>
 
             <span>
-                aguardando posicionamento
+                Selecione o tipo de posicionamento
             </span>
 
         </div>
@@ -2068,19 +2191,83 @@ Barra onde ficarão as janelas minimizadas.
 
     <div class="solicitacoes-acoes">
 
-        <button onclick="abrirSolicitacaoEstufagem()">
-            Solicitar para Estufagem
+        <button
+            type="button"
+            class="acao-estufagem"
+            onclick="abrirSolicitacaoEstufagem()"
+        >
+
+            <span class="solicitacao-acao-icone">
+                ▦
+            </span>
+
+            <div>
+
+                <strong>
+                    Estufagem
+                </strong>
+
+                <small>
+                    Solicitar posicionamento para estufagem
+                </small>
+
+            </div>
+
         </button>
 
-        <button onclick="abrirSolicitacaoMapa()">
-            Solicitar MAPA
+
+        <button
+            type="button"
+            class="acao-mapa"
+            onclick="abrirSolicitacaoMapa()"
+        >
+
+            <span class="solicitacao-acao-icone">
+                ⌖
+            </span>
+
+            <div>
+
+                <strong>
+                    MAPA
+                </strong>
+
+                <small>
+                    Solicitar posicionamento para vistoria
+                </small>
+
+            </div>
+
         </button>
 
-        <button onclick="abrirSolicitacaoFumigacao()">
-            Solicitar Fumigação
+
+        <button
+            type="button"
+            class="acao-fumigacao"
+            onclick="abrirSolicitacaoFumigacao()"
+        >
+
+            <span class="solicitacao-acao-icone">
+                ◈
+            </span>
+
+            <div>
+
+                <strong>
+                    Fumigação
+                </strong>
+
+                <small>
+                    Solicitar posicionamento para fumigação
+                </small>
+
+            </div>
+
         </button>
 
     </div>
+
+</div>
 
 
     <!-- ESTUFAGEM -->
