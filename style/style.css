@@ -10660,3 +10660,488 @@ and
     }
 
 }
+
+/* =========================================================
+PROGRAMAÇÃO
+INTERFACE NOVA - DESKTOP / TABLET
+========================================================= */
+
+#programacao{
+
+    padding:24px;
+
+    background:#f6f8fc;
+
+    border:
+        1px solid
+        #dce4ef;
+
+    border-radius:20px;
+}
+
+
+/* =========================================================
+CABEÇALHO
+========================================================= */
+
+#programacao .programacao-cabecalho{
+
+    margin-bottom:18px;
+}
+
+
+#programacao .programacao-cabecalho h2{
+
+    margin:0;
+
+    color:#0b2344;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:-.7px;
+}
+
+
+#programacao .programacao-cabecalho p{
+
+    margin-top:3px;
+
+    color:#78879b;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+FILTROS
+========================================================= */
+
+#programacao .programacao-filtros{
+
+    width:100%;
+
+    margin-bottom:16px;
+
+    padding:14px;
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(130px,.75fr)
+        minmax(150px,1fr)
+        minmax(150px,1fr)
+        minmax(210px,1.45fr)
+        120px;
+
+    gap:10px;
+
+    align-items:end;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e1e8f1;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(8,33,61,.04);
+}
+
+
+#programacao .programacao-filtro-campo{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+}
+
+
+#programacao
+.programacao-filtro-campo > span{
+
+    color:#607089;
+
+    font-size:10px;
+
+    font-weight:600;
+}
+
+
+#programacao
+.programacao-filtro-campo select,
+
+#programacao
+.programacao-filtro-campo input{
+
+    width:100%;
+    height:43px;
+
+    min-width:0;
+
+    margin:0;
+
+    padding:
+        0
+        12px;
+
+    border:
+        1px solid
+        #dce4ee;
+
+    border-radius:9px;
+
+    background:#ffffff;
+
+    color:#25364e;
+
+    font-size:11px;
+}
+
+
+#programacao
+.programacao-filtro-campo select:focus,
+
+#programacao
+.programacao-filtro-campo input:focus{
+
+    border-color:#2f7df4;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(47,125,244,.09);
+}
+
+
+/* =========================================================
+BOTÃO BUSCAR
+========================================================= */
+
+#programacao
+.programacao-filtro-acao{
+
+    display:flex;
+
+    align-items:flex-end;
+}
+
+
+#programacao
+.programacao-filtro-acao button{
+
+    width:100%;
+    height:43px;
+
+    margin:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:7px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1767d7,
+            #2f7df4
+        );
+
+    color:#ffffff;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 5px 14px
+        rgba(23,103,215,.18);
+}
+
+
+#programacao
+.programacao-filtro-acao button span{
+
+    font-size:17px;
+
+    line-height:1;
+}
+
+
+/* =========================================================
+CARDS RESUMO
+========================================================= */
+
+#programacao .programacao-resumos{
+
+    margin-bottom:16px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(180px,1fr)
+        );
+
+    gap:12px;
+}
+
+
+#programacao
+.programacao-resumo-card{
+
+    min-width:0;
+
+    min-height:92px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:
+        15px
+        17px;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #e1e8f1;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(8,33,61,.04);
+}
+
+
+#programacao
+.programacao-resumo-icone{
+
+    width:48px;
+    height:48px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:#e8f1ff;
+
+    color:#1767d7;
+
+    font-size:22px;
+
+    font-weight:700;
+}
+
+
+/* CONCLUÍDOS */
+
+#programacao
+.resumo-concluidos
+.programacao-resumo-icone{
+
+    background:#e7f8ef;
+
+    color:#169358;
+}
+
+
+/* MAPEAMENTO */
+
+#programacao
+.resumo-mapeamento
+.programacao-resumo-icone{
+
+    background:#fff1df;
+
+    color:#e77d14;
+}
+
+
+#programacao
+.programacao-resumo-info{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+
+#programacao
+.programacao-resumo-info > span{
+
+    margin-bottom:1px;
+
+    color:#77869a;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+}
+
+
+#programacao
+.programacao-resumo-info > div{
+
+    display:flex;
+
+    align-items:baseline;
+
+    gap:7px;
+}
+
+
+#programacao
+.programacao-resumo-info strong{
+
+    color:#10284c;
+
+    font-size:26px;
+
+    font-weight:700;
+
+    line-height:1.15;
+}
+
+
+#programacao
+.programacao-resumo-info small{
+
+    color:#596b85;
+
+    font-size:10px;
+}
+
+
+#programacao
+.programacao-resumo-info p{
+
+    margin-top:2px;
+
+    color:#94a0af;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+PAINEL DA TABELA
+========================================================= */
+
+#programacao .grid-panel{
+
+    margin-top:0;
+
+    overflow:hidden;
+
+    background:#ffffff;
+
+    border:
+        1px solid
+        #dfe7f0;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(8,33,61,.045);
+}
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media(
+    min-width:601px
+)
+and
+(
+    max-width:1050px
+){
+
+    #programacao
+    .programacao-filtros{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(180px,1fr)
+            );
+    }
+
+
+    #programacao
+    .programacao-filtro-acao{
+
+        grid-column:
+            1 / -1;
+    }
+
+
+    #programacao
+    .programacao-filtro-acao button{
+
+        max-width:180px;
+
+        margin-left:auto;
+    }
+
+
+    #programacao
+    .programacao-resumos{
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(150px,1fr)
+            );
+    }
+
+
+    #programacao
+    .programacao-resumo-icone{
+
+        width:42px;
+        height:42px;
+
+        font-size:18px;
+    }
+
+
+    #programacao
+    .programacao-resumo-info strong{
+
+        font-size:21px;
+    }
+
+}
