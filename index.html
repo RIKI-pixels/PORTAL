@@ -594,22 +594,94 @@
 
             <div class="box" id="programacao">
 
-    <h2>PROGRAMAÇÃO</h2>
+<!-- =====================================================
+     CABEÇALHO PROGRAMAÇÃO
+====================================================== -->
 
-    <div class="filters active">
+<div class="programacao-cabecalho">
+
+    <div>
+        <h2>
+            PROGRAMAÇÃO
+        </h2>
+
+        <p>
+            Consulte e acompanhe a programação das operações.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FILTROS
+====================================================== -->
+
+<div class="filters active programacao-filtros">
+
+    <label class="programacao-filtro-campo">
+
+        <span>
+            Tipo
+        </span>
 
         <select id="tipoProgramacao">
-            <option value="AZ">AZ</option>
-            <option value="RX">RX</option>
-            <option value="ESTUFAGEM">ESTUFAGEM</option>
+
+            <option value="AZ">
+                AZ
+            </option>
+
+            <option value="RX">
+                RX
+            </option>
+
+            <option value="ESTUFAGEM">
+                ESTUFAGEM
+            </option>
+
         </select>
 
-        <input type="date" id="progInicio">
-        <input type="date" id="progFim">
+    </label>
+
+
+    <label class="programacao-filtro-campo">
+
+        <span>
+            Data inicial
+        </span>
+
+        <input
+            type="date"
+            id="progInicio"
+        >
+
+    </label>
+
+
+    <label class="programacao-filtro-campo">
+
+        <span>
+            Data final
+        </span>
+
+        <input
+            type="date"
+            id="progFim"
+        >
+
+    </label>
+
+
+    <label class="programacao-filtro-campo">
+
+        <span>
+            Janela
+        </span>
 
         <select
             id="janelaProgramacao"
-            onchange="filtrarProgramacaoPorJanela()">
+            onchange="filtrarProgramacaoPorJanela()"
+        >
 
             <option value="">
                 TODAS AS JANELAS
@@ -617,11 +689,129 @@
 
         </select>
 
-        <button onclick="buscarProgramacao()">
+    </label>
+
+
+    <div class="programacao-filtro-acao">
+
+        <button
+            type="button"
+            onclick="buscarProgramacao()"
+        >
+            <span>⌕</span>
             Buscar
         </button>
 
     </div>
+
+</div>
+
+
+<!-- =====================================================
+     RESUMO PROGRAMAÇÃO
+====================================================== -->
+
+<div class="programacao-resumos">
+
+    <!-- TOTAL -->
+
+    <article class="programacao-resumo-card resumo-total">
+
+        <div class="programacao-resumo-icone">
+            ▤
+        </div>
+
+        <div class="programacao-resumo-info">
+
+            <span>
+                TOTAL NO PERÍODO
+            </span>
+
+            <div>
+                <strong id="resumoProgramacaoTotal">
+                    0
+                </strong>
+
+                <small>
+                    registros
+                </small>
+            </div>
+
+            <p>
+                Programação selecionada
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- CONCLUÍDOS -->
+
+    <article class="programacao-resumo-card resumo-concluidos">
+
+        <div class="programacao-resumo-icone">
+            ✓
+        </div>
+
+        <div class="programacao-resumo-info">
+
+            <span>
+                CONCLUÍDOS
+            </span>
+
+            <div>
+                <strong id="resumoProgramacaoConcluidos">
+                    0
+                </strong>
+
+                <small>
+                    operações
+                </small>
+            </div>
+
+            <p>
+                Operações finalizadas
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- SEM LOCALIZAÇÃO -->
+
+    <article class="programacao-resumo-card resumo-mapeamento">
+
+        <div class="programacao-resumo-icone">
+            ◷
+        </div>
+
+        <div class="programacao-resumo-info">
+
+            <span>
+                AGUARDANDO MAPEAMENTO
+            </span>
+
+            <div>
+                <strong id="resumoProgramacaoMapeamento">
+                    0
+                </strong>
+
+                <small>
+                    unidades
+                </small>
+            </div>
+
+            <p>
+                Pendentes de localização
+            </p>
+
+        </div>
+
+    </article>
+
+</div>
 
                 <div class="grid-panel">
 
