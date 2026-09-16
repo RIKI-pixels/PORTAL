@@ -880,31 +880,210 @@
 
             <!-- ESTOQUE -->
 
-            <div class="box" id="estoque">
+<!-- =====================================================
+     CABEÇALHO ESTOQUE
+====================================================== -->
 
-                <h2>ESTOQUE</h2>
+<div class="estoque-cabecalho">
 
-                <div class="filters active">
+    <div>
 
-                    <select id="tipoBuscaEstoque">
+        <h2>
+            ESTOQUE
+        </h2>
 
-                        <option value="ISO">ISO</option>
-                        <option value="CONTAINER">CONTAINER</option>
-                        <option value="CLIENTE">CLIENTE</option>
-                        <option value="BOOKING">BOOKING</option>
+        <p>
+            Consulte os containers disponíveis e suas posições no pátio.
+        </p>
 
-                    </select>
+    </div>
 
-                    <input
-                        type="text"
-                        id="valorBuscaEstoque"
-                        placeholder="Digite sua busca">
+</div>
 
-                    <button onclick="buscarEstoque()">
-                        Buscar
-                    </button>
 
-                </div>
+<!-- =====================================================
+     FILTROS ESTOQUE
+====================================================== -->
+
+<div class="filters active estoque-filtros">
+
+    <label class="estoque-filtro-campo">
+
+        <span>
+            Buscar por
+        </span>
+
+        <select id="tipoBuscaEstoque">
+
+            <option value="ISO">
+                ISO
+            </option>
+
+            <option value="CONTAINER">
+                CONTAINER
+            </option>
+
+            <option value="CLIENTE">
+                CLIENTE
+            </option>
+
+            <option value="BOOKING">
+                BOOKING
+            </option>
+
+        </select>
+
+    </label>
+
+
+    <label class="estoque-filtro-campo">
+
+        <span>
+            Pesquisa
+        </span>
+
+        <input
+            type="text"
+            id="valorBuscaEstoque"
+            placeholder="Digite sua busca"
+        >
+
+    </label>
+
+
+    <div class="estoque-filtro-acao">
+
+        <button
+            type="button"
+            onclick="buscarEstoque()"
+        >
+
+            <span>
+                ⌕
+            </span>
+
+            Buscar
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     RESUMO ESTOQUE
+====================================================== -->
+
+<div class="estoque-resumos">
+
+
+    <!-- TOTAL -->
+
+    <article class="estoque-resumo-card resumo-total">
+
+        <div class="estoque-resumo-icone">
+            ▤
+        </div>
+
+        <div class="estoque-resumo-info">
+
+            <span>
+                TOTAL DO ESTOQUE
+            </span>
+
+            <div>
+
+                <strong id="resumoEstoqueTotal">
+                    0
+                </strong>
+
+                <small>
+                    containers
+                </small>
+
+            </div>
+
+            <p>
+                Resultado da consulta
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- MAPEADOS -->
+
+    <article class="estoque-resumo-card resumo-mapeados">
+
+        <div class="estoque-resumo-icone">
+            ✓
+        </div>
+
+        <div class="estoque-resumo-info">
+
+            <span>
+                MAPEADOS
+            </span>
+
+            <div>
+
+                <strong id="resumoEstoqueMapeados">
+                    0
+                </strong>
+
+                <small>
+                    unidades
+                </small>
+
+            </div>
+
+            <p>
+                Containers com localização
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- SEM LOCALIZAÇÃO -->
+
+    <article class="estoque-resumo-card resumo-sem-localizacao">
+
+        <div class="estoque-resumo-icone">
+            ◷
+        </div>
+
+        <div class="estoque-resumo-info">
+
+            <span>
+                SEM LOCALIZAÇÃO
+            </span>
+
+            <div>
+
+                <strong id="resumoEstoqueSemLocalizacao">
+                    0
+                </strong>
+
+                <small>
+                    unidades
+                </small>
+
+            </div>
+
+            <p>
+                Aguardando mapeamento
+            </p>
+
+        </div>
+
+    </article>
+
+
+</div>
 
                 <div class="grid-panel">
 
