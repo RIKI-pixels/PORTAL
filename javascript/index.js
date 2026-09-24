@@ -1339,22 +1339,7 @@ function verificarCarregamento(){
 /* ==========================================================
    CONTROLE DAS TELAS
 ========================================================== */
-
-function limparMenu(){
-
-    document
-
-        .querySelectorAll(".menu-item")
-
-        .forEach(item=>{
-
-            item.classList.remove("active");
-
-        });
-
-}
-
-
+ 
 function mostrarInicio(){
 
     DOM.inicio.style.display = "flex";
