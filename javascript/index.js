@@ -1024,17 +1024,42 @@ function formatarLocalizacaoEstoque(localizacao){
 
 function criarRegistroEstoque(linha){
 
-    const container = textoMaiusculo(linha[0]);
+    const container =
+        textoMaiusculo(
+            linha[0]
+        );
 
     return{
 
-        container: container,
-        iso: textoMaiusculo(linha[1]),
-        estado: textoMaiusculo(linha[2]),
-        cliente: textoMaiusculo(linha[3]),
-        booking: textoMaiusculo(linha[4]),
-       localizaca: formatarLocalizacaoEstoque(obterLocalizacao(container)
-       )
+        container:
+            container,
+
+        iso:
+            textoMaiusculo(
+                linha[1]
+            ),
+
+        estado:
+            textoMaiusculo(
+                linha[2]
+            ),
+
+        cliente:
+            textoMaiusculo(
+                linha[3]
+            ),
+
+        booking:
+            textoMaiusculo(
+                linha[4]
+            ),
+
+        localizacao:
+            formatarLocalizacaoEstoque(
+                obterLocalizacao(
+                    container
+                )
+            )
 
     };
 
