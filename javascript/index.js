@@ -3679,22 +3679,6 @@ function lerListaContainers(idTextarea){
 
 }
 
-function containerJaSolicitado(container){
-
-    return obterSolicitacoes().some(item=>{
-
-        return (
-            item.container === container &&
-            (
-                item.status === "PENDENTE" ||
-                item.status === "EM ANDAMENTO"
-            )
-        );
-
-    });
-
-}
-
 async function criarSolicitacoes(
     containers,
     destino,
