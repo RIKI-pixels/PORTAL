@@ -818,15 +818,6 @@ function valor(linha,coluna){
 
 }
 
-function limparTabelaProgramacao(){
-
-    DOM.theadProg.innerHTML = "";
-
-    DOM.tbodyProg.innerHTML = "";
-
-}
-
-
 /* ==========================================================
    MANIPULAÇÃO DE DATAS
 ========================================================== */
@@ -3531,16 +3522,6 @@ function obterSolicitacoes(){
 
 }
 
-
-function salvarSolicitacoes(lista){
-
-    console.warn(
-        "salvarSolicitacoes() está desativada. As solicitações agora são salvas no Supabase.",
-        lista
-    );
-
-}
-
 function atualizarDashboardSolicitacoes(){
 
     /* =========================
@@ -5335,16 +5316,6 @@ function obterControleProgramacao(){
     return CONTROLE_PROGRAMACAO;
 
 }
-
-
-function salvarControleProgramacao(controle){
-
-    console.warn(
-        "salvarControleProgramacao ignorado: Programação agora utiliza Supabase."
-    );
-
-}
-
 
 function chaveRegistroProgramacao(registro){
 
