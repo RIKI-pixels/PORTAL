@@ -2907,16 +2907,6 @@ function obterLocalizacoes(){
 
 }
 
-
-function salvarLocalizacoes(localizacoes){
-
-    console.warn(
-        "salvarLocalizacoes() está desativada. As localizações agora são salvas no Supabase.",
-        localizacoes
-    );
-
-}
-
 function obterContainerNaPosicao(posicao){
 
     const localizacoes =
