@@ -6424,14 +6424,14 @@ async function buscarProgramacao(){
        LOCALIZAÇÃO ATUAL
     ========================= */
 
-    lista.forEach(registro=>{
+lista.forEach(registro=>{
 
-        o =
-            obterLocalizacao(
-                registro.container
-            ) || "AGUARDANDO MAPEAMENTO";
+    registro.localizacao =
+        obterLocalizacao(
+            registro.container
+        ) || "AGUARDANDO MAPEAMENTO";
 
-    });
+});
 
 
     lista.sort((a,b)=>
