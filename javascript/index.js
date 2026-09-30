@@ -6148,13 +6148,6 @@ document
     });
 
 document
-    .getElementById("cancelarMovimentacao")
-    .addEventListener(
-        "click",
-        fecharMovimentacao
-    );
-
-document
     .querySelectorAll(".local-solicitacao")
     .forEach(botao=>{
 
