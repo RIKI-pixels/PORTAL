@@ -6513,32 +6513,16 @@ document
 ========================================================== */
 
 function atualizarPlanilha(){
-
     APP.carregado = false;
-
     APP.dados = [];
-
     carregarPlanilha();
-
 }
 
-
-
-function totalRegistros(){
-
-    return APP.dados.length;
-
 }
-
-
 
 function obterRegistro(indice){
-
     return APP.dados[indice];
-
 }
-
-
 
 /* ==========================================================
    PESQUISA FUTURA
