@@ -6168,16 +6168,6 @@ document
     });
 
 /* ==========================================================
-   ATALHOS
-========================================================== */
-
-function atualizarPlanilha(){
-    APP.carregado = false;
-    APP.dados = [];
-    carregarPlanilha();
-}
-
-/* ==========================================================
    DEBUG
 ========================================================== */
 
@@ -6219,8 +6209,6 @@ window.resetarLocalizacoes = resetarLocalizacoes;
 
 window.mostrarMapa = mostrarMapa;
 window.movimentarContainer = movimentarContainer;
-
-window.atualizarPlanilha = atualizarPlanilha;
 
 window.mostrarSolicitacoes = mostrarSolicitacoes;
 
