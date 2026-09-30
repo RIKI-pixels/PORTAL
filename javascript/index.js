@@ -6519,42 +6519,6 @@ function atualizarPlanilha(){
 }
 
 /* ==========================================================
-   PESQUISA FUTURA
-========================================================== */
-
-function pesquisarContainer(numero){
-
-    numero = textoMaiusculo(numero);
-
-    return APP.dados.filter(registro=>{
-
-        return registro.container
-
-            .includes(numero);
-
-    });
-
-}
-
-
-
-function pesquisarCliente(cliente){
-
-    cliente = textoMaiusculo(cliente);
-
-    return APP.dados.filter(registro=>{
-
-        return registro.cliente
-
-            .includes(cliente);
-
-    });
-
-}
-
-
-
-/* ==========================================================
    ORDENAÇÃO
 ========================================================== */
 
