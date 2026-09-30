@@ -2779,56 +2779,6 @@ if(
 
 }
 
-   function gerarLinhasPraca(
-    nomePraca,
-    quantidade
-){
-
-    DOM.linhasPraca.innerHTML = "";
-
-    for(
-        let numero = 1;
-        numero <= quantidade;
-        numero++
-    ){
-
-        const numeroFormatado =
-            String(numero).padStart(2,"0");
-
-        const nomeLinha =
-            `${nomePraca}-${numeroFormatado}`;
-
-        const botao =
-            document.createElement("button");
-
-        botao.className =
-            "linha-patio";
-
-        botao.innerHTML = `
-
-            <strong>
-                ${nomeLinha}
-            </strong>
-
-            <span>
-                4 pilhas
-            </span>
-
-        `;
-
-        botao.addEventListener(
-            "click",
-            ()=>abrirLinha(nomeLinha)
-        );
-
-        DOM.linhasPraca.appendChild(
-            botao
-        );
-
-    }
-
-}
-
 function abrirLinha(nomeLinha){
 
     APP.linhaSelecionada = nomeLinha;
