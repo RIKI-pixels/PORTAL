@@ -2779,37 +2779,6 @@ if(
 
 }
 
-function abrirPraca(nomePraca){
-
-    const quantidadeLinhas =
-        PRACAS_PATIO[nomePraca];
-
-    if(!quantidadeLinhas){
-        return;
-    }
-
-    APP.pracaSelecionada = nomePraca;
-    APP.linhaSelecionada = null;
-
-    DOM.mapaGeral.style.display = "none";
-    DOM.mapaPraca.style.display = "block";
-    DOM.mapaLinha.style.display = "none";
-
-    DOM.voltarMapaGeral.style.display = "block";
-
-    DOM.nomePracaSelecionada.textContent =
-        nomePraca;
-
-    DOM.quantidadeLinhasPraca.textContent =
-        quantidadeLinhas;
-
-    gerarLinhasPraca(
-        nomePraca,
-        quantidadeLinhas
-    );
-
-}
-
    function gerarLinhasPraca(
     nomePraca,
     quantidade
