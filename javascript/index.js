@@ -6125,17 +6125,6 @@ document
 );
 
 document
-    .querySelectorAll("#mapaLinha .nivel")
-    .forEach(botao=>{
-
-        botao.addEventListener(
-            "click",
-            ()=>abrirMovimentacao(botao)
-        );
-
-    });
-
-document
     .querySelectorAll(".local-solicitacao")
     .forEach(botao=>{
 
