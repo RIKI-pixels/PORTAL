@@ -5637,49 +5637,6 @@ async function alterarObservacaoProgramacao(
    COLUNAS DA PROGRAMAÇÃO
 ========================================================== */
 
-function obterColunasProgramacao(){
-
-    return[
-
-        {
-            nome:"TIPO",
-            campo:"tipo"
-        },
-
-        {
-            nome:"CLIENTE",
-            campo:"cliente"
-        },
-
-        {
-            nome:"CONTAINER",
-            campo:"container"
-        },
-
-        {
-            nome:"DATA AG.",
-            campo:"dataTexto"
-        },
-
-        {
-            nome:"JANELA",
-            campo:"janela"
-        },
-
-        {
-            nome:"BOOKING",
-            campo:"booking"
-        },
-
-        {
-            nome:"LOCALIZAÇÃO",
-            campo:"localizacao"
-        }
-
-    ];
-
-}
-
 function obterColunasEstoque(){
 
     return[
