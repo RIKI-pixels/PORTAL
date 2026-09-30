@@ -2813,14 +2813,6 @@ function normalizarContainer(numero){
 
 }
 
-function validarFormatoContainer(numero){
-
-    numero = normalizarContainer(numero);
-
-    return /^[A-Z]{4}[0-9]{7}$/.test(numero);
-
-}
-
 function buscarContainerNoEstoque(numero){
 
     numero =
