@@ -2779,23 +2779,6 @@ if(
 
 }
 
-function abrirLinha(nomeLinha){
-
-    APP.linhaSelecionada = nomeLinha;
-
-    DOM.mapaGeral.style.display = "none";
-    DOM.mapaPraca.style.display = "none";
-    DOM.mapaLinha.style.display = "block";
-
-    DOM.voltarMapaGeral.style.display = "block";
-
-    DOM.nomeLinhaSelecionada.textContent =
-        nomeLinha;
-
-    atualizarVisualLinha();
-
-}
-
 function obterLocalizacoes(){
 
     return LOCALIZACOES_CONTAINERS;
