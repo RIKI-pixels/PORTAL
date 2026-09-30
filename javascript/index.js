@@ -1,3 +1,4 @@
+
  /* ==========================================================
    PORTAL OPERACIONAL CDI
    Versão 1.6.4 JANELAS FLUTUANTES MAPA
@@ -2801,55 +2802,6 @@ function obterContainerNaPosicao(posicao){
     }
 
     return null;
-
-}
-
-function atualizarVisualLinha(){
-
-    if(!APP.linhaSelecionada){
-        return;
-    }
-
-    document
-        .querySelectorAll("#mapaLinha .nivel")
-        .forEach(botao=>{
-
-            const pilha =
-                botao.closest(".pilha").dataset.pilha;
-
-            const nivel =
-                botao.dataset.nivel;
-
-            const posicao =
-                `${APP.linhaSelecionada}-${pilha}-${nivel}`;
-
-            const container =
-                obterContainerNaPosicao(posicao);
-
-            botao.dataset.posicao =
-                posicao;
-
-            if(container){
-
-                botao.classList.add("ocupado");
-
-                botao.innerHTML = `
-                    <strong>${container}</strong>
-                    <span>${posicao}</span>
-                `;
-
-            }else{
-
-                botao.classList.remove("ocupado");
-
-                botao.innerHTML = `
-                    <strong>VAZIO</strong>
-                    <span>${posicao}</span>
-                `;
-
-            }
-
-        });
 
 }
 
