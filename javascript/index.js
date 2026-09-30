@@ -6519,33 +6519,6 @@ function atualizarPlanilha(){
 }
 
 /* ==========================================================
-   ESTATÍSTICAS
-========================================================== */
-
-function estatisticas(){
-
-    return{
-
-        registros:
-
-            APP.dados.length,
-
-        carregado:
-
-            APP.carregado,
-
-        ultimaAtualizacao:
-
-            APP.ultimaAtualizacao,
-
-
-    };
-
-}
-
-
-
-/* ==========================================================
    DEBUG
 ========================================================== */
 
