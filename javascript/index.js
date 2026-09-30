@@ -6518,10 +6518,6 @@ function atualizarPlanilha(){
     carregarPlanilha();
 }
 
-function obterRegistro(indice){
-    return APP.dados[indice];
-}
-
 /* ==========================================================
    PESQUISA FUTURA
 ========================================================== */
