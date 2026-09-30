@@ -6330,14 +6330,6 @@ document
     });
 
 document
-    .getElementById("confirmarMovimentacao")
-    .addEventListener(
-        "click",
-        confirmarMovimentacao
-    );
-
-
-document
     .getElementById("cancelarMovimentacao")
     .addEventListener(
         "click",
