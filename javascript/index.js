@@ -5634,26 +5634,6 @@ async function alterarObservacaoProgramacao(
 }
 
 /* ==========================================================
-   COLUNAS DA PROGRAMAÇÃO
-========================================================== */
-
-function obterColunasEstoque(){
-
-    return[
-
-        {nome:"CONTAINER",campo:"container"},
-        {nome:"ISO",campo:"iso"},
-        {nome:"ESTADO",campo:"estado"},
-        {nome:"CLIENTE",campo:"cliente"},
-        {nome:"BOOKING",campo:"booking"},
-        {nome:"LOCALIZAÇÃO",campo:"localizacao"}
-
-    ];
-
-}
-
-
-/* ==========================================================
    RENDER UNIVERSAL
 ========================================================== */
 
