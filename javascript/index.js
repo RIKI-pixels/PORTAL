@@ -2935,18 +2935,6 @@ function validarRetiradaContainer(container){
 
 }
 
-function fecharMovimentacao(){
-
-    document.getElementById(
-        "modalMovimentacao"
-    ).style.display = "none";
-
-    APP.destinoSelecionado = null;
-    APP.pilhaSelecionada = null;
-    APP.nivelSelecionado = null;
-
-}
-
 function atualizarContainerSelecionadoMapa(){
 
     const painel =
