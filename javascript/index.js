@@ -1,9 +1,8 @@
 
  /* ==========================================================
-   PORTAL OPERACIONAL CDI
-   Versão 1.6.4 JANELAS FLUTUANTES MAPA
+   PORTAL OPERACIONAL
+   Versão 2.0.0 TESTES CONCLUIDOS
 ========================================================== */
-
 
 /* ==========================================================
    CONFIGURAÇÕES
@@ -748,18 +747,6 @@ const DOM = {
     tbodyEstoque: document.getElementById("tbodyEstoque"),
 
     mapaGeral: document.getElementById("mapaGeral"),
-
-    nomePracaSelecionada:
-        document.getElementById("nomePracaSelecionada"),
-
-    quantidadeLinhasPraca:
-        document.getElementById("quantidadeLinhasPraca"),
-
-    linhasPraca:
-        document.getElementById("linhasPraca"),
-
-    nomeLinhaSelecionada:
-        document.getElementById("nomeLinhaSelecionada"),
 
     solicitacoes:
          document.getElementById("solicitacoes"),
@@ -2395,16 +2382,8 @@ async function atualizarTSVGlobal(){
             "Iniciando atualização global do TSV..."
         );
 
-        /*
-        Primeiro atualiza o computador
-        que clicou no botão.
-        */
         await carregarPlanilha();
 
-        /*
-        Depois avisa todos os outros
-        portais através do Supabase.
-        */
         const { error } =
             await supabaseClient
                 .from("portal_eventos")
@@ -2484,12 +2463,9 @@ function iniciarRealtimeSupabase(){
         .channel("portal-eventos-global")
 
 
-        /*
-        =========================================
-        EVENTOS GLOBAIS
-        TSV / TESTES
-        =========================================
-        */
+        /*=========================================
+        EVENTOS GLOBAIS (TESTE DE SUBPASE)
+        =========================================*/
 
         .on(
             "postgres_changes",
@@ -2511,11 +2487,9 @@ function iniciarRealtimeSupabase(){
                     payload.new;
 
 
-                /*
-                =========================================
+                /* =========================================
                 TESTE
-                =========================================
-                */
+                =========================================*/
 
                 if(
                     evento.tipo ===
@@ -2532,13 +2506,11 @@ function iniciarRealtimeSupabase(){
                 }
 
 
-                /*
-                =========================================
-                ATUALIZAÇÃO GLOBAL TSV
-                =========================================
-                */
+/*=========================================
+ATUALIZAÇÃO GLOBAL TSV
+========================================*/
 
-if(
+      if(
     evento.tipo ===
     "ATUALIZAR_TSV"
 ){
@@ -2551,23 +2523,11 @@ if(
 
         try{
 
-            /*
-            1. BUSCA OS LINKS GLOBAIS MAIS RECENTES
-            */
-
             await carregarConfigGlobal();
 
 
-            /*
-            2. RECARREGA O TSV TRANSPORTE
-            */
-
             await carregarPlanilha();
 
-
-            /*
-            3. RECARREGA O TSV ESTOQUE
-            */
 
             carregarEstoque();
 
@@ -2592,14 +2552,10 @@ if(
     }
 )
 
-
-
-        /*
-        =========================================
+        /*=========================================
         LOCALIZAÇÕES
         MAPA / ESTOQUE
-        =========================================
-        */
+        =========================================*/
 
         .on(
             "postgres_changes",
@@ -2616,17 +2572,7 @@ if(
                     payload
                 );
 
-
-                /*
-                RECARREGA LOCALIZAÇÕES
-                */
-
                 await carregarLocalizacoesSupabase();
-
-
-                /*
-                ATUALIZA ESTOQUE EM MEMÓRIA
-                */
 
                 if(APP.carregadoEstoque){
 
@@ -2642,11 +2588,6 @@ if(
                     );
 
                 }
-
-
-                /*
-                ATUALIZA CORES/ESTADO DO MAPA
-                */
 
                 atualizarAreasSolicitadasMapa();
 
@@ -2715,12 +2656,6 @@ if(
 
         await carregarControleProgramacaoSupabase();
 
-
-        /*
-        Só redesenha a tabela se a Programação
-        já estiver carregada.
-        */
-
         if(
             APP.listaProgramacaoAtual &&
             Array.isArray(
@@ -2742,11 +2677,9 @@ if(
     }
 )
 
-        /*
-        =========================================
+        /*=========================================
         CONEXÃO REALTIME
-        =========================================
-        */
+        ========================================*/
 
         .subscribe(status => {
 
@@ -2867,13 +2800,11 @@ function validarRetiradaContainer(container){
 
 
     if(partes.length < 4){
-
-        // Está em área especial, como MAPA/FUMIGAÇÃO/ESTUFAGEM
+     
         return true;
 
     }
-
-
+ 
     const nivelAtual =
         Number(
             partes[partes.length - 1]
@@ -3293,10 +3224,7 @@ async function criarSolicitacoes(
             buscarContainerNoEstoque(
                 container
             );
-
-
-        // CONTAINER NÃO EXISTE
-
+     
         if(!registro){
 
             erros.push(
@@ -3306,9 +3234,6 @@ async function criarSolicitacoes(
             continue;
 
         }
-
-
-        // SEM LOCALIZAÇÃO
 
         const localAtual =
             obterLocalizacao(
@@ -3332,9 +3257,6 @@ async function criarSolicitacoes(
                 registro.estado
             );
 
-
-        // ESTUFAGEM = SOMENTE VAZIO
-
         if(
             tipo === "ESTUFAGEM" &&
             estado !== "V"
@@ -3347,9 +3269,6 @@ async function criarSolicitacoes(
             continue;
 
         }
-
-
-        // MAPA/FUMIGAÇÃO NÃO ACEITAM VAZIO
 
         if(
             (
@@ -3366,9 +3285,6 @@ async function criarSolicitacoes(
             continue;
 
         }
-
-
-        // JÁ SOLICITADO
 
         const jaSolicitado =
             solicitacoesAtuais.some(
@@ -4571,11 +4487,9 @@ async function concluirSolicitacoesArea(destino){
 
         try{
 
-            /*
-            =========================================
+            /* =========================================
             ATUALIZA LOCALIZAÇÃO
-            =========================================
-            */
+            ========================================= */
 
             const {
                 error:
@@ -4623,11 +4537,9 @@ async function concluirSolicitacoesArea(destino){
             }
 
 
-            /*
-            =========================================
+            /*=========================================
             SOLICITAÇÃO → EM ANDAMENTO
-            =========================================
-            */
+            =========================================*/
 
             const {
                 error:
@@ -4676,11 +4588,9 @@ async function concluirSolicitacoesArea(destino){
             }
 
 
-            /*
-            =========================================
+            /*=========================================
             LOG
-            =========================================
-            */
+            =========================================*/
 
             await registrarLog({
 
@@ -4718,11 +4628,9 @@ async function concluirSolicitacoesArea(destino){
     }
 
 
-    /*
-    =========================================
+    /*=========================================
     RECARREGA DADOS
-    =========================================
-    */
+    =========================================*/
 
     await carregarLocalizacoesSupabase();
 
@@ -5170,7 +5078,6 @@ async function alterarObservacaoProgramacao(
 
         }
 
-
         /* =========================================
            SE EXISTE → UPDATE
         ========================================= */
@@ -5269,7 +5176,6 @@ async function alterarObservacaoProgramacao(
         ========================================= */
 
         await carregarControleProgramacaoSupabase();
-
 
         /* =========================================
            REGISTRA NO LOG
@@ -5961,8 +5867,7 @@ function obterLocalizacao(container){
 
 function movimentarContainer(container){
 
-    const registro =
-        buscarContainerNoEstoque(container);
+    const registro = buscarContainerNoEstoque(container);
 
     if(!registro){
 
@@ -5980,9 +5885,7 @@ function movimentarContainer(container){
 
 }
 
-    APP.containerSelecionado =
-        normalizarContainer(container);
-
+    APP.containerSelecionado = normalizarContainer(container);
     mostrarMapa();
 
 }
@@ -6166,73 +6069,8 @@ if(CONFIG.DEBUG){
 
 }
 
-
-
 /* ==========================================================
-   EXPORTAÇÕES FUTURAS
-========================================================== */
-
-window.mostrarInicio = mostrarInicio;
-window.mostrarProgramacao = mostrarProgramacao;
-window.buscarProgramacao = buscarProgramacao;
-
-window.programacaoAnterior = programacaoAnterior;
-window.programacaoProximo = programacaoProximo;
-window.alterarLimiteProgramacao = alterarLimiteProgramacao;
-
-window.mostrarEstoque = mostrarEstoque;
-window.buscarEstoque = buscarEstoque;
-
-window.estoqueAnterior = estoqueAnterior;
-window.estoqueProximo = estoqueProximo;
-window.alterarLimiteEstoque = alterarLimiteEstoque;
-
-window.abrirDEV = abrirDEV;
-window.salvarTSV = salvarTSV;
-window.restaurarTSV = restaurarTSV;
-window.resetarLocalizacoes = resetarLocalizacoes;
-
-window.mostrarMapa = mostrarMapa;
-window.movimentarContainer = movimentarContainer;
-
-window.mostrarSolicitacoes = mostrarSolicitacoes;
-
-window.abrirSolicitacaoEstufagem = abrirSolicitacaoEstufagem;
-
-window.abrirSolicitacaoMapa = abrirSolicitacaoMapa;
-
-window.abrirSolicitacaoFumigacao = abrirSolicitacaoFumigacao;
-
-window.confirmarSolicitacaoEstufagem = confirmarSolicitacaoEstufagem;
-
-window.confirmarSolicitacaoMapa = confirmarSolicitacaoMapa;
-
-window.confirmarSolicitacaoFumigacao = confirmarSolicitacaoFumigacao;
-
-window.fecharSolicitacoesArea = fecharSolicitacoesArea;
-
-window.concluirSolicitacoesArea = concluirSolicitacoesArea;
-
-window.concluirSolicitacoesSelecionadas = concluirSolicitacoesSelecionadas;
-
-window.filtrarProgramacaoPorJanela = filtrarProgramacaoPorJanela;
-
-window.alterarConcluidoProgramacao = alterarConcluidoProgramacao;
-
-window.alterarObservacaoProgramacao = alterarObservacaoProgramacao;
-
-window.testarSupabase = testarSupabase;
-
-window.atualizarTSVGlobal = atualizarTSVGlobal;
-
-window.registrarLog = registrarLog;
-
-iniciarRealtimeSupabase();
-
-
-/* ==========================================================
-CLASSES SEMÂNTICAS DA PROGRAMAÇÃO
-MOBILE
+CLASSES SEMÂNTICAS DA PROGRAMAÇÃO MOBILE
 ========================================================== */
 
 function aplicarClassesSemanticasProgramacao(){
@@ -6508,12 +6346,6 @@ function abrirJanelaProgramacao(){
         existente.style.display =
             "flex";
 
-
-        /*
-        Remove botão da barra de minimizadas,
-        caso a janela estivesse minimizada.
-        */
-
         const botaoMinimizado =
             document.querySelector(
                 `[data-restaurar="${idJanela}"]`
@@ -6599,7 +6431,7 @@ function abrirJanelaProgramacao(){
 
 
     /* =========================================
-    BOTÃO VOLTAR NÃO É NECESSÁRIO
+    BOTÃO VOLTAR
     ========================================= */
 
     const botaoVoltar =
@@ -6802,11 +6634,9 @@ function renderizarJanelaProgramacao(
     }
 
 
-    /*
-    Usa exatamente a programação
-    que está atualmente carregada
-    no portal.
-    */
+    /*==========================================================
+    JANELA PROGRAMAÇÃO NO MAPA ABRE A PROGRAMAÇÃO CARREGADA
+   ========================================================== */
 
     const programacao =
         Array.isArray(
@@ -6930,7 +6760,6 @@ BASE
 
 let Z_INDEX_JANELAS_MAPA = 100;
 
-
 /* ==========================================================
 ABRIR JANELA DA PRAÇA
 ========================================================== */
@@ -6958,11 +6787,6 @@ function abrirJanelaPraca(praca){
     const idJanela =
         `praca-${String(praca).toUpperCase()}`;
 
-
-    /*
-    Se a janela já estiver aberta,
-    apenas trazemos ela para frente.
-    */
     const existente =
         areaJanelas.querySelector(
             `[data-janela="${idJanela}"]`
@@ -6977,11 +6801,9 @@ function abrirJanelaPraca(praca){
 
         return;
     }
-
-
-    /*
-    Clona o template
-    */
+    /*==========================================================
+    CLONA TEMPLATE
+    ==========================================================*/
     const fragmento =
         template.content.cloneNode(true);
 
@@ -6995,10 +6817,6 @@ function abrirJanelaPraca(praca){
     janela.dataset.janela =
         idJanela;
 
-
-    /*
-    Título
-    */
     const subtitulo =
         janela.querySelector(
             ".mapa-janela-subtitulo"
@@ -7022,9 +6840,9 @@ function abrirJanelaPraca(praca){
             `PRAÇA ${praca}`;
     }
 
-    /*
-    Ações
-    */
+    /*==========================================================
+    AÇÕES
+   ========================================================== */
     const botaoFechar =
         janela.querySelector(
             '[data-acao="fechar"]'
@@ -7042,11 +6860,6 @@ function abrirJanelaPraca(praca){
 
     }
 
-
-    /*
-    Os outros botões ficam sem ação
-    por enquanto.
-    */
     const botaoMinimizar =
         janela.querySelector(
             '[data-acao="minimizar"]'
@@ -7094,10 +6907,6 @@ if(botaoMaximizar){
 
 }
 
-
-    /*
-    Clicar na janela traz ela para frente
-    */
     janela.addEventListener(
         "pointerdown",
         () => {
@@ -7110,37 +6919,20 @@ if(botaoMaximizar){
 ativarResizeJanelaMapa(
     janela
 );
-    /*
-    Arraste
-    */
+
     ativarArrasteJanelaMapa(
         janela
     );
 
-
-    /*
-    Adiciona ao mapa
-    */
    areaJanelas.appendChild(
     janela
 );
 
-
-/*
-Renderiza todas as linhas
-da praça dentro da janela.
-*/
 renderizarPracaCompacta(
     janela,
     praca
 );
 
-
-    /*
-    Pequeno deslocamento para
-    janelas não nascerem exatamente
-    uma em cima da outra.
-    */
     const quantidade =
         areaJanelas.querySelectorAll(
             ".mapa-janela"
@@ -7160,12 +6952,6 @@ renderizarPracaCompacta(
             160
         )}px`;
 
-
-    /*
-    Remove o translateX do CSS
-    porque daqui em diante
-    o posicionamento será manual.
-    */
     janela.style.transform =
         "none";
 
@@ -7175,8 +6961,6 @@ renderizarPracaCompacta(
     );
 
 }
-
-
 
 /* ==========================================================
 TRAZER JANELA PARA FRENTE
@@ -7535,10 +7319,6 @@ function ativarArrasteJanelaMapa(janela){
         "pointerdown",
         evento => {
 
-            /*
-            Não inicia arraste
-            ao clicar nos botões.
-            */
             if(
                 evento.target.closest(
                     ".mapa-janela-acoes"
@@ -7617,12 +7397,7 @@ function ativarArrasteJanelaMapa(janela){
             let novoTop =
                 inicioTop +
                 deslocamentoY;
-
-
-            /*
-            Evita perder completamente
-            a janela para fora da tela.
-            */
+         
             const limiteDireito =
                 window.innerWidth -
                 120;
@@ -7683,11 +7458,6 @@ function ativarArrasteJanelaMapa(janela){
                 );
 
             }catch(erro){
-
-                /*
-                Sem problema caso
-                o pointer já tenha sido liberado.
-                */
 
             }
 
@@ -7761,12 +7531,7 @@ function renderizarPracaCompacta(
     if(!conteudo){
         return;
     }
-
-
-    /*
-    Na visão geral da praça
-    não precisamos do botão voltar.
-    */
+ 
     if(botaoVoltar){
 
         botaoVoltar.style.display =
@@ -7808,11 +7573,9 @@ function renderizarPracaCompacta(
     `;
 
 
-    /*
-    =========================================
+    /*=========================================
     GERA TODAS AS LINHAS DA PRAÇA
-    =========================================
-    */
+    =========================================*/
 
     for(
         let numeroLinha = 1;
@@ -7837,11 +7600,9 @@ function renderizarPracaCompacta(
             "";
 
 
-        /*
-        =====================================
+        /*=====================================
         4 PILHAS
-        =====================================
-        */
+        =====================================*/
 
     const quantidadeLastros =
     LASTROS_POR_PRACA[praca] || 4;
@@ -7855,12 +7616,6 @@ function renderizarPracaCompacta(
 
             let niveisHTML =
                 "";
-
-
-            /*
-            Nível 4 fica visualmente em cima.
-            Nível 1 embaixo.
-            */
 
             for(
                 let nivel = 4;
@@ -7928,11 +7683,9 @@ function renderizarPracaCompacta(
         }
 
 
-        /*
-        =====================================
+        /*=====================================
         CARD DA LINHA
-        =====================================
-        */
+        =====================================*/
 
         html += `
 
@@ -7991,11 +7744,9 @@ function renderizarPracaCompacta(
     conteudo.innerHTML =
         html;
 
-    /*
-    =========================================
+    /*=========================================
     RESUMO DO CABEÇALHO
-    =========================================
-    */
+    =========================================*/
 
     if(resumo){
 
@@ -8012,10 +7763,6 @@ function renderizarPracaCompacta(
     /*
     =========================================
     CLIQUE NAS LINHAS
-
-    Por enquanto apenas identifica.
-    No próximo passo abriremos
-    a visualização detalhada.
     =========================================
     */
 
@@ -8095,9 +7842,9 @@ function renderizarLinhaDetalhada(
     }
 
 
-    /*
+    /*=========================================
     Atualiza título
-    */
+    =========================================*/
     if(titulo){
 
         titulo.textContent =
@@ -8106,9 +7853,9 @@ function renderizarLinhaDetalhada(
     }
 
 
-    /*
+    /*=========================================
     Botão voltar aparece
-    */
+    =========================================*/
     if(botaoVoltar){
 
         botaoVoltar.style.display =
@@ -8204,10 +7951,10 @@ function renderizarLinhaDetalhada(
         `;
 
 
-        /*
+        /*=========================================
         Nível 4 em cima,
         nível 1 embaixo.
-        */
+        =========================================*/
         for(
             let nivel = 4;
             nivel >= 1;
@@ -8331,9 +8078,10 @@ conteudo
 
     });
 
-    /*
+    /*=========================================
     Atualiza resumo
-    */
+    =========================================*/
+ 
     if(resumo){
 
         resumo.textContent =
@@ -8342,13 +8090,9 @@ conteudo
     }
 
 
- /*
-=========================================
-DRAG AND DROP - TESTE VISUAL
-
-Nesta etapa NÃO movimenta no Supabase.
-=========================================
-*/
+ /*=========================================
+DRAG AND DROP 
+=========================================*/
 
 ativarDragDropTesteLinha(
     janela
@@ -9534,6 +9278,68 @@ function atualizarJanelasMapaAbertas(){
         });
 
 }
+
+/* ==========================================================
+   EXPORTAÇÕES FUTURAS
+========================================================== */
+
+window.mostrarInicio = mostrarInicio;
+window.mostrarProgramacao = mostrarProgramacao;
+window.buscarProgramacao = buscarProgramacao;
+
+window.programacaoAnterior = programacaoAnterior;
+window.programacaoProximo = programacaoProximo;
+window.alterarLimiteProgramacao = alterarLimiteProgramacao;
+
+window.mostrarEstoque = mostrarEstoque;
+window.buscarEstoque = buscarEstoque;
+
+window.estoqueAnterior = estoqueAnterior;
+window.estoqueProximo = estoqueProximo;
+window.alterarLimiteEstoque = alterarLimiteEstoque;
+
+window.abrirDEV = abrirDEV;
+window.salvarTSV = salvarTSV;
+window.restaurarTSV = restaurarTSV;
+window.resetarLocalizacoes = resetarLocalizacoes;
+
+window.mostrarMapa = mostrarMapa;
+window.movimentarContainer = movimentarContainer;
+
+window.mostrarSolicitacoes = mostrarSolicitacoes;
+
+window.abrirSolicitacaoEstufagem = abrirSolicitacaoEstufagem;
+
+window.abrirSolicitacaoMapa = abrirSolicitacaoMapa;
+
+window.abrirSolicitacaoFumigacao = abrirSolicitacaoFumigacao;
+
+window.confirmarSolicitacaoEstufagem = confirmarSolicitacaoEstufagem;
+
+window.confirmarSolicitacaoMapa = confirmarSolicitacaoMapa;
+
+window.confirmarSolicitacaoFumigacao = confirmarSolicitacaoFumigacao;
+
+window.fecharSolicitacoesArea = fecharSolicitacoesArea;
+
+window.concluirSolicitacoesArea = concluirSolicitacoesArea;
+
+window.concluirSolicitacoesSelecionadas = concluirSolicitacoesSelecionadas;
+
+window.filtrarProgramacaoPorJanela = filtrarProgramacaoPorJanela;
+
+window.alterarConcluidoProgramacao = alterarConcluidoProgramacao;
+
+window.alterarObservacaoProgramacao = alterarObservacaoProgramacao;
+
+window.testarSupabase = testarSupabase;
+
+window.atualizarTSVGlobal = atualizarTSVGlobal;
+
+window.registrarLog = registrarLog;
+
+iniciarRealtimeSupabase();
+
 
 /* ==========================================================
    FIM DO ARQUIVO
