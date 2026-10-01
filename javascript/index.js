@@ -748,8 +748,6 @@ const DOM = {
     tbodyEstoque: document.getElementById("tbodyEstoque"),
 
     mapaGeral: document.getElementById("mapaGeral"),
-    mapaPraca: document.getElementById("mapaPraca"),
-    mapaLinha: document.getElementById("mapaLinha"),
 
     nomePracaSelecionada:
         document.getElementById("nomePracaSelecionada"),
@@ -2768,10 +2766,6 @@ if(
    function mostrarMapaGeral(){
 
     DOM.mapaGeral.style.display = "block";
-
-    DOM.mapaPraca.style.display = "none";
-
-    DOM.mapaLinha.style.display = "none";
 
 
 }
