@@ -763,9 +763,6 @@ const DOM = {
     nomeLinhaSelecionada:
         document.getElementById("nomeLinhaSelecionada"),
 
-    voltarMapaGeral:
-        document.getElementById("voltarMapaGeral"),
-
     solicitacoes:
          document.getElementById("solicitacoes"),
             
@@ -2776,7 +2773,6 @@ if(
 
     DOM.mapaLinha.style.display = "none";
 
-    DOM.voltarMapaGeral.style.display = "none";
 
 }
 
@@ -6114,11 +6110,6 @@ document
         );
 
     });
-        DOM.voltarMapaGeral
-            .addEventListener(
-                "click",
-                mostrarMapaGeral
-            );
 
     }
 
