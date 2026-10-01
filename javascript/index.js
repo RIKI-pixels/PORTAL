@@ -8164,7 +8164,10 @@ function renderizarLinhaDetalhada(
             </div>
 
 
-            <div class="mapa-linha-popup-estrutura">
+<div
+    class="mapa-linha-popup-estrutura"
+    style="--quantidade-lastros:${quantidadeLastros};"
+>
 
     `;
 
