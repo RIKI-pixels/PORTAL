@@ -2830,72 +2830,59 @@ function validarEmpilhamento(){
 
 }
 
+
 function validarRetiradaContainer(container){
 
-    const localAtual =
-        obterLocalizacao(container);
+    const localAtual = obterLocalizacao(container);
 
     if(!localAtual){
         return true;
     }
 
+    const localizacao = interpretarLocalizacaoTSV(localAtual);
 
-    const partes =
-        localAtual.split("-");
-
-
-    if(partes.length < 4){
-     
-        return true;
-
-    }
- 
-    const nivelAtual =
-        Number(
-            partes[partes.length - 1]
+    // Não autoriza retirada sem conseguir validar a posição
+    if(!localizacao){
+        alert(
+            `Não foi possível validar a localização de ${container}.\n\n` +
+            `Localização registrada: ${localAtual}`
         );
-
-
-    if(!nivelAtual){
-        return true;
+        return false;
     }
 
+    const {
+        praca,
+        linha,
+        lastro,
+        nivel,
+        rua
+    } = localizacao;
 
-    const basePosicao =
-        partes.slice(
-            0,
-            partes.length - 1
-        ).join("-");
-
-
+    // Verifica os níveis superiores da mesma pilha
     for(
-        let nivelSuperior = nivelAtual + 1;
+        let nivelSuperior = nivel + 1;
         nivelSuperior <= 4;
         nivelSuperior++
     ){
 
         const posicaoSuperior =
-            `${basePosicao}-${nivelSuperior}`;
+            `${praca}${linha}-${lastro}-${nivelSuperior}-${rua}`;
 
         const containerSuperior =
-            obterContainerNaPosicao(
-                posicaoSuperior
-            );
-
+            obterContainerNaPosicao(posicaoSuperior);
 
         if(containerSuperior){
 
             alert(
                 `Não é possível movimentar ${container}.\n\n` +
-                `Existe o container ${containerSuperior} acima dele na posição ${posicaoSuperior}.`
+                `O contêiner ${containerSuperior} está acima dele.\n` +
+                `Posição: ${posicaoSuperior}`
             );
 
             return false;
-
         }
 
     }
-
 
     return true;
 
