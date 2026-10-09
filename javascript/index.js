@@ -998,6 +998,70 @@ function formatarLocalizacaoEstoque(localizacao){
 
 
 /* ==========================================================
+   CONVERSÃO DE LOCALIZAÇÕES DO MAPA
+========================================================== */
+
+function converterLocalizacaoMapa(destino, ruaPega){
+
+    if(!destino){
+        return null;
+    }
+
+    const rua = Number(ruaPega);
+
+    if(!Number.isInteger(rua) || rua < 1){
+        return null;
+    }
+
+    const texto = String(destino)
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+
+    // Se já estiver no formato do TSV
+    const localizacaoTSV =
+        interpretarLocalizacaoTSV(texto);
+
+    if(localizacaoTSV){
+
+        return (
+            `${localizacaoTSV.praca}` +
+            `${localizacaoTSV.linha}-` +
+            `${localizacaoTSV.lastro}-` +
+            `${localizacaoTSV.nivel}-` +
+            `${rua}`
+        );
+
+    }
+
+    // Formato original do mapa: D-26-1-2
+    const partes = texto.match(
+        /^([A-D])-(\d{1,2})-([1-6])-(\d+)$/
+    );
+
+    if(!partes){
+        return null;
+    }
+
+    const praca = partes[1];
+    const linha = partes[2].padStart(2, "0");
+    const pilha = Number(partes[3]);
+    const nivel = Number(partes[4]);
+
+    if(!Number.isInteger(nivel) || nivel < 1 || nivel > 4){
+        return null;
+    }
+
+    const lastros = ["A", "B", "C", "D", "E", "F"];
+
+    const lastro = lastros[pilha - 1];
+
+    return `${praca}${linha}-${lastro}-${nivel}-${rua}`;
+
+}
+
+
+/* ==========================================================
    IMPORTAÇÃO DE LOCALIZAÇÕES DO TSV
 ========================================================== */
 
