@@ -5824,6 +5824,116 @@ filtrarProgramacaoPorJanela();
 
 let LOCALIZACOES_CONTAINERS = {};
 
+/* ==========================================================
+   SINCRONIZAÇÃO TSV → SUPABASE
+========================================================== */
+
+async function sincronizarLocalizacoesTSV(){
+
+    if(!APP.carregadoEstoque){
+        console.warn("Estoque ainda não carregado.");
+        return;
+    }
+
+    // Confirma a leitura atual do banco antes de importar
+    const carregou = await carregarLocalizacoesSupabase();
+
+    if(!carregou){
+        console.error(
+            "Sincronização cancelada: falha ao consultar Supabase."
+        );
+        return;
+    }
+
+    const novos = new Map();
+
+    for(const item of APP.dadosEstoque){
+
+        const container =
+            normalizarContainer(item.container);
+
+        const localizacao = item.localizacaoTSV;
+
+        if(!container || !localizacao){
+            continue;
+        }
+
+        // Não importa contêiner que já existe no banco
+        if(Object.prototype.hasOwnProperty.call(
+            LOCALIZACOES_CONTAINERS,
+            container
+        )){
+            continue;
+        }
+
+        novos.set(container, {
+            container: container,
+            localizacao: localizacao
+        });
+
+    }
+
+    const registros = [...novos.values()];
+
+    if(registros.length === 0){
+        console.log(
+            "Nenhuma localização nova para importar."
+        );
+        return;
+    }
+
+    console.log(
+        `Localizações novas identificadas: ${registros.length}`
+    );
+
+    // Lotes menores para evitar requisições grandes
+    const tamanhoLote = 100;
+
+    for(let i = 0; i < registros.length; i += tamanhoLote){
+
+        const lote = registros.slice(
+            i,
+            i + tamanhoLote
+        );
+
+        const { error } = await supabaseClient
+            .from("portal_localizacoes")
+            .upsert(lote, {
+                onConflict: "container",
+                ignoreDuplicates: true
+            });
+
+        if(error){
+            console.error(
+                "Erro ao importar lote:",
+                error
+            );
+            return;
+        }
+
+    }
+
+    // Atualiza o estado com os dados reais do banco
+    const atualizado = await carregarLocalizacoesSupabase();
+
+    if(atualizado){
+
+        APP.dadosEstoque.forEach(item => {
+
+            item.localizacao =
+                formatarLocalizacaoEstoque(
+                    obterLocalizacao(item.container)
+                );
+
+        });
+
+        console.log(
+            "Sincronização TSV → Supabase finalizada."
+        );
+
+    }
+
+}
 
 async function carregarLocalizacoesSupabase(){
 
