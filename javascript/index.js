@@ -5828,6 +5828,7 @@ let LOCALIZACOES_CONTAINERS = {};
    SINCRONIZAÇÃO TSV → SUPABASE
 ========================================================== */
 
+
 async function sincronizarLocalizacoesTSV(){
 
     if(!APP.carregadoEstoque){
@@ -5835,66 +5836,100 @@ async function sincronizarLocalizacoesTSV(){
         return;
     }
 
-    // Confirma a leitura atual do banco antes de importar
     const carregou = await carregarLocalizacoesSupabase();
 
     if(!carregou){
-        console.error(
-            "Sincronização cancelada: falha ao consultar Supabase."
-        );
+        console.error("Falha ao consultar Supabase.");
         return;
     }
 
-    const novos = new Map();
+    const porPosicao = new Map();
 
     for(const item of APP.dadosEstoque){
 
-        const container =
-            normalizarContainer(item.container);
-
-        const localizacao = item.localizacaoTSV;
-
-        if(!container || !localizacao){
+        if(!item.localizacaoTSV){
             continue;
         }
 
-        // Não importa contêiner que já existe no banco
+        const posicao = item.localizacaoTSV;
+
+        if(!porPosicao.has(posicao)){
+            porPosicao.set(posicao, []);
+        }
+
+        porPosicao.get(posicao).push(item);
+
+    }
+
+    // Localizações já ocupadas no Supabase
+    const ocupadas = new Set(
+        Object.values(LOCALIZACOES_CONTAINERS)
+            .filter(Boolean)
+    );
+
+    const candidatos = [];
+    let ignoradosConflito = 0;
+    let ignoradosExistentes = 0;
+    let ignoradosOcupados = 0;
+
+    for(const [posicao, itens] of porPosicao){
+
+        // Não importar posições duplicadas no TSV
+        if(itens.length !== 1){
+            ignoradosConflito += itens.length;
+            continue;
+        }
+
+        const item = itens[0];
+        const container = normalizarContainer(item.container);
+
+        // Supabase sempre tem prioridade
         if(Object.prototype.hasOwnProperty.call(
             LOCALIZACOES_CONTAINERS,
             container
         )){
+            ignoradosExistentes++;
             continue;
         }
 
-        novos.set(container, {
-            container: container,
-            localizacao: localizacao
+        // Não utilizar posição ocupada
+        if(ocupadas.has(posicao)){
+            ignoradosOcupados++;
+            continue;
+        }
+
+        candidatos.push({
+            container,
+            localizacao: posicao
         });
+
+        ocupadas.add(posicao);
 
     }
 
-    const registros = [...novos.values()];
+    console.log("Resumo da sincronização:");
+    console.table({
+        candidatos: candidatos.length,
+        conflitosTSV: ignoradosConflito,
+        existentesSupabase: ignoradosExistentes,
+        posicoesOcupadas: ignoradosOcupados
+    });
 
-    if(registros.length === 0){
-        console.log(
-            "Nenhuma localização nova para importar."
-        );
+    // Segurança: não grava nada sem confirmação
+    const confirmar = window.confirm(
+        `Importar ${candidatos.length} localizações para o Supabase?`
+    );
+
+    if(!confirmar){
+        console.log("Importação cancelada.");
         return;
     }
 
-    console.log(
-        `Localizações novas identificadas: ${registros.length}`
-    );
+    let importados = 0;
 
-    // Lotes menores para evitar requisições grandes
-    const tamanhoLote = 100;
+    for(let i = 0; i < candidatos.length; i += 100){
 
-    for(let i = 0; i < registros.length; i += tamanhoLote){
-
-        const lote = registros.slice(
-            i,
-            i + tamanhoLote
-        );
+        const lote = candidatos.slice(i, i + 100);
 
         const { error } = await supabaseClient
             .from("portal_localizacoes")
@@ -5904,34 +5939,19 @@ async function sincronizarLocalizacoesTSV(){
             });
 
         if(error){
-            console.error(
-                "Erro ao importar lote:",
-                error
-            );
-            return;
+            console.error("Erro ao importar lote:", error);
+            break;
         }
 
-    }
-
-    // Atualiza o estado com os dados reais do banco
-    const atualizado = await carregarLocalizacoesSupabase();
-
-    if(atualizado){
-
-        APP.dadosEstoque.forEach(item => {
-
-            item.localizacao =
-                formatarLocalizacaoEstoque(
-                    obterLocalizacao(item.container)
-                );
-
-        });
-
-        console.log(
-            "Sincronização TSV → Supabase finalizada."
-        );
+        importados += lote.length;
 
     }
+
+    await carregarLocalizacoesSupabase();
+
+    console.log(
+        `Importação finalizada. Registros enviados: ${importados}`
+    );
 
 }
 
