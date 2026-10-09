@@ -996,6 +996,53 @@ function formatarLocalizacaoEstoque(localizacao){
     return `${praca}-${linha}-${lastro}-${nivel}`;
 }
 
+
+/* ==========================================================
+   IMPORTAÇÃO DE LOCALIZAÇÕES DO TSV
+========================================================== */
+
+function interpretarLocalizacaoTSV(valor){
+
+    if(!valor){
+        return null;
+    }
+
+    const texto = String(valor)
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+
+    // Exemplo: D26-A-2-2
+    const formato = /^([A-D])(\d{1,2})-([A-F])-(\d+)-(\d+)$/;
+
+    const resultado = texto.match(formato);
+
+    if(!resultado){
+        return null;
+    }
+
+    const praca = resultado[1];
+    const linha = resultado[2].padStart(2, "0");
+    const lastro = resultado[3];
+    const nivel = Number(resultado[4]);
+    const rua = Number(resultado[5]);
+
+    if(nivel < 1 || rua < 1){
+        return null;
+    }
+
+    return {
+        praca,
+        linha,
+        lastro,
+        nivel,
+        rua,
+        localizacao: `${praca}${linha}-${lastro}-${nivel}-${rua}`
+    };
+
+}
+
+
 function criarRegistroEstoque(linha){
 
     const container =
