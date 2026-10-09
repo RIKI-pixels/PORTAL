@@ -2796,15 +2796,58 @@ function buscarContainerNoEstoque(numero){
 
 }
 
+
 function validarEmpilhamento(){
 
-    const nivel =
-        APP.nivelSelecionado;
+    const destino = APP.destinoSelecionado;
 
+    if(!destino){
+        console.warn(
+            "Empilhamento sem posição de destino."
+        );
+        return false;
+    }
+
+    const localizacao =
+        interpretarLocalizacaoTSV(destino);
+
+    if(!localizacao){
+        console.warn(
+            "Formato de localização não reconhecido:",
+            destino
+        );
+        return false;
+    }
+
+    const {
+        praca,
+        linha,
+        lastro,
+        nivel,
+        rua
+    } = localizacao;
+
+    // Verifica se a posição de destino está ocupada
+    const ocupante =
+        obterContainerNaPosicao(localizacao.localizacao);
+
+    if(ocupante){
+
+        console.warn(
+            "Posição já ocupada:",
+            localizacao.localizacao,
+            ocupante
+        );
+
+        return false;
+    }
+
+    // Nível 1 não precisa de apoio inferior
     if(nivel === 1){
         return true;
     }
 
+    // Confere todos os níveis inferiores
     for(
         let nivelInferior = 1;
         nivelInferior < nivel;
@@ -2812,16 +2855,19 @@ function validarEmpilhamento(){
     ){
 
         const posicaoInferior =
-            `${APP.linhaSelecionada}-${APP.pilhaSelecionada}-${nivelInferior}`;
+            `${praca}${linha}-${lastro}-${nivelInferior}-${rua}`;
 
-        if(
-            !obterContainerNaPosicao(
+        const containerInferior =
+            obterContainerNaPosicao(posicaoInferior);
+
+        if(!containerInferior){
+
+            console.warn(
+                "Empilhamento bloqueado. Nível inferior vazio:",
                 posicaoInferior
-            )
-        ){
+            );
 
             return false;
-
         }
 
     }
