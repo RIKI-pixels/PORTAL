@@ -1042,49 +1042,47 @@ function interpretarLocalizacaoTSV(valor){
 
 }
 
-
 function criarRegistroEstoque(linha){
 
     const container =
-        textoMaiusculo(
-            linha[0]
-        );
+        textoMaiusculo(linha[0]);
 
-    return{
+    // Coluna F da planilha de Estoque
+    const localizacaoTSV =
+        interpretarLocalizacaoTSV(linha[5]);
 
-        container:
-            container,
+    // Localização registrada no Supabase
+    const localizacaoPortal =
+        obterLocalizacao(container);
 
-        iso:
-            textoMaiusculo(
-                linha[1]
-            ),
+    return {
 
-        estado:
-            textoMaiusculo(
-                linha[2]
-            ),
+        container: container,
 
-        cliente:
-            textoMaiusculo(
-                linha[3]
-            ),
+        iso: textoMaiusculo(linha[1]),
 
-        booking:
-            textoMaiusculo(
-                linha[4]
-            ),
+        estado: textoMaiusculo(linha[2]),
 
-        localizacao:
-            formatarLocalizacaoEstoque(
-                obterLocalizacao(
-                    container
-                )
-            )
+        cliente: textoMaiusculo(linha[3]),
+
+        booking: textoMaiusculo(linha[4]),
+
+        // Localização que será exibida no estoque
+        localizacao: localizacaoPortal
+            ? formatarLocalizacaoEstoque(localizacaoPortal)
+            : localizacaoTSV
+                ? localizacaoTSV.localizacao
+                : "",
+
+        // Localização original da planilha
+        localizacaoTSV: localizacaoTSV
+            ? localizacaoTSV.localizacao
+            : ""
 
     };
 
 }
+
 
 async function carregarConfigGlobal(){
 
