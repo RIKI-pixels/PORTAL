@@ -2797,74 +2797,97 @@ function buscarContainerNoEstoque(numero){
 }
 
 
+
 function validarEmpilhamento(){
 
     const destino = APP.destinoSelecionado;
 
     if(!destino){
-        console.warn(
-            "Empilhamento sem posição de destino."
-        );
+        console.warn("Nenhum destino selecionado.");
         return false;
     }
 
-    const localizacao =
-        interpretarLocalizacaoTSV(destino);
+    const texto = String(destino)
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
 
-    if(!localizacao){
-        console.warn(
-            "Formato de localização não reconhecido:",
-            destino
-        );
+    let posicoesInferiores = [];
+
+    // Formato da planilha: D26-A-2-2
+    const localizacaoTSV =
+        interpretarLocalizacaoTSV(texto);
+
+    if(localizacaoTSV){
+
+        const {
+            praca,
+            linha,
+            lastro,
+            nivel,
+            rua
+        } = localizacaoTSV;
+
+        for(let n = 1; n < nivel; n++){
+
+            posicoesInferiores.push(
+                `${praca}${linha}-${lastro}-${n}-${rua}`
+            );
+
+        }
+
+    } else {
+
+        // Formato original do mapa: B-01-1-1
+        const partes = texto.split("-");
+
+        if(
+            partes.length !== 4 ||
+            !/^[A-D]$/.test(partes[0]) ||
+            !/^\d{1,2}$/.test(partes[1]) ||
+            !/^\d+$/.test(partes[2]) ||
+            !/^\d+$/.test(partes[3])
+        ){
+            console.warn(
+                "Formato de localização não reconhecido:",
+                destino
+            );
+            return false;
+        }
+
+        const praca = partes[0];
+        const linha = partes[1].padStart(2, "0");
+        const pilha = Number(partes[2]);
+        const nivel = Number(partes[3]);
+
+        if(pilha < 1 || nivel < 1 || nivel > 4){
+            return false;
+        }
+
+        for(let n = 1; n < nivel; n++){
+
+            posicoesInferiores.push(
+                `${praca}-${linha}-${pilha}-${n}`
+            );
+
+        }
+
+    }
+
+    // Não permite ocupar uma posição já utilizada
+    if(obterContainerNaPosicao(texto)){
+        console.warn("Posição ocupada:", texto);
         return false;
     }
 
-    const {
-        praca,
-        linha,
-        lastro,
-        nivel,
-        rua
-    } = localizacao;
+    // Verifica se existem contêineres nos níveis inferiores
+    for(const posicao of posicoesInferiores){
 
-    // Verifica se a posição de destino está ocupada
-    const ocupante =
-        obterContainerNaPosicao(localizacao.localizacao);
-
-    if(ocupante){
-
-        console.warn(
-            "Posição já ocupada:",
-            localizacao.localizacao,
-            ocupante
-        );
-
-        return false;
-    }
-
-    // Nível 1 não precisa de apoio inferior
-    if(nivel === 1){
-        return true;
-    }
-
-    // Confere todos os níveis inferiores
-    for(
-        let nivelInferior = 1;
-        nivelInferior < nivel;
-        nivelInferior++
-    ){
-
-        const posicaoInferior =
-            `${praca}${linha}-${lastro}-${nivelInferior}-${rua}`;
-
-        const containerInferior =
-            obterContainerNaPosicao(posicaoInferior);
-
-        if(!containerInferior){
+        if(!obterContainerNaPosicao(posicao)){
 
             console.warn(
-                "Empilhamento bloqueado. Nível inferior vazio:",
-                posicaoInferior
+                "Nível inferior vazio:",
+                posicao
             );
 
             return false;
@@ -2875,6 +2898,7 @@ function validarEmpilhamento(){
     return true;
 
 }
+
 
 
 function validarRetiradaContainer(container){
