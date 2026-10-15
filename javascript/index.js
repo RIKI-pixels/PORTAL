@@ -9375,6 +9375,52 @@ async function movimentarContainerSelecionadoMapa(
         return;
     }
 
+ 
+    /* =========================================
+    RUA DE PEGA INFORMADA PELO OPERADOR
+    ========================================= */
+
+    const ruaInformada = window.prompt(
+        "Informe a rua de pega para esta localização:",
+        ""
+    );
+
+    // Cancelamento não realiza movimentação
+    if(ruaInformada === null){
+        return;
+    }
+
+    const rua = Number(ruaInformada.trim());
+
+    if(
+        !Number.isInteger(rua) ||
+        rua < 1
+    ){
+        alert("Informe uma rua de pega válida.");
+        return;
+    }
+
+    const destinoConvertido =
+        converterLocalizacaoMapa(destino, rua);
+
+    if(!destinoConvertido){
+        alert("Não foi possível converter a localização.");
+        return;
+    }
+
+    const ocupanteConvertido =
+        obterContainerNaPosicao(destinoConvertido);
+
+    if(
+        ocupanteConvertido &&
+        ocupanteConvertido !== container
+    ){
+        alert(
+            `A posição ${destinoConvertido} já está ocupada por ${ocupanteConvertido}.`
+        );
+        return;
+    }
+
 
     /* =========================================
     CONFIRMA
@@ -9383,8 +9429,8 @@ async function movimentarContainerSelecionadoMapa(
     const confirmar =
         window.confirm(
             `Movimentar ${container}?\n\n` +
-            `${origem || "SEM LOCALIZAÇÃO"}\n` +
-            `→\n${destino}`
+           `${origem || "SEM LOCALIZAÇÃO"}\n` +
+           `→\n${destinoConvertido}`
         );
 
 
@@ -9415,7 +9461,7 @@ async function movimentarContainerSelecionadoMapa(
                             container,
 
                         localizacao:
-                            destino,
+                            destinoConvertido,
 
                         atualizado_por:
                             USUARIO_PORTAL.id,
@@ -9464,7 +9510,7 @@ async function movimentarContainerSelecionadoMapa(
                 container,
 
             detalhes:
-                `${origem || "SEM LOCALIZAÇÃO"} → ${destino}`
+                `${origem || "SEM LOCALIZAÇÃO"} → ${destinoConvertido}`
 
         });
 
