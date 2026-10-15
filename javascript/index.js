@@ -1529,7 +1529,7 @@ function mostrarMapa(){
 
    atualizarAreasSolicitadasMapa();
 
-   atualizarContainerSelecionadoMapa();
+   //atualizarContainerSelecionadoMapa();
 
    
 
