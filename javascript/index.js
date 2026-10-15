@@ -8919,9 +8919,10 @@ async function movimentarContainerPorDrag(
         );
 
 
-    if(
-        localAtual !== origem
-    ){
+   if(
+       !localAtual ||
+       obterContainerNaPosicao(origem) !== container
+     ){
 
         alert(
             `A localização do container foi alterada.\n\nLocal atual: ${localAtual || "SEM LOCALIZAÇÃO"}`
