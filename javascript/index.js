@@ -2711,7 +2711,6 @@ console.log(
     "Localizações e janelas do MAPA atualizadas pelo Realtime."
 );
 
-                );
 
             }
         )
