@@ -2818,24 +2818,77 @@ function obterLocalizacoes(){
 
 }
 
+
 function obterContainerNaPosicao(posicao){
 
-    const localizacoes =
-        obterLocalizacoes();
+    function identificarPosicaoFisica(valor){
+
+        if(!valor){
+            return null;
+        }
+
+        const texto = String(valor)
+            .trim()
+            .toUpperCase()
+            .replace(/\s+/g, "");
+
+        // Formato TSV: A01-A-1-1
+        const tsv = interpretarLocalizacaoTSV(texto);
+
+        if(tsv){
+
+            const pilha =
+                "ABCDEF".indexOf(tsv.lastro) + 1;
+
+            if(pilha < 1){
+                return null;
+            }
+
+            return `${tsv.praca}-${tsv.linha}-${pilha}-${tsv.nivel}`;
+        }
+
+        // Formato antigo do mapa: A-01-1-1
+        const mapa = texto.match(
+            /^([A-D])-(\d{1,2})-([1-6])-([1-4])$/
+        );
+
+        if(mapa){
+
+            const praca = mapa[1];
+            const linha = mapa[2].padStart(2, "0");
+            const pilha = Number(mapa[3]);
+            const nivel = Number(mapa[4]);
+
+            return `${praca}-${linha}-${pilha}-${nivel}`;
+        }
+
+        return null;
+    }
+
+    const posicaoProcurada =
+        identificarPosicaoFisica(posicao);
+
+    if(!posicaoProcurada){
+        return null;
+    }
+
+    const localizacoes = obterLocalizacoes();
 
     for(const container in localizacoes){
 
-        if(localizacoes[container] === posicao){
+        const posicaoRegistrada =
+            identificarPosicaoFisica(
+                localizacoes[container]
+            );
 
+        if(posicaoRegistrada === posicaoProcurada){
             return container;
-
         }
-
     }
 
     return null;
-
 }
+
 
 function normalizarContainer(numero){
 
