@@ -2838,6 +2838,47 @@ function obterLocalizacoes(){
 }
 
 
+function identificarPosicaoFisica(valor){
+
+    if(!valor){
+        return null;
+    }
+
+    const texto = String(valor)
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+
+    // Formato TSV: A01-A-1-1
+    const tsv = interpretarLocalizacaoTSV(texto);
+
+    if(tsv){
+
+        const pilha =
+            "ABCDEF".indexOf(tsv.lastro) + 1;
+
+        return `${tsv.praca}-${tsv.linha}-${pilha}-${tsv.nivel}`;
+    }
+
+    // Formato do MAPA: A-01-1-1
+    const mapa = texto.match(
+        /^([A-D])-(\d{1,2})-([1-6])-([1-4])$/
+    );
+
+    if(mapa){
+
+        const praca = mapa[1];
+        const linha = mapa[2].padStart(2, "0");
+        const pilha = Number(mapa[3]);
+        const nivel = Number(mapa[4]);
+
+        return `${praca}-${linha}-${pilha}-${nivel}`;
+    }
+
+    return null;
+}
+
+
 function obterContainerNaPosicao(posicao){
 
     function identificarPosicaoFisica(valor){
