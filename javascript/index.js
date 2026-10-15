@@ -1529,7 +1529,7 @@ function mostrarMapa(){
 
    atualizarAreasSolicitadasMapa();
 
-   //atualizarContainerSelecionadoMapa();
+   atualizarContainerSelecionadoMapa();
 
    
 
@@ -2698,11 +2698,19 @@ ATUALIZAÇÃO GLOBAL TSV
 
                 }
 
-                atualizarAreasSolicitadasMapa();
 
+atualizarAreasSolicitadasMapa();
 
-                console.log(
-                    "Localizações atualizadas pelo Realtime."
+/* =========================================
+ATUALIZA JANELAS ABERTAS DO MAPA
+========================================= */
+
+atualizarJanelasMapaAbertas();
+
+console.log(
+    "Localizações e janelas do MAPA atualizadas pelo Realtime."
+);
+
                 );
 
             }
