@@ -9101,6 +9101,50 @@ async function movimentarContainerPorDrag(
         return;
     }
 
+ 
+    /* =========================================
+    RUA DE PEGA DO DESTINO
+    ========================================= */
+
+    const ruaInformada = window.prompt(
+        "Informe a rua de pega do destino:",
+        ""
+    );
+
+    if(ruaInformada === null){
+        return;
+    }
+
+    if(ruaInformada.trim() === ""){
+        alert("Informe uma rua de pega válida.");
+        return;
+    }
+
+    const rua = Number(ruaInformada.trim());
+
+    if(!Number.isInteger(rua) || rua < 1){
+        alert("Informe uma rua de pega válida.");
+        return;
+    }
+
+    const destinoConvertido =
+        converterLocalizacaoMapa(destino, rua);
+
+    if(!destinoConvertido){
+        alert("Não foi possível converter a localização.");
+        return;
+    }
+
+    const ocupanteDestino =
+        obterContainerNaPosicao(destinoConvertido);
+
+    if(ocupanteDestino && ocupanteDestino !== container){
+        alert(
+            `A posição ${destinoConvertido} já está ocupada por ${ocupanteDestino}.`
+        );
+        return;
+    }
+
 
     /* =========================================
     CONFIRMAÇÃO
