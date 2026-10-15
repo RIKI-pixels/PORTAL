@@ -958,43 +958,46 @@ function criarRegistro(linha){
 
 }
 
+
 function formatarLocalizacaoEstoque(localizacao){
 
     if(!localizacao){
         return "";
     }
 
-    const partes =
-        String(localizacao).split("-");
+    const texto = String(localizacao)
+        .trim()
+        .toUpperCase();
 
-    if(partes.length !== 4){
-        return localizacao;
+    // Formato atual: A01-A-1-1
+    // Praça, linha, lastro, nível e rua de pega
+    const formatoAtual =
+        interpretarLocalizacaoTSV(texto);
+
+    if(formatoAtual){
+        return formatoAtual.localizacao;
     }
 
-    const praca =
-        partes[0];
+    // Formato antigo do mapa: A-01-1-1
+    const partes = texto.match(
+        /^([A-D])-(\d{1,2})-([1-6])-([1-4])$/
+    );
 
-    const linha =
-        partes[1];
+    if(partes){
 
-    const numeroLastro =
-        Number(partes[2]);
+        const praca = partes[1];
+        const linha = partes[2].padStart(2, "0");
+        const pilha = Number(partes[3]);
+        const nivel = partes[4];
 
-    const nivel =
-        partes[3];
+        const lastro = "ABCDEF"[pilha - 1];
 
-    const letrasLastro =
-        ["A", "B", "C", "D", "E", "F"];
-
-    const lastro =
-        letrasLastro[numeroLastro - 1];
-
-    if(!lastro){
-        return localizacao;
+        return `${praca}${linha}-${lastro}-${nivel}`;
     }
 
-    return `${praca}-${linha}-${lastro}-${nivel}`;
+    return texto;
 }
+
 
 
 /* ==========================================================
