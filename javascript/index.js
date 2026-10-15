@@ -1094,8 +1094,17 @@ function interpretarLocalizacaoTSV(valor){
     const nivel = Number(resultado[4]);
     const rua = Number(resultado[5]);
 
-    if(nivel < 1 || rua < 1){
-        return null;
+
+if(
+    !Number.isInteger(nivel) ||
+    nivel < 1 ||
+    nivel > 4 ||
+    !Number.isInteger(rua) ||
+    rua < 1
+){
+    return null;
+}
+
     }
 
     return {
