@@ -2965,6 +2965,7 @@ function validarEmpilhamento(){
 
 
 
+
 function validarRetiradaContainer(container){
 
     const localAtual = obterLocalizacao(container);
@@ -2973,44 +2974,74 @@ function validarRetiradaContainer(container){
         return true;
     }
 
-    const localizacao = interpretarLocalizacaoTSV(localAtual);
+    const texto = String(localAtual)
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
 
-    // Não autoriza retirada sem conseguir validar a posição
-    if(!localizacao){
-        alert(
-            `Não foi possível validar a localização de ${container}.\n\n` +
-            `Localização registrada: ${localAtual}`
+    const posicoesSuperiores = [];
+
+    const localizacaoTSV =
+        interpretarLocalizacaoTSV(texto);
+
+    if(localizacaoTSV){
+
+        const {praca, linha, lastro, nivel, rua} =
+            localizacaoTSV;
+
+        for(let n = nivel + 1; n <= 4; n++){
+
+            posicoesSuperiores.push(
+                `${praca}${linha}-${lastro}-${n}-${rua}`
+            );
+
+        }
+
+    }else{
+
+        const partes = texto.match(
+            /^([A-D])-(\d{1,2})-([1-6])-(\d+)$/
         );
-        return false;
+
+        if(!partes){
+
+            alert(
+                `Localização não reconhecida: ${localAtual}`
+            );
+
+            return false;
+        }
+
+        const praca = partes[1];
+        const linha = partes[2].padStart(2, "0");
+        const pilha = Number(partes[3]);
+        const nivel = Number(partes[4]);
+
+        if(nivel < 1 || nivel > 4){
+            return false;
+        }
+
+        for(let n = nivel + 1; n <= 4; n++){
+
+            posicoesSuperiores.push(
+                `${praca}-${linha}-${pilha}-${n}`
+            );
+
+        }
+
     }
 
-    const {
-        praca,
-        linha,
-        lastro,
-        nivel,
-        rua
-    } = localizacao;
-
-    // Verifica os níveis superiores da mesma pilha
-    for(
-        let nivelSuperior = nivel + 1;
-        nivelSuperior <= 4;
-        nivelSuperior++
-    ){
-
-        const posicaoSuperior =
-            `${praca}${linha}-${lastro}-${nivelSuperior}-${rua}`;
+    for(const posicao of posicoesSuperiores){
 
         const containerSuperior =
-            obterContainerNaPosicao(posicaoSuperior);
+            obterContainerNaPosicao(posicao);
 
         if(containerSuperior){
 
             alert(
-                `Não é possível movimentar ${container}.\n\n` +
-                `O contêiner ${containerSuperior} está acima dele.\n` +
-                `Posição: ${posicaoSuperior}`
+                `Não é possível retirar ${container}.\n\n` +
+                `Existe o contêiner ${containerSuperior} ` +
+                `acima, na posição ${posicao}.`
             );
 
             return false;
@@ -3019,65 +3050,8 @@ function validarRetiradaContainer(container){
     }
 
     return true;
-
 }
 
-function atualizarContainerSelecionadoMapa(){
-
-    const painel =
-        document.getElementById(
-            "containerSelecionadoMapa"
-        );
-
-    if(!painel){
-        return;
-    }
-
-
-    if(!APP.containerSelecionado){
-
-        painel.style.display = "none";
-
-        return;
-
-    }
-
-
-    painel.style.display = "flex";
-
-
-    const numeroContainer =
-        document.getElementById(
-            "numeroContainerSelecionado"
-        );
-
-    if(numeroContainer){
-
-        numeroContainer.textContent =
-            APP.containerSelecionado;
-
-    }
-
-
-    const localAtual =
-        obterLocalizacao(
-            APP.containerSelecionado
-        );
-
-
-    const localAtualElemento =
-        document.getElementById(
-            "localAtualContainerSelecionado"
-        );
-
-    if(localAtualElemento){
-
-        localAtualElemento.textContent =
-            `Local atual: ${localAtual || "SEM LOCALIZAÇÃO"}`;
-
-    }
-
-}
 
 
 /* ==========================================================
