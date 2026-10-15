@@ -8888,6 +8888,24 @@ async function movimentarContainerPorDrag(
         return;
     }
 
+ 
+    /* =========================================
+    ATUALIZA LOCALIZAÇÕES ANTES DE VALIDAR
+    ========================================= */
+
+    const localizacoesAtualizadas =
+        await carregarLocalizacoesSupabase();
+
+    if(!localizacoesAtualizadas){
+
+        alert(
+            "Não foi possível consultar as localizações atualizadas.\n\n" +
+            "Movimentação cancelada para evitar conflitos."
+        );
+
+        return;
+    }
+
 
     /* =========================================
     GARANTE QUE O DESTINO CONTINUA VAZIO
