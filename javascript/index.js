@@ -2937,7 +2937,7 @@ function buscarContainerNoEstoque(numero){
 
 
 
-function validarEmpilhamento(){
+function validarEmpilhamentofunction validarEmpilhamento(containerMovimentado = null){
 
     const destino = APP.destinoSelecionado;
 
@@ -3022,19 +3022,38 @@ for(let n = 1; n < nivel; n++){
     }
 
     // Verifica se existem contêineres nos níveis inferiores
-    for(const posicao of posicoesInferiores){
 
-        if(!obterContainerNaPosicao(posicao)){
+for(const posicao of posicoesInferiores){
 
-            console.warn(
-                "Nível inferior vazio:",
-                posicao
-            );
+    const containerInferior =
+        obterContainerNaPosicao(posicao);
 
-            return false;
-        }
+    if(!containerInferior){
 
+        console.warn(
+            "Nível inferior vazio:",
+            posicao
+        );
+
+        return false;
     }
+
+    if(
+        containerMovimentado &&
+        normalizarContainer(containerInferior) ===
+        normalizarContainer(containerMovimentado)
+    ){
+
+        console.warn(
+            "O contêiner não pode ser seu próprio suporte:",
+            containerMovimentado
+        );
+
+        return false;
+    }
+
+}
+
 
     return true;
 
