@@ -1004,6 +1004,7 @@ function formatarLocalizacaoEstoque(localizacao){
    CONVERSÃO DE LOCALIZAÇÕES DO MAPA
 ========================================================== */
 
+
 function converterLocalizacaoMapa(destino, ruaPega){
 
     if(!destino){
@@ -1031,13 +1032,13 @@ function converterLocalizacaoMapa(destino, ruaPega){
             `${localizacaoTSV.praca}` +
             `${localizacaoTSV.linha}-` +
             `${localizacaoTSV.lastro}-` +
-            `${localizacaoTSV.nivel}-` +
-            `${rua}`
+            `${rua}-` +
+            `${localizacaoTSV.nivel}`
         );
 
     }
 
-    // Formato original do mapa: D-26-1-2
+    // Formato interno do MAPA: D-26-1-2
     const partes = texto.match(
         /^([A-D])-(\d{1,2})-([1-6])-(\d+)$/
     );
@@ -1051,7 +1052,11 @@ function converterLocalizacaoMapa(destino, ruaPega){
     const pilha = Number(partes[3]);
     const nivel = Number(partes[4]);
 
-    if(!Number.isInteger(nivel) || nivel < 1 || nivel > 4){
+    if(
+        !Number.isInteger(nivel) ||
+        nivel < 1 ||
+        nivel > 4
+    ){
         return null;
     }
 
@@ -1059,9 +1064,10 @@ function converterLocalizacaoMapa(destino, ruaPega){
 
     const lastro = lastros[pilha - 1];
 
-    return `${praca}${linha}-${lastro}-${nivel}-${rua}`;
+    return `${praca}${linha}-${lastro}-${rua}-${nivel}`;
 
 }
+
 
 
 /* ==========================================================
