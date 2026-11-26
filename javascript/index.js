@@ -2967,13 +2967,15 @@ function validarEmpilhamento(){
             rua
         } = localizacaoTSV;
 
-        for(let n = 1; n < nivel; n++){
 
-            posicoesInferiores.push(
-                `${praca}${linha}-${lastro}-${n}-${rua}`
-            );
+for(let n = 1; n < nivel; n++){
 
-        }
+    posicoesInferiores.push(
+        `${praca}${linha}-${lastro}-${rua}-${n}`
+    );
+
+}
+
 
     } else {
 
