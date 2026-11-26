@@ -3066,13 +3066,14 @@ function validarRetiradaContainer(container){
         const {praca, linha, lastro, nivel, rua} =
             localizacaoTSV;
 
-        for(let n = nivel + 1; n <= 4; n++){
 
-            posicoesSuperiores.push(
-                `${praca}${linha}-${lastro}-${n}-${rua}`
-            );
+for(let n = nivel + 1; n <= 4; n++){
 
-        }
+    posicoesSuperiores.push(
+        `${praca}${linha}-${lastro}-${rua}-${n}`
+    );
+
+}
 
     }else{
 
