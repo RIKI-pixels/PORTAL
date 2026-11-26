@@ -1068,6 +1068,7 @@ function converterLocalizacaoMapa(destino, ruaPega){
    IMPORTAÇÃO DE LOCALIZAÇÕES DO TSV
 ========================================================== */
 
+
 function interpretarLocalizacaoTSV(valor){
 
     if(!valor){
@@ -1079,8 +1080,9 @@ function interpretarLocalizacaoTSV(valor){
         .toUpperCase()
         .replace(/\s+/g, "");
 
-    // Exemplo: D26-A-2-2
-    const formato = /^([A-D])(\d{1,2})-([A-F])-(\d+)-(\d+)$/;
+    // Formato: PRAÇA/LINHA-LASTRO-RUA-ALTURA
+    const formato =
+        /^([A-D])(\d{1,2})-([A-F])-(\d+)-(\d+)$/;
 
     const resultado = texto.match(formato);
 
@@ -1091,19 +1093,18 @@ function interpretarLocalizacaoTSV(valor){
     const praca = resultado[1];
     const linha = resultado[2].padStart(2, "0");
     const lastro = resultado[3];
-    const nivel = Number(resultado[4]);
-    const rua = Number(resultado[5]);
+    const rua = Number(resultado[4]);
+    const nivel = Number(resultado[5]);
 
-
-if(
-    !Number.isInteger(nivel) ||
-    nivel < 1 ||
-    nivel > 4 ||
-    !Number.isInteger(rua) ||
-    rua < 1
-){
-    return null;
-}
+    if(
+        !Number.isInteger(nivel) ||
+        nivel < 1 ||
+        nivel > 4 ||
+        !Number.isInteger(rua) ||
+        rua < 1
+    ){
+        return null;
+    }
 
     return {
         praca,
@@ -1111,10 +1112,11 @@ if(
         lastro,
         nivel,
         rua,
-        localizacao: `${praca}${linha}-${lastro}-${nivel}-${rua}`
+        localizacao: `${praca}${linha}-${lastro}-${rua}-${nivel}`
     };
 
 }
+
 
 function criarRegistroEstoque(linha){
 
