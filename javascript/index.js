@@ -1105,8 +1105,6 @@ if(
     return null;
 }
 
-    }
-
     return {
         praca,
         linha,
